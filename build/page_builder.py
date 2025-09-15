@@ -43,7 +43,8 @@ class PageBuilder:
         template_var_map = {
             'news': 'post',
             'projects': 'project', 
-            'members': 'member'
+            'members': 'member',
+            'meetings': 'meeting'
         }
         
         for item in items:

@@ -55,6 +55,9 @@ class WebsiteBuilder:
                                   detail_template='details/project-detail.html'),
             'members': ContentType('members', 'members', sort_key='title', reverse=False,
                                  detail_template='details/member-detail.html'),
+            'meetings': ContentType('meetings', 'meetings', output_filename='meetings.html',
+                                  page_template='pages/meetings.html',
+                                  detail_template='details/meeting-detail.html'),
         }
     
     def load_site_config(self) -> Dict[str, Any]:
@@ -92,21 +95,28 @@ class WebsiteBuilder:
         print(f"Generated {output_file}")
     
     def build_news_page(self):
-        """Build the whatsnew.html page with all news items."""
+        """Build the whatsnew.html page with all news items and recent meetings."""
         posts = self.content_manager.get_all_content(self.content_types['news'])
         self.page_builder.build_detail_pages(posts, self.content_types['news'])
         
+        # Get meetings for the right column
+        meetings = self.content_manager.get_all_content(self.content_types['meetings'])
+        
         news_content = self.page_builder.render_compact_news_cards(posts)
+        meetings_content = self.page_builder.render_cards(
+            meetings, 'cards/compact-meeting-card.html'
+        )
         hero_content = self.content_manager.build_hero_content('whatsnew')
         
         self.page_builder.build_page(
             'pages/whatsnew.html',
             'whatsnew.html',
             hero=hero_content,
-            news_content=news_content
+            news_content=news_content,
+            meetings_content=meetings_content
         )
         
-        print(f"Built whatsnew.html with {len(posts)} posts")
+        print(f"Built whatsnew.html with {len(posts)} posts and {len(meetings)} meetings")
     
     def build_projects_page(self):
         """Build the projects.html page."""
@@ -156,41 +166,47 @@ class WebsiteBuilder:
         
         print("Built about.html")
     
+    def build_meetings_page(self):
+        """Build the meetings.html page."""
+        meetings = self.content_manager.get_all_content(self.content_types['meetings'])
+        self.page_builder.build_detail_pages(meetings, self.content_types['meetings'])
+        
+        meetings_content = self.page_builder.render_cards(
+            meetings, 'cards/compact-meeting-card.html'
+        )
+        hero_content = self.content_manager.build_hero_content('meetings')
+        
+        self.page_builder.build_page(
+            'pages/meetings.html',
+            'meetings.html',
+            hero=hero_content,
+            meetings_content=meetings_content
+        )
+        
+        print(f"Built meetings.html with {len(meetings)} meetings")
+    
     def build_nextmeeting_page(self):
-        """Build the nextmeeting.html page."""
-        nextmeeting_file = self.content_dir / 'nextmeeting.md'
-        
-        if not nextmeeting_file.exists():
-            print(f"Warning: {nextmeeting_file} not found")
-            nextmeeting_content = "<p>Next meeting content not found.</p>"
-            hero_content = {'hero_title': 'Next Meeting', 'hero_subtitle': '', 'hero_content': ''}
-        else:
-            nextmeeting_data = self.content_manager.process_markdown_file(nextmeeting_file)
-            nextmeeting_content = nextmeeting_data['content'] if nextmeeting_data else "<p>Error processing next meeting content.</p>"
-            
-            if nextmeeting_data:
-                hero_content = {
-                    'hero_title': nextmeeting_data['title'],
-                    'hero_subtitle': nextmeeting_data['metadata'].get('subtitle', ''),
-                    'hero_content': ''
-                }
-            else:
-                hero_content = {'hero_title': 'Next Meeting', 'hero_subtitle': '', 'hero_content': ''}
-        
-        # Build page in subdirectory
+        """Build the nextmeeting redirect to meetings/nextmeeting.html."""
         nextmeeting_dir = self.dist_dir / 'nextmeeting'
         nextmeeting_dir.mkdir(exist_ok=True)
         
-        template = self.jinja_env.get_template('pages/nextmeeting.html')
-        html_content = template.render(
-            site=self.site_config,
-            hero=hero_content,
-            nextmeeting_content=nextmeeting_content
-        )
+        # Simple redirect to meetings/nextmeeting.html
+        redirect_html = '''<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Redirecting to Next Meeting</title>
+    <meta http-equiv="refresh" content="0; url=../meetings/nextmeeting.html">
+    <link rel="canonical" href="../meetings/nextmeeting.html">
+</head>
+<body>
+    <p>Redirecting to <a href="../meetings/nextmeeting.html">next meeting page</a>...</p>
+</body>
+</html>'''
         
         output_file = nextmeeting_dir / 'index.html'
-        output_file.write_text(html_content, encoding='utf-8')
-        print("Built nextmeeting/index.html")
+        output_file.write_text(redirect_html, encoding='utf-8')
+        print("Built nextmeeting/index.html (redirect to meetings/nextmeeting.html)")
     
     def build(self):
         """Main build function."""
@@ -212,6 +228,7 @@ class WebsiteBuilder:
         self.build_news_page()
         self.build_projects_page()
         self.build_members_page()
+        self.build_meetings_page()
         self.build_about_page()
         self.build_nextmeeting_page()
         

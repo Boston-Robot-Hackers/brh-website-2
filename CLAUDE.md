@@ -17,12 +17,25 @@
 
 ## Key Coding Style Requirements
 
-* Code in python
+* Code in Python using latest version
 * Always look for a well supported package to implement a feature
 * Look for and eliminate duplicate code
-* Use python classes where apporpriate
-* No methods or functions longer than 35 lines
-* No source files longer than 400 lines
+* Use Python classes where appropriate
+* No methods or functions longer than 50 lines
+* No source files longer than 300 lines
 * No html or css inside of python source files. Very small exceptions are permitted
-
+* Uses only ROS2
+* Write idiomatic Python
+* Don't go overboard on error checking
+* Give methods intention revealing names
+* Use classes and put them in a separate file
+* Put data classes in the file where they are constructed
+* Name files after the class defined in the file
+* Use Python latest and ROS2 compliant package management and building with colcon
+* Prefer async/await over threading when there is a choice
+* Avoid if/else statements that are nested more than 1 deep
+* Avoid 1 line methods
+* Look for code duplication and make the code DRY if it makes sense
+* When undertaking a multi step implementation or refactoring, do it in a way that after each step we retain a running program so that I can test it to make sure we are on the right track
+* Don't assign the result of a function to a variable just to use that variable one time only, just use the function call
 

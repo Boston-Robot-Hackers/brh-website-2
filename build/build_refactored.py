@@ -64,6 +64,9 @@ class WebsiteBuilder:
                                   detail_template='details/project-detail.html'),
             'members': ContentType('members', 'members', sort_key='title', reverse=False,
                                  detail_template='details/member-detail.html'),
+            'meetings': ContentType('meetings', 'meetings', output_filename='meetings.html',
+                                  page_template='pages/meetings.html',
+                                  detail_template='details/meeting-detail.html'),
         }
     
     def load_site_config(self) -> Dict[str, Any]:

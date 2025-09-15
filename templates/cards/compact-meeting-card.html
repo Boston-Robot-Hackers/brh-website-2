@@ -1,0 +1,22 @@
+<!-- Compact meeting card - Small inline meeting display for listing pages. -->
+<div class="card mb-3">
+    <div class="row g-0 h-100">
+        <div class="col-auto d-flex align-items-stretch p-3">
+            {% if image %}
+            <img src="{{ image }}" style="width: 80px; height: 80px; object-fit: cover; border-radius: var(--radius); border: 1px solid #000;" alt="">
+            {% else %}
+            <div class="bg-primary d-flex align-items-center justify-content-center text-white fw-bold" style="width: 80px; height: 80px; font-size: 0.9rem; border-radius: var(--radius); border: 1px solid #000;">
+                {{ text or 'MTG' }}
+            </div>
+            {% endif %}
+        </div>
+        <div class="col">
+            <div class="card-body py-3">
+                <h6 class="card-title mb-1">
+                    <a href="meetings/{{ id }}.html" class="text-decoration-none">{{ title }}</a>
+                </h6>
+                <p class="card-text text-muted small mb-1">{{ excerpt }}</p>
+            </div>
+        </div>
+    </div>
+</div>

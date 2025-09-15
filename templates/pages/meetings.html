@@ -1,0 +1,15 @@
+<!-- Meetings listing page - Displays all meetings with compact cards. -->
+{% extends 'layouts/page.html' %}
+
+{% set current_page = 'meetings' %}
+{% set is_detail_page = false %}
+
+{% block title %}Meetings - {{ site.title }}{% endblock %}
+
+{% block main_content %}
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            {{ meetings_content }}
+        </div>
+    </div>
+{% endblock %}

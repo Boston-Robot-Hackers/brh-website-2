@@ -1,0 +1,33 @@
+<!-- Meeting detail page - Full meeting article with header and content. -->
+{% extends 'layouts/detail.html' %}
+
+{% set current_page = 'meetings' %}
+{% set back_link = 'meetings.html' %}
+{% set back_text = 'Back to Meetings' %}
+
+{% block title %}{{ meeting.title }} - {{ site.title }}{% endblock %}
+
+{% block detail_content %}
+    <article class="meeting-detail">
+        <div class="d-flex align-items-center mb-4">
+            {% if meeting.image %}
+            <img src="../{{ meeting.image }}" class="rounded me-3" style="width: 80px; height: 80px; object-fit: cover;" alt="{{ meeting.title }}">
+            {% else %}
+            <div class="bg-primary rounded d-flex align-items-center justify-content-center text-white fw-bold me-3" style="width: 80px; height: 80px; font-size: 1rem;">
+                {{ meeting.text or 'MTG' }}
+            </div>
+            {% endif %}
+            <div>
+                <h1 class="mb-1">{{ meeting.title }}</h1>
+                <p class="text-muted mb-0">{{ meeting.date }}</p>
+                {% if meeting.excerpt %}
+                <p class="lead mt-2">{{ meeting.excerpt }}</p>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="content">
+            {{ meeting.content|safe }}
+        </div>
+    </article>
+{% endblock %}

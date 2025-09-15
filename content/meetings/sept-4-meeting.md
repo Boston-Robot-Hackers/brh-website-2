@@ -1,7 +1,8 @@
 ---
-title: Next Meeting
+title: Sept 4 at 7:00pm
 subtitle: Join us for our upcoming meeting
-excerpt: Information about our next meeting
+excerpt: 'Featuring a talk by Siddarth Dayasagar: "Space Station OS"'
+image: "images/clock.png"
 ---
 ## Our Next Meeting
 
