@@ -6,7 +6,6 @@ featured: true
 skills: ["ROS & ROS2", "SLAM & Sensor Fusion", "Perception & Path Planning", "Terrain Estimation & Trajectory Generation", "Mobile Robots & Multi Model Robots"]
 github: "https://github.com/kamalnath26"
 linkedin: "https://www.linkedin.com/in/kamalnathb/"
-projects: ["M4 [Multi-Modal Mobility Morphobot]"](https://www.youtube.com/watch?v=S4eQXXxUnNE&t=194s) ["COBRA [Crater Observing Bio-inspired Rolling Articulator]] (https://bpb-us-e1.wpmucdn.com/sites.northeastern.edu/dist/2/4415/files/2023/04/09320000-0a00-0242-3035-08db09dfe0f6_720p.mp4)]
 opentowork: true
 ---
 I am currently pursuing my Master’s in Robotics at Northeastern University, having joined in Fall 2024. My journey in robotics began with a Bachelor's in Mechatronics, which I completed in 2021. During this time, I immersed myself in building numerous robots and competing in various robotics competitions, sharpening my skills in automation and intelligent systems. 
