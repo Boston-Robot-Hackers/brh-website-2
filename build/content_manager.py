@@ -97,7 +97,11 @@ class ContentManager:
                 items.append(item_data)
         
         # Sort by specified key
-        items.sort(key=lambda x: x[content_type.sort_key], reverse=content_type.reverse)
+        if content_type.sort_key == 'order':
+            # For order field, default to 0 if not present, so items without order come first
+            items.sort(key=lambda x: x['metadata'].get('order', 0), reverse=content_type.reverse)
+        else:
+            items.sort(key=lambda x: x[content_type.sort_key], reverse=content_type.reverse)
         return items
     
     def build_hero_content(self, page_name: str = 'index') -> Dict[str, Any]:
