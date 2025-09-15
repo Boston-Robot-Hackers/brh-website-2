@@ -13,4 +13,4 @@ Time: 7:00pm
 Location: Artsans Asylum
 Featured talk: Affordable Biomimetic Robot Hands
 ```
-### [Click here for further details](content/meetings/oct-9-meeting.html)
+### [Click here for further details](content/meetings/nextmeeting.html)
