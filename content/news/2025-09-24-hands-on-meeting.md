@@ -1,6 +1,6 @@
 ---
 title: "Introducing Hands-On Meetings!"
-date: 2025-09-09
+date: 2025-09-24
 excerpt: "Hands-on meetings coming!"
 image: "images/workbench.png"
 highlight: true
