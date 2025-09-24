@@ -1,7 +1,7 @@
 ---
 title: "Introducing Hands-On Meetings!"
 date: 2025-09-24
-excerpt: "Hands-on meetings coming!"
+excerpt: "Hands-on meetings are coming, starting on Oct 23. The usual place and time. Some of us will bring some partial robots or other widgets from our workshops and if you acquire a robot or robot kit before and want help building it or debugging it, bring it along. It will be a two hour meeting, without an agenda!"
 image: "images/workbench.png"
 highlight: true
 ---
