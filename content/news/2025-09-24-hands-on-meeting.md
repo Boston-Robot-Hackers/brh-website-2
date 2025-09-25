@@ -26,7 +26,7 @@ Another premise of this group was that we want to build things, we want to write
 
 In our monthly meetings and online We have had discussions in the meetings as well as offline about somehow doing projects together, hands-on, so we can learn from each other. Some of our members are more advanced and are in a position to help others level up. We will not focus on very simple robots but on what we might call "moderatelhy advanced" robots. (I am open to a better phrase :)
 
-So what is a "moderately-advanced" robot? In my mind, one that uses ROS2 qualifies, but it's not limited to that. There are other options other than ROS2 tha are equally advanced (more on that later.) But I would exclude robots that are programmed only with block-GUIs. I would exclude robots that are used in high school or elementary schools. They are too simple and would not impress anyone during an interview. I would exclude robots that are fancy remote control cars. So it's not hard and fast, but it leans towards "moderatly advanced".
+So what is a "moderately-advanced" robot? In my mind, one that uses ROS2 qualifies, but it's not limited to that. There are options other than ROS2 tha are equally advanced (more on that later.) But I would exclude robots that are programmed only with block-GUIs. I would exclude robots that are used in high school or elementary schools. They are too simple and would not impress anyone during an interview. I would exclude robots that are fancy remote control cars. So it's not hard and fast, but it leans towards "moderatly advanced".
 
 ### Hands-On Meetings
 
