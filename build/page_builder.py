@@ -66,125 +66,76 @@ class PageBuilder:
         
         print(f"Built {len(items)} {content_type.name} detail pages")
     
-    def render_cards(self, items: List[Dict], template_name: str, **extra_context) -> str:
+    def render_cards(self, items: List[Dict], template_name: str,
+                     item_var_name: str = None, **extra_context) -> str:
         """Generic method to render cards using a template."""
         if not items:
             return ""
-            
+
         template = self.jinja_env.get_template(template_name)
         cards_html = []
-        
+
         for item in items:
-            context = {**item, **extra_context}
-            if 'date' in item and item['date']:
-                context['formatted_date'] = self.format_date(item['date'])
-            
+            if item_var_name:
+                # Template expects item as a nested object (e.g., project.title)
+                context = {
+                    item_var_name: item,
+                    'formatted_date': self.format_date(item['date']) if item.get('date') else '',
+                    **extra_context
+                }
+            else:
+                # Template expects flat properties (e.g., title)
+                context = {**item, **extra_context}
+                if 'date' in item and item['date']:
+                    context['formatted_date'] = self.format_date(item['date'])
+
             card_html = template.render(**context)
             cards_html.append(card_html)
-        
+
         return '\n'.join(cards_html)
     
     def render_news_cards(self, posts: List[Dict[str, Any]]) -> str:
         """Render news cards using the template."""
-        template = self.jinja_env.get_template('cards/news-card.html')
-        
-        cards_html = []
-        for post in posts:
-            # Use default image classes
-            image_classes = "image-base image-square d-flex align-items-center justify-content-center text-white fw-bold"
-            
-            card_html = template.render(
-                id=post['id'],
-                title=post['title'],
-                excerpt=post['excerpt'],
-                text=post['text'],
-                image=post['image'],
-                formatted_date=self.format_date(post['date']),
-                image_classes=image_classes
-            )
-            cards_html.append(card_html)
-        
-        return '\n'.join(cards_html)
+        # Add image classes to posts for the template
+        image_classes = "image-base image-square d-flex align-items-center justify-content-center text-white fw-bold"
+        return self.render_cards(posts, 'cards/news-card.html',
+                               image_classes=image_classes)
     
     def render_compact_news_cards(self, posts):
         """Render compact news cards for the full news page."""
-        template = self.jinja_env.get_template('cards/compact-news-card.html')
-        cards_html = []
-        
-        for post in posts:
-            # Format the date
-            try:
-                if isinstance(post['date'], str):
-                    date_obj = datetime.fromisoformat(post['date']).date()
-                else:
-                    date_obj = post['date']
-                formatted_date = date_obj.strftime("%B %d, %Y")
-            except:
-                formatted_date = str(post['date'])
-            
-            # Render the card
-            card_html = template.render(
-                id=post['id'],
-                title=post['title'],
-                excerpt=post['excerpt'],
-                formatted_date=formatted_date,
-                image=post['image'],
-                text=post['text']
-            )
-            cards_html.append(card_html)
-        
-        return '\n'.join(cards_html)
+        return self.render_cards(posts, 'cards/compact-news-card.html')
     
     def render_projects_content(self, projects):
         """Render projects as full content articles using template."""
-        template = self.jinja_env.get_template('cards/project-listing-item.html')
-        content_sections = []
-        
-        for project in projects:
-            section_html = template.render(
-                project=project,
-                formatted_date=self.format_date(project['date'])
-            )
-            content_sections.append(section_html)
-        
-        return '\n'.join(content_sections)
+        return self.render_cards(projects, 'cards/project-listing-item.html', 'project')
     
     def render_project_cards_for_home(self, projects):
         """Render project cards for the home page display."""
-        template = self.jinja_env.get_template('cards/project-card.html')
-        cards_html = []
-        
+        # Add status to each project for the template
+        projects_with_status = []
         for project in projects:
-            card_html = template.render(
-                id=project['id'],
-                title=project['title'],
-                text=project['text'],
-                excerpt=project['excerpt'],
-                image=project['image'],
-                status=project['metadata'].get('status', 'Unknown'),
-            )
-            cards_html.append(card_html)
-        
-        return '\n'.join(cards_html)
+            project_copy = project.copy()
+            project_copy['status'] = project['metadata'].get('status', 'Unknown')
+            projects_with_status.append(project_copy)
+
+        return self.render_cards(projects_with_status, 'cards/project-card.html')
     
     def render_member_cards(self, members):
         """Render member cards for the members page."""
-        template = self.jinja_env.get_template('cards/member-card.html')
-        cards_html = []
-        
+        # Flatten member data for the template
+        members_flattened = []
         for member in members:
-            card_html = template.render(
-                id=member['id'],
-                name=member['title'],
-                role=member['metadata'].get('role', 'Member'),
-                skills=member['metadata'].get('skills', []),
-                card_text=member['metadata'].get('card-text', 'MEMBER'),
-                image=member['metadata'].get('image'),
-                metadata=member['metadata'],
-            )
-            cards_html.append(card_html)
-        
-        return '\n'.join(cards_html)
+            member_copy = member.copy()
+            member_copy.update({
+                'name': member['title'],
+                'role': member['metadata'].get('role', 'Member'),
+                'skills': member['metadata'].get('skills', []),
+                'card_text': member['metadata'].get('card-text', 'MEMBER'),
+                'image': member['metadata'].get('image'),
+            })
+            members_flattened.append(member_copy)
+
+        return self.render_cards(members_flattened, 'cards/member-card.html')
     
     def build_page(self, template_name: str, output_filename: str, **context):
         """Generic method to build a page with given template and context."""
