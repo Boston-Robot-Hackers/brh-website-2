@@ -55,7 +55,7 @@ class WebsiteBuilder:
                                   detail_template='details/project-detail.html'),
             'members': ContentType('members', 'members', sort_key='title', reverse=False,
                                  detail_template='details/member-detail.html'),
-            'meetings': ContentType('meetings', 'meetings', sort_key='order', reverse=True,
+            'meetings': ContentType('meetings', 'meetings', sort_key='order', reverse=False,
                                   output_filename='meetings.html',
                                   page_template='pages/meetings.html',
                                   detail_template='details/meeting-detail.html'),
