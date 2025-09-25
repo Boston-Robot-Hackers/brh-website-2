@@ -2,7 +2,7 @@
 title: "Talk: Space Station OS"
 date: 2025-08-11
 excerpt: 'The talk at our next monthly (Sept 4) will be "Space Station OS - Open source OS for next generation space stations using ROS2"'
-highlight: true
+highlight: false
 image: images/news/space-os.png
 ---
 At our next meeting, September 4, 2025 at 7:00, Siddarth Dayasagar will present a talk titled "Space Station OS"
