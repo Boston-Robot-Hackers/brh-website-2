@@ -1,16 +1,19 @@
 ---
-title: "Next: October 9 at 7:00pm"
+title: November 11 at 7:00pm
 subtitle: Join us for our upcoming meeting
-excerpt: 'Featuring talk by David Dorf about "Affordable Biomimetic Robot Hands"'
+excerpt: >
+  Featured Talk: AI for generalized robotic manipulation. Learn about the foundational
+  research around diffusion, VLAs and VLMs, and see a demo of Hugging Face's Lerobot
+  platform for training models at home for under $500.
 image: "images/clock.png"
-date: 10/9/2025
-order: 3
+date: 11/11/2025
+order: 5
 ---
 ## Our Next Meeting
 
-* When: October 9 at 7:00pm
+* When: November 11 at 7:00pm
 * Where: [Artisans Asylum](https://www.artisansasylum.com) (96 Holton Street, Boston, MA 02135))
-* Register: [Register](https://www.eventbrite.com/e/boston-robot-hackers-monthly-meeting-tickets-1557040904259?aff=oddtdtcreator)
+* Register: [Register](https://brh.eventbrite.com)
 
 **We hope that you will join us for our next meeting.**
 
@@ -18,22 +21,22 @@ order: 3
 
     7:00 Mingle, network, show and tell
     7:30 Brief Topics
-    7:45 Featured Speaker: David Dorf - "Affordable Biomimetic Robot Hands"
+    7:45 Featured Speaker: Skyler Wiernik
     8:30 Q&A and Open Discussion
     9:00 End of formal meeting
 
-### Show and Tell
+## Talk: "AI for generalized robotic manipulation", Skyler Wiernik
 
-Bring your projects, half-built experiments, cool discoveries and tools. Give a 1 minute pitch on what you brought
+Robots of the future will require a generalized understanding of their environment in order to complete tasks alongside humans. The foundation of these systems is being built today at companies like Physical Intelligence, Gemini Robotics, K Scale Labs, and Hugging Face. Furthermore, much of this work has been open source, and you can build upon it at home for under $500. I'll go over some of the foundational research around difusion, VLAs and VLMs, demo Hugging Face's Lerobot platform, and show you how to train your first model at home.
 
-### David Dorf "Affordable Biomimetic Robot Hands"
+<img src="../images/meetings/skyler1.jpeg" alt="Sample image" style="float: left; margin: 20px 20px 20px 0; border-radius: 8px; height: 250px;">
 
-<img src="../images/meetings/hand1.png" alt="Sample image" style="float: left; margin: 20px 20px 20px 0; border-radius: 8px; height: 250px;">
 
-<img src="../images/meetings/hand2.png" alt="Sample image" style="float: right; margin: 20px 20px 20px 0; border-radius: 8px; height: 250px;">
+## About Skyler
 
-Dexterous tasks are the next frontier in robotic manipulation. Robots require end-effectors that can adapt to a wide variety of tools to work in dynamic environments. Currently available robot hands are heavy, bulky, fragile, and expensive. In this talk, we'll discuss novel methods for tackling these issues with 3D printing flexible materials and biomimetic design.
+<img src="../images/meetings/skyler2.jpeg" alt="Sample image" style="float: right; margin: 20px 20px 20px 0; border-radius: 8px; height: 250px;">
 
-## Join Boston Robot Hackers
+I've been building robots since I was a kid, and recently graduated from Worcester Polytechnic Institute. I'm now writing software at Amazon Robotics, and playing with VLAs in my free time. Previously, I competed in FIRST Robotics, built developer tools at Apple, and contributed to open source humanoids.
 
-We meet every month. Join our private mailing list: [Boston Robotic Hackers](https://docs.google.com/forms/d/e/1FAIpQLScYvvhPZmbpyqAoFFkcD_cis5RfagIL6OsL_Nk_qc4a7bsakQ/viewform)
+
+
