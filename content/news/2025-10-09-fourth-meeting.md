@@ -1,7 +1,7 @@
 ---
 title: "Fourth BRH Meeting November 11 2025"
 date: 2025-11-11
-image: "images/talk.png"
+image: "images/neuraltraining.png"
 excerpt: "Featuring a talk discussing novel methods for tackling these issues with 3D printing flexible materials and biomimetic design"
 highlight: true
 ---
