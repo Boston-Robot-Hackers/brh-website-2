@@ -7,10 +7,9 @@ highlight: true
 ---
 ### Announcing our fourth meeting!
 
-```
-Date: November 11, 2025
-Time: 7:00pm
-Location: Artsans Asylum
-Featured talk: Affordable Biomimetic Robot Hands
-```
+    Date: November 11, 2025
+    Time: 7:00pm
+    Location: Artsans Asylum
+    Featured talk: AI for generalized robotic manipulation", Skyler Wiernik
+
 ### [Click here for further details](../meetings/nextmeeting.html)
