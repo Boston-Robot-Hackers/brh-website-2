@@ -2,14 +2,9 @@
 title: November 11 at 7:00pm
 subtitle: Join us for our upcoming meeting
 excerpt: >
-  Featured Talk: AI for generalized robotic manipulation: Robots of the future
-  will require a generalized understanding of their environment in order to complete
-  tasks alongside humans. The foundation of these systems is being built today at
-  companies like Physical Intelligence, Gemini Robotics, K Scale Labs, and Hugging Face.
-  Furthermore, much of this work has been open source, and you can build upon it at home
-  for under $500. I'll go over some of the foundational research around difusion, VLAs
-  and VLMs, demo Hugging Face's Lerobot platform, and show you how to train your first
-  model at home.
+  Featured Talk: AI for generalized robotic manipulation. Learn about the foundational
+  research around diffusion, VLAs and VLMs, and see a demo of Hugging Face's Lerobot
+  platform for training models at home for under $500.
 image: "images/clock.png"
 date: 11/11/2025
 order: 5
