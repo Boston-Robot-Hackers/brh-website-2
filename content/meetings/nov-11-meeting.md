@@ -26,7 +26,12 @@ order: 5
 
 Robots of the future will require a generalized understanding of their environment in order to complete tasks alongside humans. The foundation of these systems is being built today at companies like Physical Intelligence, Gemini Robotics, K Scale Labs, and Hugging Face. Furthermore, much of this work has been open source, and you can build upon it at home for under $500. I'll go over some of the foundational research around difusion, VLAs and VLMs, demo Hugging Face's Lerobot platform, and show you how to train your first model at home.
 
+<img src="../images/meetings/skyler1.jpeg" alt="Sample image" style="float: left; margin: 20px 20px 20px 0; border-radius: 8px; height: 250px;">
+
+
 ## About Skyler
+
+<img src="../images/meetings/skyler2.jpeg" alt="Sample image" style="float: right; margin: 20px 20px 20px 0; border-radius: 8px; height: 250px;">
 
 I've been building robots since I was a kid, and recently graduated from Worcester Polytechnic Institute. I'm now writing software at Amazon Robotics, and playing with VLAs in my free time. Previously, I competed in FIRST Robotics, built developer tools at Apple, and contributed to open source humanoids.
 
