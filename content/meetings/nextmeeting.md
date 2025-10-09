@@ -3,6 +3,7 @@ title: "Next: October 9 at 7:00pm"
 subtitle: Join us for our upcoming meeting
 excerpt: 'Featuring talk by David Dorf about "Affordable Biomimetic Robot Hands"'
 image: "images/clock.png"
+date: 10/9/2025
 order: 3
 ---
 ## Our Next Meeting
