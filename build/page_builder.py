@@ -22,12 +22,23 @@ class PageBuilder:
     
     def format_date(self, date_str: str) -> str:
         """Format date string for display."""
+        if not date_str:
+            return ""
+
         if isinstance(date_str, str):
+            for fmt in ['%Y-%m-%d', '%m/%d/%Y', '%d/%m/%Y']:
+                try:
+                    date_obj = datetime.strptime(date_str, fmt)
+                    return date_obj.strftime('%B %d, %Y')
+                except ValueError:
+                    continue
+
             try:
                 date_obj = datetime.fromisoformat(date_str.replace('Z', '+00:00'))
                 return date_obj.strftime('%B %d, %Y')
             except ValueError:
                 return date_str
+
         return str(date_str)
     
     def build_detail_pages(self, items: List[Dict], content_type: ContentType):

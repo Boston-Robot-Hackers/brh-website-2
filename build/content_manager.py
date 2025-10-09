@@ -48,24 +48,27 @@ class ContentManager:
         """Process a single markdown file and return structured data."""
         if md_processor is None:
             md_processor = self.setup_markdown_processor()
-            
+
         try:
             post = frontmatter.load(file_path)
             html_content = md_processor.convert(post.content)
             metadata = post.metadata
-            
-            # Parse date from filename if not in front matter
-            if 'date' not in metadata:
+
+            # Handle date field - prefer frontmatter date over filename
+            if 'date' in metadata:
+                if isinstance(metadata['date'], datetime):
+                    metadata['date'] = metadata['date'].isoformat()
+                elif hasattr(metadata['date'], 'isoformat'):
+                    metadata['date'] = metadata['date'].isoformat()
+                elif isinstance(metadata['date'], str):
+                    metadata['date'] = metadata['date']
+            else:
                 date_str = file_path.stem[:10]
                 try:
                     metadata['date'] = datetime.strptime(date_str, '%Y-%m-%d').date().isoformat()
                 except ValueError:
-                    metadata['date'] = datetime.now().date().isoformat()
-            elif isinstance(metadata['date'], datetime):
-                metadata['date'] = metadata['date'].isoformat()
-            elif hasattr(metadata['date'], 'isoformat'):
-                metadata['date'] = metadata['date'].isoformat()
-            
+                    metadata['date'] = None
+
             return {
                 'id': file_path.stem,
                 'title': metadata.get('title', metadata.get('name', 'Untitled')),
@@ -76,7 +79,7 @@ class ContentManager:
                 'content': html_content,
                 'metadata': metadata
             }
-            
+
         except Exception as e:
             print(f"Error processing {file_path}: {e}")
             return None
