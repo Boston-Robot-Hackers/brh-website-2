@@ -1,5 +1,5 @@
 ---
-title: "Third BRH Meeting October 9 2025"
+title: "Fourth BRH Meeting November 11 2025"
 date: 2025-09-15
 image: "images/talk.png"
 excerpt: "Featuring a talk discussing novel methods for tackling these issues with 3D printing flexible materials and biomimetic design"
