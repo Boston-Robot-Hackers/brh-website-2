@@ -1,7 +1,7 @@
 ---
 title: November 11 at 7:00pm
 subtitle: Join us for our upcoming meeting
-excerpt: Meeting info coming soon!
+excerpt: 'Featured Talk: "AI for generalized robotic manipulation"'
 image: "images/clock.png"
 date: 11/11/2025
 order: 5
