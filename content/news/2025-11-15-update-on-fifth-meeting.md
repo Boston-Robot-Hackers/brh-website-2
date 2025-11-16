@@ -19,9 +19,9 @@ We had the first BRH "Lightning Talk" by Caspian Chaharom. Caspian shared hisama
 
 ### Main Talk on VLAs
 
-<img src="../../images/meetings/skyler-1.jpeg" alt="Sample image" style="float: right; margin: 25px 25px 25px 25px; border-radius: 8px; height: 250px;">
-
 Our main presentation from Skyler on [VLAs](https://en.wikipedia.org/wiki/Vision-language-action_model) -- Visual Language Action Models. The talk was well received with many questions, most over MY head. Skyler is interested in sharing his work any of us. He is sharing a [library with his code](https://github.com/avla-robotics/leopenpi), which is a python client for the LeRobot to connect to an OpenPI server, which allows you to run PI0/PI0.5 on it without your own GPU.
+
+<img src="../../images/meetings/skyler-1.jpeg" alt="Sample image" style="float: right; margin: 25px 25px 25px 25px; border-radius: 8px; height: 250px;">
 
 ### HACKERSWEET™
 
