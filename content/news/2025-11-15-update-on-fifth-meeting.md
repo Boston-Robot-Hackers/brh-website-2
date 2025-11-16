@@ -9,7 +9,7 @@ highlight: true
 
 <img src="../../images/meetings/meeting-4.png" alt="Sample image" style="float: right; margin: 25px 25px 25px 25px; border-radius: 8px; height: 250px;">
 
-Progress measured by having the most number of signups on Eventbrite (35) and actual attendance (25). But also measured by word of mouth. We had many first time attendees. They said they were glad to have discovered this group and complimented the presentations. Please continue to spread the word. 
+Progress, as measured by having the most number of signups on Eventbrite (35) and actual attendance (25). But also measured by word of mouth. We had many first time attendees. They said they were glad to have discovered this group and complimented the presentations. Please continue to spread the word. 
 
 ### Lightning Talk
 
