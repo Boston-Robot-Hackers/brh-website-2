@@ -1,6 +1,6 @@
 ---
 title: "Lightening Talks"
-date: 2025-12-03
+date: 2025-11-03
 image: "images/meeting-3.png"
 excerpt: "Our monthly meetings will now include a section of lightning talks. Anyone can self-nominate for a talk. We have time for up to three of them each meeting. This is a really quick 5-10 minute talk presented by one of us. Topics are anything robot-related where you explain something you know, or know how to do, or show, so we all learn from each other. "
 highlight: true
