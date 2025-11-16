@@ -2,16 +2,14 @@
 title: December 11 at 7:00pm
 subtitle: Join us for our upcoming meeting
 excerpt: >
-  Featured Talk: AI for generalized robotic manipulation. Learn about the foundational
-  research around diffusion, VLAs and VLMs, and see a demo of Hugging Face's Lerobot
-  platform for training models at home for under $500.
+  Featured Talk: Joel Grimm and Christopher Lai will introduce us to the Beaver Works project. A collaboration between MIT and the MIT Lincoln Labs. Beaverworks introduces real-world projects for students to work on and develop innovative solutions. Beyond providing engaging projects for MIT students, MIT Beaver Works has expanded its impact by offering AI and engineering courses to middle and high school students. 
 image: "images/clock.png"
 date: 12/11/2025
 order: 1
 ---
 ## Our Next Meeting
 
-* When: November 11 at 7:00pm
+* When: December 11 at 7:00 to 9:00pm
 * Where: [Artisans Asylum](https://www.artisansasylum.com) (96 Holton Street, Boston, MA 02135))
 * Register: [Register](https://brh.eventbrite.com)
 
@@ -20,23 +18,14 @@ order: 1
 ## Agenda
 
     7:00 Mingle, network, show and tell
-    7:30 Brief Topics
-    7:45 Featured Speaker: Skyler Wiernik
+    7:30 Lightning Talks
+    7:45 Featured Speakers: Joel Grimm and Christopher Lai 
     8:30 Q&A and Open Discussion
     9:00 End of formal meeting
 
 ## Talk: "AI for generalized robotic manipulation", Skyler Wiernik
 
-<img src="../images/meetings/skyler1.png" alt="Sample image" style="float: left; margin: 20px 20px 20px 0; border-radius: 8px; height: 250px;">
-
-Robots of the future will require a generalized understanding of their environment in order to complete tasks alongside humans. The foundation of these systems is being built today at companies like Physical Intelligence, Gemini Robotics, K Scale Labs, and Hugging Face. Furthermore, much of this work has been open source, and you can build upon it at home for under $500. I'll go over some of the foundational research around difusion, VLAs and VLMs, demo Hugging Face's Lerobot platform, and show you how to train your first model at home.
-
-<img src="../images/meetings/skyler2.jpeg" alt="Sample image" style="float: right; margin: 20px 20px 20px 0; border-radius: 8px; height: 250px;">
-
-## About Skyler
-
-
-I've been building robots since I was a kid, and recently graduated from Worcester Polytechnic Institute. I'm now writing software at Amazon Robotics, and playing with VLAs in my free time. Previously, I competed in FIRST Robotics, built developer tools at Apple, and contributed to open source humanoids.
+MIT Beaver Works is a collaboration between MIT and Lincoln Laboratory. It introduces real-world projects for students to work on and develop innovative solutions. Beyond providing engaging projects for MIT students, MIT Beaver Works has expanded its impact by offering AI and engineering courses to middle and high school students. These courses are facilitated by a talented team of Lincoln Laboratory staff and MIT faculty, empowering the younger generation with valuable skills in these fields. 
 
 
 
