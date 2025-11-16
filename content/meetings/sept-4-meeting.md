@@ -3,7 +3,7 @@ title: Sept 4 at 7:00pm
 subtitle: Join us for our upcoming meeting
 excerpt: 'Featuring a talk by Siddarth Dayasagar: "Space Station OS"'
 image: "images/clock.png"
-order: 2
+order: 5
 ---
 ## Our Next Meeting
 

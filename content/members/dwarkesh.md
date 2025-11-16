@@ -1,4 +1,3 @@
-[dwarakesh.md]
 ---
 name: "Dwarakesh Rajesh"
 role: "Robotics Engineer"

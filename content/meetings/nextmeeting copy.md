@@ -1,13 +1,13 @@
 ---
-title: November 11 at 7:00pm
+title: December 11 at 7:00pm
 subtitle: Join us for our upcoming meeting
 excerpt: >
   Featured Talk: AI for generalized robotic manipulation. Learn about the foundational
   research around diffusion, VLAs and VLMs, and see a demo of Hugging Face's Lerobot
   platform for training models at home for under $500.
 image: "images/clock.png"
-date: 11/11/2025
-order: 5
+date: 12/11/2025
+order: 1
 ---
 ## Our Next Meeting
 
