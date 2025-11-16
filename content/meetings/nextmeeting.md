@@ -23,7 +23,7 @@ order: 1
     8:30 Q&A and Open Discussion
     9:00 End of formal meeting
 
-## Talk: "AI for generalized robotic manipulation", Skyler Wiernik
+## Talk: Introduction to BeaverWorks
 
 MIT Beaver Works is a collaboration between MIT and Lincoln Laboratory. It introduces real-world projects for students to work on and develop innovative solutions. Beyond providing engaging projects for MIT students, MIT Beaver Works has expanded its impact by offering AI and engineering courses to middle and high school students. These courses are facilitated by a talented team of Lincoln Laboratory staff and MIT faculty, empowering the younger generation with valuable skills in these fields. 
 
