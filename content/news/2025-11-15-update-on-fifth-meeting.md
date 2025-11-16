@@ -1,7 +1,7 @@
 ---
 title: "November meeting update"
 date: 2025-11-15
-image: "images/meeting-3.png"
+image: "images/armwork.png"
 excerpt: "This was our most attended meeting to date. Skyler gave a great presenetation about his work applying neural nets to a robot arm. The neural net was trained by watching videos he made of the arm working under remote control"
 highlight: true
 ---
@@ -11,7 +11,7 @@ highlight: true
 
 Progress measued by having the most number of signups on Eventbrite (35) and actual attendance (25). But also measured by word of mouth. We had many first time attendees. They said they were glad to have discovered this group and complimented the presentations. Please continue to spread the word. 
 
-<h3 style="clear: both;">Lightning Talk<h3>
+<h3 style="clear: both;">Lightning Talk</h3>
 
 We had the first BRH "Lightning Talk" by Caspian Chaharom. Caspian shared hisamazing product -- [AutoPCB](https://autopcb.app) for PCB design and manufacturing. If people are interested Caspian has offered us access to the product and maybe a workshop / tutorial session sometime early next year.
 
