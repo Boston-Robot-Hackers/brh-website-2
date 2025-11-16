@@ -12,7 +12,7 @@ highlight: true
 <img src="../../images/meetings/skyler-2.png" alt="Sample image" style="float: right; margin: 25px 25px 25px 25px; border-radius: 8px; height: 250px;">
 
 <video width="320" height="240" controls>
-  <source src=../../images/meetings/armcookie.MOV">
+  <source src="../../images/meetings/armcookie.MOV">
   Your browser does not support the video tag.
 </video>
 
