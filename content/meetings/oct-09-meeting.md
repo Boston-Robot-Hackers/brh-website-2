@@ -4,4 +4,6 @@ date: 10/9/2025
 time: "7:00pm"
 location: "Artisans Asylum, 96 Holton Street, Allston"
 type: meeting
+announcement: "2025-10-09-fourth-meeting.md"
+
 ---
