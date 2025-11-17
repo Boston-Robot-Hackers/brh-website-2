@@ -1,9 +1,8 @@
 ---
-title: Hands On Meeting - October 23
-subtitle: Join us for our upcoming meeting
-excerpt: Our first hands-on meeting. Come to work on your robot with us!
-image: "images/clock.png"
-order: 4
+title: "Hands On Meeting - October 23"
+date: 10/23/2025
+time: "6:00pm"
+location: "Artisans Asylum, 96 Holton Street, Allston"
+type: meeting
+announcement: "2025-09-24-hands-on-meeting.md"
 ---
-
-## This will be a hand-on meeting. Details to follow.

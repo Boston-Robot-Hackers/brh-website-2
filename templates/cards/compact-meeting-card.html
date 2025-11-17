@@ -1,22 +1,39 @@
 <!-- Compact meeting card - Small inline meeting display for listing pages. -->
-<div class="card mb-3">
-    <div class="row g-0 h-100">
-        <div class="col-auto d-flex align-items-stretch p-3">
-            {% if image %}
-            <img src="{{ image }}" style="width: 80px; height: 80px; object-fit: cover; border-radius: var(--radius); border: 1px solid #000;" alt="">
-            {% else %}
-            <div class="bg-primary d-flex align-items-center justify-content-center text-white fw-bold" style="width: 80px; height: 80px; font-size: 0.9rem; border-radius: var(--radius); border: 1px solid #000;">
-                {{ text or 'MTG' }}
+<div class="mb-2 p-2" style="background-color: #f8f9fa; border-radius: 4px; padding-left: 0.5rem; border-bottom: 2px solid #ced4da;">
+    <div style="display: flex;">
+        <div style="flex-shrink: 0; margin-right: 0.5rem;">📅</div>
+        <div style="flex-grow: 1;">
+            <div class="mb-0" style="font-size: 1.05rem;">
+                {% if 'Hands On' in title or 'Hands-On' in title %}
+                Hands On Meeting:
+                {% else %}
+                Main Meeting:
+                {% endif %}
+                {% if metadata.date and metadata.time %}
+                {{ metadata.date }} at {{ metadata.time }}
+                {% else %}
+                {{ title }}
+                {% endif %}
+            </div>
+            {% if 'Hands On' not in title and 'Hands-On' not in title %}
+            <div class="small mt-1" style="display: inline;">
+                <span style="white-space: nowrap;">
+                {% if announcement_exists %}
+                    <a href="news/{{ metadata.announcement|replace('.md', '.html') }}">announcement</a>
+                {% else %}
+                    <span class="text-muted">announcement TBD</span>
+                {% endif %}
+                </span>
+                <span style="white-space: nowrap;">
+                |
+                {% if report_exists %}
+                    <a href="news/{{ metadata.report|replace('.md', '.html') }}">report</a>
+                {% else %}
+                    <span class="text-muted">report TBD</span>
+                {% endif %}
+                </span>
             </div>
             {% endif %}
-        </div>
-        <div class="col">
-            <div class="card-body py-3">
-                <h6 class="card-title mb-1">
-                    <a href="meetings/{{ id }}.html" class="text-decoration-none">{{ title }}</a>
-                </h6>
-                <p class="card-text text-muted small mb-1">{{ excerpt }}</p>
-            </div>
         </div>
     </div>
 </div>

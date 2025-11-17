@@ -45,37 +45,53 @@ class PageBuilder:
         """Generic method to build detail pages."""
         if not items:
             return
-            
+
         detail_template = self.jinja_env.get_template(content_type.detail_template)
         detail_dir = self.dist_dir / content_type.directory
         detail_dir.mkdir(exist_ok=True)
-        
+
         # Map content type to expected template variable name
         template_var_map = {
             'news': 'post',
-            'projects': 'project', 
+            'projects': 'project',
             'members': 'member',
             'meetings': 'meeting'
         }
-        
+
         for item in items:
             # Format date if it exists
             item_with_formatted_date = item.copy()
             if 'date' in item and item['date']:
                 item_with_formatted_date['date'] = self.format_date(item['date'])
-            
+
             # Use correct variable name for templates
             var_name = template_var_map.get(content_type.name, content_type.name[:-1])
             template_vars = {
                 'site': self.site_config,
                 var_name: item_with_formatted_date,
             }
-            
+
+            # For meetings, check if announcement and report files exist
+            if content_type.name == 'meetings':
+                template_vars[var_name]['announcement_exists'] = self.check_news_file_exists(
+                    item['metadata'].get('announcement')
+                )
+                template_vars[var_name]['report_exists'] = self.check_news_file_exists(
+                    item['metadata'].get('report')
+                )
+
             html_content = detail_template.render(**template_vars)
             detail_file = detail_dir / f"{item['id']}.html"
             detail_file.write_text(html_content, encoding='utf-8')
-        
+
         print(f"Built {len(items)} {content_type.name} detail pages")
+
+    def check_news_file_exists(self, filename: str) -> bool:
+        """Check if a news file exists in the content directory."""
+        if not filename:
+            return False
+        news_file = self.dist_dir.parent / 'content' / 'news' / filename
+        return news_file.exists()
     
     def render_cards(self, items: List[Dict], template_name: str,
                      item_var_name: str = None, **extra_context) -> str:
@@ -99,6 +115,15 @@ class PageBuilder:
                 context = {**item, **extra_context}
                 if 'date' in item and item['date']:
                     context['formatted_date'] = self.format_date(item['date'])
+
+            # For meeting cards, add announcement/report existence checks
+            if 'compact-meeting-card' in template_name and 'metadata' in item:
+                context['announcement_exists'] = self.check_news_file_exists(
+                    item['metadata'].get('announcement')
+                )
+                context['report_exists'] = self.check_news_file_exists(
+                    item['metadata'].get('report')
+                )
 
             card_html = template.render(**context)
             cards_html.append(card_html)

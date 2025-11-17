@@ -55,7 +55,7 @@ class WebsiteBuilder:
                                   detail_template='details/project-detail.html'),
             'members': ContentType('members', 'members', sort_key='title', reverse=False,
                                  detail_template='details/member-detail.html'),
-            'meetings': ContentType('meetings', 'meetings', sort_key='order', reverse=False,
+            'meetings': ContentType('meetings', 'meetings', sort_key='date', reverse=True,
                                   output_filename='meetings.html',
                                   page_template='pages/meetings.html',
                                   detail_template='details/meeting-detail.html'),
@@ -81,18 +81,25 @@ class WebsiteBuilder:
         """Build the main index.html file."""
         news_content = self.build_whatsnew()
         hero_content = self.content_manager.build_hero_content()
-        
+
         projects = self.content_manager.get_all_content(self.content_types['projects'])
         projects_content = self.page_builder.render_project_cards_for_home(projects)
-        
+
+        # Add meetings content for front page
+        meetings = self.content_manager.get_all_content(self.content_types['meetings'])
+        meetings_content = self.page_builder.render_cards(
+            meetings, 'cards/compact-meeting-card.html'
+        )
+
         output_file = self.page_builder.build_page(
-            'pages/index.html', 
+            'pages/index.html',
             'index.html',
             news_content=news_content,
             hero=hero_content,
-            projects_content=projects_content
+            projects_content=projects_content,
+            meetings_content=meetings_content
         )
-        
+
         print(f"Generated {output_file}")
     
     def build_news_page(self):

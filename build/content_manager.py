@@ -90,15 +90,22 @@ class ContentManager:
         if not content_dir.exists():
             print(f"Warning: {content_dir} directory not found")
             return []
-        
+
         md_processor = self.setup_markdown_processor()
         items = []
-        
+
+        # Files to exclude from meetings list (pointer files)
+        exclude_files = {'nextmeeting.md', 'nexthandson.md'}
+
         for md_file in content_dir.glob('*.md'):
+            # Skip pointer files for meetings
+            if content_type.name == 'meetings' and md_file.name in exclude_files:
+                continue
+
             item_data = self.process_markdown_file(md_file, md_processor)
             if item_data:
                 items.append(item_data)
-        
+
         # Sort by specified key
         if content_type.sort_key == 'order':
             # For order field, default to 0 if not present, so items without order come first
@@ -106,6 +113,195 @@ class ContentManager:
         else:
             items.sort(key=lambda x: x[content_type.sort_key], reverse=content_type.reverse)
         return items
+
+    def generate_index_hero(self, static_content: str) -> str:
+        """Generate index hero by adding future meeting info to static content."""
+        if '<hr/>' not in static_content and '<hr>' not in static_content:
+            return static_content
+
+        split_on = '<hr/>' if '<hr/>' in static_content else '<hr>'
+        parts = static_content.split(split_on, 1)
+        static_part = parts[0] + split_on
+
+        # Get all future meetings
+        future_meetings = self.get_future_meetings()
+        generated_part = self.format_future_meetings_section(future_meetings)
+
+        return static_part + '\n' + generated_part
+
+    def get_future_meetings(self) -> List[Dict[str, Any]]:
+        """Get all meetings with dates in the future, sorted by date ascending."""
+        meetings_dir = self.content_dir / 'meetings'
+        if not meetings_dir.exists():
+            return []
+
+        today = datetime.now().date()
+        future_meetings = []
+
+        for md_file in meetings_dir.glob('*.md'):
+            try:
+                post = frontmatter.load(md_file)
+                metadata = post.metadata
+                date_str = metadata.get('date', '')
+
+                if not date_str:
+                    continue
+
+                # Parse the date (format: MM/DD/YYYY)
+                try:
+                    meeting_date = datetime.strptime(str(date_str), '%m/%d/%Y').date()
+                except ValueError:
+                    # Try alternative format
+                    try:
+                        meeting_date = datetime.strptime(str(date_str), '%Y-%m-%d').date()
+                    except ValueError:
+                        continue
+
+                # Only include future meetings
+                if meeting_date >= today:
+                    future_meetings.append({
+                        'metadata': metadata,
+                        'date_obj': meeting_date,
+                        'title': metadata.get('title', '')
+                    })
+
+            except Exception as e:
+                print(f"Error processing {md_file}: {e}")
+                continue
+
+        # Sort by date ascending (nearest first)
+        future_meetings.sort(key=lambda x: x['date_obj'])
+        return future_meetings
+
+    def format_future_meetings_section(self, meetings: List[Dict[str, Any]]) -> str:
+        """Format the 2 nearest future meetings for the hero section."""
+        if not meetings:
+            return "<p><em>No upcoming meetings scheduled</em></p>"
+
+        # Only show the 2 nearest meetings
+        nearest_meetings = meetings[:2]
+
+        meeting_parts = []
+
+        for meeting in nearest_meetings:
+            metadata = meeting['metadata']
+            title = meeting['title']
+
+            # Determine if it's a hands-on meeting
+            is_handson = 'Hands On' in title or 'Hands-On' in title
+            label = "Next Hands-On Meeting" if is_handson else "Next Main Meeting"
+
+            # Format the meeting
+            date = metadata.get('date', '')
+            time = metadata.get('time', '')
+            announcement = metadata.get('announcement', '')
+
+            datetime_str = f"{date} at {time}" if date and time else date or time or ''
+
+            if announcement:
+                news_dir = self.content_dir / 'news'
+                announcement_file = news_dir / announcement
+                if announcement_file.exists():
+                    link_href = f"news/{announcement.replace('.md', '.html')}"
+                    meeting_link = f'<a href="{link_href}">{datetime_str}</a>'
+                else:
+                    meeting_link = datetime_str
+            else:
+                meeting_link = datetime_str
+
+            meeting_parts.append(f"<strong>{label}:</strong> {meeting_link}")
+
+        # Combine both meetings on one line without location
+        result = "<p>" + " | ".join(meeting_parts) + "</p>"
+
+        return result
+
+    def format_single_meeting_for_hero(self, label: str, meeting: Dict) -> str:
+        """Format a single meeting entry for the hero section."""
+        date = meeting.get('date', '')
+        time = meeting.get('time', '')
+        location = meeting.get('location', '')
+        announcement = meeting.get('announcement', '')
+
+        datetime_str = f"{date} at {time}" if date and time else date or time or ''
+
+        if announcement:
+            news_dir = self.content_dir / 'news'
+            announcement_file = news_dir / announcement
+            if announcement_file.exists():
+                link_href = f"news/{announcement.replace('.md', '.html')}"
+                meeting_link = f'<a href="{link_href}">{datetime_str}</a>'
+            else:
+                meeting_link = datetime_str
+        else:
+            meeting_link = datetime_str
+
+        result = f"<p><strong>{label}:</strong> {meeting_link}"
+        if location:
+            result += f" at <a href='https://www.artisansasylum.com' target='_blank'>{location}</a>"
+        result += "</p>"
+
+        return result
+
+    def load_meeting_info(self, filename: str) -> Dict[str, Any]:
+        """Load meeting info from a meeting file."""
+        meeting_file = self.content_dir / 'meetings' / filename
+        if not meeting_file.exists():
+            return None
+
+        try:
+            post = frontmatter.load(meeting_file)
+            return post.metadata
+        except Exception as e:
+            print(f"Error loading {filename}: {e}")
+            return None
+
+    def format_meeting_section(self, nextmeeting: Dict, nexthandson: Dict) -> str:
+        """Format the meeting info section for the hero."""
+        sections = []
+
+        if nextmeeting:
+            section = self.format_single_meeting(
+                "Next Meeting",
+                nextmeeting
+            )
+            sections.append(section)
+
+        if nexthandson:
+            section = self.format_single_meeting(
+                "Next Hands-On Meeting",
+                nexthandson
+            )
+            sections.append(section)
+
+        return '\n\n'.join(sections)
+
+    def format_single_meeting(self, label: str, meeting: Dict) -> str:
+        """Format a single meeting entry."""
+        date = meeting.get('date', '')
+        time = meeting.get('time', '')
+        location = meeting.get('location', '')
+        announcement = meeting.get('announcement', '')
+
+        datetime_str = f"{date} at {time}" if date and time else date or time or ''
+
+        if announcement:
+            news_dir = self.content_dir / 'news'
+            announcement_file = news_dir / announcement
+            if announcement_file.exists():
+                link_href = f"news/{announcement.replace('.md', '.html')}"
+                meeting_link = f'<a href="{link_href}">{datetime_str}</a>'
+            else:
+                meeting_link = datetime_str
+        else:
+            meeting_link = '<em>coming soon</em>'
+
+        result = f"<p><strong>{label}:</strong> {meeting_link}"
+        if location and announcement:
+            result += f" at {location}"
+        result += "</p>"
+
+        return result
     
     def build_hero_content(self, page_name: str = 'index') -> Dict[str, Any]:
         """Build hero content from page-specific markdown file."""
@@ -113,19 +309,24 @@ class ContentManager:
         if not hero_file.exists():
             print(f"Warning: {hero_file} not found, leaving hero section blank")
             return {'hero_title': '', 'hero_subtitle': '', 'hero_content': ''}
-        
+
         md_processor = self.setup_markdown_processor()
         hero_data = self.process_markdown_file(hero_file, md_processor)
-        
-        if hero_data:
-            return {
-                'hero_title': hero_data['title'],
-                'hero_subtitle': hero_data['metadata'].get('subtitle', ''),
-                'hero_content': hero_data['content']
-            }
-        
-        print(f"Warning: Failed to process {hero_file}, leaving hero section blank")
-        return {'hero_title': '', 'hero_subtitle': '', 'hero_content': ''}
+
+        if not hero_data:
+            print(f"Warning: Failed to process {hero_file}, leaving hero section blank")
+            return {'hero_title': '', 'hero_subtitle': '', 'hero_content': ''}
+
+        hero_content = hero_data['content']
+
+        if page_name == 'index':
+            hero_content = self.generate_index_hero(hero_content)
+
+        return {
+            'hero_title': hero_data['title'],
+            'hero_subtitle': hero_data['metadata'].get('subtitle', ''),
+            'hero_content': hero_content
+        }
     
     def process_single_content_file(self, filename: str) -> str:
         """Process a single content file and return HTML content."""

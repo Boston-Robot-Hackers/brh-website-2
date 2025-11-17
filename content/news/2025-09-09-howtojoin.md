@@ -4,6 +4,7 @@ date: 2025-09-09
 excerpt: "If you're not a member, it's easy to join! If you are, let's get you listed on our member directory! If you have a cool project, we would love to showcase you on our site."
 image: "images/team.png"
 highlight: true
+type: news
 ---
 ### Should you join?
 

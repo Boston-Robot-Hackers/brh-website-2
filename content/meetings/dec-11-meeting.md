@@ -1,0 +1,8 @@
+---
+title: "December 11 at 7:00pm"
+date: 12/11/2025
+time: "7:00pm"
+location: "Artisans Asylum, 96 Holton Street, Allston"
+type: meeting
+announcement: "2025-12-11-december-meeting-announcement.md"
+---

@@ -1,9 +1,10 @@
 ---
 title: Montlhy Meetings
-date: 2025-08-03    
+date: 2025-08-03
 image: "images/people.png"
 excerpt: "As we are still a very new club we are still figuring out how our meetings work. Here is our current approach. We meet about once a month, around the first Thursday of the month. The meetings are always on a Thursday from 7:00pm to 9:00pm. Our meetings happen at the Artisans Asylum in Boston (Allston) Massachusetts."
 highlight: false
+type: news
 ---
 ### Format of the meeting (times are very approximate!)
 

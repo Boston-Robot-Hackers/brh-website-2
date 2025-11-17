@@ -19,15 +19,31 @@
             {% endif %}
             <div>
                 <h1 class="mb-1">{{ meeting.title }}</h1>
-                <p class="text-muted mb-0">{{ meeting.date }}</p>
-                {% if meeting.excerpt %}
-                <p class="lead mt-2">{{ meeting.excerpt }}</p>
+                {% if meeting.metadata.time %}
+                <p class="text-muted mb-0">{{ meeting.metadata.time }}</p>
+                {% endif %}
+                {% if meeting.metadata.location %}
+                <p class="text-muted mb-0">{{ meeting.metadata.location }}</p>
                 {% endif %}
             </div>
         </div>
-        
+
         <div class="content">
-            {{ meeting.content|safe }}
+            <p><strong>Announcement:</strong>
+            {% if meeting.announcement_exists %}
+                <a href="../news/{{ meeting.metadata.announcement|replace('.md', '.html') }}">View meeting announcement</a>
+            {% else %}
+                <em>coming soon</em>
+            {% endif %}
+            </p>
+
+            <p><strong>Meeting Report:</strong>
+            {% if meeting.report_exists %}
+                <a href="../news/{{ meeting.metadata.report|replace('.md', '.html') }}">View meeting report</a>
+            {% else %}
+                <em>coming soon</em>
+            {% endif %}
+            </p>
         </div>
     </article>
 {% endblock %}
