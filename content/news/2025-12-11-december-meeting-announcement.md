@@ -2,8 +2,8 @@
 title: "December 11 at 7:00pm"
 date: 2025-12-11
 image: "images/clock.png"
-excerpt: "Featured Talk: Joel Grimm and Christopher Lai will introduce us to the Beaver Works project. A collaboration between MIT and the MIT Lincoln Labs."
-highlight: false
+excerpt: "Featured Talk: Joel Grimm and Christopher Lai will introduce us to the Autonomous RACECAR at MIT's Beaver Works Summer Institute"
+highlight: true
 type: news
 ---
 ## Our Next Meeting
@@ -22,6 +22,12 @@ type: news
     8:30 Q&A and Open Discussion
     9:00 End of formal meeting
 
-## Talk: Introduction to BeaverWorks
+## Talk: Autonomous RACECAR at MIT's Beaver Works Summer Institute
+This course has been evolving for 10 years as part of BWSI, originally a course to teach programming and autonomous systems to MIT graduate and undergrad students, it's now used to bring students as young as middle school into autonomous robotics!  We'll describe the course and our approach to teaching it to students over a wide age range and skill level and provide information about the BWSI program.
 
-MIT Beaver Works is a collaboration between MIT and Lincoln Laboratory. It introduces real-world projects for students to work on and develop innovative solutions. Beyond providing engaging projects for MIT students, MIT Beaver Works has expanded its impact by offering AI and engineering courses to middle and high school students. These courses are facilitated by a talented team of Lincoln Laboratory staff and MIT faculty, empowering the younger generation with valuable skills in these fields.
+### Speaker: Chris Lai
+Graduate of Cal Poly Pomona with a BS in Computer Engineering and has been teaching with BWSI for 3 years and is now working at MIT Lincoln Laboratory for 2 years.
+
+### Speaker: Joel Grimm
+Graduate of University of Rochester and has been working at MIT Lincoln Laboratory for 39 years, and has been managing the Beaver Works Center at MIT for the last 8 years, bringing projects and experience to MIT undergrads and collaborations with faculty.
+
