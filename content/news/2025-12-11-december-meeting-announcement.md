@@ -23,6 +23,9 @@ type: news
     9:00 End of formal meeting
 
 ## Talk: Autonomous RACECAR at MIT's Beaver Works Summer Institute
+
+<img src="../../images/meetings/wide_racecar_logo.jpg" alt="Sample image" style="float: right; margin: 25px 25px 25px 25px; border-radius: 8px; height: 250px;">
+
 This course has been evolving for 10 years as part of BWSI, originally a course to teach programming and autonomous systems to MIT graduate and undergrad students, it's now used to bring students as young as middle school into autonomous robotics!  We'll describe the course and our approach to teaching it to students over a wide age range and skill level and provide information about the BWSI program.
 
 ### Speaker: Chris Lai
