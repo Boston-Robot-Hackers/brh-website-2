@@ -22,15 +22,15 @@ type: news
     8:30 Q&A and Open Discussion
     9:00 End of formal meeting
 
-## Talk: Autonomous RACECAR at MIT's Beaver Works Summer Institute
+## Autonomous RACECAR at MIT's Beaver Works Summer Institute
 
 <img src="../../images/meetings/wide_racecar_logo.jpg" alt="Sample image" style="float: right; margin: 25px 25px 25px 25px; border-radius: 8px; height: 250px;">
 
 This course has been evolving for 10 years as part of BWSI, originally a course to teach programming and autonomous systems to MIT graduate and undergrad students, it's now used to bring students as young as middle school into autonomous robotics!  We'll describe the course and our approach to teaching it to students over a wide age range and skill level and provide information about the BWSI program.
 
-### Speaker: Chris Lai
+#### Speaker: Chris Lai
 Graduate of Cal Poly Pomona with a BS in Computer Engineering and has been teaching with BWSI for 3 years and is now working at MIT Lincoln Laboratory for 2 years.
 
-### Speaker: Joel Grimm
+#### Speaker: Joel Grimm
 Graduate of University of Rochester and has been working at MIT Lincoln Laboratory for 39 years, and has been managing the Beaver Works Center at MIT for the last 8 years, bringing projects and experience to MIT undergrads and collaborations with faculty.
 
