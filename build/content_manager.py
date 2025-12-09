@@ -94,14 +94,7 @@ class ContentManager:
         md_processor = self.setup_markdown_processor()
         items = []
 
-        # Files to exclude from meetings list (pointer files)
-        exclude_files = {'nextmeeting.md', 'nexthandson.md'}
-
         for md_file in content_dir.glob('*.md'):
-            # Skip pointer files for meetings
-            if content_type.name == 'meetings' and md_file.name in exclude_files:
-                continue
-
             item_data = self.process_markdown_file(md_file, md_processor)
             if item_data:
                 items.append(item_data)

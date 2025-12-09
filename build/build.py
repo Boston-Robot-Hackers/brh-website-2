@@ -193,29 +193,6 @@ class WebsiteBuilder:
         
         print(f"Built meetings.html with {len(meetings)} meetings")
     
-    def build_nextmeeting_page(self):
-        """Build the nextmeeting redirect to meetings/nextmeeting.html."""
-        nextmeeting_dir = self.dist_dir / 'nextmeeting'
-        nextmeeting_dir.mkdir(exist_ok=True)
-        
-        # Simple redirect to meetings/nextmeeting.html
-        redirect_html = '''<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Redirecting to Next Meeting</title>
-    <meta http-equiv="refresh" content="0; url=../meetings/nextmeeting.html">
-    <link rel="canonical" href="../meetings/nextmeeting.html">
-</head>
-<body>
-    <p>Redirecting to <a href="../meetings/nextmeeting.html">next meeting page</a>...</p>
-</body>
-</html>'''
-        
-        output_file = nextmeeting_dir / 'index.html'
-        output_file.write_text(redirect_html, encoding='utf-8')
-        print("Built nextmeeting/index.html (redirect to meetings/nextmeeting.html)")
-    
     def build(self):
         """Main build function."""
         print("Building Boston Robot Hackers website...")
@@ -238,8 +215,7 @@ class WebsiteBuilder:
         self.build_members_page()
         self.build_meetings_page()
         self.build_about_page()
-        self.build_nextmeeting_page()
-        
+
         print("Build complete!")
 
 
