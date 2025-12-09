@@ -16,11 +16,13 @@ type: news
 
 ## Agenda
 
-    7:00 Mingle, network, show and tell
-    7:30 Lightning Talks
-    7:45 Featured Speakers: Joel Grimm and Christopher Lai
-    8:30 Q&A and Open Discussion
-    9:00 End of formal meeting
+* 7:00 Mingle, network, show and tell
+* 7:30 Lightning Talks
+    * Varun Raghavendra will give a brief talk about his project LeKapda, that envisions a world where every home runs smarter, cleaner, and freer through open-source laundry automation.
+    * Buddy will give a 5-10 minute talk on his use of ROS Bag Traces with his shell script.
+* 7:45 Featured Speakers: Joel Grimm and Christopher Lai
+* 8:30 Q&A and Open Discussion
+* 9:00 End of formal meeting
 
 ## Autonomous RACECAR at MIT's Beaver Works Summer Institute
 
