@@ -1,8 +1,8 @@
 ---
 title: Access Ability Arm
-date: n/a
+date: images/projects/aa1.jpeg"
 status: initial testing
-image: 
+image: Access Ability Arm
 text: n/a
 lead: Randell Drane
 members: 1
