@@ -10,10 +10,10 @@ members: 1
 ## Access Ability Robot
 
 <img src="../images/projects/aa1.jpeg" alt="Sample image" style="float: left; margin: 25px 25px 25px 25px; border-radius: 8px; height: 200px;">
+<img src="../images/projects/aa2.jpeg" alt="Sample image" style="float: right; margin: 25px 25px 25px 25px; border-radius: 8px; height: 200px;">
 
 Goal is to create recipe that serves those losing the use of their arms.  Seeking people who like to code to help this mechanical engineer who codes poorly.  Happy to provide whatever mechanical/electrical systems the team wants.  My perception is that most of the work is piecing together the myriad libraries that facilitate computer vision and robot control with a  useful  machine interface.  Also seeking those that need such devices so that we comply with  Nothing about us without us .  I have been assuming user in the loop.  Which I think can be helpful in getting a system running now.
 
-<img src="../images/projects/aa2.jpeg" alt="Sample image" style="float: right; margin: 25px 25px 25px 25px; border-radius: 8px; height: 200px;">
 
 ## Mobile dock cleaner/protector
 
