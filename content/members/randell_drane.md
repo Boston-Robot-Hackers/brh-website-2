@@ -6,7 +6,7 @@ github: n/a
 linkedin: n/a
 projects: ["Access-Ability-Arm"]
 opentowork: false
-image: "images/people/randell_drane.png"
+image: "images/people/randelldrane.png"
 
 ---
 See website: https://www.draneengineering.com/s-projects-side-by-side
