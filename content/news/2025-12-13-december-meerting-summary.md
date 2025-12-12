@@ -40,7 +40,7 @@ You can see the results of my informal survey below. **Summary**: Participants i
 
 ### Lightning Talks
 
-<img src="../../images/meetings/dec_meeting_3.jpg" alt="Sample image" style="float: right; height: 150px;/>
+<img src="../../images/meetings/dec_meeting_3.jpg" alt="Sample image" style="float: right; height: 150px;"/>
 
 <br/>
 
@@ -51,7 +51,7 @@ We had a three "lightning" talks: [Buddy E](https://bostonrobothackers.com/membe
 
 Joel Grim and Chris Lai gave a talk about their work at [Beaverworks Summer Institute at MIT](https://bwsi.mit.edu). Chris went deep on the RACECAR course, part of Beaverworks. I thought it was very interesting to hear the ways Chris explains things complex Robotics concepts to students. I liked the progression from “how do you drive a car” … "what if you had to write a program to command the car to follow this maze” etc. Pedagogically it feels very effective. 
 
-<img src="../../images/meetings/dec_meeting_2.jpg" alt="Sample image" style="float: right; height: 150px;/>
+<img src="../../images/meetings/dec_meeting_2.jpg" alt="Sample image" style="float: right; height: 150px;"/>
 
 <br/>
 
