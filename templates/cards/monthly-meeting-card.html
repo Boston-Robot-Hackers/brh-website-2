@@ -1,0 +1,60 @@
+<!-- Monthly meeting card - Groups main and hands-on meetings by month -->
+<div class="mb-3 p-3" style="background-color: #f8f9fa; border-radius: 6px; border: 1px solid #dee2e6;">
+    <h5 class="mb-3" style="color: #495057; font-weight: 600;">{{ month_label }}</h5>
+
+    {% if main_meeting %}
+    <div class="mb-2">
+        <div style="display: flex; align-items: start;">
+            <div style="flex-shrink: 0; margin-right: 0.5rem;">📅</div>
+            <div style="flex-grow: 1;">
+                <div style="font-weight: 500;">
+                    Main Meeting: {{ main_meeting.metadata.date }} at {{ main_meeting.metadata.time }}
+                </div>
+                {% if main_meeting.metadata.text %}
+                <div class="small text-muted mt-1">
+                    {{ main_meeting.metadata.text }}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if handson_meeting %}
+    <div class="mb-2">
+        <div style="display: flex; align-items: start;">
+            <div style="flex-shrink: 0; margin-right: 0.5rem;">🔧</div>
+            <div style="flex-grow: 1;">
+                <div style="font-weight: 500;">
+                    Hands-On Meeting: {{ handson_meeting.metadata.date }} at {{ handson_meeting.metadata.time }}
+                </div>
+                {% if handson_meeting.metadata.text %}
+                <div class="small text-muted mt-1">
+                    {{ handson_meeting.metadata.text }}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if main_meeting and (main_announcement_exists or main_report_exists) %}
+    <div class="small mt-2" style="padding-left: 1.5rem;">
+        <span style="white-space: nowrap;">
+        {% if main_announcement_exists %}
+            <a href="news/{{ main_meeting.metadata.announcement|replace('.md', '.html') }}">announcement</a>
+        {% else %}
+            <span class="text-muted">announcement TBD</span>
+        {% endif %}
+        </span>
+        <span style="white-space: nowrap;">
+        |
+        {% if main_report_exists %}
+            <a href="news/{{ main_meeting.metadata.report|replace('.md', '.html') }}">report</a>
+        {% else %}
+            <span class="text-muted">report TBD</span>
+        {% endif %}
+        </span>
+    </div>
+    {% endif %}
+</div>

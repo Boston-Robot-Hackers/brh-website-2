@@ -85,11 +85,9 @@ class WebsiteBuilder:
         projects = self.content_manager.get_all_content(self.content_types['projects'])
         projects_content = self.page_builder.render_project_cards_for_home(projects)
 
-        # Add meetings content for front page
+        # Add meetings content for front page (grouped by month)
         meetings = self.content_manager.get_all_content(self.content_types['meetings'])
-        meetings_content = self.page_builder.render_cards(
-            meetings, 'cards/compact-meeting-card.html'
-        )
+        meetings_content = self.page_builder.render_monthly_meeting_cards(meetings)
 
         output_file = self.page_builder.build_page(
             'pages/index.html',
@@ -107,13 +105,11 @@ class WebsiteBuilder:
         posts = self.content_manager.get_all_content(self.content_types['news'])
         self.page_builder.build_detail_pages(posts, self.content_types['news'])
         
-        # Get meetings for the right column
+        # Get meetings for the right column (grouped by month)
         meetings = self.content_manager.get_all_content(self.content_types['meetings'])
-        
+
         news_content = self.page_builder.render_compact_news_cards(posts)
-        meetings_content = self.page_builder.render_cards(
-            meetings, 'cards/compact-meeting-card.html'
-        )
+        meetings_content = self.page_builder.render_monthly_meeting_cards(meetings)
         hero_content = self.content_manager.build_hero_content('whatsnew')
         
         self.page_builder.build_page(
@@ -178,10 +174,8 @@ class WebsiteBuilder:
         """Build the meetings.html page."""
         meetings = self.content_manager.get_all_content(self.content_types['meetings'])
         self.page_builder.build_detail_pages(meetings, self.content_types['meetings'])
-        
-        meetings_content = self.page_builder.render_cards(
-            meetings, 'cards/compact-meeting-card.html'
-        )
+
+        meetings_content = self.page_builder.render_monthly_meeting_cards(meetings)
         hero_content = self.content_manager.build_hero_content('meetings')
         
         self.page_builder.build_page(

@@ -172,6 +172,83 @@ class PageBuilder:
             members_flattened.append(member_copy)
 
         return self.render_cards(members_flattened, 'cards/member-card.html')
+
+    def group_meetings_by_month(self, meetings: List[Dict]) -> List[Dict]:
+        """Group meetings by month, pairing main and hands-on meetings."""
+        from collections import defaultdict
+
+        month_groups = defaultdict(lambda: {'main': None, 'handson': None})
+
+        for meeting in meetings:
+            date_str = meeting['metadata'].get('date', '')
+            if not date_str:
+                continue
+
+            # Parse date to get year-month key
+            for fmt in ['%m/%d/%Y', '%d/%m/%Y', '%Y-%m-%d']:
+                try:
+                    date_obj = datetime.strptime(date_str, fmt)
+                    month_key = date_obj.strftime('%Y-%m')
+                    month_label = date_obj.strftime('%B %Y')
+
+                    # Determine if main or hands-on
+                    title = meeting.get('title', '')
+                    if 'Hands On' in title or 'Hands-On' in title or 'handson' in title.lower():
+                        month_groups[month_key]['handson'] = meeting
+                    else:
+                        month_groups[month_key]['main'] = meeting
+
+                    month_groups[month_key]['label'] = month_label
+                    month_groups[month_key]['sort_key'] = month_key
+                    break
+                except ValueError:
+                    continue
+
+        # Convert to sorted list
+        grouped = []
+        for month_key in sorted(month_groups.keys(), reverse=True):
+            group = month_groups[month_key]
+            grouped.append({
+                'month_label': group['label'],
+                'main_meeting': group['main'],
+                'handson_meeting': group['handson'],
+                'sort_key': group['sort_key']
+            })
+
+        return grouped
+
+    def render_monthly_meeting_cards(self, meetings: List[Dict]) -> str:
+        """Render meetings grouped by month."""
+        if not meetings:
+            return ""
+
+        grouped = self.group_meetings_by_month(meetings)
+        template = self.jinja_env.get_template('cards/monthly-meeting-card.html')
+        cards_html = []
+
+        for group in grouped:
+            context = {
+                'month_label': group['month_label'],
+                'main_meeting': group['main_meeting'],
+                'handson_meeting': group['handson_meeting'],
+            }
+
+            # Add announcement/report existence checks for main meeting
+            if group['main_meeting']:
+                context['main_announcement_exists'] = self.check_news_file_exists(
+                    group['main_meeting']['metadata'].get('announcement')
+                )
+                context['main_report_exists'] = self.check_news_file_exists(
+                    group['main_meeting']['metadata'].get('report')
+                )
+            else:
+                context['main_announcement_exists'] = False
+                context['main_report_exists'] = False
+
+            card_html = template.render(**context)
+            cards_html.append(card_html)
+
+        return '\n'.join(cards_html)
     
     def build_page(self, template_name: str, output_filename: str, **context):
         """Generic method to build a page with given template and context."""
