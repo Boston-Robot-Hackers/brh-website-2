@@ -8,9 +8,13 @@ type: news
 ---
 ### Discussion
 
-We discussed what sorts of talks and activities would be of most interest to the membership. I observed that while the overall membership is quite diverse, the ones who come to the meetings tend to be more technical. **Note** this might be self-selecting. People earlier in their Robotics journey might feel that they won't be able to contribute or participate if everyone who comes or presents is dreams PID and Kalman Filters.
+We discussed what sorts of talks and activities would be of most interest to the membership. I observed that while the overall membership is quite diverse, the ones who come to the meetings tend to be more technical. 
 
-#### Quick Survey of attendees
+**Note** this might be self-selecting. People earlier in their Robotics journey might feel that they won't be able to contribute or participate if everyone who comes or presents is dreams PID and Kalman Filters.
+
+You can see the results of my informal survey below. **Summary**: Participants in this meeting were strongly on the technical side, evenly split between hobbyists and professionals, and more software than hardware oriented.
+
+#### Raw Results
 
 * Meeting attendance: 21 people
 * First timers: 5
