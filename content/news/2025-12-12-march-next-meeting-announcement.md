@@ -2,7 +2,7 @@
 title: "Monthly Meeting: March 5 at 7:00pm"
 date: 2025-12-11
 image: "images/clock.png"
-excerpt: "Featured Talk: Joel Grimm and Christopher Lai will introduce us to the Autonomous RACECAR at MIT's Beaver Works Summer Institute"
+excerpt: "Chris Lai: eaching Advanced Robotic Concepts to High School Students"
 highlight: true
 type: news
 ---
