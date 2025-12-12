@@ -15,6 +15,11 @@
                 {{ title }}
                 {% endif %}
             </div>
+            {% if metadata.text %}
+            <div class="small text-muted mt-1">
+                {{ metadata.text }}
+            </div>
+            {% endif %}
             {% if 'Hands On' not in title and 'Hands-On' not in title %}
             <div class="small mt-1" style="display: inline;">
                 <span style="white-space: nowrap;">
