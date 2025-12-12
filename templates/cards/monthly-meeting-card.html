@@ -5,7 +5,7 @@
     {% if main_meeting %}
     <div class="mb-2">
         <div style="display: flex; align-items: start;">
-            <div style="flex-shrink: 0; margin-right: 0.5rem;">📅</div>
+            <div style="flex-shrink: 0; margin-right: 0.5rem;">&bull;</div>
             <div style="flex-grow: 1;">
                 <div style="font-weight: 500;">
                     Main Meeting: {{ main_meeting.metadata.date }} at {{ main_meeting.metadata.time }}
@@ -23,7 +23,7 @@
     {% if handson_meeting %}
     <div class="mb-2">
         <div style="display: flex; align-items: start;">
-            <div style="flex-shrink: 0; margin-right: 0.5rem;">🔧</div>
+            <div style="flex-shrink: 0; margin-right: 0.5rem;">&bull;</div>
             <div style="flex-grow: 1;">
                 <div style="font-weight: 500;">
                     Hands-On Meeting: {{ handson_meeting.metadata.date }} at {{ handson_meeting.metadata.time }}
