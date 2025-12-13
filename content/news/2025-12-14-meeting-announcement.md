@@ -2,8 +2,8 @@
 title: "Meeting announcements"
 date: 2025-12-14
 image: "images/meeting-2.png"
-excerpt: "Alan Killman"
-highlight: false
+excerpt: Speakers for March, April and June 2026
+highlight: true
 type: news
 ---
 **COMING SOON**
