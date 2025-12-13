@@ -1,5 +1,5 @@
 ---
-title: "Meeting announcements"
+title: "2026 Meetings and Talks"
 date: 2025-12-14
 image: "images/meeting-2.png"
 excerpt: Speakers for March, April and June 2026
