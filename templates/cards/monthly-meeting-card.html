@@ -11,7 +11,7 @@
                     Main Meeting: {{ main_meeting.metadata.date }} at {{ main_meeting.metadata.time }}
                 </div>
                 {% if main_meeting.metadata.text %}
-                <div class="small text-muted mt-1">
+                <div class="text-muted mt-1" style="font-weight: 600; font-size: 1rem;">
                     {{ main_meeting.metadata.text }}
                 </div>
                 {% endif %}
@@ -29,7 +29,7 @@
                     Hands-On Meeting: {{ handson_meeting.metadata.date }} at {{ handson_meeting.metadata.time }}
                 </div>
                 {% if handson_meeting.metadata.text %}
-                <div class="small text-muted mt-1">
+                <div class="text-muted mt-1" style="font-weight: 600; font-size: 1rem;">
                     {{ handson_meeting.metadata.text }}
                 </div>
                 {% endif %}
