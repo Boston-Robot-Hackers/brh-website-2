@@ -1,5 +1,5 @@
 ---
-title: "Next: October 9 at 7:00pm"
+title: "Meeting announcement: David Dorff on Affordable Biometric Robot Hands: October 9 at 7:00pm"
 subtitle: Join us for our upcoming meeting
 excerpt: 'Featuring talk by David Dorf about "Affordable Biomimetic Robot Hands"'
 date: 2025-11-09
