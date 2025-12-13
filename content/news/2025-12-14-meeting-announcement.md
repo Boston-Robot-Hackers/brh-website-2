@@ -1,7 +1,7 @@
 ---
 title: "Meeting announcements"
 date: 2025-12-14
-image: "images/clock.png"
+image: "images/meeting-2.png"
 excerpt: "Alan Killman"
 highlight: false
 type: news
