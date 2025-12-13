@@ -1,7 +1,7 @@
 ---
 title: Meeting notes from December main meeting
 date: 2025-12-13
-image: "images/clock.png"
+image: "images/neuraltraining.png"
 excerpt: "December meeting notes"
 highlight: true
 type: news
