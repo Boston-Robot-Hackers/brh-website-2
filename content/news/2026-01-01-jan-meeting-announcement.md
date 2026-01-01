@@ -1,7 +1,7 @@
 ---
 title: "Meeting announcement for January 8 2026 - URDF and Vibe Coding"
 date: 2025-12-14
-image: "images/meeting-2.png"
+image: "images/leo-1.png"
 excerpt: Speakers for March, April and June 2026
 highlight: true
 type: news
