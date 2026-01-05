@@ -1,6 +1,6 @@
 ---
 title: "Meeting announcement for March 5, 2026: Kalman Filters"
-date: 2025-01-05
+date: 2026-01-05
 image: "images/kalman2.png"
 excerpt: Monthly Meeting Announcement March 5 2026
 highlight: true
