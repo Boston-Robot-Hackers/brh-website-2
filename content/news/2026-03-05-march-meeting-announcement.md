@@ -1,20 +1,18 @@
 ---
-title: "Meeting announcement for March 5, 2026: Kalman Filters
-date: 2025-12-14
+title: "Meeting announcement for March 5, 2026: Kalman Filters"
+date: 2025-01-05
 image: "images/kalman2.png"
 excerpt: Monthly Meeting Announcement March 5 2026
 highlight: true
 type: news
 ---
-## Our Next Meeting
+### Our Next Meeting
 
 * When: March 5, 2026 at 7:00 to 9:00pm
 * Where: [Artisans Asylum](https://www.artisansasylum.com) (96 Holton Street, Boston, MA 02135))
 * Register: [Register](https://brh.eventbrite.com)
 
-**We hope that you will join us for our next meeting.**
-
-## Agenda
+### Agenda
 
 * 7:00 Mingle, network, show and tell
 * 7:30 Lightning Talks
@@ -23,7 +21,7 @@ type: news
 * 8:30 Q&A and Open Discussion
 * 9:00 End of formal meeting
 
-## Kalman Filters
+### Kalman Filters
 
 The Kalman Filter is a powerful and efficient tool used in robotics (and beyond) to improve the accuracy and precision of noisy predictions or sensor readings. The algorithm uses the temporal aspect of predictions over time, combined with a noise model of the measurements, to allow the estimate of a state to converge. In addition, the algorithm is also memory efficient and recursive, which doesn't need a computer to store massive amounts of data (compared to other similar averaging techniques). Overall, it helps solve the problem of uncertainty in robotics, bringing us one step closer to being able to help robots more accurately perceive the world around it.
 

@@ -6,15 +6,13 @@ excerpt: Monthly Meeting Announcement January 8 at A2
 highlight: true
 type: news
 ---
-## Our Next Meeting
+### Our Next Meeting
 
 * When: January 8 2026 at 7:00 to 9:00pm
 * Where: [Artisans Asylum](https://www.artisansasylum.com) (96 Holton Street, Boston, MA 02135))
 * Register: [Register](https://brh.eventbrite.com)
 
-**We hope that you will join us for our next meeting.**
-
-## Agenda
+### Agenda
 
 * 7:00 Mingle, network, show and tell
 * 7:30 Lightning Talks
@@ -23,7 +21,7 @@ type: news
 * 8:30 Q&A and Open Discussion
 * 9:00 End of formal meeting
 
-## URDF and Vibe Coding
+### URDF and Vibe Coding
 
 URDF is the Unified Robot Description Format — it's an XML based format used in ROS (and other places) to describe a robot's physical structure, including its links, joints, visual geometry, collision properties, and inertial parameters. The data in a URDF file is used if various scenarios, including simulation, rendering it in RVIZ and elsewhere, doing coordinate transformations and more. 
 
