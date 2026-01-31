@@ -249,7 +249,62 @@ class PageBuilder:
             cards_html.append(card_html)
 
         return '\n'.join(cards_html)
-    
+
+    def render_upcoming_meetings_calendar(self, meetings: List[Dict]) -> str:
+        """Render upcoming meetings in calendar format for home page."""
+        if not meetings:
+            return ""
+
+        from datetime import datetime, date
+
+        today = date.today()
+        upcoming = []
+
+        # Filter and format meetings
+        for meeting in meetings:
+            date_str = meeting['metadata'].get('date', '')
+            if not date_str:
+                continue
+
+            # Parse date
+            date_obj = None
+            for fmt in ['%m/%d/%Y', '%d/%m/%Y', '%Y-%m-%d']:
+                try:
+                    date_obj = datetime.strptime(date_str, fmt).date()
+                    break
+                except ValueError:
+                    continue
+
+            if not date_obj or date_obj < today:
+                continue
+
+            # Determine meeting type label
+            title = meeting.get('title', '')
+            if 'Hands On' in title or 'Hands-On' in title or 'handson' in title.lower():
+                type_label = 'Hands-On Meeting'
+            else:
+                type_label = 'Main Meeting'
+
+            # Format for template
+            upcoming.append({
+                'date_obj': date_obj,
+                'day': date_obj.strftime('%d'),
+                'month_abbr': date_obj.strftime('%b'),
+                'year': date_obj.strftime('%Y'),
+                'month_year': date_obj.strftime('%b %Y'),
+                'time': meeting['metadata'].get('time', ''),
+                'type_label': type_label,
+                'text': meeting['metadata'].get('text', ''),
+                'title': title,
+            })
+
+        # Sort by date
+        upcoming.sort(key=lambda x: x['date_obj'])
+
+        # Render template
+        template = self.jinja_env.get_template('components/upcoming-meetings-calendar.html')
+        return template.render(meetings=upcoming)
+
     def build_page(self, template_name: str, output_filename: str, **context):
         """Generic method to build a page with given template and context."""
         template = self.jinja_env.get_template(template_name)

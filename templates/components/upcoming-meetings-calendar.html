@@ -1,0 +1,45 @@
+<!-- Upcoming meetings calendar - Table-style display for home page -->
+<div class="upcoming-meetings-calendar">
+    {% if meetings %}
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <tbody>
+            {% for meeting in meetings %}
+                <tr class="meeting-row">
+                    <td class="date-column" style="width: 140px; vertical-align: top; padding: 1rem 0.75rem;">
+                        <div class="meeting-date">
+                            <div class="date-day" style="font-size: 1.75rem; font-weight: 700; line-height: 1; color: #212529;">
+                                {{ meeting.day }} {{ meeting.month_abbr }}
+                            </div>
+                            <div class="date-month-year" style="font-size: 0.875rem; font-weight: 500; color: #6c757d; margin-top: 0.25rem;">
+                                {{ meeting.year }}
+                            </div>
+                            <div class="date-time" style="font-size: 0.875rem; color: #6c757d; margin-top: 0.25rem;">
+                                {{ meeting.time }}
+                            </div>
+                        </div>
+                    </td>
+                    <td class="details-column" style="vertical-align: top; padding: 1rem 0.75rem;">
+                        <div class="meeting-type" style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; color: #0d6efd; margin-bottom: 0.25rem; letter-spacing: 0.5px;">
+                            {{ meeting.type_label }}
+                        </div>
+                        {% if meeting.text %}
+                        <div class="meeting-blurb" style="font-size: 0.95rem; color: #212529; line-height: 1.4;">
+                            {{ meeting.text }}
+                        </div>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="mt-3">
+        <a href="meetings.html" class="btn btn-sm btn-outline-primary">view all meetings</a>
+    </div>
+    {% else %}
+    <div class="alert alert-info">
+        <p class="mb-0">No upcoming meetings scheduled. Check back soon!</p>
+    </div>
+    {% endif %}
+</div>
