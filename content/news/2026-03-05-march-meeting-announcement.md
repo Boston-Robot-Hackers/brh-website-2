@@ -1,8 +1,8 @@
 ---
-title: "Meeting announcement for March 5, 2026: Kalman Filters"
-date: 2026-01-05
-image: "images/kalman2.png"
-excerpt: Monthly Meeting Announcement March 5 2026
+title: "March Monthly Meeting"
+date: 2026-01-31
+image: "images/clock.png"
+excerpt: "We are fortunate to have Tom Ryden, Executive Director of Mass Robotics as our speaker this month. Tom will discuss current trends in Robotics Startups and the industry in general"
 highlight: true
 type: news
 ---
@@ -17,20 +17,14 @@ type: news
 * 7:00 Mingle, network, show and tell
 * 7:30 Lightning Talks
     * Please send me ideas
-* 7:45 Featured Speaker: Pito Salas, URDF and Vibe Coding 
+* 7:45 Featured Speaker: Tom Ryden, Executive Director of Mass Robotics
 * 8:30 Q&A and Open Discussion
 * 9:00 End of formal meeting
 
-### Kalman Filters
+### Robotics Landscape
 
-The Kalman Filter is a powerful and efficient tool used in robotics (and beyond) to improve the accuracy and precision of noisy predictions or sensor readings. The algorithm uses the temporal aspect of predictions over time, combined with a noise model of the measurements, to allow the estimate of a state to converge. In addition, the algorithm is also memory efficient and recursive, which doesn't need a computer to store massive amounts of data (compared to other similar averaging techniques). Overall, it helps solve the problem of uncertainty in robotics, bringing us one step closer to being able to help robots more accurately perceive the world around it.
+We are very fortunate this month to have Tom Ryden as our guest speaker. He is Executive Director of MassRobotics, the world's largest independent robotics hub. He has worked in the industry in a variety of robot-adjacent companies so he knows what he is talking about. Mass Robotics wants to help create and scale the next generation of successful  robotics companies, supporting entrepreneurs and startups in the field.
 
-<img src="../../images/kalman3.png" alt="Sample image" style="float: right; margin: 25px 25px 25px 25px; border-radius: 8px; height: 250px;">
+In this talk, Tom will examine which robotics startups are getting funding and reaching customers versus those that are failing. He'll identify gaps between research and real-world products, pointing out opportunities in automation, manipulation, and human-robot interaction.
 
-Kalman Filters are used in some of the world's most advanced guidance, navigation, and control systems, including aircraft and spacecraft, in order to provide the ground station with accurate information about the craft's current and future state. However, the Kalman Filter is also applicable to hobby-level robotics, and can improve the stability and operation of the system when used correctly.
-
-In this talk, we will go over the motivation behind the Kalman Filter, and describe why (and most importantly) how it is used. We will provide multiple examples of the filter used in robotics, both in software and hardware, and explain different ways where you can use the filter in your own projects.
-
-#### Speaker: Chris Lai
-Graduate of Cal Poly Pomona with a BS in Computer Engineering and has been teaching with BWSI for 3 years and is now working at MIT Lincoln Laboratory for 2 years.
-
+The talk covers current trends including humanoid robots, Physical AI, and what companies are actually buying. Key questions: What technical skills matter for getting products to market? Which applications have real customers versus just cool technology? How can roboticists and groups like Boston Robot Hackers get involved in the local robotics scene?

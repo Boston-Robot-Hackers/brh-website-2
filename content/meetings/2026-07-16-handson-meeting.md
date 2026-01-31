@@ -1,6 +1,6 @@
 ---
-title: "Hands On Meeting - May 14"
-date: 05/14/2026
+title: "Hands On Meeting - July 16
+date: 07/16/2026
 time: "6:00pm"
 location: "Artisans Asylum, 96 Holton Street, Allston"
 type: meeting
