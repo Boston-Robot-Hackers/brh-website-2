@@ -85,9 +85,9 @@ class WebsiteBuilder:
         projects = self.content_manager.get_all_content(self.content_types['projects'])
         projects_content = self.page_builder.render_project_cards_for_home(projects)
 
-        # Add meetings content for front page (grouped by month)
+        # Add upcoming meetings in calendar format for front page
         meetings = self.content_manager.get_all_content(self.content_types['meetings'])
-        meetings_content = self.page_builder.render_monthly_meeting_cards(meetings)
+        meetings_content = self.page_builder.render_upcoming_meetings_calendar(meetings)
 
         output_file = self.page_builder.build_page(
             'pages/index.html',
