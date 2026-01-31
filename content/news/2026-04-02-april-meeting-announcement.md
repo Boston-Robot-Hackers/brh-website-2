@@ -1,14 +1,14 @@
 ---
-title: "Meeting announcement for July 9, 2026: Kalman Filters"
+title: "Meeting announcement for April 2: Kalman Filters"
 date: 2026-01-30
 image: "images/kalman2.png"
-excerpt: Monthly Meeting Announcement July 9 2026
+excerpt: "Chris Lai leads the Beaver Works Summer Program at MIT. Chris will discuss the motivation behind the Kalman Filter, and describe why (and most importantly) how it is used."
 highlight: true
 type: news
 ---
 ### Our Next Meeting
 
-* When: March 5, 2026 at 7:00 to 9:00pm
+* When: April 2, 2026, 7:00 to 9:00pm
 * Where: [Artisans Asylum](https://www.artisansasylum.com) (96 Holton Street, Boston, MA 02135))
 * Register: [Register](https://brh.eventbrite.com)
 
@@ -23,7 +23,7 @@ type: news
 
 ### Kalman Filters
 
-The Kalman Filter is a powerful and efficient tool used in robotics (and beyond) to improve the accuracy and precision of noisy predictions or sensor readings. The algorithm uses the temporal aspect of predictions over time, combined with a noise model of the measurements, to allow the estimate of a state to converge. In addition, the algorithm is also memory efficient and recursive, which doesn't need a computer to store massive amounts of data (compared to other similar averaging techniques). Overall, it helps solve the problem of uncertainty in robotics, bringing us one step closer to being able to help robots more accurately perceive the world around it.
+The Kalman Filter is a powerful and efficient tool used in robotics (and beyond) to improve the accuracy and precision of noisy predictions or sensor readings. The algorithm uses the temporal aspect of predictions over time, combined with a noise model of the measurements, to allow the estimate of a state to converge. In addition, the algorithm is also memory efficient and recursive, which doesn't need a computer to store massive amounts of data (compared to other similar averaging techniques). Overall, it helps solve the problem of uncertainty in robotics, bringing us one step closer to being able to help robots more accurately perceive the world around it.ß
 
 <img src="../../images/kalman3.png" alt="Sample image" style="float: right; margin: 25px 25px 25px 25px; border-radius: 8px; height: 250px;">
 

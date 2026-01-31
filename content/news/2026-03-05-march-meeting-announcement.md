@@ -1,5 +1,5 @@
 ---
-title: "March Monthly Meeting"
+title: "Meeting announcement for March 5: Tom Ryder on current trends in Robotics"
 date: 2026-01-31
 image: "images/clock.png"
 excerpt: "We are fortunate to have Tom Ryden, Executive Director of Mass Robotics as our speaker this month. Tom will discuss current trends in Robotics Startups and the industry in general"
