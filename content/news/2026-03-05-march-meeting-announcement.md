@@ -27,4 +27,4 @@ We are very fortunate this month to have Tom Ryden as our guest speaker. He is E
 
 In this talk, Tom will examine which robotics startups are getting funding and reaching customers versus those that are failing. He'll identify gaps between research and real-world products, pointing out opportunities in automation, manipulation, and human-robot interaction.
 
-The talk covers current trends including humanoid robots, Physical AI, and what companies are actually buying. Key questions: What technical skills matter for getting products to market? Which applications have real customers versus just cool technology? How can roboticists and groups like Boston Robot Hackers get involved in the local robotics scene?
+Key questions: What technical skills matter for getting products to market? Which applications have real customers versus just cool technology? How can roboticists and groups like Boston Robot Hackers get involved in the local robotics scene?
