@@ -4,7 +4,6 @@ subtitle: Join us for our upcoming meeting
 excerpt: 'Featuring talk by David Dorf about "Affordable Biomimetic Robot Hands"'
 date: 2025-11-09
 image: "images/clock.png"
-order: 3
 ---
 ## Our Next Meeting
 
