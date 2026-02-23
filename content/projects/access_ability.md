@@ -1,6 +1,6 @@
 ---
 title: Access Ability Arm
-date: 2024
+date: 2024-02-02
 status: testing
 image: images/projects/aa1.jpeg
 text: Access Ability Arm
