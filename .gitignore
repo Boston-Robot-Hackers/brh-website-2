@@ -34,3 +34,7 @@ Thumbs.db
 # Logs
 *.log
 .aider*
+
+# j2 framework
+.j2/state.md
+.coverage

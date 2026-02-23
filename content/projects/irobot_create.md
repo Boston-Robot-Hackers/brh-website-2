@@ -6,7 +6,7 @@ image: images/projects/roombacreate.png
 text: LASER Roomba
 lead: Alan Kilian
 members: 1
-excerpt: An iRobot Create-II (Roomba 960) controlled by a Raspberry PI and a Sick LASER scanner. Built with ROS2.
+excerpt: "An iRobot Create-II (Roomba 960) controlled by a Raspberry PI and a Sick LASER scanner. Built with ROS2."
 ---
 Using an iRobot Create-II as a base and a Neato XV11 lidar (Replaced by a SICK lidar), this is a simple ROS2 development platform for me to learn SLAM.
 

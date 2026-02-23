@@ -6,6 +6,7 @@ image: images/projects/aa1.jpeg
 text: Access Ability Arm
 lead: Randell Drane
 members: 3
+excerpt: "A UFactory arm coupled with a custom gripper and associated computer vision code facilitating operator use"
 ---
 ## Access Ability Arm
 
