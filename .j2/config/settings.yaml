@@ -6,3 +6,10 @@ package_manager: uv
 test_runner: pytest
 framework: jinja2
 description: Static site generator for the Boston Robot Hackers community website
+
+j2:
+  specs_dir: ".j2/specs"
+  features_file: ".j2/features/features.md"
+  tasks_dir: ".j2/tasks"
+  templates_dir: ".j2/templates"
+  rules_file: ".j2/rules.md"

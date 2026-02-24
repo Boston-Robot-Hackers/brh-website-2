@@ -11,7 +11,7 @@ Status values:
 
 ## F01 — Test Suite
 **Priority**: High
-**Status**: not started | Tests written: no | Tests passing: n/a
+**Status**: done | Tests written: yes | Tests passing: yes
 **Description**: Add a pytest test suite covering the core build modules: `ContentManager` (markdown parsing, frontmatter extraction, date handling, hero generation), `PageBuilder` (template rendering, page output), and `AssetManager` (directory copying, CSS generation). Tests should run via `uv run pytest` from the repo root.
 
 ---

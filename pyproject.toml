@@ -1,0 +1,21 @@
+[project]
+name = "brh-website-2"
+version = "0.1.0"
+description = "Boston Robot Hackers website build system"
+requires-python = ">=3.12"
+dependencies = [
+    "jinja2>=3.1.6",
+    "markdown>=3.8.2",
+    "pygments>=2.19.2",
+    "python-frontmatter>=1.1.0",
+]
+
+[tool.uv]
+dev-dependencies = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["build"]
