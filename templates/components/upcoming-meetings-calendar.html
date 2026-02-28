@@ -5,7 +5,7 @@
         <table class="table table-hover">
             <tbody>
             {% for meeting in meetings %}
-                <tr class="meeting-row">
+                <tr class="meeting-row"{% if meeting.announcement_url %} onclick="window.location='{{ meeting.announcement_url }}'" style="cursor: pointer;"{% endif %}>
                     <td class="date-column" style="width: 140px; vertical-align: top; padding: 1rem 0.75rem;">
                         <div class="meeting-date">
                             <div class="date-day" style="font-size: 1.75rem; font-weight: 700; line-height: 1; color: #212529;">

@@ -285,6 +285,12 @@ class PageBuilder:
             else:
                 type_label = 'Main Meeting'
 
+            # Build announcement URL if the file exists
+            announcement = meeting['metadata'].get('announcement', '')
+            announcement_url = ''
+            if announcement and self.check_news_file_exists(announcement):
+                announcement_url = 'news/' + announcement.replace('.md', '.html')
+
             # Format for template
             upcoming.append({
                 'date_obj': date_obj,
@@ -296,6 +302,7 @@ class PageBuilder:
                 'type_label': type_label,
                 'text': meeting['metadata'].get('text', ''),
                 'title': title,
+                'announcement_url': announcement_url,
             })
 
         # Sort by date
