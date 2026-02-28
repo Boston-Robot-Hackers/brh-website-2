@@ -206,7 +206,7 @@ class PageBuilder:
 
         # Convert to sorted list
         grouped = []
-        for month_key in sorted(month_groups.keys(), reverse=True):
+        for month_key in sorted(month_groups.keys(), reverse=False):
             group = month_groups[month_key]
             grouped.append({
                 'month_label': group['label'],
