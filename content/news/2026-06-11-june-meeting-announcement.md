@@ -1,5 +1,5 @@
 ---
-title: "Meeting announcement for April 2: Kalman Filters"
+title: "Meeting announcement for June 11: Powering Robots
 date: 2026-02-27
 image: "images/kalman2.png"
 excerpt: "Alan Kilian, a long time software and hardware person with a lifelong passion for Robotics will speak about aspects of power for robots. Batteries, Measurement, Circuitry and more."
@@ -8,7 +8,7 @@ type: news
 ---
 ### Our Next Meeting
 
-* When: April 2, 2026, 7:00 to 9:00pm
+* When: June 11, 2026, 7:00 to 9:00pm
 * Where: [Artisans Asylum](https://www.artisansasylum.com) (96 Holton Street, Boston, MA 02135))
 * Register: [Register](https://brh.eventbrite.com)
 
