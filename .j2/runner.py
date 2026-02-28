@@ -196,6 +196,7 @@ def build_context(root, settings, placeholders, args):
         "tasks":      lambda: load_tasks(root, settings, args.feature),
         "task":       lambda: extract_task(load_tasks(root, settings, args.feature), args.task),
         "feature_id":       lambda: args.feature if args.feature else find_default_feature(root, settings),
+        "feature_arg_provided": lambda: "yes" if args.feature else "no",
         "request":          lambda: args.request,
         "target":           lambda: args.target,
         "default_feature":  lambda: find_default_feature(root, settings),

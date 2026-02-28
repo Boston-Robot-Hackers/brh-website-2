@@ -10,7 +10,9 @@
       "Bash(mv:*)",
       "Bash(git add:*)",
       "Bash(sed:*)",
-      "Bash(open:*)"
+      "Bash(open:*)",
+      "Bash(ls:*)",
+      "Bash(python3:*)"
     ],
     "deny": []
   }
