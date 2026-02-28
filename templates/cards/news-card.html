@@ -3,7 +3,7 @@
     <div class="row g-0 h-100">
         <div class="col-4 col-md-3 d-flex align-items-stretch p-3">
             {% if image %}
-            <img src="{{ image }}" class="img-fluid" style="width: 100%; object-fit: cover; border-radius: var(--radius);" alt="{{ title }}">
+            <img src="{{ image }}" class="img-fluid border" style="width: 100%; object-fit: contain; border-radius: var(--radius); border-color: #000 !important;" alt="{{ title }}">
             {% else %}
             <div class="bg-secondary d-flex align-items-center justify-content-center text-white fw-bold w-100" style="border-radius: var(--radius);">
                 {% if text %}{{ text }}{% else %}NEWS{% endif %}
