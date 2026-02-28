@@ -1,7 +1,7 @@
 ---
 title: "Meeting announcement for June 11: Powering Robots
 date: 2026-02-27
-image: "images/kalman2.png"
+image: "images/battery.png"
 excerpt: "Alan Kilian, a long time software and hardware person with a lifelong passion for Robotics will speak about aspects of power for robots. Batteries, Measurement, Circuitry and more."
 highlight: true
 type: news
