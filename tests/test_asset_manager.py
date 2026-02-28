@@ -34,7 +34,7 @@ class TestCopyDirectory:
         images.mkdir()
         (images / "photo.jpg").write_text("fake image data")
         am = AssetManager(root, dist)
-        am.copy_directory("images")
+        am.copy_directory("images", "images")
         assert (dist / "images" / "photo.jpg").exists()
 
     def test_replaces_existing_dest(self, tmp_path):
@@ -48,7 +48,7 @@ class TestCopyDirectory:
         dest_scripts.mkdir()
         (dest_scripts / "old.js").write_text("old")
         am = AssetManager(root, dist)
-        am.copy_directory("scripts")
+        am.copy_directory("scripts", "scripts")
         assert (dist / "scripts" / "app.js").exists()
         assert not (dist / "scripts" / "old.js").exists()
 
@@ -58,7 +58,7 @@ class TestCopyDirectory:
         root.mkdir()
         dist.mkdir()
         am = AssetManager(root, dist)
-        am.copy_directory("nonexistent")
+        am.copy_directory("nonexistent", "nonexistent")
         assert not (dist / "nonexistent").exists()
 
 

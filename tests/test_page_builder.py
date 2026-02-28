@@ -66,19 +66,19 @@ class TestBuildDetailPages:
 
     def test_writes_one_file_per_item(self, page_builder, dist):
         items = self._make_items(["post-1", "post-2"])
-        ct = ContentType("news", "news", "date", True, "details/news-detail.html", "pages/news.html", "news.html")
+        ct = ContentType("news", "news", {"sort_key": "date", "reverse": True, "detail_template": "details/news-detail.html", "page_template": "pages/news.html", "output_filename": "news.html"})
         page_builder.build_detail_pages(items, ct)
         assert (dist / "news" / "post-1.html").exists()
         assert (dist / "news" / "post-2.html").exists()
 
     def test_creates_subdirectory(self, page_builder, dist):
         items = self._make_items(["proj-1"])
-        ct = ContentType("projects", "projects", "title", False, "details/project-detail.html", "pages/projects.html", "projects.html")
+        ct = ContentType("projects", "projects", {"sort_key": "title", "reverse": False, "detail_template": "details/project-detail.html", "page_template": "pages/projects.html", "output_filename": "projects.html"})
         page_builder.build_detail_pages(items, ct)
         assert (dist / "projects").is_dir()
 
     def test_empty_items_writes_nothing(self, page_builder, dist):
-        ct = ContentType("members", "members", "title", False, "details/member-detail.html", "pages/members.html", "members.html")
+        ct = ContentType("members", "members", {"sort_key": "title", "reverse": False, "detail_template": "details/member-detail.html", "page_template": "pages/members.html", "output_filename": "members.html"})
         page_builder.build_detail_pages([], ct)
         assert not (dist / "members").exists()
 
@@ -90,7 +90,7 @@ class TestBuildDetailPages:
         env = Environment(loader=DictLoader(templates))
         pb = PageBuilder(env, dist, {"name": "BRH"})
         items = [{"id": "post-1", "title": "Post", "date": "2024-03-15", "metadata": {}}]
-        ct = ContentType("news", "news", "date", True, "details/news-detail.html", "pages/news.html", "news.html")
+        ct = ContentType("news", "news", {"sort_key": "date", "reverse": True, "detail_template": "details/news-detail.html", "page_template": "pages/news.html", "output_filename": "news.html"})
         pb.build_detail_pages(items, ct)
         content = (dist / "news" / "post-1.html").read_text()
         assert "March 15, 2024" in content

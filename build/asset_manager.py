@@ -16,9 +16,8 @@ class AssetManager:
         self.root_dir = root_dir
         self.dist_dir = dist_dir
     
-    def copy_directory(self, src_name: str, dest_name: str = None):
+    def copy_directory(self, src_name: str, dest_name: str):
         """Generic method to copy a directory."""
-        dest_name = dest_name or src_name
         src_path = self.root_dir / src_name
         dest_path = self.dist_dir / dest_name
         
@@ -30,8 +29,8 @@ class AssetManager:
     
     def copy_assets(self):
         """Copy static assets to output directory."""
-        self.copy_directory("images")
-        self.copy_directory("scripts")
+        self.copy_directory("images", "images")
+        self.copy_directory("scripts", "scripts")
     
     def copy_css_files(self):
         """Copy CSS files to output/css directory."""
@@ -46,7 +45,7 @@ class AssetManager:
                 shutil.copy2(src_file, css_dest / css_file)
                 print(f"Copied {css_file} to {css_dest}")
     
-    def generate_pygments_css(self, theme='default'):
+    def generate_pygments_css(self, theme: str):
         """Generate Pygments CSS for syntax highlighting."""
         formatter = HtmlFormatter(style=theme, cssclass='highlight')
         css_content = formatter.get_style_defs('.highlight')

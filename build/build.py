@@ -48,17 +48,26 @@ class WebsiteBuilder:
         
         # Define content types
         self.content_types = {
-            'news': ContentType('news', 'news', output_filename='whatsnew.html', 
-                              page_template='pages/whatsnew.html', 
-                              detail_template='details/news-detail.html'),
-            'projects': ContentType('projects', 'projects',
-                                  detail_template='details/project-detail.html'),
-            'members': ContentType('members', 'members', sort_key='title', reverse=False,
-                                 detail_template='details/member-detail.html'),
-            'meetings': ContentType('meetings', 'meetings', sort_key='date', reverse=True,
-                                  output_filename='meetings.html',
-                                  page_template='pages/meetings.html',
-                                  detail_template='details/meeting-detail.html'),
+            'news': ContentType('news', 'news', {
+                'output_filename': 'whatsnew.html',
+                'page_template': 'pages/whatsnew.html',
+                'detail_template': 'details/news-detail.html',
+            }),
+            'projects': ContentType('projects', 'projects', {
+                'detail_template': 'details/project-detail.html',
+            }),
+            'members': ContentType('members', 'members', {
+                'sort_key': 'title',
+                'reverse': False,
+                'detail_template': 'details/member-detail.html',
+            }),
+            'meetings': ContentType('meetings', 'meetings', {
+                'sort_key': 'date',
+                'reverse': True,
+                'output_filename': 'meetings.html',
+                'page_template': 'pages/meetings.html',
+                'detail_template': 'details/meeting-detail.html',
+            }),
         }
     
     def load_site_config(self) -> Dict[str, Any]:
@@ -80,7 +89,7 @@ class WebsiteBuilder:
     def build_index(self):
         """Build the main index.html file."""
         news_content = self.build_whatsnew()
-        hero_content = self.content_manager.build_hero_content()
+        hero_content = self.content_manager.build_hero_content('index')
 
         projects = self.content_manager.get_all_content(self.content_types['projects'])
         projects_content = self.page_builder.render_project_cards_for_home(projects)

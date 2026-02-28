@@ -10,15 +10,17 @@ from typing import List, Dict, Any
 from jinja2 import Environment
 
 from content_manager import ContentType
+from meeting_renderer import MeetingRenderer
 
 
 class PageBuilder:
     """Handles page building and template rendering."""
-    
+
     def __init__(self, jinja_env: Environment, dist_dir: Path, site_config: Dict):
         self.jinja_env = jinja_env
         self.dist_dir = dist_dir
         self.site_config = site_config
+        self.meeting_renderer = MeetingRenderer(jinja_env, dist_dir)
     
     def format_date(self, date_str: str) -> str:
         """Format date string for display."""
@@ -94,7 +96,7 @@ class PageBuilder:
         return news_file.exists()
     
     def render_cards(self, items: List[Dict], template_name: str,
-                     item_var_name: str = None, **extra_context) -> str:
+                     item_var_name: str, **extra_context) -> str:
         """Generic method to render cards using a template."""
         if not items:
             return ""
@@ -135,11 +137,11 @@ class PageBuilder:
         # Add image classes to posts for the template
         image_classes = "image-base image-square d-flex align-items-center justify-content-center text-white fw-bold"
         return self.render_cards(posts, 'cards/news-card.html',
-                               image_classes=image_classes)
+                               None, image_classes=image_classes)
     
     def render_compact_news_cards(self, posts):
         """Render compact news cards for the full news page."""
-        return self.render_cards(posts, 'cards/compact-news-card.html')
+        return self.render_cards(posts, 'cards/compact-news-card.html', None)
     
     def render_projects_content(self, projects):
         """Render projects as full content articles using template."""
@@ -154,7 +156,7 @@ class PageBuilder:
             project_copy['status'] = project['metadata'].get('status', 'Unknown')
             projects_with_status.append(project_copy)
 
-        return self.render_cards(projects_with_status, 'cards/project-card.html')
+        return self.render_cards(projects_with_status, 'cards/project-card.html', None)
     
     def render_member_cards(self, members):
         """Render member cards for the members page."""
@@ -171,139 +173,19 @@ class PageBuilder:
             })
             members_flattened.append(member_copy)
 
-        return self.render_cards(members_flattened, 'cards/member-card.html')
+        return self.render_cards(members_flattened, 'cards/member-card.html', None)
 
     def group_meetings_by_month(self, meetings: List[Dict]) -> List[Dict]:
         """Group meetings by month, pairing main and hands-on meetings."""
-        from collections import defaultdict
-
-        month_groups = defaultdict(lambda: {'main': None, 'handson': None})
-
-        for meeting in meetings:
-            date_str = meeting['metadata'].get('date', '')
-            if not date_str:
-                continue
-
-            # Parse date to get year-month key
-            for fmt in ['%m/%d/%Y', '%d/%m/%Y', '%Y-%m-%d']:
-                try:
-                    date_obj = datetime.strptime(date_str, fmt)
-                    month_key = date_obj.strftime('%Y-%m')
-                    month_label = date_obj.strftime('%B %Y')
-
-                    # Determine if main or hands-on
-                    title = meeting.get('title', '')
-                    if 'Hands On' in title or 'Hands-On' in title or 'handson' in title.lower():
-                        month_groups[month_key]['handson'] = meeting
-                    else:
-                        month_groups[month_key]['main'] = meeting
-
-                    month_groups[month_key]['label'] = month_label
-                    month_groups[month_key]['sort_key'] = month_key
-                    break
-                except ValueError:
-                    continue
-
-        # Convert to sorted list
-        grouped = []
-        for month_key in sorted(month_groups.keys(), reverse=True):
-            group = month_groups[month_key]
-            grouped.append({
-                'month_label': group['label'],
-                'main_meeting': group['main'],
-                'handson_meeting': group['handson'],
-                'sort_key': group['sort_key']
-            })
-
-        return grouped
+        return self.meeting_renderer.group_meetings_by_month(meetings)
 
     def render_monthly_meeting_cards(self, meetings: List[Dict]) -> str:
         """Render meetings grouped by month."""
-        if not meetings:
-            return ""
-
-        grouped = self.group_meetings_by_month(meetings)
-        template = self.jinja_env.get_template('cards/monthly-meeting-card.html')
-        cards_html = []
-
-        for group in grouped:
-            context = {
-                'month_label': group['month_label'],
-                'main_meeting': group['main_meeting'],
-                'handson_meeting': group['handson_meeting'],
-            }
-
-            # Add announcement/report existence checks for main meeting
-            if group['main_meeting']:
-                context['main_announcement_exists'] = self.check_news_file_exists(
-                    group['main_meeting']['metadata'].get('announcement')
-                )
-                context['main_report_exists'] = self.check_news_file_exists(
-                    group['main_meeting']['metadata'].get('report')
-                )
-            else:
-                context['main_announcement_exists'] = False
-                context['main_report_exists'] = False
-
-            card_html = template.render(**context)
-            cards_html.append(card_html)
-
-        return '\n'.join(cards_html)
+        return self.meeting_renderer.render_monthly_meeting_cards(meetings)
 
     def render_upcoming_meetings_calendar(self, meetings: List[Dict]) -> str:
         """Render upcoming meetings in calendar format for home page."""
-        if not meetings:
-            return ""
-
-        from datetime import datetime, date
-
-        today = date.today()
-        upcoming = []
-
-        # Filter and format meetings
-        for meeting in meetings:
-            date_str = meeting['metadata'].get('date', '')
-            if not date_str:
-                continue
-
-            # Parse date
-            date_obj = None
-            for fmt in ['%m/%d/%Y', '%d/%m/%Y', '%Y-%m-%d']:
-                try:
-                    date_obj = datetime.strptime(date_str, fmt).date()
-                    break
-                except ValueError:
-                    continue
-
-            if not date_obj or date_obj < today:
-                continue
-
-            # Determine meeting type label
-            title = meeting.get('title', '')
-            if 'Hands On' in title or 'Hands-On' in title or 'handson' in title.lower():
-                type_label = 'Hands-On Meeting'
-            else:
-                type_label = 'Main Meeting'
-
-            # Format for template
-            upcoming.append({
-                'date_obj': date_obj,
-                'day': date_obj.strftime('%d'),
-                'month_abbr': date_obj.strftime('%b'),
-                'year': date_obj.strftime('%Y'),
-                'month_year': date_obj.strftime('%b %Y'),
-                'time': meeting['metadata'].get('time', ''),
-                'type_label': type_label,
-                'text': meeting['metadata'].get('text', ''),
-                'title': title,
-            })
-
-        # Sort by date
-        upcoming.sort(key=lambda x: x['date_obj'])
-
-        # Render template
-        template = self.jinja_env.get_template('components/upcoming-meetings-calendar.html')
-        return template.render(meetings=upcoming)
+        return self.meeting_renderer.render_upcoming_meetings_calendar(meetings)
 
     def build_page(self, template_name: str, output_filename: str, **context):
         """Generic method to build a page with given template and context."""
