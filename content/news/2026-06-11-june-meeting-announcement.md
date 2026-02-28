@@ -22,6 +22,7 @@ type: news
 * 9:00 End of formal meeting
 
 ### Power Systems for Robots
+<img src="../../images/people/alankilian.jpg" alt="Sample image" style="float: right; margin: 25px 25px 25px 25px; border-radius: 8px; height: 250px;">
 
 In his talk, [Alan](https://bostonrobothackers.com/members/alan-kilian.html) will explain the core elements of robot power systems by covering battery chemistries, physical formats, charge and discharge behavior, and the safety and environmental limits that define how those batteries can be used. He will then show how these fundamentals connect to practical voltage‑regulation methods, the ways power consumption is measured, and the control circuitry that helps a robot use its battery more efficiently and extend its operating life.
 
