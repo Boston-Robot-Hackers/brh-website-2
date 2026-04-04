@@ -20,7 +20,7 @@ type: news
 * 8:30 Q&A and Open Discussion
 * 9:00 End of formal meeting
 
-### Power Systems for Robots
+### Simulations!
 
 Simulation is one of the most powerful tools available to robotics engineers, from hobby projects on a Raspberry Pi to large-scale production systems using cutting-edge hardware. In this talk, Adam will discuss how the right simulation approach can accelerate development, improve safety, and reduce costly real-world failures.
  
