@@ -1,9 +1,9 @@
 ---
-title: "Hands On Meeting - May 14"
-date: 05/14/2026
+title: "Hands On Meeting - November 18"
+date: 11/18/2025
 time: "6:00pm"
 location: "Artisans Asylum, 96 Holton Street, Allston"
 type: meeting
+announcement: "6-hands-on-meeting.md"
 text: These meetings have no agenda or speaker. Just hacking together. Beginners welcome!
-announcement: "2025-09-24-hands-on-meeting.md"
 ---

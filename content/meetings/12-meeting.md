@@ -5,5 +5,5 @@ time: "7:00pm"
 location: "Artisans Asylum, 96 Holton Street, Allston"
 text: "Featuring Chris Lai Presentation on Kalman Filters. Chris will discuss the motivation behind the Kalman Filter, and describe why (and most importantly) how it is used."
 type: meeting
-announcement: "2026-04-02-april-meeting-announcement.md"
+announcement: "17-april-meeting-announcement.md"
 ---

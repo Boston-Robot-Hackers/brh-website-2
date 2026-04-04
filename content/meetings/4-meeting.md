@@ -5,6 +5,6 @@ time: "7:00pm"
 location: "Artisans Asylum, 96 Holton Street, Allston"
 type: meeting
 text: Using a VLA for controlling a robotic hand
-announcement: "2025-10-09-fourth-meeting.md"
+announcement: "11-fourth-meeting.md"
 report: "2025-11-15-update-on-fifth-meeting.md"
 ---

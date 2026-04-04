@@ -4,5 +4,5 @@ date: 01/08/2026
 time: "7:00pm"
 location: "Artisans Asylum, 96 Holton Street, Allston"
 type: meeting
-announcement: "2026-01-01-jan-meeting-announcement.md"
+announcement: "16-jan-meeting-announcement.md"
 ---

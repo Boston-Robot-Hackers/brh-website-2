@@ -53,13 +53,6 @@ class TestDateHandling:
         result = cm.process_markdown_file(f)
         assert result["date"] == "03/15/2024"
 
-    def test_date_from_filename_stem(self, tmp_path):
-        f = tmp_path / "2024-06-01-my-post.md"
-        f.write_text("---\ntitle: Post\n---\nContent.\n")
-        cm = ContentManager(tmp_path)
-        result = cm.process_markdown_file(f)
-        assert result["date"] == "2024-06-01"
-
     def test_non_date_filename_yields_none(self, tmp_path):
         f = tmp_path / "my-post.md"
         f.write_text("---\ntitle: Post\n---\nContent.\n")

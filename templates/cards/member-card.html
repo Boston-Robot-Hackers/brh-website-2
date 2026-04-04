@@ -14,14 +14,9 @@
             </h5>
             <p class="card-text text-muted small">{{ role }}</p>
             {% if skills %}
-            <div class="member-skills">
-                {% for skill in skills[:3] %}
-                <span class="skill-badge">{{ skill }}</span>
-                {% endfor %}
-                {% if skills|length > 3 %}
-                <span class="text-muted small">+{{ skills|length - 3 }} more</span>
-                {% endif %}
-            </div>
+            <p class="member-skills mb-0">
+                {% for skill in skills %}#{{ skill }}{% if not loop.last %} {% endif %}{% endfor %}
+            </p>
             {% endif %}
         </div>
     </div>

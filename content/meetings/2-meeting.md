@@ -5,6 +5,6 @@ time: "7:00pm"
 location: "Artisans Asylum, 96 Holton Street, Allston"
 type: meeting
 text: Affordable Biomimetic Robot Hands
-announcement: "2025-10-9-meeting-announcement.md"
+announcement: "10-meeting-announcement.md"
 
 ---

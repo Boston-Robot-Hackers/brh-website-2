@@ -54,7 +54,7 @@ class ContentManager:
             html_content = md_processor.convert(post.content)
             metadata = post.metadata
 
-            # Handle date field - prefer frontmatter date over filename
+            # Normalize date field from frontmatter
             if 'date' in metadata:
                 if isinstance(metadata['date'], datetime):
                     metadata['date'] = metadata['date'].isoformat()
@@ -63,11 +63,7 @@ class ContentManager:
                 elif isinstance(metadata['date'], str):
                     metadata['date'] = metadata['date']
             else:
-                date_str = file_path.stem[:10]
-                try:
-                    metadata['date'] = datetime.strptime(date_str, '%Y-%m-%d').date().isoformat()
-                except ValueError:
-                    metadata['date'] = None
+                metadata['date'] = None
 
             return {
                 'id': file_path.stem,
@@ -104,7 +100,7 @@ class ContentManager:
             # For order field, default to 0 if not present, so items without order come first
             items.sort(key=lambda x: x['metadata'].get('order', 0), reverse=content_type.reverse)
         else:
-            items.sort(key=lambda x: x[content_type.sort_key], reverse=content_type.reverse)
+            items.sort(key=lambda x: x[content_type.sort_key] or '', reverse=content_type.reverse)
         return items
 
     def generate_index_hero(self, static_content: str) -> str:
