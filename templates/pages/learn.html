@@ -1,0 +1,17 @@
+<!-- Learn page - Displays curated learning resources organized by topic. Not reusable. -->
+{% extends 'layouts/page.html' %}
+
+{% set current_page = 'learn' %}
+{% set is_detail_page = false %}
+
+{% block title %}Learn - {{ site.title }}{% endblock %}
+
+{% block main_content %}
+    <div class="row">
+        <div class="col-lg-9 mx-auto">
+            <div class="learn-content">
+                {{ learn_content }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -160,15 +160,48 @@ class WebsiteBuilder:
         """Build the about.html page."""
         about_content = self.content_manager.process_single_content_file('about.md')
         hero_content = self.content_manager.build_hero_content('about')
-        
+
         self.page_builder.build_page(
             'pages/about.html',
             'about.html',
             hero=hero_content,
             about_content=about_content
         )
-        
+
         print("Built about.html")
+
+    def build_community_page(self):
+        """Build the community.html page combining members and projects."""
+        members = self.content_manager.get_all_content(self.content_types['members'])
+        projects = self.content_manager.get_all_content(self.content_types['projects'])
+
+        members_content = self.page_builder.render_member_cards(members)
+        projects_content = self.page_builder.render_projects_content(projects)
+        hero_content = self.content_manager.build_hero_content('community')
+
+        self.page_builder.build_page(
+            'pages/community.html',
+            'community.html',
+            hero=hero_content,
+            members_content=members_content,
+            projects_content=projects_content,
+        )
+
+        print(f"Built community.html with {len(members)} members and {len(projects)} projects")
+
+    def build_learn_page(self):
+        """Build the learn.html page."""
+        learn_content = self.content_manager.process_single_content_file('learn.md')
+        hero_content = self.content_manager.build_hero_content('learn')
+
+        self.page_builder.build_page(
+            'pages/learn.html',
+            'learn.html',
+            hero=hero_content,
+            learn_content=learn_content
+        )
+
+        print("Built learn.html")
     
     def build_meetings_page(self):
         """Build the meetings.html page."""
@@ -209,6 +242,8 @@ class WebsiteBuilder:
         self.build_members_page()
         self.build_meetings_page()
         self.build_about_page()
+        self.build_learn_page()
+        self.build_community_page()
 
         print("Build complete!")
 

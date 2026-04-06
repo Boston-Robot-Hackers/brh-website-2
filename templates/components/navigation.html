@@ -7,19 +7,15 @@
                    class="nav-link {{ 'active' if current_page == 'home' else 'text-light' }}">Home</a>
             </li>
             <li class="nav-item">
-                <a href="{{ '../' if is_detail_page else '' }}whatsnew.html" 
-                   class="nav-link {{ 'active' if current_page == 'news' else 'text-light' }}">What's New</a>
+                <a href="{{ '../' if is_detail_page else '' }}learn.html"
+                   class="nav-link {{ 'active' if current_page == 'learn' else 'text-light' }}">Learn</a>
             </li>
             <li class="nav-item">
-                <a href="{{ '../' if is_detail_page else '' }}projects.html" 
-                   class="nav-link {{ 'active' if current_page == 'projects' else 'text-light' }}">Projects</a>
+                <a href="{{ '../' if is_detail_page else '' }}community.html"
+                   class="nav-link {{ 'active' if current_page == 'community' else 'text-light' }}">Members &amp; Projects</a>
             </li>
             <li class="nav-item">
-                <a href="{{ '../' if is_detail_page else '' }}members.html" 
-                   class="nav-link {{ 'active' if current_page == 'members' else 'text-light' }}">Members</a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ '../' if is_detail_page else '' }}about.html" 
+                <a href="{{ '../' if is_detail_page else '' }}about.html"
                    class="nav-link {{ 'active' if current_page == 'about' else 'text-light' }}">About</a>
             </li>
         </ul>

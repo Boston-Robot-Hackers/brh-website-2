@@ -1,0 +1,55 @@
+<!-- Community page - Combined members and projects view with left/right split. Not reusable. -->
+{% extends 'layouts/page.html' %}
+
+{% set current_page = 'community' %}
+{% set is_detail_page = false %}
+
+{% block title %}Members &amp; Projects - {{ site.title }}{% endblock %}
+
+{% block extra_head %}
+<style>
+  /* Override member card widths inside the community page only */
+  #community-members .col-lg-2,
+  #community-members .col-md-3,
+  #community-members .col-sm-4,
+  #community-members .col-6 {
+    width: 33.333%;
+  }
+  @media (min-width: 768px) {
+    #community-members .col-lg-2,
+    #community-members .col-md-3,
+    #community-members .col-sm-4,
+    #community-members .col-6 {
+      width: 25%;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block main_content %}
+    <div class="row g-0">
+
+        <!-- Members column -->
+        <div class="col-lg-7 pe-lg-5" id="community-members">
+            <div class="d-flex align-items-baseline justify-content-between mb-3">
+                <h3 class="mb-0">Members</h3>
+                <a href="members.html" class="text-muted small">see all</a>
+            </div>
+            <div class="row g-3">
+                {{ members_content }}
+            </div>
+        </div>
+
+        <hr class="d-lg-none my-4">
+
+        <!-- Projects column -->
+        <div class="col-lg-5 ps-lg-4" style="border-left: 2px solid #94a3b8;">
+            <div class="d-flex align-items-baseline justify-content-between mb-3">
+                <h3 class="mb-0">Projects</h3>
+                <a href="projects.html" class="text-muted small">see all</a>
+            </div>
+            {{ projects_content }}
+        </div>
+
+    </div>
+{% endblock %}
