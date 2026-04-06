@@ -182,19 +182,61 @@ class WebsiteBuilder:
 
         print("Built about.html")
 
+    def parse_learn_sections(self, text: str) -> list:
+        """Parse learn.md into structured sections for card rendering."""
+        import re
+        icons = {
+            'Getting Started': 'bi-rocket-takeoff',
+            'Programming': 'bi-code-slash',
+            'Hardware': 'bi-cpu',
+            'Computer Vision': 'bi-eye',
+            'Motion Planning': 'bi-map',
+            'AI': 'bi-stars',
+            'Academic': 'bi-journal-text',
+            'Community': 'bi-people-fill',
+        }
+        sections = []
+        for raw in re.split(r'\n---\n', text):
+            raw = raw.strip()
+            if not raw:
+                continue
+            title = intro = ''
+            links = []
+            for line in raw.split('\n'):
+                if line.startswith('## '):
+                    title = line[3:].strip()
+                elif line.startswith('- '):
+                    m = re.match(r'- \[([^\]]+)\]\(([^)]+)\)\s*[—–-]+\s*(.*)', line)
+                    if m:
+                        links.append({'text': m.group(1), 'url': m.group(2), 'desc': m.group(3)})
+                    else:
+                        m2 = re.match(r'- \[([^\]]+)\]\(([^)]+)\)', line)
+                        if m2:
+                            links.append({'text': m2.group(1), 'url': m2.group(2), 'desc': ''})
+                elif line and not line.startswith('#'):
+                    intro = (intro + ' ' + line).strip()
+            if title:
+                icon = next((v for k, v in icons.items() if k.lower() in title.lower()), 'bi-bookmark')
+                sections.append({'title': title, 'intro': intro, 'links': links, 'icon': icon})
+        return sections
+
     def build_learn_page(self):
         """Build the learn.html page."""
-        learn_content = self.content_manager.process_single_content_file('learn.md')
+        raw_text = (self.content_dir / 'learn.md').read_text()
+        # Strip frontmatter
+        import re
+        raw_text = re.sub(r'^---.*?---\s*', '', raw_text, flags=re.DOTALL)
+        sections = self.parse_learn_sections(raw_text)
         hero_content = self.content_manager.build_hero_content('learn')
 
         self.page_builder.build_page(
             'pages/learn.html',
             'learn.html',
             hero=hero_content,
-            learn_content=learn_content
+            learn_sections=sections,
         )
 
-        print("Built learn.html")
+        print(f"Built learn.html with {len(sections)} sections")
     
     def build_meetings_page(self):
         """Build the meetings.html page."""

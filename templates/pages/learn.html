@@ -1,4 +1,4 @@
-<!-- Learn page - Displays curated learning resources organized by topic. Not reusable. -->
+<!-- Learn page - Curated learning resources organized as styled section cards. -->
 {% extends 'layouts/page.html' %}
 
 {% set current_page = 'learn' %}
@@ -7,11 +7,29 @@
 {% block title %}Learn - {{ site.title }}{% endblock %}
 
 {% block main_content %}
-    <div class="row">
-        <div class="col-lg-9 mx-auto">
-            <div class="learn-content">
-                {{ learn_content }}
+<div class="row g-4">
+    {% for section in learn_sections %}
+    <div class="col-md-6">
+        <div class="card h-100 shadow-sm learn-card">
+            <div class="card-header learn-card-header d-flex align-items-center gap-2">
+                <i class="bi {{ section.icon }} fs-5"></i>
+                <span class="fw-semibold">{{ section.title }}</span>
+            </div>
+            <div class="card-body">
+                {% if section.intro %}
+                <p class="text-muted small mb-3">{{ section.intro }}</p>
+                {% endif %}
+                <ul class="list-unstyled mb-0 learn-links">
+                    {% for link in section.links %}
+                    <li class="learn-link-item">
+                        <a href="{{ link.url }}" target="_blank" class="learn-link">{{ link.text }}</a>
+                        {% if link.desc %}<span class="text-muted"> — {{ link.desc }}</span>{% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
             </div>
         </div>
     </div>
+    {% endfor %}
+</div>
 {% endblock %}

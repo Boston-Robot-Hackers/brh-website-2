@@ -2,7 +2,7 @@
 name: "Pito Salas"
 image: "images/people/pitosalas.png"
 featured: true
-hashtags: ["ROS", "maker", "entrepreneur", "professional"]
+hashtags: ["ROS", "maker", "entrepreneur", "retired"]
 github: "https://github.com/pitosalas"
 linkedin: "https://www.linkedin.com/in/pitosalas/"
 projects: ["project_template"]
