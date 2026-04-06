@@ -1,10 +1,10 @@
 ---
 name: "Randell Drane"
 featured: true
-skills: n/a
+hashtags: []
 github: n/a
 linkedin: n/a
-projects: ["Access-Ability-Arm"]
+projects: ["access_ability"]
 opentowork: false
 image: "images/people/randelldrane.png"
 

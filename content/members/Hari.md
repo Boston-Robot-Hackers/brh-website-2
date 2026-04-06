@@ -1,9 +1,8 @@
 ---
 name: "Hariharan Sureshkumar"
-role: "Roboticist & Computer Vision Researcher"
 image: "images/people/hari.png"
 featured: true
-skills: ["Computer Vision", "Physics based vision", "Robotic Perception", "RL", "ROS"]
+hashtags: ["CV", "perception", "student", "research"]
 github: "https://github.com/hxriharan"
 linkedin: "https://www.linkedin.com/in/hariharan-suresh/"
 opentowork: false

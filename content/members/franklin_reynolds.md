@@ -1,9 +1,8 @@
 ---
 name: "Franklin Reynolds"
-role: "software engineer"
 image: "images/people/franklinreynolds.jpeg"
 featured: true
-skills: ["software development"]
+hashtags: ["software", "firmware", "retired"]
 linkedin: "https://www.linkedin.com/in/franklin-reynolds-5124503/"
 opentowork: false
 ---

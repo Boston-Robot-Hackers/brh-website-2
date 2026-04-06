@@ -1,9 +1,8 @@
 ---
 name: "Siddarth Dayasagar"
-role: "Roboticist and Space Enthusiast"
 image: "images/people/siddarth.jpeg"
 featured: true
-skills: ["ROS 2", "C++", "Python"]
+hashtags: ["ROS", "space", "C++", "student"]
 github: "https://github.com/siddarth09"
 linkedin: "https://www.linkedin.com/in/siddarth-d-roboticsengineer/"
 projects: ["Space Station OS"]

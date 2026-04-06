@@ -1,8 +1,7 @@
 ---
 name: "Chris Kennedy"
-role: "Psychiatric AI"
 featured: true
-skills: ["Computer vision", "Natural language processing", "Machine learning"]
+hashtags: ["CV", "NLP", "AI"]
 github: "https://github.com/ck37"
 linkedin: "https://www.linkedin.com/in/chriskennedy37/"
 projects: []

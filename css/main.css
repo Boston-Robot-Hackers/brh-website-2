@@ -171,6 +171,12 @@
   border-bottom-color: var(--primary);
 }
 
+/* Member detail bio - tighten paragraph spacing */
+.member-detail .content p {
+  margin-bottom: 0.25rem;
+  line-height: 1.5;
+}
+
 /* Modern card styling */
 .card .card-body { 
   padding: 1.25rem;

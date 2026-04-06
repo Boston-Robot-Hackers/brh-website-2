@@ -1,9 +1,8 @@
 ---
 name: "Skyler Wiernik"
-role: "Software Engineer, Verne Robotics"
 image: "images/people/skylerwiernik.jpg"
 featured: true
-skills: ["Software", "Machine Learning"]
+hashtags: ["ML", "software", "professional"]
 github: "https://github.com/Skylerwiernik"
 linkedin: "https://www.linkedin.com/in/skyler-wiernik"
 opentowork: false

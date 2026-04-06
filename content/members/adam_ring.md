@@ -1,9 +1,8 @@
 ---
 name: "Adam Ring"
-role: "Robot Hacker"
 image: "images/people/adam_ring.jpg"
 featured: true
-skills: ["ROS", "Robotics", "Robotics Simulation", "Computer Vision"]
+hashtags: ["ROS", "CV", "simulation", "professional"]
 github: "https://github.com/Aringan0323"
 linkedin: "https://www.linkedin.com/in/adam-ring-7166a319b/"
 projects: ["Mini-Rover Behavior Trees, Coin Expanse Block-Code Trading"]

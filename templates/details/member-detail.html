@@ -24,13 +24,10 @@
             </div>
             <div class="col-md-8">
                 <h1 class="mb-2">{{ member.title }}</h1>
-                <h5 class="text-muted mb-3">{{ member.metadata.role|default('Member') }}</h5>
-                
-                {% if member.metadata.skills %}
+                {% if member.metadata.hashtags %}
                 <div class="mb-3">
-                    <strong>Skills:</strong>
-                    {% for skill in member.metadata.skills %}
-                    <span class="badge bg-light text-dark me-1">{{ skill }}</span>
+                    {% for tag in member.metadata.hashtags %}
+                    <span class="badge bg-light text-dark me-1">#{{ tag }}</span>
                     {% endfor %}
                 </div>
                 {% endif %}
@@ -46,12 +43,20 @@
                         <strong>LinkedIn:</strong> <a href="{{ member.metadata.linkedin }}" target="_blank">{{ member.metadata.linkedin }}</a>
                     </div>
                     {% endif %}
-                    {% if member.metadata.projects %}
-                    <div class="col-12 mt-2">
-                        <strong>Current Projects:</strong> {{ member.metadata.projects|join(', ') }}
-                    </div>
-                    {% endif %}
                 </div>
+                {% if member.metadata.projects %}
+                <div class="mt-2">
+                    <strong>Current Projects:</strong>
+                    {% for slug in member.metadata.projects %}
+                        {% if projects_map and slug in projects_map %}
+                            <a href="{{ projects_map[slug].url }}">{{ projects_map[slug].title }}</a>
+                        {% else %}
+                            {{ slug }}
+                        {% endif %}
+                        {% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                </div>
+                {% endif %}
             </div>
         </div>
         

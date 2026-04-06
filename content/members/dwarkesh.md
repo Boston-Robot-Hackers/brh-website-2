@@ -1,9 +1,8 @@
 ---
 name: "Dwarakesh Rajesh"
-role: "Robotics Engineer"
 image: "images/people/dr.jpg"
 featured: true
-skills: ["ROS/ROS2", "Python/C/C++/C#", "Simulation", "Automation"]
+hashtags: ["ROS", "python", "simulation", "professional"]
 github: "https://github.com/dwara-rajesh"
 linkedin: "www.linkedin.com/in/dwarakesh-rajesh/"
 projects: ["Adaptive Manipulation Based on Hardware fault detection"]

@@ -64,6 +64,15 @@ Jinja2 templates in `templates/`:
 
 `config/site.json` — Site-wide text strings (title, section titles, button labels, footer text). Available in all templates as the `site_config` context variable.
 
+## Development Process
+
+Features and tasks are tracked in `process/`:
+- `process/spec.md` — App description and goals
+- `process/features/notdone/` — Planned features (one file per feature)
+- `process/features/done/` — Completed features
+- `process/tasks/notdone/` — Pending tasks
+- `process/tasks/done/` — Completed tasks
+
 ## Deployment
 
 GitHub Actions automatically deploys to GitHub Pages on push to `main`. The `output/` directory is not committed; it's generated during the CI build.

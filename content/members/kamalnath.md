@@ -1,9 +1,8 @@
 ---
 name: "Kamalnath Bathirappan"
-role: "Robotics Researcher"
 image: "images/people/kamalnath.jpg"
 featured: true
-skills: ["ROS & ROS2", "SLAM & Sensor Fusion", "Perception & Path Planning", "Terrain Estimation & Trajectory Generation", "Mobile Robots & Multi Model Robots"]
+hashtags: ["SLAM", "perception", "student", "research"]
 github: "https://github.com/kamalnath26"
 linkedin: "https://www.linkedin.com/in/kamalnathb/"
 opentowork: true

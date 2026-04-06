@@ -4,42 +4,20 @@ Static website generator for the Boston Robot Hackers community built with Pytho
 
 ## Prerequisites
 
-- Python 3.8 or higher
-- UV package manager (installation instructions below)
+- Python 3.12 or higher
+- UV package manager
 
-## Installation
+**Install UV:**
 
-### 1. Install UV (if not already installed)
-
-UV is a fast Python package manager. Install it using one of these methods:
-
-**macOS/Linux:**
 ```bash
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-**Windows (PowerShell):**
-```powershell
-powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
-```
-
-**Alternative (using pip):**
-```bash
-pip install uv
-```
-
-### 2. Clone and Set Up Project
+## Installation
 
 ```bash
 git clone https://github.com/Boston-Robot-Hackers/brh-website-2.git
 cd brh-website-2
-```
-
-### 3. Install Dependencies
-
-UV will automatically create a virtual environment and install all dependencies:
-
-```bash
 uv sync
 ```
 
@@ -47,69 +25,68 @@ uv sync
 
 ### Build the Website
 
-Generate the complete website in the `output/` directory:
-
 ```bash
 uv run python build/build.py
 ```
 
-### Development Workflow
+Output is written to `output/`.
 
-1. Edit content files in the `content/` directory (markdown format)
-2. Modify templates in the `templates/` directory (Jinja2 format)
-3. Update styles in the `css/` directory
-4. Run the build command to regenerate the site
-5. Check the `output/` directory for generated files
+### Run Tests
+
+```bash
+uv run pytest
+uv run pytest --cov=build
+```
 
 ## Project Structure
 
 ```
-├── build/build.py          # Main build script
-├── content/               # Markdown content files
-│   ├── heroes/           # Hero section content for each page
-│   ├── news/             # News/announcements
-│   ├── projects/         # Project descriptions
-│   └── members/          # Member profiles
-├── templates/            # Jinja2 templates
-│   ├── pages/           # Page templates
-│   ├── components/      # Reusable components
-│   └── layouts/         # Base layouts
-├── css/                 # Stylesheets
-├── images/              # Static images
-├── scripts/             # JavaScript files
-├── config/              # Site configuration
-└── output/              # Generated website (created by build)
+├── build/                  # Build system
+│   ├── build.py            # Main build script (WebsiteBuilder)
+│   ├── content_manager.py  # Loads/processes Markdown content
+│   ├── page_builder.py     # Renders Jinja2 templates to HTML
+│   ├── asset_manager.py    # Copies static assets, generates CSS
+│   └── pyproject.toml      # Build-specific dependencies (Python 3.13)
+├── content/                # Markdown source content
+│   ├── heroes/             # Hero section content per page
+│   ├── news/               # News/announcements
+│   ├── meetings/           # Meeting entries
+│   ├── projects/           # Project descriptions
+│   ├── members/            # Member profiles
+│   ├── about.md            # About page content
+│   └── learn.md            # Learn page content
+├── templates/              # Jinja2 templates
+│   ├── layouts/            # Base layouts (base, home, page, detail)
+│   ├── pages/              # Per-page templates
+│   ├── components/         # Reusable partials
+│   ├── cards/              # Card components for listings
+│   └── details/            # Detail page templates
+├── css/                    # Stylesheets
+├── images/                 # Static images
+├── scripts/                # JavaScript
+├── config/
+│   └── site.json           # Site-wide text strings and configuration
+├── tests/                  # Pytest test suite
+├── pyproject.toml          # Root dependencies (Python 3.12+)
+└── output/                 # Generated website (not committed)
 ```
 
-## Content Management
+## Content Files
 
-- **Hero sections**: Edit files in `content/heroes/` to update page headers
-- **News**: Add markdown files to `content/news/` for announcements
-- **Projects**: Add project descriptions to `content/projects/`
-- **Members**: Add member profiles to `content/members/`
-- **Site config**: Edit `config/site.json` for site-wide settings
+All content is Markdown with YAML frontmatter. Dated files use the `YYYY-MM-DD-slug.md` naming convention.
 
-## Key Features
-
-- Static site generation with Python and Jinja2
-- Markdown content with frontmatter support
-- Syntax highlighting for code blocks
-- Responsive Bootstrap-based design
-- Automatic image optimization
-- Component-based template system
+| Directory | Key frontmatter fields |
+|---|---|
+| `content/news/` | `title`, `date`, `image`, `excerpt`, `highlight` |
+| `content/members/` | `name`, `role`, `image`, `featured`, `skills`, `github`, `linkedin`, `projects`, `opentowork` |
+| `content/projects/` | `title`, `image`, `excerpt` |
+| `content/meetings/` | `title`, `date` (MM/DD/YYYY), `time`, `location`, `announcement` |
+| `content/heroes/` | Named by page (e.g. `index.md`, `about.md`) |
 
 ## Deployment
 
-The website is automatically deployed via GitHub Actions when changes are pushed to the main branch. The generated site is served from GitHub Pages.
+GitHub Actions automatically builds and deploys to GitHub Pages on push to `main`. The `output/` directory is not committed.
 
-## Contributing
+## License
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test the build locally
-5. Submit a pull request
-
-## Support
-
-For issues or questions, please open an issue on GitHub or contact the Boston Robot Hackers community.
+MIT — see [LICENSE](LICENSE)

@@ -43,6 +43,15 @@
                     </div>
                     {% endif %}
                 </div>
+                {% set project_members = members_map[project.id] if members_map and project.id in members_map else [] %}
+                {% if project_members %}
+                <div class="mt-1">
+                    <strong>Members:</strong>
+                    {% for m in project_members %}
+                        <a href="{{ m.url }}">{{ m.name }}</a>{% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                </div>
+                {% endif %}
             </div>
         </div>
         

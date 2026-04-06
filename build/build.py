@@ -125,7 +125,16 @@ class WebsiteBuilder:
     def build_projects_page(self):
         """Build the projects.html page."""
         projects = self.content_manager.get_all_content(self.content_types['projects'])
-        self.page_builder.build_detail_pages(projects, self.content_types['projects'])
+        members = self.content_manager.get_all_content(self.content_types['members'])
+        members_map = {}
+        for member in members:
+            for slug in member['metadata'].get('projects', []):
+                members_map.setdefault(slug, []).append({
+                    'id': member['id'],
+                    'name': member['title'],
+                    'url': f"../members/{member['id']}.html",
+                })
+        self.page_builder.build_detail_pages(projects, self.content_types['projects'], members_map=members_map)
         
         projects_content = self.page_builder.render_projects_content(projects)
         hero_content = self.content_manager.build_hero_content('projects')
@@ -142,9 +151,12 @@ class WebsiteBuilder:
     def build_members_page(self):
         """Build the members.html page."""
         members = self.content_manager.get_all_content(self.content_types['members'])
-        self.page_builder.build_detail_pages(members, self.content_types['members'])
-        
-        members_content = self.page_builder.render_member_cards(members)
+        projects = self.content_manager.get_all_content(self.content_types['projects'])
+        projects_map_detail = {p['id']: {'title': p['title'], 'url': f"../projects/{p['id']}.html"} for p in projects}
+        projects_map_listing = {p['id']: {'title': p['title'], 'url': f"projects/{p['id']}.html"} for p in projects}
+        self.page_builder.build_detail_pages(members, self.content_types['members'], projects_map=projects_map_detail)
+
+        members_content = self.page_builder.render_member_cards(members, projects_map=projects_map_listing)
         hero_content = self.content_manager.build_hero_content('members')
         
         self.page_builder.build_page(
@@ -169,25 +181,6 @@ class WebsiteBuilder:
         )
 
         print("Built about.html")
-
-    def build_community_page(self):
-        """Build the community.html page combining members and projects."""
-        members = self.content_manager.get_all_content(self.content_types['members'])
-        projects = self.content_manager.get_all_content(self.content_types['projects'])
-
-        members_content = self.page_builder.render_member_cards(members)
-        projects_content = self.page_builder.render_projects_content(projects)
-        hero_content = self.content_manager.build_hero_content('community')
-
-        self.page_builder.build_page(
-            'pages/community.html',
-            'community.html',
-            hero=hero_content,
-            members_content=members_content,
-            projects_content=projects_content,
-        )
-
-        print(f"Built community.html with {len(members)} members and {len(projects)} projects")
 
     def build_learn_page(self):
         """Build the learn.html page."""
@@ -243,7 +236,6 @@ class WebsiteBuilder:
         self.build_meetings_page()
         self.build_about_page()
         self.build_learn_page()
-        self.build_community_page()
 
         print("Build complete!")
 

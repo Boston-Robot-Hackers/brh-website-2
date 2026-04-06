@@ -41,7 +41,7 @@ class PageBuilder:
 
         return str(date_str)
     
-    def build_detail_pages(self, items: List[Dict], content_type: ContentType):
+    def build_detail_pages(self, items: List[Dict], content_type: ContentType, **extra_context):
         """Generic method to build detail pages."""
         if not items:
             return
@@ -69,6 +69,7 @@ class PageBuilder:
             template_vars = {
                 'site': self.site_config,
                 var_name: item_with_formatted_date,
+                **extra_context,
             }
 
             # For meetings, check if announcement and report files exist
@@ -156,22 +157,21 @@ class PageBuilder:
 
         return self.render_cards(projects_with_status, 'cards/project-card.html')
     
-    def render_member_cards(self, members):
+    def render_member_cards(self, members, projects_map=None):
         """Render member cards for the members page."""
-        # Flatten member data for the template
         members_flattened = []
         for member in members:
             member_copy = member.copy()
             member_copy.update({
                 'name': member['title'],
-                'role': member['metadata'].get('role', 'Member'),
-                'skills': member['metadata'].get('skills', []),
+'hashtags': member['metadata'].get('hashtags', []),
+                'projects': member['metadata'].get('projects', []),
                 'card_text': member['metadata'].get('card-text', 'MEMBER'),
                 'image': member['metadata'].get('image'),
             })
             members_flattened.append(member_copy)
 
-        return self.render_cards(members_flattened, 'cards/member-card.html')
+        return self.render_cards(members_flattened, 'cards/member-card.html', projects_map=projects_map)
 
     def group_meetings_by_month(self, meetings: List[Dict]) -> List[Dict]:
         """Group meetings by month, pairing main and hands-on meetings."""

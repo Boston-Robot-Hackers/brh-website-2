@@ -76,7 +76,47 @@ body {
   font-size: 0.7rem;
   color: var(--primary);
   letter-spacing: 0.01em;
-  line-height: 1.6;
+  line-height: 1.8;
+}
+
+.member-tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--primary);
+}
+
+.member-projects {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 0.6rem !important;
+  padding-top: 0.6rem !important;
+  border-top: 2px solid var(--border) !important;
+}
+
+.member-projects-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-bottom: 3px;
+}
+
+.member-project-link {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--primary);
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+.member-project-link:hover {
+  color: var(--primary);
 }
 
 
@@ -206,7 +246,7 @@ footer p {
 
 /* Default image sizes with better proportions */
 .image-square {
-  height: 200px;
+  aspect-ratio: 1 / 1;
   width: 100%;
   border-radius: var(--radius-lg) var(--radius-lg) 0 0;
   overflow: hidden;
@@ -226,6 +266,7 @@ footer p {
 /* Modern "Open to work" banner */
 .card.open-to-work {
   position: relative;
+  padding-bottom: 28px;
 }
 
 .card.open-to-work::after {

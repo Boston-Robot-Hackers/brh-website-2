@@ -1,5 +1,5 @@
 <!-- Member card - Grid card displaying member info and skills. Reusable for any member listing. -->
-<div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-4">
+<div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-4" style="min-width: 200px;">
     <div class="card h-100 shadow-sm{% if metadata.opentowork %} open-to-work{% endif %}">
         <div class="image-base image-square d-flex align-items-center justify-content-center text-white fw-bold">
             {% if image %}
@@ -8,15 +8,32 @@
             {{ card_text }}
             {% endif %}
         </div>
-        <div class="card-body">
-            <h5 class="font-telex card-title h6 fw-normal">
+        <div class="card-body d-flex flex-column">
+            <h5 class="card-title mb-2" style="font-size: 1rem; font-weight: 600;">
                 <a href="members/{{ id }}.html" class="text-decoration-none">{{ name }}</a>
             </h5>
-            <p class="card-text text-muted small">{{ role }}</p>
-            {% if skills %}
-            <p class="member-skills mb-0">
-                {% for skill in skills %}#{{ skill }}{% if not loop.last %} {% endif %}{% endfor %}
-            </p>
+            {% if hashtags %}
+            <div class="member-skills mb-0 flex-grow-1">
+                {% for tag in hashtags %}<span class="member-tag">#{{ tag }}</span> {% endfor %}
+            </div>
+            {% endif %}
+            {% if projects and projects_map %}
+            {% set matched = projects | selectattr('__class__') | list %}
+            {% set ns = namespace(count=0) %}
+            {% for slug in projects %}{% if slug in projects_map %}{% set ns.count = ns.count + 1 %}{% endif %}{% endfor %}
+            {% if ns.count > 0 %}
+            <div class="member-projects">
+                <div class="member-projects-label">Projects</div>
+                {% set ns2 = namespace(shown=0) %}
+                {% for slug in projects %}
+                    {% if projects_map and slug in projects_map and ns2.shown < 2 %}
+                    <a href="{{ projects_map[slug].url }}" class="member-project-link">{{ projects_map[slug].title }}</a>
+                    {% set ns2.shown = ns2.shown + 1 %}
+                    {% endif %}
+                {% endfor %}
+                {% if ns.count > 2 %}<span class="member-project-link text-muted">+{{ ns.count - 2 }} more</span>{% endif %}
+            </div>
+            {% endif %}
             {% endif %}
         </div>
     </div>

@@ -1,9 +1,8 @@
 ---
 name: "Arjun Viswanathan"
-role: "RL Research Student"
 image: "images/people/arjun.jpg"
 featured: true
-skills: ["Reinforcement Learning", "Legged Robotics"]
+hashtags: ["ML", "student", "research"]
 github: "https://github.com/arjun-2612"
 linkedin: "https://www.linkedin.com/in/arjun-viswanathan-a7671620a/"
 projects: ["Husky-b Multimodal Quadruped"]

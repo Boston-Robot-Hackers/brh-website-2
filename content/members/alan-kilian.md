@@ -1,13 +1,12 @@
 ---
 name: "Alan Kilian"
-role: "Retired firmware/electronics engineer"
 image: "images/people/alankilian.jpg"
 featured: true
-skills: ["ROS", "Firmware Engineering", "Control systems","Electronics", "3D printing"]
+hashtags: ["ROS", "firmware", "controlsystems", "retired"]
 github: "https://github.com/AlanKilian"
 linkedin: "https://www.linkedin.com/in/alankilian/"
 website: "http://www.bobodyne.com/web-docs/"
-projects: ["iRobot Roomba Create-II","XRP robot"]
+projects: ["irobot_create", "XRP robot"]
 opentowork: false
 ---
 I'm a retired software/firmware engineer and manager who has loved and worked with robots for my entire life.
