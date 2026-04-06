@@ -11,6 +11,21 @@ import frontmatter
 import markdown
 
 
+def parse_date(date_str):
+    """Parse a date string trying common formats. Returns datetime or None."""
+    if not date_str:
+        return None
+    for fmt in ['%m/%d/%Y', '%Y-%m-%d', '%d/%m/%Y']:
+        try:
+            return datetime.strptime(str(date_str), fmt)
+        except ValueError:
+            continue
+    try:
+        return datetime.fromisoformat(str(date_str).replace('Z', '+00:00'))
+    except ValueError:
+        return None
+
+
 class ContentType:
     """Configuration for different content types."""
     def __init__(self, name: str, directory: str, sort_key: str = 'date', 
