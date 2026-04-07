@@ -14,4 +14,12 @@
             </div>
         </div>
     </div>
+    <div class="row mt-4">
+        <div class="col-lg-10 mx-auto">
+            <p class="text-muted small">
+                <strong>Available hashtags:</strong>
+                {% for tag in valid_hashtags %}#{{ tag }}{% if not loop.last %} &nbsp;{% endif %}{% endfor %}
+            </p>
+        </div>
+    </div>
 {% endblock %}

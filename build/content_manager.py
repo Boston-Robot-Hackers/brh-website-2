@@ -3,6 +3,7 @@ Content management module for the website builder.
 Handles loading and processing of markdown content.
 """
 
+import json
 from datetime import datetime
 from pathlib import Path
 from typing import List, Dict, Any
@@ -45,6 +46,20 @@ class ContentManager:
     
     def __init__(self, content_dir: Path):
         self.content_dir = content_dir
+        config_file = content_dir.parent / 'config' / 'site.json'
+        if config_file.exists():
+            site_config = json.loads(config_file.read_text())
+            self.valid_hashtags = set(site_config.get('valid_hashtags', []))
+        else:
+            self.valid_hashtags = set()
+
+    def validate_member_hashtags(self, member_id: str, hashtags: list):
+        """Warn about any hashtags not in the valid list."""
+        if not self.valid_hashtags:
+            return
+        for tag in hashtags:
+            if tag not in self.valid_hashtags:
+                print(f"Warning: member '{member_id}' has unknown hashtag '{tag}'")
     
     def setup_markdown_processor(self):
         """Set up markdown processor with syntax highlighting."""
@@ -108,6 +123,9 @@ class ContentManager:
         for md_file in content_dir.glob('*.md'):
             item_data = self.process_markdown_file(md_file, md_processor)
             if item_data:
+                if content_type.directory == 'members':
+                    hashtags = item_data['metadata'].get('hashtags', [])
+                    self.validate_member_hashtags(item_data['id'], hashtags)
                 items.append(item_data)
 
         # Sort by specified key

@@ -163,7 +163,8 @@ class WebsiteBuilder:
             'pages/members.html',
             'members.html',
             hero=hero_content,
-            members_content=members_content
+            members_content=members_content,
+            valid_hashtags=sorted(self.content_manager.valid_hashtags)
         )
         
         print(f"Built members.html with {len(members)} members")

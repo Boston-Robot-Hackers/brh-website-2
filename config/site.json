@@ -12,5 +12,6 @@
   "projects_title": "Projects",
   "projects_subtitle": "Current community initiatives",
   "projects_button_text": "Explore All Projects",
-  "footer_text": "© 2025 Boston Robot Hackers. Building the future, one robot at a time."
+  "footer_text": "© 2025 Boston Robot Hackers. Building the future, one robot at a time.",
+  "valid_hashtags": ["ROS", "CV", "ML", "SLAM", "NLP", "AI", "firmware", "embeddedsystems", "controlsystems", "networking", "software", "python", "C++", "simulation", "perception", "space", "student", "professional", "retired", "maker", "entrepreneur", "research"]
 }
