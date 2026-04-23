@@ -22,7 +22,7 @@ type: news
 
 ### Simulations!
 
-Simulation is one of the most powerful tools available to robotics engineers, from hobby projects on a Raspberry Pi to large-scale production systems using cutting-edge hardware. In this talk, Adam will discuss how the right simulation approach can accelerate development, improve safety, and reduce costly real-world failures.
+Simulation is one of the most powerful tools available to robotics engineers, from hobby projects on a Raspberry Pi to large-scale production systems using cutting-edge hardware. We are very fortunate to have [Adam Ring](https://www.linkedin.com/in/adam-ring-7166a319b/), an expert in Simulation for Robotics to share with us how the right simulation approach can accelerate development, improve safety, and reduce costly real-world failures.
  
 <img src="../../images/news/adamsim.jpg" alt="Sample image" style="float: left; margin: 25px 25px 25px 25px; border-radius: 8px; height: 250px;">
 
