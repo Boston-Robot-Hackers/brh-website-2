@@ -16,8 +16,8 @@ excerpt: "Isaac Vandor is the developer and maintainer for the software running 
 
 * 7:00 Mingle, network, show and tell
 * 7:30 Lightning Talks
-  * Update on Pupper
-  * Update on Hands on meetings
+    * Update on Pupper
+    * Update on Hands on meetings
 * 7:45 Featured Speaker: Isaac Vandor on Underwater robotics
 * 8:30 Q&A and Open Discussion
 * 9:00 End of formal meeting
