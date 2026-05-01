@@ -1,7 +1,7 @@
 ---
-title: "Meeting Report: Chris Lai on Kalman Filters"
+title: "Isaac Vandor talk about maritime robotics"
 date: 2026-07-09
-image: "news/sentry.png"
+image: "images/news/sentry.png"
 highlight: true
 type: news
 excerpt: "Isaac Vandor is the developer and maintainer for the software running on famous underwater vehicles like Alvin and AUV Sentry. Isaac will talk about his work and experiences with underwater maritime robotics."
