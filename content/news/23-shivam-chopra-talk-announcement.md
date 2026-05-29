@@ -1,7 +1,7 @@
 ---
 title: "Aug 8: Shivam: Forward and Inverse Kinematics"
 date: 2026-08-06
-image: "images/news/sentry.png"
+image: "images/news/kinematics.png"
 highlight: true
 type: news
 excerpt: "Shivam is a Senior Medical Device Engineer and Subsystem Technical Lead at Dexcom, where he works on next-generation wearable platforms. Every robotic arm faces the same two fundamental questions: given these joint angles, where is the end-effector? (forward kinematics) — and the harder one: given a target, what joint angles get me there? (inverse kinematics). The math behind both questions is something every roboticist eventually has to reckon with, and this talk is a ground-up walk through it."
@@ -24,12 +24,11 @@ excerpt: "Shivam is a Senior Medical Device Engineer and Subsystem Technical Lea
  
 ### Featured Talk
 
+#### Forward & Inverse Kinematics: The Math: From joint angles to end-effector poses — and back again
 
 <a href="../../images/news/kinematics.png">
     <img src="../../images/news/kinematics.png" alt="Sample image" style="float: left; margin: 25px 25px 25px 25px; border-radius: 8px; height: 200px;">
 </a>
-
-## Forward & Inverse Kinematics: The Math: From joint angles to end-effector poses — and back again
 
 Every robotic arm faces the same two fundamental questions: given these joint angles, where is the end-effector? (forward kinematics) — and the harder one: given a target, what joint angles get me there? (inverse kinematics). The math behind both questions is something every roboticist eventually has to reckon with, and this talk is a ground-up walk through it.
 
@@ -37,7 +36,7 @@ We'll start with the building blocks — rotation matrices, homogeneous transfor
 
 The goal is that you leave with enough intuition to read a kinematics derivation, implement a basic solver, and know which approach to reach for on your own robot — whether it's a 3-DOF desktop arm or something more exotic.
 
-## Speaker: Shivam Chopra
+#### Speaker: Shivam Chopra
 
 Our August 8 main speaker will be Shivam Chopra, PhD, who is a Senior Medical Device Engineer and Subsystem Technical Lead at Dexcom, where he leads electromechanical architecture and validation for next-generation wearable platforms. He holds a PhD in Mechanical Engineering (Robotics) from UC San Diego, where his research in the Gravish Lab spanned underactuated locomotion and sensing in granular and underwater environments. His robot was the fastest untethered digging robot that could sense obstacles. With 10+ years across robotics R&D, automation, and hardware-software integration, Shivam brings both the theory and the scars of making robots actually work.
 
