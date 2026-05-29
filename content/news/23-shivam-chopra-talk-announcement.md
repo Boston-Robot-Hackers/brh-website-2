@@ -1,5 +1,5 @@
 ---
-title: "Aug 8: Shivam: Forward and Inverse Kinematics"
+title: "Aug 8: Shivam Chopra: Forward and Inverse Kinematics"
 date: 2026-08-06
 image: "images/news/kinematics.png"
 highlight: true
