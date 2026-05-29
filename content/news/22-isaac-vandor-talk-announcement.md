@@ -1,5 +1,5 @@
 ---
-title: "Isaac Vandor talk about maritime robotics"
+title: "July 9: Isaac Vandor talk about maritime robotics"
 date: 2026-07-09
 image: "images/news/sentry.png"
 highlight: true

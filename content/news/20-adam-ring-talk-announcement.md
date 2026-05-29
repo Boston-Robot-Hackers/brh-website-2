@@ -1,5 +1,5 @@
 ---
-title: "Adam Ring talk about simulation"
+title: "May 7: Adam Ring talk about simulation"
 date: 2026-04-04
 image: "images/news/adamsim.jpg"
 excerpt: "Adam Ring will give the talk about simulation in robotics. In this talk, Adam will discuss how the right simulation approach can accelerate development, improve safety, and reduce costly real-world failures."
