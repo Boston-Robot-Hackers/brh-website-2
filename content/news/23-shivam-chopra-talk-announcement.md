@@ -1,5 +1,5 @@
 ---
-title: "Shivam Chopra will give a talk on Forward and Inverse Kinematics"
+title: "Aug 8: Shivam: Forward and Inverse Kinematics"
 date: 2026-08-06
 image: "images/news/sentry.png"
 highlight: true
