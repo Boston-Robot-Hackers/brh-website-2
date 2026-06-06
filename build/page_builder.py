@@ -9,16 +9,17 @@ from typing import List, Dict, Any
 
 from jinja2 import Environment
 
-from content_manager import ContentType
+from content_manager import ContentType, classify_meeting
 
 
 class PageBuilder:
     """Handles page building and template rendering."""
-    
+
     def __init__(self, jinja_env: Environment, dist_dir: Path, site_config: Dict):
         self.jinja_env = jinja_env
         self.dist_dir = dist_dir
         self.site_config = site_config
+        self._news_map = None
     
     def format_date(self, date_str: str) -> str:
         """Format date string for display."""
@@ -72,14 +73,14 @@ class PageBuilder:
                 **extra_context,
             }
 
-            # For meetings, check if announcement and report files exist
+            # For meetings, resolve announcement and report links
             if content_type.name == 'meetings':
-                template_vars[var_name]['announcement_exists'] = self.check_news_file_exists(
-                    item['metadata'].get('announcement')
-                )
-                template_vars[var_name]['report_exists'] = self.check_news_file_exists(
-                    item['metadata'].get('report')
-                )
+                ann_html, ann_exists = self.news_html_name(item['metadata'].get('announcement'))
+                rep_html, rep_exists = self.news_html_name(item['metadata'].get('report'))
+                template_vars[var_name]['announcement_exists'] = ann_exists
+                template_vars[var_name]['report_exists'] = rep_exists
+                template_vars[var_name]['announcement_html'] = ann_html
+                template_vars[var_name]['report_html'] = rep_html
 
             html_content = detail_template.render(**template_vars)
             detail_file = detail_dir / f"{item['id']}.html"
@@ -87,12 +88,43 @@ class PageBuilder:
 
         print(f"Built {len(items)} {content_type.name} detail pages")
 
+    def news_id_map(self) -> Dict[str, str]:
+        """Map every news reference (filename stem or `slug`) to its output id."""
+        if self._news_map is not None:
+            return self._news_map
+        import frontmatter
+        mapping: Dict[str, str] = {}
+        news_dir = self.dist_dir.parent / 'content' / 'news'
+        if news_dir.exists():
+            for f in news_dir.glob('*.md'):
+                try:
+                    slug = frontmatter.load(f).metadata.get('slug')
+                except Exception:
+                    slug = None
+                out_id = slug or f.stem
+                mapping[f.stem] = out_id
+                if slug:
+                    mapping[slug] = out_id
+        self._news_map = mapping
+        return mapping
+
+    def news_html_name(self, ref: str):
+        """Resolve an announcement/report reference to (html_filename, exists).
+
+        The published filename comes from the news item's `slug` (or stem), so
+        meeting links survive a news file being renamed or given a stable slug.
+        """
+        if not ref:
+            return '', False
+        key = str(ref).rsplit('.', 1)[0]
+        out_id = self.news_id_map().get(key)
+        if out_id:
+            return f'{out_id}.html', True
+        return '', False
+
     def check_news_file_exists(self, filename: str) -> bool:
-        """Check if a news file exists in the content directory."""
-        if not filename:
-            return False
-        news_file = self.dist_dir.parent / 'content' / 'news' / filename
-        return news_file.exists()
+        """Check if a referenced news file resolves to a real news item."""
+        return self.news_html_name(filename)[1]
     
     def render_cards(self, items: List[Dict], template_name: str,
                      item_var_name: str = None, **extra_context) -> str:
@@ -117,14 +149,14 @@ class PageBuilder:
                 if 'date' in item and item['date']:
                     context['formatted_date'] = self.format_date(item['date'])
 
-            # For meeting cards, add announcement/report existence checks
+            # For meeting cards, resolve announcement/report links
             if 'compact-meeting-card' in template_name and 'metadata' in item:
-                context['announcement_exists'] = self.check_news_file_exists(
-                    item['metadata'].get('announcement')
-                )
-                context['report_exists'] = self.check_news_file_exists(
-                    item['metadata'].get('report')
-                )
+                ann_html, ann_exists = self.news_html_name(item['metadata'].get('announcement'))
+                rep_html, rep_exists = self.news_html_name(item['metadata'].get('report'))
+                context['announcement_exists'] = ann_exists
+                context['report_exists'] = rep_exists
+                context['announcement_html'] = ann_html
+                context['report_html'] = rep_html
 
             card_html = template.render(**context)
             cards_html.append(card_html)
@@ -192,11 +224,13 @@ class PageBuilder:
                     month_label = date_obj.strftime('%B %Y')
 
                     # Determine if main or hands-on
-                    title = meeting.get('title', '')
-                    if 'Hands On' in title or 'Hands-On' in title or 'handson' in title.lower():
-                        month_groups[month_key]['handson'] = meeting
-                    else:
-                        month_groups[month_key]['main'] = meeting
+                    slot = classify_meeting(meeting['metadata'], meeting.get('title', ''))
+                    if month_groups[month_key][slot] is not None:
+                        existing = month_groups[month_key][slot].get('id', '?')
+                        print(f"Warning: month {month_key} already has a '{slot}' meeting "
+                              f"('{existing}'); '{meeting.get('id', '?')}' will overwrite it "
+                              f"on the meetings page")
+                    month_groups[month_key][slot] = meeting
 
                     month_groups[month_key]['label'] = month_label
                     month_groups[month_key]['sort_key'] = month_key
@@ -233,17 +267,21 @@ class PageBuilder:
                 'handson_meeting': group['handson_meeting'],
             }
 
-            # Add announcement/report existence checks for main meeting
+            # Resolve announcement/report links for main meeting
             if group['main_meeting']:
-                context['main_announcement_exists'] = self.check_news_file_exists(
-                    group['main_meeting']['metadata'].get('announcement')
-                )
-                context['main_report_exists'] = self.check_news_file_exists(
-                    group['main_meeting']['metadata'].get('report')
-                )
+                ann_html, ann_exists = self.news_html_name(
+                    group['main_meeting']['metadata'].get('announcement'))
+                rep_html, rep_exists = self.news_html_name(
+                    group['main_meeting']['metadata'].get('report'))
+                context['main_announcement_exists'] = ann_exists
+                context['main_report_exists'] = rep_exists
+                context['main_announcement_html'] = ann_html
+                context['main_report_html'] = rep_html
             else:
                 context['main_announcement_exists'] = False
                 context['main_report_exists'] = False
+                context['main_announcement_html'] = ''
+                context['main_report_html'] = ''
 
             card_html = template.render(**context)
             cards_html.append(card_html)
@@ -280,16 +318,14 @@ class PageBuilder:
 
             # Determine meeting type label
             title = meeting.get('title', '')
-            if 'Hands On' in title or 'Hands-On' in title or 'handson' in title.lower():
+            if classify_meeting(meeting['metadata'], title) == 'handson':
                 type_label = 'Hands-On Meeting'
             else:
                 type_label = 'Main Meeting'
 
-            # Build announcement URL if the file exists
-            announcement = meeting['metadata'].get('announcement', '')
-            announcement_url = ''
-            if announcement and self.check_news_file_exists(announcement):
-                announcement_url = 'news/' + announcement.replace('.md', '.html')
+            # Build announcement URL if it resolves to a real news item
+            ann_html, ann_exists = self.news_html_name(meeting['metadata'].get('announcement'))
+            announcement_url = f'news/{ann_html}' if ann_exists else ''
 
             # Format for template
             upcoming.append({

@@ -42,7 +42,7 @@
     <div class="small mt-2" style="padding-left: 1.5rem;">
         <span style="white-space: nowrap;">
         {% if main_announcement_exists %}
-            <a href="news/{{ main_meeting.metadata.announcement|replace('.md', '.html') }}">announcement</a>
+            <a href="news/{{ main_announcement_html }}">announcement</a>
         {% else %}
             <span class="text-muted">announcement TBD</span>
         {% endif %}
@@ -50,7 +50,7 @@
         <span style="white-space: nowrap;">
         |
         {% if main_report_exists %}
-            <a href="news/{{ main_meeting.metadata.report|replace('.md', '.html') }}">report</a>
+            <a href="news/{{ main_report_html }}">report</a>
         {% else %}
             <span class="text-muted">report TBD</span>
         {% endif %}

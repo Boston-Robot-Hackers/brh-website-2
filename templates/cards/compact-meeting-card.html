@@ -24,7 +24,7 @@
             <div class="small mt-1" style="display: inline;">
                 <span style="white-space: nowrap;">
                 {% if announcement_exists %}
-                    <a href="news/{{ metadata.announcement|replace('.md', '.html') }}">announcement</a>
+                    <a href="news/{{ announcement_html }}">announcement</a>
                 {% else %}
                     <span class="text-muted">announcement TBD</span>
                 {% endif %}
@@ -32,7 +32,7 @@
                 <span style="white-space: nowrap;">
                 |
                 {% if report_exists %}
-                    <a href="news/{{ metadata.report|replace('.md', '.html') }}">report</a>
+                    <a href="news/{{ report_html }}">report</a>
                 {% else %}
                     <span class="text-muted">report TBD</span>
                 {% endif %}

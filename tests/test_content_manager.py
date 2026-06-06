@@ -195,57 +195,40 @@ class TestHeroGeneration:
         assert items[1]["metadata"]["order"] == 2
 
 
-class TestLegacyMeetingMethods:
-    def test_format_single_meeting_for_hero_with_time(self, tmp_content_dir):
-        cm = ContentManager(tmp_content_dir)
-        meeting = {"date": "03/15/2024", "time": "7:00pm", "location": "", "announcement": ""}
-        result = cm.format_single_meeting_for_hero("Test Label", meeting)
-        assert "Test Label" in result
-        assert "03/15/2024" in result
+class TestClassifyMeeting:
+    def test_kind_field_takes_precedence_over_title(self):
+        from content_manager import classify_meeting
+        # title says hands-on, but explicit kind wins
+        assert classify_meeting({"kind": "main"}, "Hands On Night") == "main"
+        assert classify_meeting({"kind": "handson"}, "Regular Meeting") == "handson"
 
-    def test_format_single_meeting_for_hero_with_announcement(self, tmp_content_dir):
-        news_dir = tmp_content_dir / "news"
-        (news_dir / "announce.md").write_text("---\ntitle: Announce\n---\nDetails.\n")
-        cm = ContentManager(tmp_content_dir)
-        meeting = {"date": "03/15/2024", "time": "7pm", "location": "Lab", "announcement": "announce.md"}
-        result = cm.format_single_meeting_for_hero("Label", meeting)
-        assert "<a href=" in result
+    def test_falls_back_to_title_when_no_kind(self):
+        from content_manager import classify_meeting
+        assert classify_meeting({}, "Hands-On Meeting - May 20") == "handson"
+        assert classify_meeting({}, "May 7 at 7:00pm") == "main"
 
-    def test_load_meeting_info_exists(self, tmp_content_dir):
-        cm = ContentManager(tmp_content_dir)
-        result = cm.load_meeting_info("meeting-future.md")
-        assert result is not None
-        assert result["title"] == "Main Meeting"
+    def test_defaults_to_main(self):
+        from content_manager import classify_meeting
+        assert classify_meeting({}, "") == "main"
 
-    def test_load_meeting_info_missing(self, tmp_content_dir):
-        cm = ContentManager(tmp_content_dir)
-        result = cm.load_meeting_info("nonexistent.md")
-        assert result is None
 
-    def test_format_meeting_section_both_present(self, tmp_content_dir):
+class TestResolveNewsHtml:
+    def test_resolves_by_filename_stem(self, tmp_content_dir):
+        (tmp_content_dir / "news" / "my-talk.md").write_text("---\ntitle: Talk\n---\nx.\n")
         cm = ContentManager(tmp_content_dir)
-        meeting = {"date": "03/15/2024", "time": "7pm", "location": "", "announcement": "x.md"}
-        result = cm.format_meeting_section(meeting, meeting)
-        assert "Next Meeting" in result
-        assert "Next Hands-On Meeting" in result
+        assert cm.resolve_news_html("my-talk.md") == ("my-talk.html", True)
+        assert cm.resolve_news_html("my-talk") == ("my-talk.html", True)
 
-    def test_format_meeting_section_one_missing(self, tmp_content_dir):
+    def test_resolves_by_slug_decoupled_from_filename(self, tmp_content_dir):
+        (tmp_content_dir / "news" / "2099-01-01-raw-name.md").write_text(
+            "---\ntitle: Talk\nslug: stable-talk\n---\nx.\n"
+        )
         cm = ContentManager(tmp_content_dir)
-        meeting = {"date": "03/15/2024", "time": "7pm", "location": "", "announcement": ""}
-        result = cm.format_meeting_section(meeting, None)
-        assert "Next Meeting" in result
-        assert "Next Hands-On Meeting" not in result
+        # reference by slug resolves; output url uses the slug, not the filename
+        assert cm.resolve_news_html("stable-talk") == ("stable-talk.html", True)
+        assert cm.resolve_news_html("2099-01-01-raw-name") == ("stable-talk.html", True)
 
-    def test_format_single_meeting_with_announcement(self, tmp_content_dir):
-        news_dir = tmp_content_dir / "news"
-        (news_dir / "event.md").write_text("---\ntitle: Event\n---\nDetails.\n")
+    def test_missing_reference_returns_not_exists(self, tmp_content_dir):
         cm = ContentManager(tmp_content_dir)
-        meeting = {"date": "03/15/2024", "time": "7pm", "location": "Lab", "announcement": "event.md"}
-        result = cm.format_single_meeting("Meeting", meeting)
-        assert "<a href=" in result
-
-    def test_format_single_meeting_no_announcement(self, tmp_content_dir):
-        cm = ContentManager(tmp_content_dir)
-        meeting = {"date": "03/15/2024", "time": "7pm", "location": "", "announcement": ""}
-        result = cm.format_single_meeting("Meeting", meeting)
-        assert "coming soon" in result
+        assert cm.resolve_news_html("nope.md") == ("", False)
+        assert cm.resolve_news_html("") == ("", False)

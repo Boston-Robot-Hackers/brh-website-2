@@ -5,5 +5,6 @@ time: "7:00pm"
 location: "Artisans Asylum, 96 Holton Street, Allston"
 text: Space Station OS
 type: meeting
+kind: main
 announcement: "4-talk-announcement.md"
 ---
