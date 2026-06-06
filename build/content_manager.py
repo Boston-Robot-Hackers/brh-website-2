@@ -99,36 +99,29 @@ class ContentManager:
         if md_processor is None:
             md_processor = self.setup_markdown_processor()
 
+        post = frontmatter.load(file_path)
+        html_content = md_processor.convert(post.content)
+        metadata = post.metadata
+
+        # Normalize the date to an ISO string and validate it at the boundary,
+        # so a bad date fails the build here, naming the file.
+        raw_date = metadata.get('date')
+        metadata['date'] = raw_date.isoformat() if hasattr(raw_date, 'isoformat') else raw_date
         try:
-            post = frontmatter.load(file_path)
-            html_content = md_processor.convert(post.content)
-            metadata = post.metadata
+            parse_date(metadata['date'])
+        except ValueError as e:
+            raise ValueError(f"{file_path}: {e}") from e
 
-            # Normalize date field from frontmatter
-            if 'date' in metadata:
-                if isinstance(metadata['date'], datetime):
-                    metadata['date'] = metadata['date'].isoformat()
-                elif hasattr(metadata['date'], 'isoformat'):
-                    metadata['date'] = metadata['date'].isoformat()
-                elif isinstance(metadata['date'], str):
-                    metadata['date'] = metadata['date']
-            else:
-                metadata['date'] = None
-
-            return {
-                'id': metadata.get('slug') or file_path.stem,
-                'title': metadata.get('title', metadata.get('name', 'Untitled')),
-                'date': metadata.get('date'),
-                'image': metadata.get('image', ''),
-                'text': metadata.get('text', metadata.get('emoji')),
-                'excerpt': metadata.get('excerpt', ''),
-                'content': html_content,
-                'metadata': metadata
-            }
-
-        except Exception as e:
-            print(f"Error processing {file_path}: {e}")
-            return None
+        return {
+            'id': metadata.get('slug') or file_path.stem,
+            'title': metadata.get('title', metadata.get('name', 'Untitled')),
+            'date': metadata.get('date'),
+            'image': metadata.get('image', ''),
+            'text': metadata.get('text', metadata.get('emoji')),
+            'excerpt': metadata.get('excerpt', ''),
+            'content': html_content,
+            'metadata': metadata
+        }
     
     def get_all_content(self, content_type: ContentType) -> List[Dict[str, Any]]:
         """Generic method to get all content of a given type."""
@@ -157,14 +150,9 @@ class ContentManager:
             # For order field, default to 0 if not present, so items without order come first
             items.sort(key=lambda x: x['metadata'].get('order', 0), reverse=content_type.reverse)
         elif content_type.sort_key == 'date':
-            # Sort chronologically by parsed date. A malformed date fails the
-            # build loudly, naming the offending file.
-            def date_key(x):
-                try:
-                    return parse_date(x['date']) or datetime.min
-                except ValueError as e:
-                    raise ValueError(f"{content_type.directory}/{x['id']}.md: {e}") from e
-            items.sort(key=date_key, reverse=content_type.reverse)
+            # Dates were validated at load, so sort chronologically directly.
+            items.sort(key=lambda x: parse_date(x['date']) or datetime.min,
+                       reverse=content_type.reverse)
         else:
             items.sort(key=lambda x: x[content_type.sort_key] or '', reverse=content_type.reverse)
         return items
@@ -200,30 +188,22 @@ class ContentManager:
         future_meetings = []
 
         for md_file in meetings_dir.glob('*.md'):
-            try:
-                post = frontmatter.load(md_file)
-                metadata = post.metadata
-                date_str = metadata.get('date', '')
-
-                if not date_str:
-                    continue
-
-                parsed = parse_date(date_str)
-                if parsed is None:
-                    continue
-                meeting_date = parsed.date()
-
-                # Only include future meetings
-                if meeting_date >= today:
-                    future_meetings.append({
-                        'metadata': metadata,
-                        'date_obj': meeting_date,
-                        'title': metadata.get('title', '')
-                    })
-
-            except Exception as e:
-                print(f"Error processing {md_file}: {e}")
+            metadata = frontmatter.load(md_file).metadata
+            date_str = metadata.get('date')
+            if not date_str:
                 continue
+
+            try:
+                meeting_date = parse_date(date_str).date()
+            except ValueError as e:
+                raise ValueError(f"{md_file}: {e}") from e
+
+            if meeting_date >= today:
+                future_meetings.append({
+                    'metadata': metadata,
+                    'date_obj': meeting_date,
+                    'title': metadata.get('title', '')
+                })
 
         # Sort by date ascending (nearest first)
         future_meetings.sort(key=lambda x: x['date_obj'])

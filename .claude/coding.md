@@ -32,6 +32,18 @@
 * Do not go overboard on error checking
 * Never use bare `except Exception:` — be specific and log or re-raise
 * Do not code defensively; let exceptions bubble up
+
+#### Fail fast on what you control
+We own our content, config, and internal contracts. Treat a malformed value
+there as a bug to fix at the source — not a case to detect and silently repair.
+
+* One canonical format per concept (dates are ISO `YYYY-MM-DD`, IDs are slugs, …). Enforce it; don't accept variants.
+* No multi-format fallback loops (`for fmt in [...]: try/except`) over data we author — that's a smell.
+* On bad input, raise with context (name the value and the file); never coerce or rewrite it to "make it work".
+* Never return the bad input unchanged as a fallback (e.g. `format_date("garbage") -> "garbage"`) — it hides the problem downstream.
+* Never `except Exception: return None` (or `continue`) to swallow a bug and keep going — that turns a loud failure into silent-wrong output.
+* Validate once at the boundary (when content loads), not defensively at every use site.
+* Litmus test: "Could this malformed value only exist because *we* made a mistake?" If yes → assert/raise. Only genuinely external, untrusted input (web forms, third-party APIs) gets validate-and-reject — and even then, reject, don't silently fix.
 * Add a comment to a method or function ONLY if the name is not self-explanatory
 * Follow YAGNI: only add code explicitly required by current requirements
 * Prefer async/await over threading when there is a choice
