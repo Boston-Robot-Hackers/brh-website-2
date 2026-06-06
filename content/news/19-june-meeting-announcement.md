@@ -1,5 +1,5 @@
 ---
-title: "June 11: Alan Kilian talk: Powering Robots"
+title: "September 3: Alan Kilian talk: Powering Robots"
 date: 2026-02-27
 image: "images/battery.png"
 excerpt: "Alan Kilian, a long time software and hardware person with a lifelong passion for Robotics will speak about aspects of power for robots. Batteries, Measurement, Circuitry and more."
@@ -8,7 +8,7 @@ type: news
 ---
 ### Our Next Meeting
 
-* When: June 11, 2026, 7:00 to 9:00pm
+* When: September 3, 2026, 7:00 to 9:00pm
 * Where: [Artisans Asylum](https://www.artisansasylum.com) (96 Holton Street, Boston, MA 02135))
 * Register: [Register](https://brh.eventbrite.com)
 
