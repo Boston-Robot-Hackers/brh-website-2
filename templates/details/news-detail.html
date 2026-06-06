@@ -11,9 +11,9 @@
     <article class="news-detail">
         <div class="d-flex align-items-center mb-4">
             {% if post.image %}
-            <img src="../{{ post.image }}" class="rounded me-3" style="width: 80px; height: 80px; object-fit: cover;" alt="{{ post.title }}">
+            <img src="../{{ post.image }}" class="rounded me-3" style="width: 140px; height: 140px; object-fit: cover;" alt="{{ post.title }}">
             {% else %}
-            <div class="bg-secondary rounded d-flex align-items-center justify-content-center text-white fw-bold me-3" style="width: 80px; height: 80px; font-size: 1rem;">
+            <div class="bg-secondary rounded d-flex align-items-center justify-content-center text-white fw-bold me-3" style="width: 140px; height: 140px; font-size: 1rem;">
                 {{ post.text }}
             </div>
             {% endif %}

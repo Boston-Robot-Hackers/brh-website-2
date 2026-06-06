@@ -11,7 +11,7 @@
     <article class="meeting-detail">
         <div class="d-flex align-items-center mb-4">
             {% if meeting.image %}
-            <img src="../{{ meeting.image }}" class="rounded me-3" style="width: 80px; height: 80px; object-fit: cover;" alt="{{ meeting.title }}">
+            <img src="../{{ meeting.image }}" class="rounded me-3" style="width: 140px; height: 140px; object-fit: cover;" alt="{{ meeting.title }}">
             {% else %}
             <div class="bg-primary rounded d-flex align-items-center justify-content-center text-white fw-bold me-3" style="width: 80px; height: 80px; font-size: 1rem;">
                 {{ meeting.text or 'MTG' }}
