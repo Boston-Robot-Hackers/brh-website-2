@@ -26,10 +26,10 @@ def tmp_content_dir(tmp_path):
         "---\ntitle: Bob\nrole: Designer\n---\nBob bio.\n"
     )
     (tmp_path / "meetings" / "meeting-future.md").write_text(
-        "---\ntitle: Main Meeting\ndate: 2099-12-31\ntime: 7:00pm\n---\n"
+        "---\ntitle: Main Meeting\ndate: 2099-12-31\nkind: main\ntime: 7:00pm\n---\n"
     )
     (tmp_path / "meetings" / "meeting-past.md").write_text(
-        "---\ntitle: Past Meeting\ndate: 2020-01-01\ntime: 7:00pm\n---\n"
+        "---\ntitle: Past Meeting\ndate: 2020-01-01\nkind: main\ntime: 7:00pm\n---\n"
     )
     (tmp_path / "heroes" / "index.md").write_text(
         "---\ntitle: Welcome\nsubtitle: Boston Robot Hackers\n---\nHero content here.\n<hr/>\nMeeting info.\n"

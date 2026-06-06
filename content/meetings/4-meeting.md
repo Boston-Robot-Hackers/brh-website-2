@@ -7,5 +7,5 @@ type: meeting
 kind: main
 text: Using a VLA for controlling a robotic hand
 announcement: "11-fourth-meeting.md"
-report: "2025-11-15-update-on-fifth-meeting.md"
+report: "12-update-on-fifth-meeting.md"
 ---

@@ -29,21 +29,16 @@ def parse_date(date_str):
         raise ValueError(f"Invalid date {date_str!r}: expected ISO format YYYY-MM-DD") from e
 
 
-def classify_meeting(metadata: Dict[str, Any], title: str = '') -> str:
-    """Classify a meeting as 'handson' or 'main'.
+def classify_meeting(metadata: Dict[str, Any]) -> str:
+    """Return the meeting kind ('main' or 'handson').
 
-    Prefers an explicit `kind` field in frontmatter; falls back to a title
-    heuristic for older content that predates the field.
+    Requires an explicit `kind` field; a missing or unknown value is a content
+    bug, not something to guess from the title.
     """
-    kind = str(metadata.get('kind') or '').strip().lower()
-    if kind in ('handson', 'hands-on', 'hands on'):
-        return 'handson'
-    if kind in ('main', 'meeting'):
-        return 'main'
-    text = (title or metadata.get('title') or '').lower()
-    if 'hands on' in text or 'hands-on' in text or 'handson' in text:
-        return 'handson'
-    return 'main'
+    kind = metadata.get('kind')
+    if kind in ('main', 'handson'):
+        return kind
+    raise ValueError(f"meeting 'kind' must be 'main' or 'handson', got {kind!r}")
 
 
 class ContentType:
@@ -139,10 +134,11 @@ class ContentManager:
                 if content_type.directory == 'members':
                     hashtags = item_data['metadata'].get('hashtags', [])
                     self.validate_member_hashtags(item_data['id'], hashtags)
-                if content_type.directory == 'meetings' and not item_data['metadata'].get('kind'):
-                    print(f"Warning: meeting '{item_data['id']}' has no 'kind' field; "
-                          f"falling back to title heuristic (classified as "
-                          f"'{classify_meeting(item_data['metadata'], item_data['title'])}')")
+                if content_type.directory == 'meetings':
+                    try:
+                        classify_meeting(item_data['metadata'])
+                    except ValueError as e:
+                        raise ValueError(f"meetings/{item_data['id']}.md: {e}") from e
                 items.append(item_data)
 
         # Sort by specified key
@@ -221,10 +217,9 @@ class ContentManager:
 
         for meeting in nearest_meetings:
             metadata = meeting['metadata']
-            title = meeting['title']
 
             # Determine if it's a hands-on meeting
-            is_handson = classify_meeting(metadata, title) == 'handson'
+            is_handson = classify_meeting(metadata) == 'handson'
             label = "Next Hands-On Meeting" if is_handson else "Next Main Meeting"
 
             # Format the meeting
@@ -252,16 +247,10 @@ class ContentManager:
         """Build hero content from page-specific markdown file."""
         hero_file = self.content_dir / 'heroes' / f'{page_name}.md'
         if not hero_file.exists():
-            print(f"Warning: {hero_file} not found, leaving hero section blank")
-            return {'hero_title': '', 'hero_subtitle': '', 'hero_content': ''}
+            raise FileNotFoundError(f"Missing hero file: {hero_file}")
 
         md_processor = self.setup_markdown_processor()
         hero_data = self.process_markdown_file(hero_file, md_processor)
-
-        if not hero_data:
-            print(f"Warning: Failed to process {hero_file}, leaving hero section blank")
-            return {'hero_title': '', 'hero_subtitle': '', 'hero_content': ''}
-
         hero_content = hero_data['content']
 
         if page_name == 'index':
@@ -277,9 +266,7 @@ class ContentManager:
         """Process a single content file and return HTML content."""
         content_file = self.content_dir / filename
         if not content_file.exists():
-            print(f"Warning: {content_file} not found")
-            return f"<p>{filename} content not found.</p>"
-        
+            raise FileNotFoundError(f"Missing content file: {content_file}")
+
         md_processor = self.setup_markdown_processor()
-        content_data = self.process_markdown_file(content_file, md_processor)
-        return content_data['content'] if content_data else f"<p>Error processing {filename} content.</p>"
+        return self.process_markdown_file(content_file, md_processor)['content']

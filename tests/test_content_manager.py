@@ -112,7 +112,7 @@ class TestHeroGeneration:
     def test_get_future_meetings_sorted_ascending(self, tmp_content_dir):
         meetings_dir = tmp_content_dir / "meetings"
         (meetings_dir / "near-future.md").write_text(
-            "---\ntitle: Near Meeting\ndate: 2099-01-15\ntime: 7pm\n---\n"
+            "---\ntitle: Near Meeting\ndate: 2099-01-15\nkind: main\ntime: 7pm\n---\n"
         )
         cm = ContentManager(tmp_content_dir)
         meetings = cm.get_future_meetings()
@@ -123,7 +123,7 @@ class TestHeroGeneration:
     def test_get_future_meetings_parses_iso_date(self, tmp_content_dir):
         meetings_dir = tmp_content_dir / "meetings"
         (meetings_dir / "iso-date-meeting.md").write_text(
-            "---\ntitle: ISO Meeting\ndate: \"2099-06-15\"\ntime: 7pm\n---\n"
+            "---\ntitle: ISO Meeting\ndate: \"2099-06-15\"\nkind: main\ntime: 7pm\n---\n"
         )
         cm = ContentManager(tmp_content_dir)
         meetings = cm.get_future_meetings()
@@ -139,7 +139,7 @@ class TestHeroGeneration:
         meetings_dir = tmp_content_dir / "meetings"
         for i in range(3):
             (meetings_dir / f"extra-{i}.md").write_text(
-                f"---\ntitle: Extra Meeting {i}\ndate: 2099-0{i + 1}-10\ntime: 7pm\n---\n"
+                f"---\ntitle: Extra Meeting {i}\ndate: 2099-0{i + 1}-10\nkind: main\ntime: 7pm\n---\n"
             )
         cm = ContentManager(tmp_content_dir)
         meetings = cm.get_future_meetings()
@@ -157,7 +157,7 @@ class TestHeroGeneration:
         )
         meetings_dir = tmp_content_dir / "meetings"
         (meetings_dir / "linked-meeting.md").write_text(
-            "---\ntitle: Linked Meeting\ndate: 2099-06-15\ntime: 7pm\nannouncement: 2099-01-01-announce.md\n---\n"
+            "---\ntitle: Linked Meeting\ndate: 2099-06-15\nkind: main\ntime: 7pm\nannouncement: 2099-01-01-announce.md\n---\n"
         )
         cm = ContentManager(tmp_content_dir)
         meetings = cm.get_future_meetings()
@@ -179,11 +179,10 @@ class TestHeroGeneration:
         result = cm.generate_index_hero(static_content)
         assert result == static_content
 
-    def test_build_hero_content_loads_from_file(self, tmp_content_dir):
+    def test_build_hero_content_missing_file_raises(self, tmp_content_dir):
         cm = ContentManager(tmp_content_dir)
-        hero = cm.build_hero_content("projects")
-        assert hero["hero_title"] == ""
-        assert hero["hero_content"] == ""
+        with pytest.raises(FileNotFoundError):
+            cm.build_hero_content("projects")
 
     def test_build_hero_content_index_page(self, tmp_content_dir):
         cm = ContentManager(tmp_content_dir)
@@ -198,8 +197,8 @@ class TestHeroGeneration:
 
     def test_process_single_content_file_missing(self, tmp_content_dir):
         cm = ContentManager(tmp_content_dir)
-        result = cm.process_single_content_file("nonexistent.md")
-        assert "not found" in result
+        with pytest.raises(FileNotFoundError):
+            cm.process_single_content_file("nonexistent.md")
 
     def test_get_all_content_order_sort(self, tmp_path):
         items_dir = tmp_path / "items"
@@ -214,20 +213,20 @@ class TestHeroGeneration:
 
 
 class TestClassifyMeeting:
-    def test_kind_field_takes_precedence_over_title(self):
+    def test_returns_explicit_kind(self):
         from content_manager import classify_meeting
-        # title says hands-on, but explicit kind wins
-        assert classify_meeting({"kind": "main"}, "Hands On Night") == "main"
-        assert classify_meeting({"kind": "handson"}, "Regular Meeting") == "handson"
+        assert classify_meeting({"kind": "main"}) == "main"
+        assert classify_meeting({"kind": "handson"}) == "handson"
 
-    def test_falls_back_to_title_when_no_kind(self):
+    def test_missing_kind_raises(self):
         from content_manager import classify_meeting
-        assert classify_meeting({}, "Hands-On Meeting - May 20") == "handson"
-        assert classify_meeting({}, "May 7 at 7:00pm") == "main"
+        with pytest.raises(ValueError):
+            classify_meeting({})
 
-    def test_defaults_to_main(self):
+    def test_unknown_kind_raises(self):
         from content_manager import classify_meeting
-        assert classify_meeting({}, "") == "main"
+        with pytest.raises(ValueError):
+            classify_meeting({"kind": "social"})
 
 
 class TestResolveNewsHtml:
@@ -246,7 +245,11 @@ class TestResolveNewsHtml:
         assert cm.resolve_news_html("stable-talk") == ("stable-talk.html", True)
         assert cm.resolve_news_html("2099-01-01-raw-name") == ("stable-talk.html", True)
 
-    def test_missing_reference_returns_not_exists(self, tmp_content_dir):
+    def test_absent_reference_is_no_link(self, tmp_content_dir):
         cm = ContentManager(tmp_content_dir)
-        assert cm.resolve_news_html("nope.md") == ("", False)
         assert cm.resolve_news_html("") == ("", False)
+
+    def test_present_but_unresolved_reference_raises(self, tmp_content_dir):
+        cm = ContentManager(tmp_content_dir)
+        with pytest.raises(ValueError):
+            cm.resolve_news_html("nope.md")

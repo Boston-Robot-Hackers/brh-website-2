@@ -16,10 +16,7 @@ def build_news_index(news_dir: Path) -> Dict[str, str]:
     mapping: Dict[str, str] = {}
     if news_dir.exists():
         for f in news_dir.glob('*.md'):
-            try:
-                slug = frontmatter.load(f).metadata.get('slug')
-            except Exception:
-                slug = None
+            slug = frontmatter.load(f).metadata.get('slug')
             out_id = slug or f.stem
             mapping[f.stem] = out_id
             if slug:
@@ -28,11 +25,15 @@ def build_news_index(news_dir: Path) -> Dict[str, str]:
 
 
 def resolve_news_html(index: Dict[str, str], ref: str) -> Tuple[str, bool]:
-    """Resolve a reference to (html_filename, exists) using a prebuilt index."""
+    """Resolve a reference to (html_filename, exists) using a prebuilt index.
+
+    No ref means the link is genuinely absent (e.g. report not written yet) ->
+    (no link, False). A ref that is present but doesn't resolve is a typo or a
+    deleted file -> raise rather than silently dropping the link.
+    """
     if not ref:
         return '', False
     key = str(ref).rsplit('.', 1)[0]  # tolerate .md/.html suffixes
-    out_id = index.get(key)
-    if out_id:
-        return f'{out_id}.html', True
-    return '', False
+    if key not in index:
+        raise ValueError(f"Unresolved news reference: {ref!r}")
+    return f'{index[key]}.html', True

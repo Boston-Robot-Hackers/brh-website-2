@@ -114,7 +114,7 @@ class PageBuilder:
                 context['report_exists'] = rep_exists
                 context['announcement_html'] = ann_html
                 context['report_html'] = rep_html
-                context['kind'] = classify_meeting(item['metadata'], item.get('title', ''))
+                context['kind'] = classify_meeting(item['metadata'])
 
             card_html = template.render(**context)
             cards_html.append(card_html)
@@ -178,7 +178,7 @@ class PageBuilder:
             month_label = date_obj.strftime('%B %Y')
 
             # Determine if main or hands-on
-            slot = classify_meeting(meeting['metadata'], meeting.get('title', ''))
+            slot = classify_meeting(meeting['metadata'])
             if month_groups[month_key][slot] is not None:
                 existing = month_groups[month_key][slot].get('id', '?')
                 print(f"Warning: month {month_key} already has a '{slot}' meeting "
@@ -261,7 +261,7 @@ class PageBuilder:
 
             # Determine meeting type label
             title = meeting.get('title', '')
-            if classify_meeting(meeting['metadata'], title) == 'handson':
+            if classify_meeting(meeting['metadata']) == 'handson':
                 type_label = 'Hands-On Meeting'
             else:
                 type_label = 'Main Meeting'

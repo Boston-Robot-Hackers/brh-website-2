@@ -117,8 +117,10 @@ def _news_item(slug, title):
     return {"id": slug, "title": title, "date": "2024-01-01", "metadata": {}, "image": "", "text": "", "excerpt": ""}
 
 
-def _meeting_item(slug, title, date_str):
-    return {"id": slug, "title": title, "date": date_str, "metadata": {"date": date_str, "time": "7pm"}, "image": "", "text": "", "excerpt": ""}
+def _meeting_item(slug, title, date_str, kind="main"):
+    return {"id": slug, "title": title, "date": date_str,
+            "metadata": {"date": date_str, "time": "7pm", "kind": kind},
+            "image": "", "text": "", "excerpt": ""}
 
 
 class TestRenderCards:
@@ -155,8 +157,8 @@ class TestRenderCards:
 class TestGroupMeetingsByMonth:
     def test_groups_main_and_handson(self, rich_page_builder):
         meetings = [
-            _meeting_item("main-jan", "January Meeting", "2024-01-15"),
-            _meeting_item("hands-jan", "Hands On January", "2024-01-22"),
+            _meeting_item("main-jan", "January Meeting", "2024-01-15", kind="main"),
+            _meeting_item("hands-jan", "Hands On January", "2024-01-22", kind="handson"),
         ]
         grouped = rich_page_builder.group_meetings_by_month(meetings)
         assert len(grouped) == 1
