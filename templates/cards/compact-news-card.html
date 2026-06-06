@@ -3,9 +3,9 @@
     <div class="row g-0 h-100">
         <div class="col-auto d-flex align-items-stretch p-3">
             {% if image %}
-            <img src="{{ image }}" style="width: 110px; height: 110px; object-fit: cover; border-radius: var(--radius);" alt="{{ title }}">
+            <img src="{{ image }}" class="compact-news-img" alt="{{ title }}">
             {% else %}
-            <div class="bg-secondary d-flex align-items-center justify-content-center text-white fw-bold" style="width: 110px; height: 110px; font-size: 0.9rem; border-radius: var(--radius);">
+            <div class="bg-secondary d-flex align-items-center justify-content-center text-white fw-bold compact-news-thumb">
                 NEWS
             </div>
             {% endif %}

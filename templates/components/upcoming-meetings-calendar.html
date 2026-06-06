@@ -5,26 +5,26 @@
         <table class="table table-hover">
             <tbody>
             {% for meeting in meetings %}
-                <tr class="meeting-row"{% if meeting.announcement_url %} onclick="window.location='{{ meeting.announcement_url }}'" style="cursor: pointer;"{% endif %}>
-                    <td class="date-column" style="width: 140px; vertical-align: top; padding: 1rem 0.75rem;">
+                <tr class="meeting-row"{% if meeting.announcement_url %} data-href="{{ meeting.announcement_url }}"{% endif %}>
+                    <td class="date-column calendar-date-cell">
                         <div class="meeting-date">
-                            <div class="date-day" style="font-size: 1.75rem; font-weight: 700; line-height: 1; color: #212529;">
+                            <div class="date-day">
                                 {{ meeting.day }} {{ meeting.month_abbr }}
                             </div>
-                            <div class="date-month-year" style="font-size: 0.875rem; font-weight: 500; color: #6c757d; margin-top: 0.25rem;">
+                            <div class="date-month-year">
                                 {{ meeting.year }}
                             </div>
-                            <div class="date-time" style="font-size: 0.875rem; color: #6c757d; margin-top: 0.25rem;">
+                            <div class="date-time">
                                 {{ meeting.time }}
                             </div>
                         </div>
                     </td>
-                    <td class="details-column" style="vertical-align: top; padding: 1rem 0.75rem;">
-                        <div class="meeting-type" style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; color: #0d6efd; margin-bottom: 0.25rem; letter-spacing: 0.5px;">
+                    <td class="details-column calendar-details-cell">
+                        <div class="meeting-type">
                             {{ meeting.type_label }}
                         </div>
                         {% if meeting.text %}
-                        <div class="meeting-blurb" style="font-size: 0.95rem; color: #212529; line-height: 1.4;">
+                        <div class="meeting-blurb">
                             {{ meeting.text }}
                         </div>
                         {% endif %}

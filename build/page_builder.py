@@ -10,6 +10,7 @@ from typing import List, Dict, Any
 from jinja2 import Environment
 
 from content_manager import ContentType, classify_meeting
+from news_links import build_news_index, resolve_news_html
 
 
 class PageBuilder:
@@ -88,39 +89,11 @@ class PageBuilder:
 
         print(f"Built {len(items)} {content_type.name} detail pages")
 
-    def news_id_map(self) -> Dict[str, str]:
-        """Map every news reference (filename stem or `slug`) to its output id."""
-        if self._news_map is not None:
-            return self._news_map
-        import frontmatter
-        mapping: Dict[str, str] = {}
-        news_dir = self.dist_dir.parent / 'content' / 'news'
-        if news_dir.exists():
-            for f in news_dir.glob('*.md'):
-                try:
-                    slug = frontmatter.load(f).metadata.get('slug')
-                except Exception:
-                    slug = None
-                out_id = slug or f.stem
-                mapping[f.stem] = out_id
-                if slug:
-                    mapping[slug] = out_id
-        self._news_map = mapping
-        return mapping
-
     def news_html_name(self, ref: str):
-        """Resolve an announcement/report reference to (html_filename, exists).
-
-        The published filename comes from the news item's `slug` (or stem), so
-        meeting links survive a news file being renamed or given a stable slug.
-        """
-        if not ref:
-            return '', False
-        key = str(ref).rsplit('.', 1)[0]
-        out_id = self.news_id_map().get(key)
-        if out_id:
-            return f'{out_id}.html', True
-        return '', False
+        """Resolve an announcement/report reference to (html_filename, exists)."""
+        if self._news_map is None:
+            self._news_map = build_news_index(self.dist_dir.parent / 'content' / 'news')
+        return resolve_news_html(self._news_map, ref)
 
     def check_news_file_exists(self, filename: str) -> bool:
         """Check if a referenced news file resolves to a real news item."""
@@ -149,7 +122,7 @@ class PageBuilder:
                 if 'date' in item and item['date']:
                     context['formatted_date'] = self.format_date(item['date'])
 
-            # For meeting cards, resolve announcement/report links
+            # For meeting cards, resolve announcement/report links and classify
             if 'compact-meeting-card' in template_name and 'metadata' in item:
                 ann_html, ann_exists = self.news_html_name(item['metadata'].get('announcement'))
                 rep_html, rep_exists = self.news_html_name(item['metadata'].get('report'))
@@ -157,6 +130,7 @@ class PageBuilder:
                 context['report_exists'] = rep_exists
                 context['announcement_html'] = ann_html
                 context['report_html'] = rep_html
+                context['kind'] = classify_meeting(item['metadata'], item.get('title', ''))
 
             card_html = template.render(**context)
             cards_html.append(card_html)

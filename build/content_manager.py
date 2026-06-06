@@ -11,6 +11,8 @@ from typing import List, Dict, Any
 import frontmatter
 import markdown
 
+from news_links import build_news_index, resolve_news_html
+
 
 def parse_date(date_str):
     """Parse a date string trying common formats. Returns datetime or None."""
@@ -163,43 +165,11 @@ class ContentManager:
             items.sort(key=lambda x: x[content_type.sort_key] or '', reverse=content_type.reverse)
         return items
 
-    def news_id_map(self) -> Dict[str, str]:
-        """Map every news reference (filename stem or `slug`) to its output id.
-
-        Lets meetings reference an announcement/report by stem *or* slug, and
-        decouples the published URL from the physical filename (a file can be
-        renamed, or given a stable `slug`, without breaking links).
-        """
-        if self._news_map is not None:
-            return self._news_map
-        mapping: Dict[str, str] = {}
-        news_dir = self.content_dir / 'news'
-        if news_dir.exists():
-            for f in news_dir.glob('*.md'):
-                try:
-                    slug = frontmatter.load(f).metadata.get('slug')
-                except Exception:
-                    slug = None
-                out_id = slug or f.stem
-                mapping[f.stem] = out_id
-                if slug:
-                    mapping[slug] = out_id
-        self._news_map = mapping
-        return mapping
-
     def resolve_news_html(self, ref: str):
-        """Resolve an announcement/report reference to (html_filename, exists).
-
-        Accepts a value with or without a .md/.html extension, matched against
-        a news file's stem or its `slug`.
-        """
-        if not ref:
-            return '', False
-        key = str(ref).rsplit('.', 1)[0]
-        out_id = self.news_id_map().get(key)
-        if out_id:
-            return f'{out_id}.html', True
-        return '', False
+        """Resolve an announcement/report reference to (html_filename, exists)."""
+        if self._news_map is None:
+            self._news_map = build_news_index(self.content_dir / 'news')
+        return resolve_news_html(self._news_map, ref)
 
     def generate_index_hero(self, static_content: str) -> str:
         """Generate index hero by adding future meeting info to static content."""

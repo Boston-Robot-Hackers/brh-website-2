@@ -254,3 +254,134 @@
   aspect-ratio: 1 / 1;
   max-height: 100px;
 }
+/* ---- Upcoming meetings calendar (home page) ---- */
+.meeting-row[data-href] {
+  cursor: pointer;
+}
+.calendar-date-cell {
+  width: 140px;
+  vertical-align: top;
+  padding: 1rem 0.75rem;
+}
+.calendar-details-cell {
+  vertical-align: top;
+  padding: 1rem 0.75rem;
+}
+.date-day {
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #212529;
+}
+.date-month-year,
+.date-time {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #6c757d;
+  margin-top: 0.25rem;
+}
+.meeting-type {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #0d6efd;
+  margin-bottom: 0.25rem;
+  letter-spacing: 0.5px;
+}
+.meeting-blurb {
+  font-size: 0.95rem;
+  color: #212529;
+  line-height: 1.4;
+}
+
+/* ---- Image thumbnails (extracted from inline styles) ---- */
+.detail-header-img,
+.detail-header-thumb {
+  width: 140px;
+  height: 140px;
+}
+.detail-header-img { object-fit: cover; }
+.detail-header-thumb { font-size: 1rem; }
+.member-detail-img,
+.member-detail-thumb {
+  width: 240px;
+  height: 240px;
+  margin: 0 auto;
+}
+.member-detail-img { object-fit: cover; }
+.member-detail-thumb { font-size: 3rem; }
+.project-detail-img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+.project-thumb {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+}
+.project-card-img {
+  width: 100%;
+  object-fit: cover;
+}
+.compact-news-img,
+.compact-news-thumb {
+  width: 110px;
+  height: 110px;
+  border-radius: var(--radius);
+}
+.compact-news-img { object-fit: cover; }
+.compact-news-thumb { font-size: 0.9rem; }
+
+/* ---- News card (home featured) ---- */
+.featured-news-card { max-width: 975px; }
+.news-card-img-wrap {
+  aspect-ratio: 1 / 1;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+.news-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.news-card-thumb {
+  aspect-ratio: 1 / 1;
+  border-radius: 0.5rem;
+}
+
+/* ---- Meeting cards (month + compact) ---- */
+.meeting-month-card {
+  background-color: #f8f9fa;
+  border-radius: 6px;
+  border: 1px solid #dee2e6;
+}
+.meeting-month-title { color: #495057; font-weight: 600; }
+.meeting-bullet-row { display: flex; align-items: flex-start; }
+.meeting-bullet { flex-shrink: 0; margin-right: 0.5rem; }
+.meeting-bullet-body { flex-grow: 1; }
+.meeting-line { font-weight: 500; }
+.meeting-text { font-weight: 600; font-size: 1rem; }
+.meeting-links { padding-left: 1.5rem; }
+.compact-meeting-card {
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  padding-left: 0.5rem;
+  border-bottom: 2px solid #ced4da;
+}
+.compact-meeting-line { font-size: 1.05rem; }
+.compact-meeting-links { display: inline; }
+.nowrap { white-space: nowrap; }
+
+/* ---- Misc card / page bits ---- */
+.project-listing-item { break-inside: avoid; }
+.badge-status { font-size: 0.65rem; }
+.project-meta { font-size: 0.75rem; }
+.member-card-col { min-width: 200px; }
+.member-card-title { font-size: 1rem; font-weight: 600; }
+.index-side-column {
+  border-left: 1px solid #dee2e6;
+  padding-left: 2rem;
+}
+.projects-two-col { columns: 2; column-gap: 2rem; }

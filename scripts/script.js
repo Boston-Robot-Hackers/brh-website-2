@@ -30,4 +30,11 @@ document.addEventListener('DOMContentLoaded', function() {
             // Let regular links (like members.html) work normally
         });
     });
+
+    // Clickable calendar rows: navigate to the row's announcement.
+    document.querySelectorAll('.meeting-row[data-href]').forEach(row => {
+        row.addEventListener('click', function() {
+            window.location = this.getAttribute('data-href');
+        });
+    });
 });

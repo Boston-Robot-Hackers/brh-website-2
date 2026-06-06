@@ -1,10 +1,10 @@
 <!-- Compact meeting card - Small inline meeting display for listing pages. -->
-<div class="mb-2 p-2" style="background-color: #f8f9fa; border-radius: 4px; padding-left: 0.5rem; border-bottom: 2px solid #ced4da;">
-    <div style="display: flex;">
-        <div style="flex-shrink: 0; margin-right: 0.5rem;">📅</div>
-        <div style="flex-grow: 1;">
-            <div class="mb-0" style="font-size: 1.05rem;">
-                {% if 'Hands On' in title or 'Hands-On' in title %}
+<div class="mb-2 p-2 compact-meeting-card">
+    <div class="compact-meeting-row">
+        <div class="meeting-bullet">📅</div>
+        <div class="meeting-bullet-body">
+            <div class="mb-0 compact-meeting-line">
+                {% if kind == 'handson' %}
                 Hands On Meeting:
                 {% else %}
                 Main Meeting:
@@ -20,16 +20,16 @@
                 {{ metadata.text }}
             </div>
             {% endif %}
-            {% if 'Hands On' not in title and 'Hands-On' not in title %}
-            <div class="small mt-1" style="display: inline;">
-                <span style="white-space: nowrap;">
+            {% if kind != 'handson' %}
+            <div class="small mt-1 compact-meeting-links">
+                <span class="nowrap">
                 {% if announcement_exists %}
                     <a href="news/{{ announcement_html }}">announcement</a>
                 {% else %}
                     <span class="text-muted">announcement TBD</span>
                 {% endif %}
                 </span>
-                <span style="white-space: nowrap;">
+                <span class="nowrap">
                 |
                 {% if report_exists %}
                     <a href="news/{{ report_html }}">report</a>

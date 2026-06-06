@@ -12,9 +12,9 @@
         <div class="row mb-4">
             <div class="col-md-4 text-center">
                 {% if member.metadata.image %}
-                <img src="../{{ member.metadata.image }}" alt="{{ member.title }}" class="rounded" style="width: 240px; height: 240px; object-fit: cover; margin: 0 auto;">
+                <img src="../{{ member.metadata.image }}" alt="{{ member.title }}" class="rounded member-detail-img">
                 {% else %}
-                <div class="member-avatar bg-secondary rounded d-flex align-items-center justify-content-center text-white fw-bold" style="width: 240px; height: 240px; font-size: 3rem; margin: 0 auto;">
+                <div class="member-avatar bg-secondary rounded d-flex align-items-center justify-content-center text-white fw-bold member-detail-thumb">
                     {{ member.metadata['card-text']|default('MEMBER') }}
                 </div>
                 {% endif %}

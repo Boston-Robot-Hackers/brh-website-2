@@ -17,7 +17,8 @@
       "Bash(git commit -m ':*)",
       "Bash(git commit:*)",
       "Bash(sort -t- -k1 -n)",
-      "WebFetch(domain:unsplash.com)"
+      "WebFetch(domain:unsplash.com)",
+      "Bash(sort -t: -k2 -rn)"
     ],
     "deny": []
   }

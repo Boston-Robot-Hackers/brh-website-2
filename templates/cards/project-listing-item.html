@@ -1,17 +1,17 @@
 <!-- Project listing item - Single project display for projects page. Reusable. -->
-<article class="project-listing-item d-flex gap-3 py-3 border-bottom align-items-start" style="break-inside: avoid;">
+<article class="project-listing-item d-flex gap-3 py-3 border-bottom align-items-start">
     {% if project.image %}
     <a href="projects/{{ project.id }}.html" class="flex-shrink-0">
-        <img src="{{ project.image }}" class="rounded" style="width: 120px; height: 120px; object-fit: cover;" alt="{{ project.title }}">
+        <img src="{{ project.image }}" class="rounded project-thumb" alt="{{ project.title }}">
     </a>
     {% endif %}
     <div class="flex-grow-1">
         <div class="d-flex align-items-baseline gap-2 flex-wrap">
             <h5 class="mb-0"><a href="projects/{{ project.id }}.html" class="text-decoration-none">{{ project.title }}</a></h5>
-            <span class="badge bg-secondary" style="font-size: 0.65rem;">{{ project.metadata.status or 'Unknown' }}</span>
+            <span class="badge bg-secondary badge-status">{{ project.metadata.status or 'Unknown' }}</span>
         </div>
         <p class="mb-1 mt-1 text-muted small">{{ project.excerpt }}</p>
-        <div class="text-muted" style="font-size: 0.75rem;">
+        <div class="text-muted project-meta">
             {% if project.metadata.lead %}<span class="me-3"><strong>Lead:</strong> {{ project.metadata.lead }}</span>{% endif %}
             {% if formatted_date %}<span class="me-3"><strong>Started:</strong> {{ formatted_date }}</span>{% endif %}
             {% if project.metadata.github %}<a href="{{ project.metadata.github }}" target="_blank" class="text-muted">GitHub</a>{% endif %}

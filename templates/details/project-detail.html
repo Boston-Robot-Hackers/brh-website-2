@@ -13,7 +13,7 @@
             <div class="col-md-2">
                 <div class="text-center">
                     {% if project.image %}
-                    <img src="../{{ project.image }}" class="rounded" style="width: 100px; height: 100px; object-fit: cover;" alt="{{ project.title }}">
+                    <img src="../{{ project.image }}" class="rounded project-detail-img" alt="{{ project.title }}">
                     {% endif %}
                     <div class="fw-bold mt-2">{{ project.text }}</div>
                     <div class="badge bg-secondary mt-1">{{ project.metadata.status|default('Unknown') }}</div>

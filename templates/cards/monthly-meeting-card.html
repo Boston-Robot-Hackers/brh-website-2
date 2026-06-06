@@ -1,17 +1,17 @@
 <!-- Monthly meeting card - Groups main and hands-on meetings by month -->
-<div class="mb-3 p-3" style="background-color: #f8f9fa; border-radius: 6px; border: 1px solid #dee2e6;">
-    <h5 class="mb-3" style="color: #495057; font-weight: 600;">{{ month_label }}</h5>
+<div class="mb-3 p-3 meeting-month-card">
+    <h5 class="mb-3 meeting-month-title">{{ month_label }}</h5>
 
     {% if main_meeting %}
     <div class="mb-2">
-        <div style="display: flex; align-items: start;">
-            <div style="flex-shrink: 0; margin-right: 0.5rem;">&bull;</div>
-            <div style="flex-grow: 1;">
-                <div style="font-weight: 500;">
+        <div class="meeting-bullet-row">
+            <div class="meeting-bullet">&bull;</div>
+            <div class="meeting-bullet-body">
+                <div class="meeting-line">
                     Main Meeting: {{ main_meeting.metadata.date }} at {{ main_meeting.metadata.time }}
                 </div>
                 {% if main_meeting.metadata.text %}
-                <div class="text-muted mt-1" style="font-weight: 600; font-size: 1rem;">
+                <div class="text-muted mt-1 meeting-text">
                     {{ main_meeting.metadata.text }}
                 </div>
                 {% endif %}
@@ -22,14 +22,14 @@
 
     {% if handson_meeting %}
     <div class="mb-2">
-        <div style="display: flex; align-items: start;">
-            <div style="flex-shrink: 0; margin-right: 0.5rem;">&bull;</div>
-            <div style="flex-grow: 1;">
-                <div style="font-weight: 500;">
+        <div class="meeting-bullet-row">
+            <div class="meeting-bullet">&bull;</div>
+            <div class="meeting-bullet-body">
+                <div class="meeting-line">
                     Hands-On Meeting: {{ handson_meeting.metadata.date }} at {{ handson_meeting.metadata.time }}
                 </div>
                 {% if handson_meeting.metadata.text %}
-                <div class="text-muted mt-1" style="font-weight: 600; font-size: 1rem;">
+                <div class="text-muted mt-1 meeting-text">
                     {{ handson_meeting.metadata.text }}
                 </div>
                 {% endif %}
@@ -39,15 +39,15 @@
     {% endif %}
 
     {% if main_meeting and (main_announcement_exists or main_report_exists) %}
-    <div class="small mt-2" style="padding-left: 1.5rem;">
-        <span style="white-space: nowrap;">
+    <div class="small mt-2 meeting-links">
+        <span class="nowrap">
         {% if main_announcement_exists %}
             <a href="news/{{ main_announcement_html }}">announcement</a>
         {% else %}
             <span class="text-muted">announcement TBD</span>
         {% endif %}
         </span>
-        <span style="white-space: nowrap;">
+        <span class="nowrap">
         |
         {% if main_report_exists %}
             <a href="news/{{ main_report_html }}">report</a>
