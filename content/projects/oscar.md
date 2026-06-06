@@ -1,6 +1,6 @@
 ---
 title: Oscar
-date: 2000-2010
+date: 2000-01-01
 status: Retired
 image: images/projects/oscar.jpg
 text: Tabletop robot

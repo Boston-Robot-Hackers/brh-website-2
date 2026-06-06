@@ -9,7 +9,7 @@ from typing import List, Dict, Any
 
 from jinja2 import Environment
 
-from content_manager import ContentType, classify_meeting
+from content_manager import ContentType, classify_meeting, parse_date
 from news_links import build_news_index, resolve_news_html
 
 
@@ -23,25 +23,9 @@ class PageBuilder:
         self._news_map = None
     
     def format_date(self, date_str: str) -> str:
-        """Format date string for display."""
-        if not date_str:
-            return ""
-
-        if isinstance(date_str, str):
-            for fmt in ['%Y-%m-%d', '%m/%d/%Y', '%d/%m/%Y']:
-                try:
-                    date_obj = datetime.strptime(date_str, fmt)
-                    return date_obj.strftime('%B %d, %Y')
-                except ValueError:
-                    continue
-
-            try:
-                date_obj = datetime.fromisoformat(date_str.replace('Z', '+00:00'))
-                return date_obj.strftime('%B %d, %Y')
-            except ValueError:
-                return date_str
-
-        return str(date_str)
+        """Format a canonical ISO date for display (e.g. 'June 11, 2026')."""
+        parsed = parse_date(date_str)
+        return parsed.strftime('%B %d, %Y') if parsed else ""
     
     def build_detail_pages(self, items: List[Dict], content_type: ContentType, **extra_context):
         """Generic method to build detail pages."""
@@ -186,31 +170,24 @@ class PageBuilder:
         month_groups = defaultdict(lambda: {'main': None, 'handson': None})
 
         for meeting in meetings:
-            date_str = meeting['metadata'].get('date', '')
-            if not date_str:
+            date_obj = parse_date(meeting['metadata'].get('date'))
+            if date_obj is None:
                 continue
 
-            # Parse date to get year-month key
-            for fmt in ['%m/%d/%Y', '%d/%m/%Y', '%Y-%m-%d']:
-                try:
-                    date_obj = datetime.strptime(date_str, fmt)
-                    month_key = date_obj.strftime('%Y-%m')
-                    month_label = date_obj.strftime('%B %Y')
+            month_key = date_obj.strftime('%Y-%m')
+            month_label = date_obj.strftime('%B %Y')
 
-                    # Determine if main or hands-on
-                    slot = classify_meeting(meeting['metadata'], meeting.get('title', ''))
-                    if month_groups[month_key][slot] is not None:
-                        existing = month_groups[month_key][slot].get('id', '?')
-                        print(f"Warning: month {month_key} already has a '{slot}' meeting "
-                              f"('{existing}'); '{meeting.get('id', '?')}' will overwrite it "
-                              f"on the meetings page")
-                    month_groups[month_key][slot] = meeting
+            # Determine if main or hands-on
+            slot = classify_meeting(meeting['metadata'], meeting.get('title', ''))
+            if month_groups[month_key][slot] is not None:
+                existing = month_groups[month_key][slot].get('id', '?')
+                print(f"Warning: month {month_key} already has a '{slot}' meeting "
+                      f"('{existing}'); '{meeting.get('id', '?')}' will overwrite it "
+                      f"on the meetings page")
+            month_groups[month_key][slot] = meeting
 
-                    month_groups[month_key]['label'] = month_label
-                    month_groups[month_key]['sort_key'] = month_key
-                    break
-                except ValueError:
-                    continue
+            month_groups[month_key]['label'] = month_label
+            month_groups[month_key]['sort_key'] = month_key
 
         # Convert to sorted list (newest month first)
         grouped = []
@@ -274,20 +251,12 @@ class PageBuilder:
 
         # Filter and format meetings
         for meeting in meetings:
-            date_str = meeting['metadata'].get('date', '')
-            if not date_str:
+            parsed = parse_date(meeting['metadata'].get('date'))
+            if parsed is None:
                 continue
+            date_obj = parsed.date()
 
-            # Parse date
-            date_obj = None
-            for fmt in ['%m/%d/%Y', '%d/%m/%Y', '%Y-%m-%d']:
-                try:
-                    date_obj = datetime.strptime(date_str, fmt).date()
-                    break
-                except ValueError:
-                    continue
-
-            if not date_obj or date_obj < today:
+            if date_obj < today:
                 continue
 
             # Determine meeting type label

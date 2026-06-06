@@ -45,11 +45,13 @@ All content lives in `content/` as Markdown with YAML frontmatter:
 - `content/news/*.md` — News posts. Key fields: `title`, `date`, `image`, `excerpt`, `highlight` (bool — only highlighted posts appear on homepage)
 - `content/members/*.md` — Member profiles. Key fields: `name`, `role`, `image`, `featured`, `skills`, `github`, `linkedin`, `projects`, `opentowork`
 - `content/projects/*.md` — Project descriptions. Key fields: `title`, `image`, `excerpt`
-- `content/meetings/*.md` — Meeting entries. Key fields: `title`, `date` (MM/DD/YYYY format), `time`, `location`, `announcement` (filename of linked news post)
+- `content/meetings/*.md` — Meeting entries. Key fields: `title`, `date` (ISO `YYYY-MM-DD`), `kind` (`main` or `handson`), `time`, `location`, `announcement` (filename of linked news post)
 - `content/heroes/*.md` — Hero section content for each page (named by page: `index.md`, `about.md`, `members.md`, etc.). The `index.md` hero uses an `<hr>` as a separator — content above is static, content below is replaced dynamically with upcoming meeting info.
 - `content/about.md` — About page content
 
 Filename convention for dated content: `YYYY-MM-DD-slug.md` (date is extracted from filename if not in frontmatter).
+
+All `date:` frontmatter fields use ISO `YYYY-MM-DD` — the single canonical format. `parse_date` accepts nothing else and the build fails loudly (naming the file) on any other value.
 
 ## Templates
 

@@ -15,18 +15,18 @@ from news_links import build_news_index, resolve_news_html
 
 
 def parse_date(date_str):
-    """Parse a date string trying common formats. Returns datetime or None."""
+    """Parse a canonical ISO date (YYYY-MM-DD).
+
+    Empty/None returns None. Any other value raises ValueError — all content
+    uses one date format, so a non-ISO value is a content bug to fix, not a
+    case to accommodate.
+    """
     if not date_str:
         return None
-    for fmt in ['%m/%d/%Y', '%Y-%m-%d', '%d/%m/%Y']:
-        try:
-            return datetime.strptime(str(date_str), fmt)
-        except ValueError:
-            continue
     try:
-        return datetime.fromisoformat(str(date_str).replace('Z', '+00:00'))
-    except ValueError:
-        return None
+        return datetime.fromisoformat(str(date_str))
+    except ValueError as e:
+        raise ValueError(f"Invalid date {date_str!r}: expected ISO format YYYY-MM-DD") from e
 
 
 def classify_meeting(metadata: Dict[str, Any], title: str = '') -> str:
@@ -157,10 +157,14 @@ class ContentManager:
             # For order field, default to 0 if not present, so items without order come first
             items.sort(key=lambda x: x['metadata'].get('order', 0), reverse=content_type.reverse)
         elif content_type.sort_key == 'date':
-            # Sort chronologically by parsed date, not by raw string (formats vary:
-            # MM/DD/YYYY vs ISO would sort wrong as plain strings).
-            items.sort(key=lambda x: parse_date(x['date']) or datetime.min,
-                       reverse=content_type.reverse)
+            # Sort chronologically by parsed date. A malformed date fails the
+            # build loudly, naming the offending file.
+            def date_key(x):
+                try:
+                    return parse_date(x['date']) or datetime.min
+                except ValueError as e:
+                    raise ValueError(f"{content_type.directory}/{x['id']}.md: {e}") from e
+            items.sort(key=date_key, reverse=content_type.reverse)
         else:
             items.sort(key=lambda x: x[content_type.sort_key] or '', reverse=content_type.reverse)
         return items
@@ -204,15 +208,10 @@ class ContentManager:
                 if not date_str:
                     continue
 
-                # Parse the date (format: MM/DD/YYYY)
-                try:
-                    meeting_date = datetime.strptime(str(date_str), '%m/%d/%Y').date()
-                except ValueError:
-                    # Try alternative format
-                    try:
-                        meeting_date = datetime.strptime(str(date_str), '%Y-%m-%d').date()
-                    except ValueError:
-                        continue
+                parsed = parse_date(date_str)
+                if parsed is None:
+                    continue
+                meeting_date = parsed.date()
 
                 # Only include future meetings
                 if meeting_date >= today:
@@ -249,7 +248,8 @@ class ContentManager:
             label = "Next Hands-On Meeting" if is_handson else "Next Main Meeting"
 
             # Format the meeting
-            date = metadata.get('date', '')
+            parsed = parse_date(metadata.get('date'))
+            date = parsed.strftime('%B %d, %Y') if parsed else ''
             time = metadata.get('time', '')
             announcement = metadata.get('announcement', '')
 

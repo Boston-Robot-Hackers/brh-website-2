@@ -1,6 +1,6 @@
 ---
 title: "Hands On Meeting - November 18"
-date: 11/18/2025
+date: 2025-11-18
 time: "6:00pm"
 location: "Artisans Asylum, 96 Holton Street, Allston"
 type: meeting

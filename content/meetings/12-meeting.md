@@ -1,6 +1,6 @@
 ---
 title: "April 2 at 7:00pm"
-date: 04/02/2026
+date: 2026-04-02
 time: "7:00pm"
 location: "Artisans Asylum, 96 Holton Street, Allston"
 text: "Featuring Chris Lai Presentation on Kalman Filters. Chris will discuss the motivation behind the Kalman Filter, and describe why (and most importantly) how it is used."

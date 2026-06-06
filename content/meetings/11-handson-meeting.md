@@ -1,6 +1,6 @@
 ---
 title: "Hands On Meeting - March 12"
-date: 03/12/2026
+date: 2026-03-12
 time: "6:00pm"
 location: "Artisans Asylum, 96 Holton Street, Allston"
 type: meeting

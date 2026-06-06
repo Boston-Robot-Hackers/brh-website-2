@@ -1,6 +1,6 @@
 ---
 title: "Hands On Meeting - January 29"
-date: 01/29/2026
+date: 2026-01-29
 time: "6:00pm"
 location: "Artisans Asylum, 96 Holton Street, Allston"
 type: 

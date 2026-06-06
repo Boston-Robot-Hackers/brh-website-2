@@ -28,17 +28,17 @@ class TestFormatDate:
     def test_iso_date(self, page_builder):
         assert page_builder.format_date("2024-03-15") == "March 15, 2024"
 
-    def test_us_slash_date(self, page_builder):
-        assert page_builder.format_date("03/15/2024") == "March 15, 2024"
-
     def test_empty_string_returns_empty(self, page_builder):
         assert page_builder.format_date("") == ""
 
     def test_none_returns_empty(self, page_builder):
         assert page_builder.format_date(None) == ""
 
-    def test_unrecognized_string_returned_as_is(self, page_builder):
-        assert page_builder.format_date("not-a-date") == "not-a-date"
+    def test_non_iso_raises(self, page_builder):
+        with pytest.raises(ValueError):
+            page_builder.format_date("03/15/2024")
+        with pytest.raises(ValueError):
+            page_builder.format_date("not-a-date")
 
 
 class TestBuildPage:
@@ -155,8 +155,8 @@ class TestRenderCards:
 class TestGroupMeetingsByMonth:
     def test_groups_main_and_handson(self, rich_page_builder):
         meetings = [
-            _meeting_item("main-jan", "January Meeting", "01/15/2024"),
-            _meeting_item("hands-jan", "Hands On January", "01/22/2024"),
+            _meeting_item("main-jan", "January Meeting", "2024-01-15"),
+            _meeting_item("hands-jan", "Hands On January", "2024-01-22"),
         ]
         grouped = rich_page_builder.group_meetings_by_month(meetings)
         assert len(grouped) == 1
@@ -165,8 +165,8 @@ class TestGroupMeetingsByMonth:
 
     def test_sorted_descending_by_month(self, rich_page_builder):
         meetings = [
-            _meeting_item("feb", "Feb Meeting", "02/01/2024"),
-            _meeting_item("jan", "Jan Meeting", "01/01/2024"),
+            _meeting_item("feb", "Feb Meeting", "2024-02-01"),
+            _meeting_item("jan", "Jan Meeting", "2024-01-01"),
         ]
         grouped = rich_page_builder.group_meetings_by_month(meetings)
         assert grouped[0]["sort_key"] > grouped[1]["sort_key"]
@@ -179,12 +179,12 @@ class TestGroupMeetingsByMonth:
 
 class TestRenderUpcomingCalendar:
     def test_renders_future_meetings(self, rich_page_builder):
-        meetings = [_meeting_item("future", "Future Meeting", "12/31/2099")]
+        meetings = [_meeting_item("future", "Future Meeting", "2099-12-31")]
         result = rich_page_builder.render_upcoming_meetings_calendar(meetings)
         assert "1" in result
 
     def test_skips_past_meetings(self, rich_page_builder):
-        meetings = [_meeting_item("old", "Old Meeting", "01/01/2020")]
+        meetings = [_meeting_item("old", "Old Meeting", "2020-01-01")]
         result = rich_page_builder.render_upcoming_meetings_calendar(meetings)
         assert result == "" or "0" in result
 

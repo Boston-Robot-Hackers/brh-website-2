@@ -37,6 +37,24 @@ class TestProcessMarkdownFile:
         assert result["title"] == "Alice"
 
 
+class TestParseDate:
+    def test_parses_iso(self):
+        from content_manager import parse_date
+        assert parse_date("2026-06-11").strftime("%Y-%m-%d") == "2026-06-11"
+
+    def test_empty_is_none(self):
+        from content_manager import parse_date
+        assert parse_date("") is None
+        assert parse_date(None) is None
+
+    def test_non_iso_raises(self):
+        from content_manager import parse_date
+        with pytest.raises(ValueError):
+            parse_date("06/11/2026")
+        with pytest.raises(ValueError):
+            parse_date("not-a-date")
+
+
 class TestDateHandling:
     def test_frontmatter_date_object_serialized_to_iso(self, tmp_path):
         f = tmp_path / "post.md"
@@ -48,10 +66,10 @@ class TestDateHandling:
 
     def test_frontmatter_string_date_preserved(self, tmp_path):
         f = tmp_path / "post.md"
-        f.write_text("---\ntitle: Post\ndate: \"03/15/2024\"\n---\nContent.\n")
+        f.write_text("---\ntitle: Post\ndate: \"2024-03-15\"\n---\nContent.\n")
         cm = ContentManager(tmp_path)
         result = cm.process_markdown_file(f)
-        assert result["date"] == "03/15/2024"
+        assert result["date"] == "2024-03-15"
 
     def test_non_date_filename_yields_none(self, tmp_path):
         f = tmp_path / "my-post.md"
@@ -94,7 +112,7 @@ class TestHeroGeneration:
     def test_get_future_meetings_sorted_ascending(self, tmp_content_dir):
         meetings_dir = tmp_content_dir / "meetings"
         (meetings_dir / "near-future.md").write_text(
-            "---\ntitle: Near Meeting\ndate: 01/15/2099\ntime: 7pm\n---\n"
+            "---\ntitle: Near Meeting\ndate: 2099-01-15\ntime: 7pm\n---\n"
         )
         cm = ContentManager(tmp_content_dir)
         meetings = cm.get_future_meetings()
@@ -121,7 +139,7 @@ class TestHeroGeneration:
         meetings_dir = tmp_content_dir / "meetings"
         for i in range(3):
             (meetings_dir / f"extra-{i}.md").write_text(
-                f"---\ntitle: Extra Meeting {i}\ndate: 0{i + 1}/10/2099\ntime: 7pm\n---\n"
+                f"---\ntitle: Extra Meeting {i}\ndate: 2099-0{i + 1}-10\ntime: 7pm\n---\n"
             )
         cm = ContentManager(tmp_content_dir)
         meetings = cm.get_future_meetings()
@@ -139,7 +157,7 @@ class TestHeroGeneration:
         )
         meetings_dir = tmp_content_dir / "meetings"
         (meetings_dir / "linked-meeting.md").write_text(
-            "---\ntitle: Linked Meeting\ndate: 06/15/2099\ntime: 7pm\nannouncement: 2099-01-01-announce.md\n---\n"
+            "---\ntitle: Linked Meeting\ndate: 2099-06-15\ntime: 7pm\nannouncement: 2099-01-01-announce.md\n---\n"
         )
         cm = ContentManager(tmp_content_dir)
         meetings = cm.get_future_meetings()

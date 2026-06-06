@@ -1,6 +1,6 @@
 ---
 title: "November 11 at 7:00pm"
-date: 11/11/2025
+date: 2025-11-11
 time: "7:00pm"
 location: "Artisans Asylum, 96 Holton Street, Allston"
 type: meeting

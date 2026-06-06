@@ -18,7 +18,10 @@
       "Bash(git commit:*)",
       "Bash(sort -t- -k1 -n)",
       "WebFetch(domain:unsplash.com)",
-      "Bash(sort -t: -k2 -rn)"
+      "Bash(sort -t: -k2 -rn)",
+      "Bash(grep -vE \"^date: [0-9]{4}-[0-9]{2}-[0-9]{2}$\")",
+      "Bash(perl -0pi -e 's/^date: 2026-06-11$/date: 06\\\\/11\\\\/2026/m' content/meetings/16-meeting.md)",
+      "Bash(git checkout *)"
     ],
     "deny": []
   }

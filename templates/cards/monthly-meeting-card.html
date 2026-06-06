@@ -8,7 +8,7 @@
             <div class="meeting-bullet">&bull;</div>
             <div class="meeting-bullet-body">
                 <div class="meeting-line">
-                    Main Meeting: {{ main_meeting.metadata.date }} at {{ main_meeting.metadata.time }}
+                    Main Meeting: {{ main_meeting.metadata.date|format_date }} at {{ main_meeting.metadata.time }}
                 </div>
                 {% if main_meeting.metadata.text %}
                 <div class="text-muted mt-1 meeting-text">
@@ -26,7 +26,7 @@
             <div class="meeting-bullet">&bull;</div>
             <div class="meeting-bullet-body">
                 <div class="meeting-line">
-                    Hands-On Meeting: {{ handson_meeting.metadata.date }} at {{ handson_meeting.metadata.time }}
+                    Hands-On Meeting: {{ handson_meeting.metadata.date|format_date }} at {{ handson_meeting.metadata.time }}
                 </div>
                 {% if handson_meeting.metadata.text %}
                 <div class="text-muted mt-1 meeting-text">

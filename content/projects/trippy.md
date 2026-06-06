@@ -1,6 +1,6 @@
 ---
 title: Trippy
-date: 2000-2010
+date: 2000-01-01
 status: Retired
 image: images/projects/trippy.jpg
 text: Trippy Holonomic robot

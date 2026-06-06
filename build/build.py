@@ -11,7 +11,7 @@ from typing import Dict, Any
 from jinja2 import Environment, FileSystemLoader
 
 from asset_manager import AssetManager
-from content_manager import ContentManager, ContentType
+from content_manager import ContentManager, ContentType, parse_date
 from page_builder import PageBuilder
 
 
@@ -40,6 +40,12 @@ class WebsiteBuilder:
         # Set up Jinja2 environment
         template_paths = [str(self.templates_dir)]
         self.jinja_env = Environment(loader=FileSystemLoader(template_paths))
+
+        # Display filter for canonical ISO dates (e.g. 2026-06-11 -> June 11, 2026)
+        def format_date(value):
+            parsed = parse_date(value)
+            return parsed.strftime('%B %d, %Y') if parsed else ''
+        self.jinja_env.filters['format_date'] = format_date
         
         # Initialize managers
         self.content_manager = ContentManager(self.content_dir)

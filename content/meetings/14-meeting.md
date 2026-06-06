@@ -1,6 +1,6 @@
 ---
 title: "May 7 at 7:00pm: Adam Ring"
-date: 05/07/2026
+date: 2026-05-07
 time: "7:00pm"
 location: "Artisans Asylum, 96 Holton Street, Allston"
 type: meeting

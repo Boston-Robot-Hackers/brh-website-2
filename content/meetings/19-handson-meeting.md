@@ -1,6 +1,6 @@
 ---
 title: "Hands On Meeting - July 22 (WED!)"
-date: 07/22/2026
+date: 2026-07-22
 time: "6:00pm"
 location: "Artisans Asylum, 96 Holton Street, Allston"
 type: meeting

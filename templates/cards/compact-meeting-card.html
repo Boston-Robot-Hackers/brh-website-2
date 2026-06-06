@@ -10,7 +10,7 @@
                 Main Meeting:
                 {% endif %}
                 {% if metadata.date and metadata.time %}
-                {{ metadata.date }} at {{ metadata.time }}
+                {{ metadata.date|format_date }} at {{ metadata.time }}
                 {% else %}
                 {{ title }}
                 {% endif %}
