@@ -238,9 +238,9 @@ class PageBuilder:
                 except ValueError:
                     continue
 
-        # Convert to sorted list
+        # Convert to sorted list (newest month first)
         grouped = []
-        for month_key in sorted(month_groups.keys(), reverse=False):
+        for month_key in sorted(month_groups.keys(), reverse=True):
             group = month_groups[month_key]
             grouped.append({
                 'month_label': group['label'],
