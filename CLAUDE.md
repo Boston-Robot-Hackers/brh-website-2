@@ -68,12 +68,20 @@ Jinja2 templates in `templates/`:
 
 ## Development Process
 
-Features and tasks are tracked in `process/`:
-- `process/spec.md` — App description and goals
-- `process/features/notdone/` — Planned features (one file per feature)
-- `process/features/done/` — Completed features
-- `process/tasks/notdone/` — Pending tasks
-- `process/tasks/done/` — Completed tasks
+Read and follow all rules in the `.claude/` folder:
+- @.claude/how_to_be.md — working principles and conduct (apply every session)
+- @.claude/process.md — development workflow and feature/task tracking rules
+- @.claude/codereview.md — coding standards, style rules, and review checklist
+
+Features and tasks tracked in j3 structure:
+- `02-doc/spec.md` — app description and goals
+- `02-doc/current.md` — session handoff and current status
+- `02-doc/notes.md` — architecture decisions and notes
+- `03-features/notdone/` — FNN-slug.md planned features
+- `03-features/done/` — completed features
+- `04-tasks/notdone/` — TFNN-slug.md pending tasks
+- `04-tasks/done/` — completed tasks
+- `05-issues/` — bugs not yet converted to features
 
 ## Deployment
 
