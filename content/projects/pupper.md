@@ -1,12 +1,14 @@
 ---
 title: Stanford Pupper v3 x Boston Robot Hackers
-date: 2000-01-01
+date: 2026-06-10
 status: New
 image: 
-text: Tabletop robot
+text: An open-source quadruped robot built at Stanford that can walk, see, listen, and respond to the world around it. 
 lead: Alan
-members: 1
-excerpt: I wanted a tiny robot for my office desktop
+members: 5
+excerpt: Open-source quadruped robot built at Stanford that can walk, see, listen, and respond to the world around it. Born as a student project and now in its third generation, Pupper has become the centerpiece of Stanford's CS123 course, a teaching platform for AI-enabled robotics, and through the Dr. Pupper project at Stanford Medicine, a companion for children recovering in the hospital.
+
+
 ---
 ## Overview
 
