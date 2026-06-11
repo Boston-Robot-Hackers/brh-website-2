@@ -16,8 +16,6 @@ The **Boston Robot Hackers** are thrilled to announce a collaborative initiative
 
 This project brings together the technical rigor of Stanford University's Computer Science Department and the vibrant, multi-disciplinary talent of the Boston robotics community. Our goal is to assemble, program, and enhance this agile robot dog right here in Boston, serving as a hands-on learning platform for engineers, students, and hobbyists alike.
 
-<img src="../images/projects/pupper_standing.jpg" alt="Pupper v3 standing" style="float: right; margin: 20px 0 20px 20px; border-radius: 8px; height: 250px;">
-
 ---
 
 ## What is Pupper v3?
@@ -32,7 +30,7 @@ Pupper v3 is more than just a robot; it is a "cute companion" designed to spark 
 - **Rapid Training:** Through simulation, Pupper can experience three months of training in just one hour by simulating thousands of environments simultaneously.
 - **Safety First:** Lightweight and designed with expressive features like moving ears and a high-resolution screen, Pupper is safe for use around people and children.
 
-<img src="../images/projects/pupper_white.jpg" alt="Pupper v3 completed build" style="float: left; margin: 20px 20px 20px 0; border-radius: 8px; height: 220px;">
+<img src="../images/projects/pupper_electronics.jpg" alt="Pupper v3 electronics internals" style="float: left; margin: 20px 20px 20px 0; border-radius: 8px; height: 220px;">
 
 ---
 
@@ -50,6 +48,8 @@ Our local Pupper Project is led by a diverse group of experts and enthusiasts fr
 - **Sabu**
 - **High School Interns** (TBD)
 - **Pito Salaso** (BRH Leader)
+
+<img src="../images/projects/pupper_all_parts.jpg" alt="Pupper v3 all components" style="float: right; margin: 20px 0 20px 20px; border-radius: 8px; height: 220px;">
 
 ---
 
