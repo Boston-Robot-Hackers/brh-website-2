@@ -1,5 +1,13 @@
-# Project: Stanford Pupper v3 x Boston Robot Hackers
-
+---
+title: Stanford Pupper v3 x Boston Robot Hackers
+date: 2000-01-01
+status: New
+image: 
+text: Tabletop robot
+lead: Alan
+members: 1
+excerpt: I wanted a tiny robot for my office desktop
+---
 ## Overview
 
 The **Boston Robot Hackers** are thrilled to announce a collaborative initiative with the **Stanford Pupper Project** to build and deploy the **Pupper v3**—a cutting-edge, open-source quadruped robot designed for research, education, and community engagement.
@@ -28,14 +36,14 @@ Our local Pupper Project is led by a diverse group of experts and enthusiasts fr
 
 ### Project Members
 
-- **Pito** (BRH Leader)
+- **Alan** (Project Coordinator)
 - **Sid**
 - **Shivam**
 - **Krissh**
-- **Lius**
+- **Luis**
 - **Sabu**
-- **Alan** (Project Coordinator)
 - **High School Interns** (TBD)
+- **Pito Salaso** (BRH Leader)
 
 ---
 
