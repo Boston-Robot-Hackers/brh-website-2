@@ -2,7 +2,7 @@
 title: Stanford Pupper v3 x Boston Robot Hackers
 date: 2026-06-10
 status: New
-image: 
+image: images/projects/pupper_standing.jpg
 text: "An open-source quadruped robot"
 lead: Alan
 members: 5
@@ -15,6 +15,8 @@ excerpt: "Open-source quadruped robot built at Stanford that can walk, see, list
 The **Boston Robot Hackers** are thrilled to announce a collaborative initiative with the **Stanford Pupper Project** to build and deploy the **Pupper v3**—a cutting-edge, open-source quadruped robot designed for research, education, and community engagement.
 
 This project brings together the technical rigor of Stanford University's Computer Science Department and the vibrant, multi-disciplinary talent of the Boston robotics community. Our goal is to assemble, program, and enhance this agile robot dog right here in Boston, serving as a hands-on learning platform for engineers, students, and hobbyists alike.
+
+<img src="../images/projects/pupper_standing.jpg" alt="Pupper v3 standing" style="float: right; margin: 20px 0 20px 20px; border-radius: 8px; height: 250px;">
 
 ---
 
@@ -29,6 +31,8 @@ Pupper v3 is more than just a robot; it is a "cute companion" designed to spark 
 - **Agile Movement:** Powered by 400W brushless motors and a Raspberry Pi 5, Pupper uses reinforcement learning (RL) to navigate complex obstacles.
 - **Rapid Training:** Through simulation, Pupper can experience three months of training in just one hour by simulating thousands of environments simultaneously.
 - **Safety First:** Lightweight and designed with expressive features like moving ears and a high-resolution screen, Pupper is safe for use around people and children.
+
+<img src="../images/projects/pupper_white.jpg" alt="Pupper v3 completed build" style="float: left; margin: 20px 20px 20px 0; border-radius: 8px; height: 220px;">
 
 ---
 
@@ -60,6 +64,8 @@ By building Pupper v3, the Boston Robot Hackers aim to:
 ---
 
 ## Get Involved
+
+<img src="../images/projects/pupper_resting.jpg" alt="Pupper v3 at rest" style="float: right; margin: 20px 0 20px 20px; border-radius: 8px; height: 220px;">
 
 We meet regularly at **Artisans Asylum** in Allston. Whether you are a professional engineer or a curious beginner, there is a place for you in our community.
 
