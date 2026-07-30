@@ -1,6 +1,6 @@
 # Code Review Checklist
 
-Version: 3.1
+Version: 3.2
 
 Use this for Python source reviews. `MUST` items are blocking unless explicitly
 waived in the task or PR notes. `SHOULD` items are expected defaults. `CONSIDER`
@@ -50,7 +50,7 @@ content, it's a bug to fix at the source.
 - [ ] SHOULD: New ROS parameters are declared, read, launch-overridable where useful, and covered by tests
 - [ ] SHOULD: Config defaults are defined in one place whenever practical
 - [ ] SHOULD: Dataclass fields are not hand-transcribed into YAML parsing or ROS parameter declaration when `dataclasses.fields()` can reasonably be used
-- [ ] SHOULD: Launch files use `better_launch` (`@launch_this`, `bl.node`, `bl.group`, `bl.include`)
+- [ ] MUST: Launch files use `better_launch` (`@launch_this`, `bl.node`, `bl.group`, `bl.include`). CLI invocation: `bl <launch_file>.launch.py --param_name value`. Error messages in launch files must use this form, not `ros2 launch` syntax.
 - [ ] SHOULD: ROS2 runtime deps are declared as `exec_depend` in `package.xml`, not in `pyproject.toml`
 - [ ] SHOULD: Tests in `tests/` run with plain `pytest`; no `colcon test` dependency
 - [ ] SHOULD: Optional topics and missing ROS graph dependencies do not crash the node
@@ -91,6 +91,8 @@ content, it's a bug to fix at the source.
 - [ ] MUST: Line length <= 88 chars unless a longer line is materially clearer
 - [ ] SHOULD: Boolean variables/params are named `is_X`, `has_X`, or `can_X`
 - [ ] SHOULD: No single-letter variables except loop counters `i`, `j`
+- [ ] MUST: Dataclass/struct fields are self-explanatory without the surrounding code — no bare `xy`/`data`/`info`/`params`; spell out the meaning (`world_xy`, `map_data`, `map_info`, `tuning`). A vague name that reads fine as a function arg is not acceptable as a stored field.
+- [ ] SHOULD: Put units in names when a value has them (`dist_to_robot_m`, `clearance_cells`, `time_before_collision`), and document non-obvious encodings inline (e.g. OccupancyGrid: -1 unknown, 0 free, >=lethal occupied).
 - [ ] SHOULD: Use `is` / `is not` for comparisons with `None`, `True`, and `False`
 - [ ] MUST: Use f-strings for string formatting
 - [ ] SHOULD: Use `enumerate()` instead of manual counter variables when the index is needed
@@ -115,11 +117,21 @@ content, it's a bug to fix at the source.
 ## Comments And Types
 - [ ] SHOULD: Simple methods with obvious bodies have no docstring
 - [ ] SHOULD: Complex methods may use multi-line docstrings explaining why the mechanism exists and any non-obvious preconditions or postconditions
+- [ ] MUST: Any function or method that does something complicated or obscure explains what it does and what its inputs and outputs are — preferably in the docstring. This is the one sanctioned place for a fuller explanation; it does not license narrative comment blocks inside the body (see below).
 - [ ] SHOULD: Comments explain why, not what
+- [ ] MUST: No multi-line narrative comment blocks embedded in code. A comment is a short "why" note, not prose paragraphs. Long explanatory passages break the flow of the code and belong in the literate docs (`01-literate/`) or a docstring, not as a wall of consecutive comment lines above the logic.
+- [ ] SHOULD: One or two lines per comment. If the "why" needs more, it is design rationale — move it to the module docstring or literate doc and leave a one-line pointer.
 - [ ] SHOULD: No task/fix/caller references in comments
 - [ ] SHOULD: Public method parameters have type annotations where the type is non-obvious
 - [ ] SHOULD: Return type is annotated when callers would otherwise have to guess
 - [ ] MUST: Prefer simple annotations where possible; use precise collection types when they prevent caller ambiguity
+
+## Web Assets (CSS / JS / HTML)
+- [ ] MUST: No inline CSS strings inside Python source files; CSS lives in `.css` files loaded at runtime
+- [ ] MUST: No inline JavaScript strings inside Python source files; JS lives in `.js` files loaded at runtime
+- [ ] MUST: No inline HTML template strings inside Python source files; HTML templates live in `.html` files loaded at runtime
+- [ ] MUST: Python loads asset files via `Path(__file__).parent / "filename"` and passes the content to the framework
+- [ ] SHOULD: One CSS file per module that needs custom styles; shared styles go in a shared asset file
 
 ## Runtime Quality
 - [ ] MUST: No unreachable code, commented-out code blocks, debug print statements, or breakpoints

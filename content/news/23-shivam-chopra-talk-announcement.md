@@ -1,5 +1,5 @@
 ---
-title: "Aug 8: Shivam Chopra: Forward and Inverse Kinematics"
+title: "Aug 6: Shivam Chopra: Forward and Inverse Kinematics"
 date: 2026-08-06
 image: "images/news/kinematics.png"
 highlight: true
@@ -8,7 +8,7 @@ excerpt: "Shivam is a Senior Medical Device Engineer and Subsystem Technical Lea
 ---
 ### Meeting Announcement
 
-* When: August 8, 2026, 7:00 to 9:00pm
+* When: Thursday August 6, 2026, 7:00 to 9:00pm
 * Where: [Artisans Asylum](https://www.artisansasylum.com) (96 Holton Street, Boston, MA 02135))
 * Register: [Register](https://brh.eventbrite.com)
 
