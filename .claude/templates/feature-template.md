@@ -20,3 +20,4 @@ Feature file name must be `FNN-<slug>.md` where `NN` matches the feature number.
 
 ## Process Gate
 After creating this feature file and the corresponding task file, **stop and present the plan to the user**. Do not write any code or content until the user gives explicit approval to proceed.
+

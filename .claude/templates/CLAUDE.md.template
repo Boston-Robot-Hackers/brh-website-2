@@ -1,34 +1,6 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
-
-See [README.md](README.md) for what this project is, its architecture, content
-model, templates, and configuration. This file covers only how to work in the
-repo as an agent.
-
-## Commands
-
-```bash
-# Install dependencies
-uv sync
-
-# Build the full website
-uv run python build/build.py
-
-# Run all tests
-uv run pytest
-
-# Run a single test file
-uv run pytest tests/test_content_manager.py
-
-# Run a specific test
-uv run pytest tests/test_content_manager.py::TestClassName::test_method_name
-
-# Run tests with coverage
-uv run pytest --cov=build
-```
-
-## Development Process
+This file provides guidance to Claude Code when working with code in this repository.
 
 Read and follow all rules in the `.claude/` folder:
 - @.claude/process.md — development workflow, feature/task tracking rules, and
@@ -41,15 +13,9 @@ Before writing or reviewing code, read and follow `.claude/style_guide.md`
 (coding standards, style rules, and review checklist) — apply it yourself
 before committing; do not substitute a generic/plugin review for it.
 
-Features and tasks tracked in j3 structure:
-- `02-doc/spec.md` — app description and goals
-- `02-doc/current.md` — session handoff and current status
-- `02-doc/notes.md` — architecture decisions and notes
-- `03-features/notdone/` — FNN-slug.md planned features
-- `03-features/done/` — completed features
-- `04-tasks/notdone/` — TFNN-slug.md pending tasks
-- `04-tasks/done/` — completed tasks
-- `05-issues/` — bugs not yet converted to features
+We are developing an app called <APP NAME>. Literate docs are in `01-literate/`,
+project docs are in `02-doc/`, features are in `03-features/`, tasks are in
+`04-tasks/`, issues are in `05-issues/`, and the spec is in `02-doc/spec.md`.
 
 ## Session Start
 

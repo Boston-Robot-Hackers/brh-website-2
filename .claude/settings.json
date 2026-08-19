@@ -4,19 +4,57 @@
       "Bash(git add *)",
       "Bash(git commit *)",
       "Bash(git push *)",
-      "Bash(python3 -m pytest test/ -v)",
-      "Bash(python3 -c \"import rclpy\")",
-      "Bash(grep '\\\\.py$')",
-      "Bash(python3 *)",
-      "Read(//home/pitosalas/ros2_ws/**)",
-      "Bash(colcon build *)",
-      "Bash(cd *)",
-      "Edit(/home/pitosalas/ros2_ws/**)",
-      "Bash(ln:*)",
       "Bash(git add:*)",
       "Bash(git commit -m ':*)",
       "Bash(git push:*)"
-
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./secrets/**)",
+      "Read(./credentials.json)",
+      "Read(./**/*.pem)",
+      "Read(./**/id_rsa*)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          { "type": "command", "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/block-secrets.sh" }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          { "type": "command", "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/post-edit-ruff.sh" }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "startup|resume",
+        "hooks": [
+          { "type": "command", "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/session-start-context.sh" }
+        ]
+      }
+    ]
+  },
+  "autoMode": {
+    "environment": [
+      "### Project: Boston Robot Hackers website",
+      "**Purpose**: Static website generator for the Boston Robot Hackers community",
+      "**Package manager**: uv",
+      "**Run**: uv run python build/build.py",
+      "**Test**: uv run pytest",
+      "**Source control**: git@github.com:Boston-Robot-Hackers/brh-website-2.git",
+      "**Protected branches**: main"
+    ],
+    "allow": [
+      "$defaults"
     ]
   }
 }
