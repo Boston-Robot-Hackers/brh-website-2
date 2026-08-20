@@ -1,0 +1,5 @@
+{% if not meetings -%}
+<p><em>No upcoming meetings scheduled</em></p>
+{%- else -%}
+<p>{% for m in meetings %}<strong>{{ m.label }}:</strong> {% if m.url %}<a href="{{ m.url }}">{{ m.datetime_str }}</a>{% else %}{{ m.datetime_str }}{% endif %}{% if not loop.last %} | {% endif %}{% endfor %}</p>
+{%- endif %}

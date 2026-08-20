@@ -1,1 +1,0 @@
-/Users/pitosalas/mydev/dotfiles/rules.md

@@ -1,6 +1,6 @@
 ---
 name: "Skyler Wiernik"
-image: "images/people/skylerwiernik.jpg"
+image: "images/members/skylerwiernik.jpg"
 featured: true
 hashtags: ["ML", "software", "professional"]
 github: "https://github.com/Skylerwiernik"

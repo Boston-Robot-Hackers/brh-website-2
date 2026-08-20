@@ -1,6 +1,10 @@
+#!/usr/bin/env python3
 """
-Content management module for the website builder.
+content_manager.py — Content management module for the website builder.
 Handles loading and processing of markdown content.
+
+Author: Pito Salas and Claude Code
+Open Source Under MIT license
 """
 
 import json
@@ -26,7 +30,8 @@ def parse_date(date_str):
     try:
         return datetime.fromisoformat(str(date_str))
     except ValueError as e:
-        raise ValueError(f"Invalid date {date_str!r}: expected ISO format YYYY-MM-DD") from e
+        raise ValueError(
+            f"Invalid date {date_str!r}: expected ISO format YYYY-MM-DD") from e
 
 
 def classify_meeting(metadata: Dict[str, Any]) -> str:
@@ -43,9 +48,9 @@ def classify_meeting(metadata: Dict[str, Any]) -> str:
 
 class ContentType:
     """Configuration for different content types."""
-    def __init__(self, name: str, directory: str, sort_key: str = 'date', 
-                 reverse: bool = True, detail_template: str = None,
-                 page_template: str = None, output_filename: str = None):
+    def __init__(self, name: str, directory: str, sort_key: str = 'date',
+                 reverse: bool = True, detail_template: str | None = None,
+                 page_template: str | None = None, output_filename: str | None = None):
         self.name = name
         self.directory = directory
         self.sort_key = sort_key
@@ -58,8 +63,9 @@ class ContentType:
 class ContentManager:
     """Manages content loading and processing."""
     
-    def __init__(self, content_dir: Path):
+    def __init__(self, content_dir: Path, jinja_env=None):
         self.content_dir = content_dir
+        self.jinja_env = jinja_env
         self._news_map = None
         config_file = content_dir.parent / 'config' / 'site.json'
         if config_file.exists():
@@ -89,7 +95,8 @@ class ContentManager:
             }
         )
     
-    def process_markdown_file(self, file_path: Path, md_processor=None) -> Dict[str, Any]:
+    def process_markdown_file(
+            self, file_path: Path, md_processor=None) -> Dict[str, Any]:
         """Process a single markdown file and return structured data."""
         if md_processor is None:
             md_processor = self.setup_markdown_processor()
@@ -101,7 +108,8 @@ class ContentManager:
         # Normalize the date to an ISO string and validate it at the boundary,
         # so a bad date fails the build here, naming the file.
         raw_date = metadata.get('date')
-        metadata['date'] = raw_date.isoformat() if hasattr(raw_date, 'isoformat') else raw_date
+        metadata['date'] = (
+            raw_date.isoformat() if hasattr(raw_date, 'isoformat') else raw_date)
         try:
             parse_date(metadata['date'])
         except ValueError as e:
@@ -129,6 +137,8 @@ class ContentManager:
         items = []
 
         for md_file in content_dir.glob('*.md'):
+            if md_file.stem.startswith('_'):
+                continue  # leading-underscore files are scaffolding, never published
             item_data = self.process_markdown_file(md_file, md_processor)
             if item_data:
                 if content_type.directory == 'members':
@@ -143,14 +153,16 @@ class ContentManager:
 
         # Sort by specified key
         if content_type.sort_key == 'order':
-            # For order field, default to 0 if not present, so items without order come first
-            items.sort(key=lambda x: x['metadata'].get('order', 0), reverse=content_type.reverse)
+            # Default to 0 if not present, so items without order come first
+            items.sort(key=lambda x: x['metadata'].get('order', 0),
+                       reverse=content_type.reverse)
         elif content_type.sort_key == 'date':
             # Dates were validated at load, so sort chronologically directly.
             items.sort(key=lambda x: parse_date(x['date']) or datetime.min,
                        reverse=content_type.reverse)
         else:
-            items.sort(key=lambda x: x[content_type.sort_key] or '', reverse=content_type.reverse)
+            items.sort(key=lambda x: x[content_type.sort_key] or '',
+                       reverse=content_type.reverse)
         return items
 
     def resolve_news_html(self, ref: str):
@@ -206,42 +218,30 @@ class ContentManager:
         return future_meetings
 
     def format_future_meetings_section(self, meetings: List[Dict[str, Any]]) -> str:
-        """Format the 2 nearest future meetings for the hero section."""
-        if not meetings:
-            return "<p><em>No upcoming meetings scheduled</em></p>"
-
+        """Render the 2 nearest future meetings via the hero template."""
         # Only show the 2 nearest meetings
-        nearest_meetings = meetings[:2]
-
-        meeting_parts = []
-
-        for meeting in nearest_meetings:
+        context_meetings = []
+        for meeting in meetings[:2]:
             metadata = meeting['metadata']
 
-            # Determine if it's a hands-on meeting
             is_handson = classify_meeting(metadata) == 'handson'
             label = "Next Hands-On Meeting" if is_handson else "Next Main Meeting"
 
-            # Format the meeting
             parsed = parse_date(metadata.get('date'))
             date = parsed.strftime('%B %d, %Y') if parsed else ''
             time = metadata.get('time', '')
-            announcement = metadata.get('announcement', '')
-
             datetime_str = f"{date} at {time}" if date and time else date or time or ''
 
-            html, exists = self.resolve_news_html(announcement)
-            if exists:
-                meeting_link = f'<a href="news/{html}">{datetime_str}</a>'
-            else:
-                meeting_link = datetime_str
+            html, exists = self.resolve_news_html(metadata.get('announcement', ''))
 
-            meeting_parts.append(f"<strong>{label}:</strong> {meeting_link}")
+            context_meetings.append({
+                'label': label,
+                'datetime_str': datetime_str,
+                'url': f'news/{html}' if exists else '',
+            })
 
-        # Combine both meetings on one line without location
-        result = "<p>" + " | ".join(meeting_parts) + "</p>"
-
-        return result
+        template = self.jinja_env.get_template('components/upcoming-meetings-hero.html')
+        return template.render(meetings=context_meetings)
 
     def build_hero_content(self, page_name: str = 'index') -> Dict[str, Any]:
         """Build hero content from page-specific markdown file."""

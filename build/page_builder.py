@@ -1,9 +1,14 @@
+#!/usr/bin/env python3
 """
-Page building module for the website builder.
+page_builder.py — Page building module for the website builder.
 Handles template rendering and page generation.
+
+Author: Pito Salas and Claude Code
+Open Source Under MIT license
 """
 
-from datetime import datetime
+from collections import defaultdict
+from datetime import date, datetime
 from pathlib import Path
 from typing import List, Dict, Any
 
@@ -27,7 +32,8 @@ class PageBuilder:
         parsed = parse_date(date_str)
         return parsed.strftime('%B %d, %Y') if parsed else ""
     
-    def build_detail_pages(self, items: List[Dict], content_type: ContentType, **extra_context):
+    def build_detail_pages(
+            self, items: List[Dict], content_type: ContentType, **extra_context):
         """Generic method to build detail pages."""
         if not items:
             return
@@ -60,12 +66,8 @@ class PageBuilder:
 
             # For meetings, resolve announcement and report links
             if content_type.name == 'meetings':
-                ann_html, ann_exists = self.news_html_name(item['metadata'].get('announcement'))
-                rep_html, rep_exists = self.news_html_name(item['metadata'].get('report'))
-                template_vars[var_name]['announcement_exists'] = ann_exists
-                template_vars[var_name]['report_exists'] = rep_exists
-                template_vars[var_name]['announcement_html'] = ann_html
-                template_vars[var_name]['report_html'] = rep_html
+                template_vars[var_name].update(
+                    self.resolve_announcement_report(item['metadata']))
 
             html_content = detail_template.render(**template_vars)
             detail_file = detail_dir / f"{item['id']}.html"
@@ -79,10 +81,22 @@ class PageBuilder:
             self._news_map = build_news_index(self.dist_dir.parent / 'content' / 'news')
         return resolve_news_html(self._news_map, ref)
 
-    def check_news_file_exists(self, filename: str) -> bool:
-        """Check if a referenced news file resolves to a real news item."""
-        return self.news_html_name(filename)[1]
-    
+    def resolve_announcement_report(
+            self, metadata: Dict, prefix: str = '') -> Dict[str, Any]:
+        """Resolve a meeting's announcement/report refs into template context keys.
+
+        Returns `{prefix}announcement_exists`, `{prefix}report_exists`,
+        `{prefix}announcement_html`, `{prefix}report_html`.
+        """
+        ann_html, ann_exists = self.news_html_name(metadata.get('announcement'))
+        rep_html, rep_exists = self.news_html_name(metadata.get('report'))
+        return {
+            f'{prefix}announcement_exists': ann_exists,
+            f'{prefix}report_exists': rep_exists,
+            f'{prefix}announcement_html': ann_html,
+            f'{prefix}report_html': rep_html,
+        }
+
     def render_cards(self, items: List[Dict], template_name: str,
                      item_var_name: str = None, **extra_context) -> str:
         """Generic method to render cards using a template."""
@@ -97,7 +111,8 @@ class PageBuilder:
                 # Template expects item as a nested object (e.g., project.title)
                 context = {
                     item_var_name: item,
-                    'formatted_date': self.format_date(item['date']) if item.get('date') else '',
+                    'formatted_date': (
+                        self.format_date(item['date']) if item.get('date') else ''),
                     **extra_context
                 }
             else:
@@ -108,12 +123,7 @@ class PageBuilder:
 
             # For meeting cards, resolve announcement/report links and classify
             if 'compact-meeting-card' in template_name and 'metadata' in item:
-                ann_html, ann_exists = self.news_html_name(item['metadata'].get('announcement'))
-                rep_html, rep_exists = self.news_html_name(item['metadata'].get('report'))
-                context['announcement_exists'] = ann_exists
-                context['report_exists'] = rep_exists
-                context['announcement_html'] = ann_html
-                context['report_html'] = rep_html
+                context.update(self.resolve_announcement_report(item['metadata']))
                 context['kind'] = classify_meeting(item['metadata'])
 
             card_html = template.render(**context)
@@ -124,7 +134,9 @@ class PageBuilder:
     def render_news_cards(self, posts: List[Dict[str, Any]]) -> str:
         """Render news cards using the template."""
         # Add image classes to posts for the template
-        image_classes = "image-base image-square d-flex align-items-center justify-content-center text-white fw-bold"
+        image_classes = (
+            "image-base image-square d-flex align-items-center "
+            "justify-content-center text-white fw-bold")
         return self.render_cards(posts, 'cards/news-card.html',
                                image_classes=image_classes)
     
@@ -154,19 +166,18 @@ class PageBuilder:
             member_copy = member.copy()
             member_copy.update({
                 'name': member['title'],
-'hashtags': member['metadata'].get('hashtags', []),
+                'hashtags': member['metadata'].get('hashtags', []),
                 'projects': member['metadata'].get('projects', []),
                 'card_text': member['metadata'].get('card-text', 'MEMBER'),
                 'image': member['metadata'].get('image'),
             })
             members_flattened.append(member_copy)
 
-        return self.render_cards(members_flattened, 'cards/member-card.html', projects_map=projects_map)
+        return self.render_cards(
+            members_flattened, 'cards/member-card.html', projects_map=projects_map)
 
     def group_meetings_by_month(self, meetings: List[Dict]) -> List[Dict]:
         """Group meetings by month, pairing main and hands-on meetings."""
-        from collections import defaultdict
-
         month_groups = defaultdict(lambda: {'main': None, 'handson': None})
 
         for meeting in meetings:
@@ -220,19 +231,15 @@ class PageBuilder:
 
             # Resolve announcement/report links for main meeting
             if group['main_meeting']:
-                ann_html, ann_exists = self.news_html_name(
-                    group['main_meeting']['metadata'].get('announcement'))
-                rep_html, rep_exists = self.news_html_name(
-                    group['main_meeting']['metadata'].get('report'))
-                context['main_announcement_exists'] = ann_exists
-                context['main_report_exists'] = rep_exists
-                context['main_announcement_html'] = ann_html
-                context['main_report_html'] = rep_html
+                context.update(self.resolve_announcement_report(
+                    group['main_meeting']['metadata'], prefix='main_'))
             else:
-                context['main_announcement_exists'] = False
-                context['main_report_exists'] = False
-                context['main_announcement_html'] = ''
-                context['main_report_html'] = ''
+                context.update({
+                    'main_announcement_exists': False,
+                    'main_report_exists': False,
+                    'main_announcement_html': '',
+                    'main_report_html': '',
+                })
 
             card_html = template.render(**context)
             cards_html.append(card_html)
@@ -243,8 +250,6 @@ class PageBuilder:
         """Render upcoming meetings in calendar format for home page."""
         if not meetings:
             return ""
-
-        from datetime import datetime, date
 
         today = date.today()
         upcoming = []
@@ -267,7 +272,8 @@ class PageBuilder:
                 type_label = 'Main Meeting'
 
             # Build announcement URL if it resolves to a real news item
-            ann_html, ann_exists = self.news_html_name(meeting['metadata'].get('announcement'))
+            ann_html, ann_exists = self.news_html_name(
+                meeting['metadata'].get('announcement'))
             announcement_url = f'news/{ann_html}' if ann_exists else ''
 
             # Format for template
@@ -288,7 +294,8 @@ class PageBuilder:
         upcoming.sort(key=lambda x: x['date_obj'])
 
         # Render template
-        template = self.jinja_env.get_template('components/upcoming-meetings-calendar.html')
+        template = self.jinja_env.get_template(
+            'components/upcoming-meetings-calendar.html')
         return template.render(meetings=upcoming)
 
     def build_page(self, template_name: str, output_filename: str, **context):

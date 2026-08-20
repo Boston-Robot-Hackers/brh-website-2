@@ -1,7 +1,7 @@
 ---
 title: "Meeting Announcement for December 11 at 7:00pm"
 date: 2025-12-11
-image: "images/clock.png"
+image: "images/news/clock.png"
 excerpt: "Featured Talk: Joel Grimm and Christopher Lai will introduce us to the Autonomous RACECAR at MIT's Beaver Works Summer Institute"
 highlight: true
 type: news

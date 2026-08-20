@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
 """
-Modular build script for Boston Robot Hackers website.
+build.py — Modular build script for Boston Robot Hackers website.
 Split into focused modules for better maintainability.
+
+Author: Pito Salas and Claude Code
+Open Source Under MIT license
 """
 
 import json
+import re
 from pathlib import Path
 from typing import Dict, Any
 
@@ -48,7 +52,7 @@ class WebsiteBuilder:
         self.jinja_env.filters['format_date'] = format_date
         
         # Initialize managers
-        self.content_manager = ContentManager(self.content_dir)
+        self.content_manager = ContentManager(self.content_dir, self.jinja_env)
         self.page_builder = PageBuilder(self.jinja_env, self.dist_dir, self.site_config)
         self.asset_manager = AssetManager(self.root_dir, self.dist_dir)
         
@@ -59,12 +63,14 @@ class WebsiteBuilder:
                               detail_template='details/news-detail.html'),
             'projects': ContentType('projects', 'projects',
                                   detail_template='details/project-detail.html'),
-            'members': ContentType('members', 'members', sort_key='title', reverse=False,
-                                 detail_template='details/member-detail.html'),
-            'meetings': ContentType('meetings', 'meetings', sort_key='date', reverse=True,
-                                  output_filename='meetings.html',
-                                  page_template='pages/meetings.html',
-                                  detail_template='details/meeting-detail.html'),
+            'members': ContentType(
+                'members', 'members', sort_key='title', reverse=False,
+                detail_template='details/member-detail.html'),
+            'meetings': ContentType(
+                'meetings', 'meetings', sort_key='date', reverse=True,
+                output_filename='meetings.html',
+                page_template='pages/meetings.html',
+                detail_template='details/meeting-detail.html'),
         }
     
     def load_site_config(self) -> Dict[str, Any]:
@@ -77,10 +83,13 @@ class WebsiteBuilder:
     def build_whatsnew(self) -> str:
         """Build the What's New section from markdown files (highlighted only)."""
         posts = self.content_manager.get_all_content(self.content_types['news'])
-        highlighted_posts = [post for post in posts if post['metadata'].get('highlight', False)]
-        
+        highlighted_posts = [
+            post for post in posts if post['metadata'].get('highlight', False)
+        ]
+
         news_html = self.page_builder.render_news_cards(highlighted_posts)
-        print(f"Generated {len(highlighted_posts)} highlighted posts from {len(posts)} total")
+        print(f"Generated {len(highlighted_posts)} highlighted posts "
+              f"from {len(posts)} total")
         return news_html
     
     def build_index(self):
@@ -126,7 +135,8 @@ class WebsiteBuilder:
             meetings_content=meetings_content
         )
         
-        print(f"Built whatsnew.html with {len(posts)} posts and {len(meetings)} meetings")
+        print(f"Built whatsnew.html with {len(posts)} posts "
+              f"and {len(meetings)} meetings")
     
     def build_projects_page(self):
         """Build the projects.html page."""
@@ -140,7 +150,8 @@ class WebsiteBuilder:
                     'name': member['title'],
                     'url': f"../members/{member['id']}.html",
                 })
-        self.page_builder.build_detail_pages(projects, self.content_types['projects'], members_map=members_map)
+        self.page_builder.build_detail_pages(
+            projects, self.content_types['projects'], members_map=members_map)
         
         projects_content = self.page_builder.render_projects_content(projects)
         hero_content = self.content_manager.build_hero_content('projects')
@@ -158,11 +169,19 @@ class WebsiteBuilder:
         """Build the members.html page."""
         members = self.content_manager.get_all_content(self.content_types['members'])
         projects = self.content_manager.get_all_content(self.content_types['projects'])
-        projects_map_detail = {p['id']: {'title': p['title'], 'url': f"../projects/{p['id']}.html"} for p in projects}
-        projects_map_listing = {p['id']: {'title': p['title'], 'url': f"projects/{p['id']}.html"} for p in projects}
-        self.page_builder.build_detail_pages(members, self.content_types['members'], projects_map=projects_map_detail)
+        projects_map_detail = {
+            p['id']: {'title': p['title'], 'url': f"../projects/{p['id']}.html"}
+            for p in projects
+        }
+        projects_map_listing = {
+            p['id']: {'title': p['title'], 'url': f"projects/{p['id']}.html"}
+            for p in projects
+        }
+        self.page_builder.build_detail_pages(
+            members, self.content_types['members'], projects_map=projects_map_detail)
 
-        members_content = self.page_builder.render_member_cards(members, projects_map=projects_map_listing)
+        members_content = self.page_builder.render_member_cards(
+            members, projects_map=projects_map_listing)
         hero_content = self.content_manager.build_hero_content('members')
         
         self.page_builder.build_page(
@@ -191,7 +210,6 @@ class WebsiteBuilder:
 
     def parse_learn_sections(self, text: str) -> list:
         """Parse learn.md into structured sections for card rendering."""
-        import re
         icons = {
             'Getting Started': 'bi-rocket-takeoff',
             'Programming': 'bi-code-slash',
@@ -215,23 +233,30 @@ class WebsiteBuilder:
                 elif line.startswith('- '):
                     m = re.match(r'- \[([^\]]+)\]\(([^)]+)\)\s*[—–-]+\s*(.*)', line)
                     if m:
-                        links.append({'text': m.group(1), 'url': m.group(2), 'desc': m.group(3)})
+                        links.append({
+                            'text': m.group(1), 'url': m.group(2), 'desc': m.group(3)
+                        })
                     else:
                         m2 = re.match(r'- \[([^\]]+)\]\(([^)]+)\)', line)
                         if m2:
-                            links.append({'text': m2.group(1), 'url': m2.group(2), 'desc': ''})
+                            links.append({
+                                'text': m2.group(1), 'url': m2.group(2), 'desc': ''
+                            })
                 elif line and not line.startswith('#'):
                     intro = (intro + ' ' + line).strip()
             if title:
-                icon = next((v for k, v in icons.items() if k.lower() in title.lower()), 'bi-bookmark')
-                sections.append({'title': title, 'intro': intro, 'links': links, 'icon': icon})
+                icon = next(
+                    (v for k, v in icons.items() if k.lower() in title.lower()),
+                    'bi-bookmark')
+                sections.append({
+                    'title': title, 'intro': intro, 'links': links, 'icon': icon
+                })
         return sections
 
     def build_learn_page(self):
         """Build the learn.html page."""
         raw_text = (self.content_dir / 'learn.md').read_text()
         # Strip frontmatter
-        import re
         raw_text = re.sub(r'^---.*?---\s*', '', raw_text, flags=re.DOTALL)
         sections = self.parse_learn_sections(raw_text)
         hero_content = self.content_manager.build_hero_content('learn')

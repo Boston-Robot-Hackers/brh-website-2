@@ -1,7 +1,7 @@
 ---
 title: "Meeting announcement for January 8 - URDF and Vibe Coding"
 date: 2025-12-15
-image: "images/leo-1.png"
+image: "images/news/leo-1.png"
 excerpt: Monthly Meeting Announcement January 8 at A2
 highlight: true
 type: news

@@ -1,7 +1,7 @@
 ---
 title: Meeting notes from December main meeting
 date: 2025-12-13
-image: "images/neuraltraining.png"
+image: "images/news/neuraltraining.png"
 excerpt: "Thoughts about our December meeting"
 highlight: true
 type: news
@@ -44,7 +44,7 @@ You can see the results of my informal survey below. **Summary**: Participants i
 
 <br/>
 
-We had a three "lightning" talks: [Buddy E](https://bostonrobothackers.com/members/buddy_e.html) showed some cool techniques for dealing with [ROS2 bag files](https://docs.ros.org/en/foxy/Tutorials/Beginner-CLI-Tools/Recording-And-Playing-Back-Data/Recording-And-Playing-Back-Data.html). 
+We had a three "lightning" talks: [Buddy E](https://bostonrobothackers.com/members/buddy-e.html) showed some cool techniques for dealing with [ROS2 bag files](https://docs.ros.org/en/foxy/Tutorials/Beginner-CLI-Tools/Recording-And-Playing-Back-Data/Recording-And-Playing-Back-Data.html). 
 [Varun Raghavendra](https://www.linkedin.com/in/varun-raghavendra-73877a166/) showed his project [LeKapda](https://github.com/varuncraghavendra/LeKapda). 
 
 ### Beaverworks

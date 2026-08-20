@@ -57,6 +57,24 @@ class TestBuildPage:
         assert result == dist / "out.html"
 
 
+class TestResolveAnnouncementReport:
+    def test_absent_refs_all_false(self, page_builder):
+        result = page_builder.resolve_announcement_report({})
+        assert result == {
+            'announcement_exists': False,
+            'report_exists': False,
+            'announcement_html': '',
+            'report_html': '',
+        }
+
+    def test_prefix_applied_to_all_keys(self, page_builder):
+        result = page_builder.resolve_announcement_report({}, prefix='main_')
+        assert set(result.keys()) == {
+            'main_announcement_exists', 'main_report_exists',
+            'main_announcement_html', 'main_report_html',
+        }
+
+
 class TestBuildDetailPages:
     def _make_items(self, ids):
         return [

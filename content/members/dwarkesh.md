@@ -1,6 +1,6 @@
 ---
 name: "Dwarakesh Rajesh"
-image: "images/people/dr.jpg"
+image: "images/members/dr.jpg"
 featured: true
 hashtags: ["ROS", "python", "simulation", "professional"]
 github: "https://github.com/dwara-rajesh"

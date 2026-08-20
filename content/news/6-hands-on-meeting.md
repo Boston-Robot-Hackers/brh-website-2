@@ -2,7 +2,7 @@
 title: "Introducing Hands-On Meetings!"
 date: 2025-09-24
 excerpt: "Hands-on meetings are coming, starting on Oct 23. The usual place and time. Some of us will bring some partial robots or other widgets from our workshops and if you acquire a robot or robot kit before and want help building it or debugging it, bring it along. It will be a two hour meeting, without an agenda!"
-image: "images/workbench.png"
+image: "images/news/workbench.png"
 highlight: true
 ---
 ### TLDR
@@ -14,7 +14,7 @@ highlight: true
 * Meeting Date and Time: October 23rd, at the usual place and time.
 * Meeting Format: A two-hour meeting without a set agenda, where participants bring their own robots or kits for help and discussion.
 
-<img src="../../images/workbench.png" alt="Sample image" style="float: right; margin: 25px 25px 25px 25px; border-radius: 8px; height: 250px;">
+<img src="../../images/news/workbench.png" alt="Sample image" style="float: right; margin: 25px 25px 25px 25px; border-radius: 8px; height: 250px;">
 
 ### Background
 

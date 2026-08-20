@@ -1,7 +1,7 @@
 ---
 title: "November meeting update"
 date: 2025-11-15
-image: "images/armwork.png"
+image: "images/news/armwork.png"
 excerpt: "This was our most attended meeting to date. Skyler gave a great presenetation about his work applying neural nets to a robot arm. The neural net was trained by watching videos he made of the arm working under remote control"
 highlight: false
 ---

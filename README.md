@@ -62,7 +62,11 @@ uv run pytest --cov=build
 │   ├── cards/              # Card components for listings
 │   └── details/            # Detail page templates
 ├── css/                    # Stylesheets
-├── images/                 # Static images
+├── images/                 # Static images, one subdirectory per content type
+│   ├── news/               # News images
+│   ├── meetings/           # Meeting images
+│   ├── members/            # Member photos
+│   └── projects/           # Project images
 ├── scripts/                # JavaScript
 ├── config/
 │   └── site.json           # Site-wide text strings and configuration

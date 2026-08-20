@@ -2,7 +2,7 @@
 title: "Become a member! Get yourself on the website!"
 date: 2025-09-09
 excerpt: "If you're not a member, it's easy to join! If you are, let's get you listed on our member directory! If you have a cool project, we would love to showcase you on our site."
-image: "images/team.png"
+image: "images/news/team.png"
 highlight: false
 type: news
 ---
@@ -21,7 +21,7 @@ If you have not yet done it, it would be great to see you on our [membership pag
 ---
 name: "Johny Appleseed"
 role: "Robot Hacker"
-image: "images/people/ja.jpg"
+image: "images/members/ja.jpg"
 featured: true
 skills: ["ROS", "Software Engineering", "Robotics"]
 github: "https://github.com/johnny"

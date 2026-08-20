@@ -1,6 +1,6 @@
 ---
 name: "Alan Kilian"
-image: "images/people/alankilian.jpg"
+image: "images/members/alankilian.jpg"
 featured: true
 hashtags: ["ROS", "firmware", "controlsystems", "retired"]
 github: "https://github.com/AlanKilian"

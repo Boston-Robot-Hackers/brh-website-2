@@ -3,7 +3,7 @@ title: "Meeting announcement: David Dorff on Affordable Biometric Robot Hands: O
 subtitle: Join us for our upcoming meeting
 excerpt: 'Featuring talk by David Dorf about "Affordable Biomimetic Robot Hands"'
 date: 2025-11-09
-image: "images/clock.png"
+image: "images/news/clock.png"
 ---
 ## Our Next Meeting
 

@@ -1,7 +1,7 @@
 ---
 title: "Meeting announcement for April 2: Kalman Filters"
 date: 2026-01-30
-image: "images/kalman2.png"
+image: "images/news/kalman2.png"
 excerpt: "Chris Lai leads the Beaver Works Summer Program at MIT. Chris will discuss the motivation behind the Kalman Filter, and describe why (and most importantly) how it is used."
 highlight: true
 type: news
@@ -25,7 +25,7 @@ type: news
 
 The Kalman Filter is a powerful and efficient tool used in robotics (and beyond) to improve the accuracy and precision of noisy predictions or sensor readings. The algorithm uses the temporal aspect of predictions over time, combined with a noise model of the measurements, to allow the estimate of a state to converge. In addition, the algorithm is also memory efficient and recursive, which doesn't need a computer to store massive amounts of data (compared to other similar averaging techniques). Overall, it helps solve the problem of uncertainty in robotics, bringing us one step closer to being able to help robots more accurately perceive the world around it.ß
 
-<img src="../../images/kalman3.png" alt="Sample image" style="float: right; margin: 25px 25px 25px 25px; border-radius: 8px; height: 250px;">
+<img src="../../images/news/kalman3.png" alt="Sample image" style="float: right; margin: 25px 25px 25px 25px; border-radius: 8px; height: 250px;">
 
 Kalman Filters are used in some of the world's most advanced guidance, navigation, and control systems, including aircraft and spacecraft, in order to provide the ground station with accurate information about the craft's current and future state. However, the Kalman Filter is also applicable to hobby-level robotics, and can improve the stability and operation of the system when used correctly.
 

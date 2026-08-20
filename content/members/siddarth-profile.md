@@ -1,6 +1,6 @@
 ---
 name: "Siddarth Dayasagar"
-image: "images/people/siddarth.jpeg"
+image: "images/members/siddarth.jpeg"
 featured: true
 hashtags: ["ROS", "space", "C++", "student"]
 github: "https://github.com/siddarth09"

@@ -1,8 +1,24 @@
 from pathlib import Path
 
 import pytest
+from jinja2 import DictLoader, Environment
 
 from content_manager import ContentManager, ContentType
+
+HERO_MEETINGS_TEMPLATE = (
+    '{% if not meetings %}<p><em>No upcoming meetings scheduled</em></p>'
+    '{% else %}<p>{% for m in meetings %}<strong>{{ m.label }}:</strong> '
+    '{% if m.url %}<a href="{{ m.url }}">{{ m.datetime_str }}</a>'
+    '{% else %}{{ m.datetime_str }}{% endif %}'
+    '{% if not loop.last %} | {% endif %}{% endfor %}</p>{% endif %}'
+)
+
+
+@pytest.fixture
+def jinja_env():
+    return Environment(loader=DictLoader({
+        'components/upcoming-meetings-hero.html': HERO_MEETINGS_TEMPLATE,
+    }))
 
 
 class TestProcessMarkdownFile:
@@ -100,6 +116,16 @@ class TestGetAllContent:
         ct = ContentType("news", "news", "date", True, "details/news-detail.html", "pages/news.html", "news.html")
         assert cm.get_all_content(ct) == []
 
+    def test_leading_underscore_file_excluded(self, tmp_content_dir):
+        (tmp_content_dir / "members" / "_template.md").write_text(
+            "---\ntitle: Template\n---\nPlaceholder.\n"
+        )
+        cm = ContentManager(tmp_content_dir)
+        ct = ContentType("members", "members", "title", False, "details/member-detail.html", "pages/members.html", "members.html")
+        items = cm.get_all_content(ct)
+        assert len(items) == 2
+        assert "Template" not in [item["title"] for item in items]
+
 
 class TestHeroGeneration:
     def test_get_future_meetings_excludes_past(self, tmp_content_dir):
@@ -130,18 +156,18 @@ class TestHeroGeneration:
         titles = [m["title"] for m in meetings]
         assert "ISO Meeting" in titles
 
-    def test_format_future_meetings_empty_list(self, tmp_content_dir):
-        cm = ContentManager(tmp_content_dir)
+    def test_format_future_meetings_empty_list(self, tmp_content_dir, jinja_env):
+        cm = ContentManager(tmp_content_dir, jinja_env)
         result = cm.format_future_meetings_section([])
         assert "No upcoming meetings" in result
 
-    def test_format_future_meetings_shows_at_most_two(self, tmp_content_dir):
+    def test_format_future_meetings_shows_at_most_two(self, tmp_content_dir, jinja_env):
         meetings_dir = tmp_content_dir / "meetings"
         for i in range(3):
             (meetings_dir / f"extra-{i}.md").write_text(
                 f"---\ntitle: Extra Meeting {i}\ndate: 2099-0{i + 1}-10\nkind: main\ntime: 7pm\n---\n"
             )
-        cm = ContentManager(tmp_content_dir)
+        cm = ContentManager(tmp_content_dir, jinja_env)
         meetings = cm.get_future_meetings()
         result = cm.format_future_meetings_section(meetings)
         assert result.count("<strong>") <= 2
@@ -150,7 +176,7 @@ class TestHeroGeneration:
         cm = ContentManager(tmp_path)
         assert cm.get_future_meetings() == []
 
-    def test_format_future_meetings_with_announcement(self, tmp_content_dir):
+    def test_format_future_meetings_with_announcement(self, tmp_content_dir, jinja_env):
         news_dir = tmp_content_dir / "news"
         (news_dir / "2099-01-01-announce.md").write_text(
             "---\ntitle: Announcement\n---\nDetails.\n"
@@ -159,15 +185,15 @@ class TestHeroGeneration:
         (meetings_dir / "linked-meeting.md").write_text(
             "---\ntitle: Linked Meeting\ndate: 2099-06-15\nkind: main\ntime: 7pm\nannouncement: 2099-01-01-announce.md\n---\n"
         )
-        cm = ContentManager(tmp_content_dir)
+        cm = ContentManager(tmp_content_dir, jinja_env)
         meetings = cm.get_future_meetings()
         linked = [m for m in meetings if m["title"] == "Linked Meeting"]
         assert len(linked) == 1
         result = cm.format_future_meetings_section(linked)
         assert "<a href=" in result
 
-    def test_generate_index_hero_inserts_meeting_info(self, tmp_content_dir):
-        cm = ContentManager(tmp_content_dir)
+    def test_generate_index_hero_inserts_meeting_info(self, tmp_content_dir, jinja_env):
+        cm = ContentManager(tmp_content_dir, jinja_env)
         static_content = "<p>Welcome</p><hr/><p>old meeting info</p>"
         result = cm.generate_index_hero(static_content)
         assert "<hr/>" in result
@@ -184,8 +210,8 @@ class TestHeroGeneration:
         with pytest.raises(FileNotFoundError):
             cm.build_hero_content("projects")
 
-    def test_build_hero_content_index_page(self, tmp_content_dir):
-        cm = ContentManager(tmp_content_dir)
+    def test_build_hero_content_index_page(self, tmp_content_dir, jinja_env):
+        cm = ContentManager(tmp_content_dir, jinja_env)
         hero = cm.build_hero_content("index")
         assert hero["hero_title"] == "Welcome"
         assert hero["hero_subtitle"] == "Boston Robot Hackers"

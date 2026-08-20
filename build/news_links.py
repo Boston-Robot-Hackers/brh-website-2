@@ -1,8 +1,12 @@
-"""Shared resolution of news references to output URLs.
+#!/usr/bin/env python3
+"""news_links.py — Shared resolution of news references to output URLs.
 
 A meeting's `announcement`/`report` may reference a news item by its filename
 stem or by an explicit `slug`. The published page is named after the item's
 `slug` (or stem), so links survive a file being renamed or slugged.
+
+Author: Pito Salas and Claude Code
+Open Source Under MIT license
 """
 
 from pathlib import Path
