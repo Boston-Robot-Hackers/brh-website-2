@@ -44,13 +44,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const themeToggle = document.getElementById('theme-toggle');
     if (themeToggle) {
         const icon = themeToggle.querySelector('i');
+        const currentTheme = () => document.documentElement.getAttribute('data-bs-theme');
         const syncIcon = () => {
-            const isDark = document.documentElement.getAttribute('data-bs-theme') === 'dark';
-            icon.className = isDark ? 'bi bi-sun-fill' : 'bi bi-moon-stars-fill';
+            icon.className = currentTheme() === 'dark' ? 'bi bi-sun-fill' : 'bi bi-moon-stars-fill';
         };
         syncIcon();
         themeToggle.addEventListener('click', function() {
-            const next = document.documentElement.getAttribute('data-bs-theme') === 'dark' ? 'light' : 'dark';
+            const next = currentTheme() === 'dark' ? 'light' : 'dark';
             document.documentElement.setAttribute('data-bs-theme', next);
             localStorage.setItem('theme', next);
             syncIcon();

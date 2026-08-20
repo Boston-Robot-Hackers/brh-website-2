@@ -28,6 +28,7 @@
 * Applies to `03-features/`, `04-tasks/`, `05-issues/`, and any hand-written doc — not `01-literate/` (own prompt in `literate.md`).
 * Blank line between paragraphs, always. Short paragraphs; bullets for anything enumerable; **bold** for key decisions; *italics* for emphasis or naming a pattern. Several short, headed subsections beat one block.
 * Applies every time a file is rewritten, not just on first authoring.
+* Be brief and to the point. Don't list each and every file, field, variable. It's a summary!
 
 # agent model selection
 * Default subagent dispatch to haiku; upgrade only when the task needs judgment, not just data-gathering.

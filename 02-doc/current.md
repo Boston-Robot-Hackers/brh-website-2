@@ -1,5 +1,16 @@
 # Current
 
+## 2026-08-19 (F01 closed)
+- F01 (dark/light mode correctness) confirmed done: all 8 TF01 steps
+  (TF01.0-TF01.7) done, `uv run pytest` — 73 passed. Moved
+  `03-features/notdone/F01-dark-light-mode.md` -> `03-features/done/` and
+  `04-tasks/notdone/TF01-dark-light-mode.md` -> `04-tasks/done/`.
+- `03-features/notdone/F03-qrcode.md` left alone — it's a one-line idea
+  note ("add a qr code on every page to go to the signup form"), not a
+  properly formatted feature file, and has no matching task file. Not done,
+  nothing to close.
+- `03-features/notdone/` and `04-tasks/notdone/` are now otherwise empty.
+
 ## 2026-08-19 (F01 done)
 - Executed all 7 TF01 steps for F01 (dark/light mode correctness).
   `css/shared.css`: added a `prefers-color-scheme: dark` block with a
