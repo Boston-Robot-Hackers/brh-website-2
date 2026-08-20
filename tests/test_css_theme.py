@@ -21,10 +21,8 @@ BESPOKE_CHROME_HEX = {"#1e293b", "#334155", "#1a1a1a", "#ffffff"}
 def test_dark_mode_defines_every_required_variable():
     css = (REPO_ROOT / "css" / "shared.css").read_text()
 
-    dark_block = re.search(
-        r"@media \(prefers-color-scheme: dark\).*?:root\s*\{(.*?)\}", css, re.DOTALL
-    )
-    assert dark_block, "expected a prefers-color-scheme: dark :root override"
+    dark_block = re.search(r':root\[data-bs-theme="dark"\]\s*\{(.*?)\}', css, re.DOTALL)
+    assert dark_block, 'expected a :root[data-bs-theme="dark"] override'
 
     dark_vars = set(re.findall(r"(--[\w-]+)\s*:", dark_block.group(1)))
     missing = DARK_MODE_VARS - dark_vars
@@ -45,3 +43,22 @@ def test_base_template_syncs_bootstrap_theme():
 
     assert "data-bs-theme" in base_html
     assert "prefers-color-scheme: dark" in base_html
+
+
+def test_bootstrap_css_loads_before_custom_css():
+    """Regression test: Bootstrap's CSS must load before shared.css/main.css.
+
+    Both define rules for `body`/`.card` etc. at equal specificity, so
+    whichever loads last wins the cascade. Bootstrap loading second silently
+    overrode our custom colors in both modes (only obviously wrong in dark
+    mode, where the two competing dark grays clashed) until this was fixed.
+    """
+    head_html = (REPO_ROOT / "templates" / "components" / "head.html").read_text()
+
+    bootstrap_pos = head_html.index("bootstrap.min.css")
+    shared_pos = head_html.index("css/shared.css")
+    main_pos = head_html.index("css/main.css")
+
+    assert bootstrap_pos < shared_pos < main_pos, (
+        "Bootstrap CSS must load before shared.css and main.css"
+    )

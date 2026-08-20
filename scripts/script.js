@@ -37,4 +37,23 @@ document.addEventListener('DOMContentLoaded', function() {
             window.location = this.getAttribute('data-href');
         });
     });
+
+    // Light/dark theme toggle. The <head> inline script already set
+    // data-bs-theme before paint (from localStorage or system preference);
+    // this just wires up manual switching and keeps the icon in sync.
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) {
+        const icon = themeToggle.querySelector('i');
+        const syncIcon = () => {
+            const isDark = document.documentElement.getAttribute('data-bs-theme') === 'dark';
+            icon.className = isDark ? 'bi bi-sun-fill' : 'bi bi-moon-stars-fill';
+        };
+        syncIcon();
+        themeToggle.addEventListener('click', function() {
+            const next = document.documentElement.getAttribute('data-bs-theme') === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-bs-theme', next);
+            localStorage.setItem('theme', next);
+            syncIcon();
+        });
+    }
 });

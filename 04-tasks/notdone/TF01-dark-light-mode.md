@@ -56,17 +56,19 @@ contrast readable.
 **Test**: covered by the regression test written in TF01.6 (parity check
 that every light-mode variable has a dark-mode counterpart).
 
-**Result**: Added a `@media (prefers-color-scheme: dark)` block to
-`css/shared.css` redefining the 7 neutral variables plus all 4 shadow
-variables (11 total), using a symmetric slate-scale flip (`--bg: #0f172a`,
-`--bg-card: #1e293b`, `--border: #334155`, `--border-hover: #475569`,
-`--text: #f1f5f9`, `--text-muted: #94a3b8`, `--text-light: #64748b`), with
-shadow opacity bumped (0.05/0.1 → 0.3/0.4) since low-opacity black shadows
-barely register on a dark background. `--primary`/`--primary-hover`/
-`--primary-light`/`--secondary`/`--accent`/`--success` were deliberately
-left unchanged — confirmed via grep that they're only used on self-contained
-saturated fills (badges, gradients), never as page/card backgrounds, so they
-read fine in both modes.
+**Result**: Added a dark-mode block to `css/shared.css` redefining the 7
+neutral variables plus all 4 shadow variables (11 total), using a symmetric
+slate-scale flip (`--bg: #0f172a`, `--bg-card: #1e293b`, `--border:
+#334155`, `--border-hover: #475569`, `--text: #f1f5f9`, `--text-muted:
+#94a3b8`, `--text-light: #64748b`), with shadow opacity bumped (0.05/0.1 →
+0.3/0.4) since low-opacity black shadows barely register on a dark
+background. `--primary`/`--primary-hover`/`--primary-light`/`--secondary`/
+`--accent`/`--success` were deliberately left unchanged — confirmed via
+grep that they're only used on self-contained saturated fills (badges,
+gradients), never as page/card backgrounds, so they read fine in both
+modes. (Originally implemented as `@media (prefers-color-scheme: dark)`;
+switched to the `:root[data-bs-theme="dark"]` attribute selector in TF01.7
+so the manual toggle can override the OS setting — see that entry.)
 
 ## TF01.2 — Sync Bootstrap's own theming with system preference
 **Status**: done
@@ -84,7 +86,23 @@ theme-setting script is present in generated page output).
 immediately after `<meta charset>` (before any CSS/analytics loads), that
 sets `data-bs-theme` via `window.matchMedia('(prefers-color-scheme: dark)')`.
 All pages extend `layouts/base.html`, so this covers every page type from
-one place.
+one place. (Updated in TF01.7 to check `localStorage` first, for the manual
+toggle.)
+
+**Follow-up bug found via actual rendering** (not caught by TF01.0's static
+audit or the automated tests, only by screenshotting the built pages): the
+user reported the dark result looked "ugly." Inspecting computed styles
+showed `body`'s background was rendering as `#212529` (Bootstrap's own
+default dark body color) instead of our `--bg` (`#0f172a`) — same for
+`.card`. Root cause: `templates/components/head.html` loaded Bootstrap's
+CSS *after* `css/shared.css`/`css/main.css`, so Bootstrap's own `body`/
+`.card` rules (equal specificity, later in the cascade) silently won over
+ours — in both modes, but only obviously wrong in dark mode where the two
+competing dark grays visibly clashed. Fixed by reordering `head.html` so
+Bootstrap loads first and our custom CSS loads last. No test caught this
+because the CSS variables were defined correctly; the bug was purely about
+which stylesheet won the cascade, which needs a rendered page (or computed-
+style inspection) to observe, not a text-content check.
 
 ## TF01.3 — Replace remaining hardcoded colors in `main.css` with variables
 **Status**: done
@@ -176,20 +194,79 @@ both `prefers-color-scheme` values.
 checks; manual pass results recorded per `.claude/style_guide.md`'s
 convention.
 
-**Result**: Added `tests/test_css_theme.py` with 3 tests — note (a) checks
-an explicit allowlist of the 11 variables that need dark counterparts
-(*not* literally every light variable, since brand/accent colors are
-intentionally unchanged; the original task description predates that
-finding). `uv run pytest` — 72 passed.
+**Result**: Added `tests/test_css_theme.py`, now 4 tests (a 4th was added in
+TF01.7's follow-up, see below) — note (a) checks an explicit allowlist of
+the 11 variables that need dark counterparts (*not* literally every light
+variable, since brand/accent colors are intentionally unchanged; the
+original task description predates that finding). `uv run pytest` — 72
+passed at the time.
 
-Manual pass: **no browser tool is available in this environment**, so
-rendering was not visually confirmed — flagging that limitation rather than
-claiming a visual check that didn't happen. Instead did a thorough static
-verification: confirmed `data-bs-theme` script present in built output for
-all 7 page types plus one detail page per content type (news, meetings,
-projects, members); confirmed the dark `:root` block is present in
-`output/css/shared.css`; confirmed no leftover `text-dark`/`bg-light`/
-`border-dark` in built output for the pages that use the fixed templates.
-Recommend the user do a quick visual spot-check (devtools
-`prefers-color-scheme: dark` emulation) before considering this fully
-verified.
+Manual pass: initially done as a static-only check, since no browser tool
+was available at first. **Superseded** — TF01.7 got Playwright working in
+this environment (installed to a scratch npm project, isolated from the
+repo, since it has no `package.json` of its own) and did real rendered
+screenshots, which is how the TF01.7 cascade-order bug was actually found.
+Static verification alone would not have caught it — the CSS variables
+were all defined correctly, so every text-content check passed; only a
+rendered page (or computed-style inspection) shows which stylesheet wins
+the cascade. Lesson: for a visual-correctness feature like this one, a
+rendered check is not optional polish, it's the only way to catch this
+class of bug.
+
+## TF01.7 — Manual toggle + the cascade-order bug it surfaced
+**Status**: done
+
+**Description**: Added after the rest of TF01 was already done — the user
+asked to actually see the result rendered, which led to finding and fixing
+a real bug, then asked for a manual light/dark toggle button (reversing
+F01's original system-preference-only non-goal).
+
+**Test**: `test_bootstrap_css_loads_before_custom_css` (new, in
+`tests/test_css_theme.py`) locks in the cascade-order fix. The toggle
+itself was verified interactively (see Result) rather than via a new
+pytest test, since it's a click-and-observe DOM interaction; pytest has no
+browser context here to drive.
+
+**Result**:
+
+*Rendering setup*: no project skill existed for running this static site
+in a browser, so one was improvised: installed Playwright into an isolated
+scratch npm project (this repo has no `package.json`), served `output/`
+via `python3 -m http.server`, and drove headless Chromium with
+`colorScheme: 'dark'`/`'light'` context options to screenshot real pages.
+
+*Bug found*: see TF01.2's follow-up note — `head.html` loaded Bootstrap's
+CSS after ours, so Bootstrap's `body`/`.card` rules won the cascade and
+silently used Bootstrap's own dark palette (`#212529`) instead of ours
+(`#0f172a`). Fixed by reordering `head.html`. Re-screenshotted after the
+fix and confirmed cards now have correct, visually distinct backgrounds
+matching the intended palette.
+
+*Toggle implementation*: switched `css/shared.css`'s dark-mode block from
+`@media (prefers-color-scheme: dark)` to the `:root[data-bs-theme="dark"]`
+attribute selector, so it's driven by the same attribute Bootstrap uses
+rather than the OS media query directly — this is what makes a manual
+override possible. `templates/layouts/base.html`'s inline script now
+checks `localStorage.getItem('theme')` first, falling back to
+`prefers-color-scheme` only if nothing is stored (still runs before first
+paint). Added a small round icon button (`#theme-toggle`,
+sun/moon Bootstrap Icon) to `components/navigation.html`, positioned
+top-right of the nav bar via `css/main.css`'s `.theme-toggle-btn`
+(absolutely positioned against `.nav-bar-thin`'s existing `position:
+sticky`, which already establishes a containing block). Click handling and
+icon sync added to `scripts/script.js`'s existing `DOMContentLoaded`
+listener: toggling flips `data-bs-theme` and writes `localStorage`.
+
+*Interactive verification*: scripted a Playwright click-through — loaded
+the homepage with OS emulated as light, confirmed `data-bs-theme` starts
+`"light"`, clicked the button, confirmed it flips to `"dark"` and
+`localStorage` gets `theme: "dark"`, reloaded the page, confirmed it stays
+`"dark"` even though the OS emulation is still light (proving the manual
+override beats the system default). Screenshotted before/after — icon
+correctly swaps moon → sun and the whole page recolors. Checked
+`console --errors`-equivalent (`page.on('console'/'pageerror')`); the only
+errors are the pre-existing missing `images/robot-logo.png` and the
+external analytics script being unreachable in this sandboxed test run —
+both unrelated to this change.
+
+`uv run pytest` — 73 passed (added the cascade-order regression test).

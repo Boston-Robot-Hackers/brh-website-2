@@ -23,6 +23,31 @@
 - F01 and TF01 marked Done/Tests Written/Test Passing: yes, still sitting
   in `notdone/` (not moved to `done/` — say the word if you want that).
 
+## 2026-08-19 (F01 follow-up: real rendering found a cascade bug, added a toggle)
+- User reported dark mode looked "ugly" and asked me to actually look at
+  it. Got Playwright working (isolated scratch npm install, no
+  `package.json` in this repo) and screenshotted real pages in both modes.
+  Found the actual bug: `templates/components/head.html` loaded Bootstrap's
+  CSS *after* `shared.css`/`main.css`, so Bootstrap's own `body`/`.card`
+  rules won the cascade tie and silently used Bootstrap's default dark gray
+  (`#212529`) instead of our palette (`#0f172a`) — in both modes, only
+  obviously wrong in dark mode. Fixed by reordering `head.html`. This is
+  the kind of bug static analysis/grepping can't catch — needed a rendered
+  page.
+- User then asked for a manual light/dark toggle (reversing F01's original
+  system-preference-only non-goal). Implemented: switched
+  `css/shared.css`'s dark block from a `prefers-color-scheme` media query
+  to the `:root[data-bs-theme="dark"]` attribute selector; `base.html`'s
+  inline script now checks `localStorage` first; added a toggle button to
+  the nav bar (`components/navigation.html` + `.theme-toggle-btn` in
+  `main.css` + click handling in `script.js`). Verified interactively with
+  Playwright (click → attribute flips → survives reload even with OS still
+  emulated light).
+- Added a regression test locking in the cascade-order fix
+  (`test_bootstrap_css_loads_before_custom_css`). `uv run pytest` — 73
+  passed. F01/TF01 docs updated with both additions as TF01.2's follow-up
+  note and a new TF01.7. Not yet committed.
+
 ## 2026-08-19 (removed image-swapping feature)
 - Removed the hand-drawn/photo swap mechanism entirely, per user request to
   keep only the photo images: deleted `scripts/set-images.sh` and all of

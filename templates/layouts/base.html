@@ -4,8 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <script>
-        document.documentElement.setAttribute('data-bs-theme',
-            window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        (function () {
+            var stored = localStorage.getItem('theme');
+            var theme = stored ||
+                (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-bs-theme', theme);
+        })();
     </script>
     <script defer src="https://cloud.umami.is/script.js" data-website-id="b8636639-c5bd-49a4-b75e-944066c5bab6"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
