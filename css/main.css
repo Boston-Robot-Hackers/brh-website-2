@@ -271,26 +271,26 @@
   font-size: 1.75rem;
   font-weight: 700;
   line-height: 1;
-  color: #212529;
+  color: var(--text);
 }
 .date-month-year,
 .date-time {
   font-size: 0.875rem;
   font-weight: 500;
-  color: #6c757d;
+  color: var(--text-muted);
   margin-top: 0.25rem;
 }
 .meeting-type {
   font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
-  color: #0d6efd;
+  color: var(--primary);
   margin-bottom: 0.25rem;
   letter-spacing: 0.5px;
 }
 .meeting-blurb {
   font-size: 0.95rem;
-  color: #212529;
+  color: var(--text);
   line-height: 1.4;
 }
 
@@ -353,11 +353,11 @@
 
 /* ---- Meeting cards (month + compact) ---- */
 .meeting-month-card {
-  background-color: #f8f9fa;
+  background-color: var(--bg);
   border-radius: 6px;
-  border: 1px solid #dee2e6;
+  border: 1px solid var(--border);
 }
-.meeting-month-title { color: #495057; font-weight: 600; }
+.meeting-month-title { color: var(--text); font-weight: 600; }
 .meeting-bullet-row { display: flex; align-items: flex-start; }
 .meeting-bullet { flex-shrink: 0; margin-right: 0.5rem; }
 .meeting-bullet-body { flex-grow: 1; }
@@ -365,10 +365,10 @@
 .meeting-text { font-weight: 600; font-size: 1rem; }
 .meeting-links { padding-left: 1.5rem; }
 .compact-meeting-card {
-  background-color: #f8f9fa;
+  background-color: var(--bg);
   border-radius: 4px;
   padding-left: 0.5rem;
-  border-bottom: 2px solid #ced4da;
+  border-bottom: 2px solid var(--border-hover);
 }
 .compact-meeting-line { font-size: 1.05rem; }
 .compact-meeting-links { display: inline; }
@@ -381,7 +381,7 @@
 .member-card-col { min-width: 200px; }
 .member-card-title { font-size: 1rem; font-weight: 600; }
 .index-side-column {
-  border-left: 1px solid #dee2e6;
+  border-left: 1px solid var(--border);
   padding-left: 2rem;
 }
 .projects-two-col { columns: 2; column-gap: 2rem; }

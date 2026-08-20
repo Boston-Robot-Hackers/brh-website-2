@@ -1,9 +1,15 @@
 # F01 — dark/light mode correctness
 **Priority**: Medium
-**Done:** no
+
+**Done:** yes
+
 **Tasks File Created:** yes
-**Tests Written:** no
-**Test Passing:** no
+
+**Tests Written:** yes
+
+**Test Passing:** yes
+
+
 **Description**: The site currently defines only one color palette (light) as
 CSS custom properties in `css/shared.css`, loads Bootstrap 5.3.2 without
 configuring its dark-mode support (`data-bs-theme`), and has ~14 hardcoded hex
@@ -18,7 +24,10 @@ visitor's system preference via `prefers-color-scheme`, with Bootstrap's own
 component theming kept in sync and no unreadable/low-contrast combinations.
 
 **Non-goals**: no manual light/dark toggle switch UI (system-preference-driven
-only); no redesign of the existing light color palette itself.
+only); no redesign of the existing light color palette itself; no Bootstrap
+version upgrade — 5.3.2 (currently loaded) already has the full color-mode
+system this feature needs, so a version bump isn't required and would add
+unrelated risk.
 
 ## How to Demo
 **Setup**: Run `uv run python build/build.py`, then open pages from `output/`

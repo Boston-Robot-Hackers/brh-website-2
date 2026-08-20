@@ -3,11 +3,11 @@
     <div class="row g-0 h-100">
         <div class="col-4 col-md-3 d-flex align-items-center p-3">
             {% if image %}
-            <div class="border border-dark w-100 news-card-img-wrap">
+            <div class="border w-100 news-card-img-wrap">
                 <img src="{{ image }}" class="news-card-img" alt="{{ title }}">
             </div>
             {% else %}
-            <div class="bg-secondary d-flex align-items-center justify-content-center text-white fw-bold w-100 border border-dark news-card-thumb">
+            <div class="bg-secondary d-flex align-items-center justify-content-center text-white fw-bold w-100 border news-card-thumb">
                 {% if text %}{{ text }}{% else %}NEWS{% endif %}
             </div>
             {% endif %}

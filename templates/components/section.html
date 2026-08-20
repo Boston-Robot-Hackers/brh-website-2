@@ -2,7 +2,7 @@
 <section class="mb-3">
     {% if section_title %}
     <div class="mb-3">
-        <h2 class="font-telex h4 fw-normal text-dark mb-1 d-flex align-items-center">
+        <h2 class="font-telex h4 fw-normal mb-1 d-flex align-items-center">
             {% if section_emoji %}<span class="me-2">{{ section_emoji }}</span>{% endif %}
             {{ section_title }}
             {% if section_link %}&nbsp;<a href="{{ section_link }}" class="text-primary small">({{ section_link_text | default('see all') }})</a>{% endif %}

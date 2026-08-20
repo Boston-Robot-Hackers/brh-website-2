@@ -1,5 +1,28 @@
 # Current
 
+## 2026-08-19 (F01 done)
+- Executed all 7 TF01 steps for F01 (dark/light mode correctness).
+  `css/shared.css`: added a `prefers-color-scheme: dark` block with a
+  symmetric slate-scale flip for the 7 neutral variables + 4 shadows;
+  brand/accent colors left unchanged (confirmed only used on self-contained
+  fills). `templates/layouts/base.html`: inline script syncs
+  `data-bs-theme` with system preference before first paint — confirmed
+  necessary since 17 templates use Bootstrap's theme-aware `.card`
+  component. `css/main.css`: converted the 10 real light-mode-only hex
+  colors (meeting-card component) to variables; left 3 bespoke-dark-chrome
+  colors hardcoded. Fixed 3 template bugs (`section.html`'s `text-dark`,
+  `member-detail.html`'s `bg-light text-dark` badge,
+  `news-card.html`'s `border-dark`) using Bootstrap's theme-aware
+  equivalents.
+- Added `tests/test_css_theme.py` (3 tests). `uv run pytest` — 72 passed.
+- Manual visual verification **not done** — no browser tool available in
+  this environment. Did a thorough static check instead (confirmed
+  `data-bs-theme` + dark CSS block present across all page types in built
+  output, no leftover bad classes). Recommend the user spot-check visually
+  before considering this fully verified.
+- F01 and TF01 marked Done/Tests Written/Test Passing: yes, still sitting
+  in `notdone/` (not moved to `done/` — say the word if you want that).
+
 ## 2026-08-19 (removed image-swapping feature)
 - Removed the hand-drawn/photo swap mechanism entirely, per user request to
   keep only the photo images: deleted `scripts/set-images.sh` and all of
