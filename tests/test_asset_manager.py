@@ -1,5 +1,3 @@
-import pytest
-
 from asset_manager import AssetManager
 
 
@@ -86,6 +84,31 @@ class TestCopyCssFiles:
         am = AssetManager(root, dist)
         am.copy_css_files()
         assert not (dist / "css" / "shared.css").exists()
+
+
+class TestGenerateQrCode:
+    def test_writes_valid_png(self, tmp_path):
+        root = tmp_path / "root"
+        dist = tmp_path / "dist"
+        root.mkdir()
+        dist.mkdir()
+        am = AssetManager(root, dist)
+        am.generate_qr_code("https://example.com/signup")
+        qr_file = dist / "images" / "signup-qr.png"
+        assert qr_file.exists()
+        assert qr_file.read_bytes()[:8] == b"\x89PNG\r\n\x1a\n"
+
+    def test_different_urls_produce_different_images(self, tmp_path):
+        root = tmp_path / "root"
+        dist = tmp_path / "dist"
+        root.mkdir()
+        dist.mkdir()
+        am = AssetManager(root, dist)
+        am.generate_qr_code("https://example.com/one", filename="one.png")
+        am.generate_qr_code("https://example.com/two", filename="two.png")
+        assert (dist / "images" / "one.png").read_bytes() != (
+            dist / "images" / "two.png"
+        ).read_bytes()
 
 
 class TestGeneratePygmentsCSS:

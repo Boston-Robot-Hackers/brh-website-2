@@ -34,7 +34,5 @@ def tmp_content_dir(tmp_path):
     (tmp_path / "heroes" / "index.md").write_text(
         "---\ntitle: Welcome\nsubtitle: Boston Robot Hackers\n---\nHero content here.\n<hr/>\nMeeting info.\n"
     )
-    (tmp_path / "about.md").write_text(
-        "---\ntitle: About\n---\nAbout the group.\n"
-    )
+    (tmp_path / "about.md").write_text("---\ntitle: About\n---\nAbout the group.\n")
     return tmp_path

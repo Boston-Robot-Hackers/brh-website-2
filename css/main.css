@@ -195,6 +195,38 @@
   border-bottom-color: var(--primary);
 }
 
+/* Home page signup QR call-to-action - floats above the nav bar and hero photo */
+.signup-qr-cta {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 200;
+  text-align: center;
+  padding: 0.4rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.signup-qr-frame {
+  display: inline-block;
+  background: #ffffff;
+  padding: 0.15rem;
+  border-radius: var(--radius);
+}
+
+.signup-qr-frame img {
+  display: block;
+}
+
+.signup-qr-caption {
+  margin: 0.5rem 0 0;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--text);
+}
+
 /* Learn page cards */
 .learn-card-header {
   background: var(--bg-card);

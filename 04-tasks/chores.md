@@ -16,3 +16,8 @@
 - [x] 14. Add image-sources/ to README.md's Project Structure tree (was real and in active use but undocumented from the root). (F02 finding 6)
 - [x] 15. Fix README.md's scripts/ description (was "JavaScript" only; also holds the set-images.sh build utility). (F02 finding 7)
 - [x] 16. Create the 05-issues/{open,closed,deferred}/ subfolders expected by .claude/process.md. (F02 finding 8)
+- [x] 17. Resize F03's home page signup QR code to 80x80 (was 160x160) and move it from centered-below-hero to top-left with a small margin, per user request.
+- [x] 18. Remove build/pyproject.toml (+ its local build/.venv, build/uv.lock) — a stale, git-tracked, pre-reorg duplicate of the root project. Unreferenced anywhere, but `uv` silently resolves to it instead of root's when a command's cwd is inside build/, so it was missing the qrcode dependency added to root for F03 and broke the build with ModuleNotFoundError. This is the "three separate pyproject.toml files" issue F02 flagged (2026-07-30) but never actually removed.
+- [x] 19. Make F03's home page signup QR code float (position: fixed, z-index above the nav bar) so it overlaps both the sticky nav bar and the hero photo, per user request — was previously a normal in-flow block pushed below them.
+- [x] 20. Enlarge F03's signup QR to 100x100 (was 80x80), trim the white frame padding down to near-zero (the QR library already bakes in its own quiet zone), and change its caption to "Join BRH", per user request.
+- [x] 21. Switch config/site.json's signup_url to the forms.gle short link (confirmed earlier to redirect to the same form) instead of the full docs.google.com URL — cuts the QR from 41x41 to 29x29 modules, less visually busy and easier to scan at the small display size, per user request.

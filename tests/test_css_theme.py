@@ -7,9 +7,17 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 # shadows). Brand/accent colors (--primary, --secondary, --accent, --success,
 # etc.) are deliberately unchanged across modes - see F01's audit.
 DARK_MODE_VARS = {
-    "--bg", "--bg-card", "--border", "--border-hover",
-    "--text", "--text-muted", "--text-light",
-    "--shadow-sm", "--shadow-md", "--shadow-lg", "--shadow-xl",
+    "--bg",
+    "--bg-card",
+    "--border",
+    "--border-hover",
+    "--text",
+    "--text-muted",
+    "--text-light",
+    "--shadow-sm",
+    "--shadow-md",
+    "--shadow-lg",
+    "--shadow-xl",
 }
 
 # The 3 bespoke dark-UI-chrome colors intentionally left hardcoded in

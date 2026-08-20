@@ -1,24 +1,25 @@
-from pathlib import Path
-
 import pytest
+from content_manager import ContentManager, ContentType
 from jinja2 import DictLoader, Environment
 
-from content_manager import ContentManager, ContentType
-
 HERO_MEETINGS_TEMPLATE = (
-    '{% if not meetings %}<p><em>No upcoming meetings scheduled</em></p>'
-    '{% else %}<p>{% for m in meetings %}<strong>{{ m.label }}:</strong> '
+    "{% if not meetings %}<p><em>No upcoming meetings scheduled</em></p>"
+    "{% else %}<p>{% for m in meetings %}<strong>{{ m.label }}:</strong> "
     '{% if m.url %}<a href="{{ m.url }}">{{ m.datetime_str }}</a>'
-    '{% else %}{{ m.datetime_str }}{% endif %}'
-    '{% if not loop.last %} | {% endif %}{% endfor %}</p>{% endif %}'
+    "{% else %}{{ m.datetime_str }}{% endif %}"
+    "{% if not loop.last %} | {% endif %}{% endfor %}</p>{% endif %}"
 )
 
 
 @pytest.fixture
 def jinja_env():
-    return Environment(loader=DictLoader({
-        'components/upcoming-meetings-hero.html': HERO_MEETINGS_TEMPLATE,
-    }))
+    return Environment(
+        loader=DictLoader(
+            {
+                "components/upcoming-meetings-hero.html": HERO_MEETINGS_TEMPLATE,
+            }
+        )
+    )
 
 
 class TestProcessMarkdownFile:
@@ -56,15 +57,18 @@ class TestProcessMarkdownFile:
 class TestParseDate:
     def test_parses_iso(self):
         from content_manager import parse_date
+
         assert parse_date("2026-06-11").strftime("%Y-%m-%d") == "2026-06-11"
 
     def test_empty_is_none(self):
         from content_manager import parse_date
+
         assert parse_date("") is None
         assert parse_date(None) is None
 
     def test_non_iso_raises(self):
         from content_manager import parse_date
+
         with pytest.raises(ValueError):
             parse_date("06/11/2026")
         with pytest.raises(ValueError):
@@ -82,7 +86,7 @@ class TestDateHandling:
 
     def test_frontmatter_string_date_preserved(self, tmp_path):
         f = tmp_path / "post.md"
-        f.write_text("---\ntitle: Post\ndate: \"2024-03-15\"\n---\nContent.\n")
+        f.write_text('---\ntitle: Post\ndate: "2024-03-15"\n---\nContent.\n')
         cm = ContentManager(tmp_path)
         result = cm.process_markdown_file(f)
         assert result["date"] == "2024-03-15"
@@ -98,14 +102,30 @@ class TestDateHandling:
 class TestGetAllContent:
     def test_news_sorted_date_descending(self, tmp_content_dir):
         cm = ContentManager(tmp_content_dir)
-        ct = ContentType("news", "news", "date", True, "details/news-detail.html", "pages/news.html", "news.html")
+        ct = ContentType(
+            "news",
+            "news",
+            "date",
+            True,
+            "details/news-detail.html",
+            "pages/news.html",
+            "news.html",
+        )
         items = cm.get_all_content(ct)
         assert len(items) == 2
         assert items[0]["date"] >= items[1]["date"]
 
     def test_members_sorted_title_ascending(self, tmp_content_dir):
         cm = ContentManager(tmp_content_dir)
-        ct = ContentType("members", "members", "title", False, "details/member-detail.html", "pages/members.html", "members.html")
+        ct = ContentType(
+            "members",
+            "members",
+            "title",
+            False,
+            "details/member-detail.html",
+            "pages/members.html",
+            "members.html",
+        )
         items = cm.get_all_content(ct)
         assert len(items) == 2
         assert items[0]["title"] == "Alice"
@@ -113,7 +133,15 @@ class TestGetAllContent:
 
     def test_missing_directory_returns_empty(self, tmp_path):
         cm = ContentManager(tmp_path)
-        ct = ContentType("news", "news", "date", True, "details/news-detail.html", "pages/news.html", "news.html")
+        ct = ContentType(
+            "news",
+            "news",
+            "date",
+            True,
+            "details/news-detail.html",
+            "pages/news.html",
+            "news.html",
+        )
         assert cm.get_all_content(ct) == []
 
     def test_leading_underscore_file_excluded(self, tmp_content_dir):
@@ -121,7 +149,15 @@ class TestGetAllContent:
             "---\ntitle: Template\n---\nPlaceholder.\n"
         )
         cm = ContentManager(tmp_content_dir)
-        ct = ContentType("members", "members", "title", False, "details/member-detail.html", "pages/members.html", "members.html")
+        ct = ContentType(
+            "members",
+            "members",
+            "title",
+            False,
+            "details/member-detail.html",
+            "pages/members.html",
+            "members.html",
+        )
         items = cm.get_all_content(ct)
         assert len(items) == 2
         assert "Template" not in [item["title"] for item in items]
@@ -149,7 +185,7 @@ class TestHeroGeneration:
     def test_get_future_meetings_parses_iso_date(self, tmp_content_dir):
         meetings_dir = tmp_content_dir / "meetings"
         (meetings_dir / "iso-date-meeting.md").write_text(
-            "---\ntitle: ISO Meeting\ndate: \"2099-06-15\"\nkind: main\ntime: 7pm\n---\n"
+            '---\ntitle: ISO Meeting\ndate: "2099-06-15"\nkind: main\ntime: 7pm\n---\n'
         )
         cm = ContentManager(tmp_content_dir)
         meetings = cm.get_future_meetings()
@@ -232,7 +268,15 @@ class TestHeroGeneration:
         (items_dir / "a.md").write_text("---\ntitle: A\norder: 2\n---\nContent.\n")
         (items_dir / "b.md").write_text("---\ntitle: B\norder: 1\n---\nContent.\n")
         cm = ContentManager(tmp_path)
-        ct = ContentType("items", "items", "order", False, "details/items-detail.html", "pages/items.html", "items.html")
+        ct = ContentType(
+            "items",
+            "items",
+            "order",
+            False,
+            "details/items-detail.html",
+            "pages/items.html",
+            "items.html",
+        )
         items = cm.get_all_content(ct)
         assert items[0]["metadata"]["order"] == 1
         assert items[1]["metadata"]["order"] == 2
@@ -241,23 +285,28 @@ class TestHeroGeneration:
 class TestClassifyMeeting:
     def test_returns_explicit_kind(self):
         from content_manager import classify_meeting
+
         assert classify_meeting({"kind": "main"}) == "main"
         assert classify_meeting({"kind": "handson"}) == "handson"
 
     def test_missing_kind_raises(self):
         from content_manager import classify_meeting
+
         with pytest.raises(ValueError):
             classify_meeting({})
 
     def test_unknown_kind_raises(self):
         from content_manager import classify_meeting
+
         with pytest.raises(ValueError):
             classify_meeting({"kind": "social"})
 
 
 class TestResolveNewsHtml:
     def test_resolves_by_filename_stem(self, tmp_content_dir):
-        (tmp_content_dir / "news" / "my-talk.md").write_text("---\ntitle: Talk\n---\nx.\n")
+        (tmp_content_dir / "news" / "my-talk.md").write_text(
+            "---\ntitle: Talk\n---\nx.\n"
+        )
         cm = ContentManager(tmp_content_dir)
         assert cm.resolve_news_html("my-talk.md") == ("my-talk.html", True)
         assert cm.resolve_news_html("my-talk") == ("my-talk.html", True)

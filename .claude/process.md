@@ -11,24 +11,30 @@
 
 # features
 * `FNN-<slug>.md` in `03-features/{notdone,done,deferred}/`; a mini-spec — scope/intent, not task detail.
-* `Tasks File Created: yes` only once a matching `04-tasks/TFNN-*.md` exists. `template.md` shows the format.
+* `Tasks File Created: yes` only once a matching `04-tasks/TFNN-*.md` exists. `feature-template.md` shows the format.
 
 # tasks
-* Full task list before any design/code. `TFNN-<slug>.md` (`NN` matches the feature) in `04-tasks/{notdone,done,deferred}/`; `template.md` shows the format.
+* Full task list before any design/code. `TFNN-<slug>.md` (`NN` matches the feature) in `04-tasks/{notdone,done,deferred}/`; `task_template.md` shows the format.
 * Each step is numbered `TFNN.N`, matching the file's own `TFNN` (e.g. `TF03.0`, `TF03.1`, ...), starting at `.0` — not a bare `T0N`.
 * Every step gets a test where feasible (else record why); every feature gets a dedicated test-writing task.
 * Task lists must never include a "regenerate literate docs" task — literate docs are refreshed later, at checkpoint, not as part of a feature's task list.
 * Last task done → move the task file to `done/`, set the feature's Done/Tests Written/Test Passing to yes, move the feature file to `done/`.
 
 # issues
-* `05-issues/{open,closed,deferred}/`, numbered, follow the template.
+* `05-issues/{open,closed,deferred}/`, numbered, follow the issue_template.
 * New → `open/`; resolved or absorbed into a feature/task → `closed/`; explicitly deferred → `deferred/`.
 
 # writing .md files
-* Applies to `03-features/`, `04-tasks/`, `05-issues/`, and any hand-written doc — not `01-literate/` (own prompt in `literate.md`).
-* Blank line between paragraphs, always. Short paragraphs; bullets for anything enumerable; **bold** for key decisions; *italics* for emphasis or naming a pattern. Several short, headed subsections beat one block.
-* Applies every time a file is rewritten, not just on first authoring.
-* Be brief and to the point. Don't list each and every file, field, variable. It's a summary!
+* Applies to `03-features/`, `04-tasks/`, `05-issues/`, and any hand-written
+  doc — not `01-literate/` (own prompt in `literate.md`). Applies every time
+  a file is rewritten, not just on first authoring.
+* Default to bullets. Use a prose sentence only when a genuine narrative
+  link between clauses can't be expressed as a list.
+* One idea per bullet — split a multi-clause bullet into two rather than
+  joining with "and"/"which".
+* **Bold** for key decisions/terms; *italics* for emphasis or naming a
+  pattern. Headed subsections over one long block.
+* Be brief — summarize, don't enumerate every file/field/variable.
 
 # agent model selection
 * Default subagent dispatch to haiku; upgrade only when the task needs judgment, not just data-gathering.
