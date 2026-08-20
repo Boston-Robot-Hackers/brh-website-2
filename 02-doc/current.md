@@ -25,5 +25,12 @@ Known, deliberately-deferred items (not urgent, no ticket filed):
 * `ruff` is not a project dependency (no entry in `pyproject.toml`); this
   session ran it via `uvx ruff` instead. Worth adding as a real dev
   dependency at some point so `uv run ruff` works directly.
+* `01-literate/` has never actually been populated in this repo despite
+  `.claude/process.md`'s "regenerate literate docs before committing"
+  rule — confirmed via `git log` (no file has ever existed there).
+  `build/content_manager.py` changed this session (F07's `toc_tokens`/
+  `reading_time`) with no literate doc generated for it. Deliberately
+  skipped per user decision (2026-08-20) rather than starting a first-pass
+  doc-gen project unprompted during a routine commit.
 
 See `02-doc/history.md` for the completed-work log.

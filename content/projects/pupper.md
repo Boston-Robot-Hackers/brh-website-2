@@ -14,6 +14,8 @@ excerpt: "Open-source quadruped robot built at Stanford that can walk, see, list
 
 The **Boston Robot Hackers** are thrilled to announce a collaborative initiative with the **Stanford Pupper Project** to build and deploy the **Pupper v3**—a cutting-edge, open-source quadruped robot designed for research, education, and community engagement.
 
+Born out of Stanford's vision for accessible, low-cost quadruped robotics, Pupper was created to democratize hands-on robotics education. That mission continues here in Boston: fueled by a community of passionate volunteers, we've brought Pupper into our lab to give local builders, students, and curious minds direct access to high-level physical AI and legged locomotion platforms.
+
 This project brings together the technical rigor of Stanford University's Computer Science Department and the vibrant, multi-disciplinary talent of the Boston robotics community. Our goal is to assemble, program, and enhance this agile robot dog right here in Boston, serving as a hands-on learning platform for engineers, students, and hobbyists alike.
 
 ---
@@ -31,6 +33,17 @@ Pupper v3 is more than just a robot; it is a "cute companion" designed to spark 
 - **Safety First:** Lightweight and designed with expressive features like moving ears and a high-resolution screen, Pupper is safe for use around people and children.
 
 <img src="../images/projects/pupper_electronics.jpg" alt="Pupper v3 electronics internals" style="float: left; margin: 20px 20px 20px 0; border-radius: 8px; height: 220px;">
+
+---
+
+## Documentation & Resources
+
+To support custom builds and localized projects, our documentation builds upon the original Stanford Pupper frameworks with focused resources across multiple platforms:
+
+- **BRH Workspace:** Tailored setup guides, hardware modifications, and local lab integration steps.
+- **GitHub Repositories:** Codebases for control loops, ROS integration, and experimental hardware drivers.
+- **Stanford Core Docs:** Upstream architectural references and foundational build instructions.
+- **Outreach Portal:** Introductory tutorials and materials for newcomers.
 
 ---
 
@@ -53,6 +66,14 @@ Our local Pupper Project is led by a diverse group of experts and enthusiasts fr
 
 ---
 
+## Boston Timeline
+
+1.  **Arrival & Setup:** Pupper arrived in Boston; core hardware assembled and baseline system diagnostics completed.
+2.  **Community Integration:** Onboarded BRH volunteers, established documentation repositories, and began open hardware modifications.
+3.  **Active Deployments:** Launched public interactive demonstrations and hands-on workshop sessions across the local ecosystem.
+
+---
+
 ## Our Mission in Boston
 
 By building Pupper v3, the Boston Robot Hackers aim to:
@@ -63,9 +84,11 @@ By building Pupper v3, the Boston Robot Hackers aim to:
 
 ---
 
-## Get Involved
+## Get Involved & Get in Touch
 
 <img src="../images/projects/pupper_resting.jpg" alt="Pupper v3 at rest" style="float: right; margin: 20px 0 20px 20px; border-radius: 8px; height: 220px;">
+
+Want to build, code, or test with Pupper? Whether you're looking to collaborate on hardware, contribute code, or schedule a live demo, we'd love to connect — reach out to the BRH team or the Pupper project group directly.
 
 We meet regularly at **Artisans Asylum** in Allston. Whether you are a professional engineer or a curious beginner, there is a place for you in our community.
 

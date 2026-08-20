@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>News detail — Option 1: Magazine feature</title>
+<script>
+  (function () {
+    var stored = localStorage.getItem('theme');
+    var theme = stored || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-bs-theme', theme);
+  })();
+</script>
+<!-- Real site CSS - this mockup only adds layout, no new theme -->
+<link rel="stylesheet" href="../../css/shared.css">
+<link rel="stylesheet" href="../../css/main.css">
+<style>
+  /* ---- Option 1 only: single-column magazine feature layout ---- */
+  .article-magazine {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 0;
+  }
+  .article-magazine__kicker {
+    color: var(--primary);
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.03em;
+    margin: 0 0 0.5rem;
+  }
+  .article-magazine__title {
+    font-weight: 900;
+    font-size: clamp(2rem, 4.5vw, 3rem);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin: 0 0 1rem;
+    color: var(--text);
+  }
+  .article-magazine__dek {
+    font-size: 1.15rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin: 0 0 1.25rem;
+  }
+  .article-magazine__meta {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    font-size: 0.85rem;
+    color: var(--text-light);
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 0;
+  }
+  .article-magazine__photo {
+    margin: 2rem -1.5rem 0;
+  }
+  .article-magazine__photo img {
+    width: 100%;
+    max-height: 460px;
+    object-fit: cover;
+    display: block;
+  }
+  .article-magazine__photo figcaption {
+    font-style: italic;
+    font-size: 0.82rem;
+    color: var(--text-light);
+    margin-top: 0.6rem;
+    padding: 0 1.5rem;
+  }
+  .article-magazine__body {
+    max-width: 640px;
+    margin: 2.5rem auto 0;
+    font-size: 1.08rem;
+    line-height: 1.75;
+  }
+  .article-magazine__body h3 {
+    font-size: 1.3rem;
+    margin: 2.25rem 0 0.75rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 2px solid var(--border);
+  }
+  .article-magazine__body h4 {
+    font-size: 1.1rem;
+    margin: 1.75rem 0 0.5rem;
+    color: var(--primary);
+  }
+  .article-magazine__body ul {
+    padding-left: 1.25rem;
+  }
+  .article-magazine__body li {
+    margin-bottom: 0.35rem;
+  }
+  .article-magazine__pullquote {
+    font-family: "Archivo Narrow", sans-serif;
+    font-style: italic;
+    font-weight: 700;
+    font-size: 1.6rem;
+    line-height: 1.35;
+    color: var(--text);
+    border-left: 4px solid var(--primary);
+    padding: 0.25rem 0 0.25rem 1.5rem;
+    margin: 2.5rem 0;
+  }
+  .article-magazine__back {
+    max-width: 640px;
+    margin: 3rem auto 0;
+    padding-top: 1.5rem;
+    padding-bottom: 3rem;
+    border-top: 1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+<header class="site-nav">
+    <div class="site-nav__inner">
+        <a href="../../index.html" class="site-nav__brand">
+            <img src="../../images/robot-logo.png" alt="" class="site-nav__logo">
+            <span class="site-nav__wordmark">Boston Robot Hackers</span>
+        </a>
+        <nav class="site-nav__links" aria-label="Primary">
+            <a href="../../index.html" class="site-nav__link">Home</a>
+            <a href="../../learn.html" class="site-nav__link">Learn</a>
+            <a href="../../members.html" class="site-nav__link">Members</a>
+            <a href="../../projects.html" class="site-nav__link">Projects</a>
+            <a href="../../about.html" class="site-nav__link">About</a>
+            <a href="../../projects/pupper.html" class="site-nav__pupper-link">
+                <img src="../../images/projects/pupper_standing.jpg" alt="" class="site-nav__pupper-photo">
+                Pupper
+            </a>
+        </nav>
+        <button id="theme-toggle" type="button" class="theme-toggle-btn" aria-label="Switch between light and dark mode" title="Switch between light and dark mode">
+            <span class="theme-toggle-btn__icon theme-toggle-btn__icon--moon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></svg>
+            </span>
+            <span class="theme-toggle-btn__icon theme-toggle-btn__icon--sun" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
+            </span>
+        </button>
+    </div>
+</header>
+
+<article class="article-magazine">
+    <p class="article-magazine__kicker">June 11, 2026</p>
+    <h1 class="article-magazine__title">Meet Pupper, the Open-Source Robot Dog</h1>
+    <p class="article-magazine__dek">Ankush is a PhD candidate in Robotics at Stanford University. Meet Pupper: an open-source quadruped robot built at Stanford that can walk, see, listen, and respond to the world around it.</p>
+    <div class="article-magazine__meta">
+        <span>June 11, 2026</span>
+        <span>&middot;</span>
+        <span>2 min read</span>
+    </div>
+
+    <figure class="article-magazine__photo">
+        <img src="../../images/news/pupper.png" alt="Meet Pupper, the Open-Source Robot Dog">
+        <figcaption>Ankush Dhawan presents Pupper v3, Stanford's open-source quadruped robot.</figcaption>
+    </figure>
+
+    <div class="article-magazine__body">
+        <h3 id="meeting-announcement">Meeting Announcement</h3>
+        <ul>
+            <li>When: June 11, 2026, 7:00 to 9:00pm</li>
+            <li>Where: <a href="https://www.artisansasylum.com">Artisans Asylum</a> (96 Holton Street, Boston, MA 02135))</li>
+            <li>Register: <a href="https://brh.eventbrite.com">Register</a></li>
+        </ul>
+        <h3 id="agenda">Agenda</h3>
+        <ul>
+            <li>7:00 Mingle, network, show and tell</li>
+            <li>7:30 Lightning Talks
+                <ul>
+                    <li>TBD</li>
+                    <li>TBD</li>
+                </ul>
+            </li>
+            <li>7:45 Featured Speaker: Ankush Dhawan</li>
+            <li>8:30 Q&amp;A and Open Discussion</li>
+            <li>9:00 End of formal meeting</li>
+        </ul>
+        <h3 id="featured-talk">Featured Talk</h3>
+        <h4 id="meet-pupper-the-open-source-robot-dog">Meet Pupper, the Open-Source Robot Dog</h4>
+        <p>Meet Pupper: an open-source quadruped robot built at Stanford that can walk, see, listen, and respond to the world around it. Born as a student project and now in its third generation, Pupper has become the centerpiece of Stanford's CS123 course, a teaching platform for AI-enabled robotics, and through the Dr. Pupper project at Stanford Medicine, a companion for children recovering in the hospital.</p>
+
+        <p class="article-magazine__pullquote">"This talk tells Pupper's story through three pillars: how it moves, how it sees, and how it decides what to do."</p>
+
+        <p>We'll trace the evolution from a wobbly first prototype to a robot dog that learns to walk in simulation, recognizes objects in real time, and takes natural-language instructions like "follow that person" or "go find the ball." Along the way, we'll look at the design choices that make Pupper distinctly playful rather than industrial, and the moments, like a post-transplant patient taking their first walk alongside a robot dog, that hint at what embodied AI can be when it's built with intention.</p>
+        <p>By the end, you'll be well acquainted with Pupper and have a deeper appreciation for the exciting ways AI-enabled robots are beginning to shape both the classroom and the hospital room.</p>
+        <h4 id="speaker-ankush-dhawan">Speaker: Ankush Dhawan</h4>
+        <p>Ankush is a PhD candidate in Robotics at Stanford University, where his research spans manipulation, tactile sensing, and novel robotic hardware. Ankush has been a main contributor for teaching CS123: A Hands-On Introduction to Building AI-Enabled Robots, and has helped transform Pupper from a robotics club project into a full undergraduate course that has now taught over 150 students. He also co-leads Dr. Pupper, an initiative with Stanford Children's Hospital that brings AI-enabled robot dogs to pediatric patients. He is excited to expand Pupper to many more institutions and help sponsor more robotics projects through Hands-On Robotics.</p>
+        <p>More about Ankush: <a href="https://ankushdhawan5812.github.io/">ankushdhawan5812.github.io</a></p>
+    </div>
+
+    <div class="article-magazine__back">
+        <a href="../../whatsnew.html" class="btn-outline">&larr; Back to What's New</a>
+    </div>
+</article>
+
+<footer>
+    <p>© 2025 Boston Robot Hackers. Building the future, one robot at a time.</p>
+</footer>
+</body>
+</html>

@@ -1,4 +1,4 @@
-<!-- Project detail page - Full project description with status, team, and links. Reusable template pattern for any project. -->
+<!-- Project detail page - Two-column "technical brief" layout: compact header, existing meta/members block, article body plus a real table-of-contents sidebar built from the project's own headings. -->
 {% extends 'layouts/detail.html' %}
 
 {% set current_page = 'projects' %}
@@ -8,45 +8,56 @@
 {% block title %}{{ project.title }} - {{ site.title }}{% endblock %}
 
 {% block detail_content %}
-    <article class="detail-article">
-        <div class="detail-header">
+    <div class="detail-brief-header">
+        <p class="detail-brief-header__kicker">{{ project.metadata.status|default('Unknown') }}</p>
+        <h1 class="detail-brief-header__title">{{ project.title }}</h1>
+        <div class="detail-brief-header__row">
             {% if project.image %}
-            <img src="../{{ project.image }}" class="detail-header-img" alt="{{ project.title }}">
+            <img src="../{{ project.image }}" alt="{{ project.title }}" class="detail-brief-header__img">
             {% else %}
-            <div class="detail-header-thumb">{{ project.text }}</div>
+            <div class="detail-brief-header__img detail-brief-header__img--fallback">{{ project.text or 'PROJECT' }}</div>
             {% endif %}
-            <div>
-                <h1 class="detail-header__title">{{ project.title }}</h1>
-                <p class="project-detail__status">{{ project.metadata.status|default('Unknown') }}</p>
-                {% if project.excerpt %}
-                <p class="detail-header__excerpt">{{ project.excerpt }}</p>
-                {% endif %}
-            </div>
-        </div>
-
-        <div class="project-detail__meta">
-            <p><strong>Started:</strong> {{ project.date }}</p>
-            <p><strong>Team:</strong> {{ project.metadata.members|default('N/A') }} members</p>
-            {% if project.metadata.lead %}
-            <p><strong>Lead:</strong> {{ project.metadata.lead }}</p>
-            {% endif %}
-            {% if project.metadata.github %}
-            <p><strong>GitHub:</strong> <a href="{{ project.metadata.github }}" target="_blank">{{ project.metadata.github }}</a></p>
+            {% if project.excerpt %}
+            <p class="detail-brief-header__excerpt">{{ project.excerpt }}</p>
             {% endif %}
         </div>
+    </div>
 
-        {% set project_members = members_map[project.id] if members_map and project.id in members_map else [] %}
-        {% if project_members %}
-        <p class="project-detail__members">
-            <strong>Members:</strong>
-            {% for m in project_members %}
-                <a href="{{ m.url }}">{{ m.name }}</a>{% if not loop.last %}, {% endif %}
-            {% endfor %}
-        </p>
+    <div class="project-detail__meta">
+        <p><strong>Started:</strong> {{ project.date }}</p>
+        <p><strong>Team:</strong> {{ project.metadata.members|default('N/A') }} members</p>
+        {% if project.metadata.lead %}
+        <p><strong>Lead:</strong> {{ project.metadata.lead }}</p>
         {% endif %}
+        {% if project.metadata.github %}
+        <p><strong>GitHub:</strong> <a href="{{ project.metadata.github }}" target="_blank">{{ project.metadata.github }}</a></p>
+        {% endif %}
+    </div>
 
-        <div class="content">
+    {% set project_members = members_map[project.id] if members_map and project.id in members_map else [] %}
+    {% if project_members %}
+    <p class="project-detail__members">
+        <strong>Members:</strong>
+        {% for m in project_members %}
+            <a href="{{ m.url }}">{{ m.name }}</a>{% if not loop.last %}, {% endif %}
+        {% endfor %}
+    </p>
+    {% endif %}
+
+    <div class="detail-brief-layout{% if not project.toc_tokens %} detail-brief-layout--no-sidebar{% endif %}">
+        <article class="detail-brief-body">
             {{ project.content|safe }}
-        </div>
-    </article>
+        </article>
+
+        {% if project.toc_tokens %}
+        <aside class="detail-brief-sidebar">
+            <p class="detail-brief-sidebar__label">On this page</p>
+            <ul class="detail-brief-toc">
+                {% for token in project.toc_tokens %}
+                <li><a href="#{{ token.id }}">{{ token.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </aside>
+        {% endif %}
+    </div>
 {% endblock %}

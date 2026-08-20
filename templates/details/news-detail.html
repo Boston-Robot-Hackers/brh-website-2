@@ -1,4 +1,4 @@
-<!-- News detail page - Full news article with header and content. Reusable template pattern for any news item. -->
+<!-- News detail page - Two-column "technical brief" layout: compact header, article body plus a real table-of-contents sidebar built from the post's own headings. -->
 {% extends 'layouts/detail.html' %}
 
 {% set current_page = 'news' %}
@@ -8,24 +8,41 @@
 {% block title %}{{ post.title }} - {{ site.title }}{% endblock %}
 
 {% block detail_content %}
-    <article class="detail-article">
-        <div class="detail-header">
+    <div class="detail-brief-header">
+        <p class="detail-brief-header__kicker">News</p>
+        <h1 class="detail-brief-header__title">{{ post.title }}</h1>
+        <div class="detail-brief-header__row">
             {% if post.image %}
-            <img src="../{{ post.image }}" class="detail-header-img" alt="{{ post.title }}">
+            <img src="../{{ post.image }}" alt="{{ post.title }}" class="detail-brief-header__img">
             {% else %}
-            <div class="detail-header-thumb">{{ post.text }}</div>
+            <div class="detail-brief-header__img detail-brief-header__img--fallback">{{ post.text or 'NEWS' }}</div>
             {% endif %}
             <div>
-                <h1 class="detail-header__title">{{ post.title }}</h1>
-                <p class="detail-header__meta">{{ post.date }}</p>
+                <div class="detail-brief-header__meta">
+                    <span>{{ post.date }}</span>
+                    <span>{{ post.reading_time }} min read</span>
+                </div>
                 {% if post.excerpt %}
-                <p class="detail-header__excerpt">{{ post.excerpt }}</p>
+                <p class="detail-brief-header__excerpt">{{ post.excerpt }}</p>
                 {% endif %}
             </div>
         </div>
+    </div>
 
-        <div class="content">
+    <div class="detail-brief-layout{% if not post.toc_tokens %} detail-brief-layout--no-sidebar{% endif %}">
+        <article class="detail-brief-body">
             {{ post.content|safe }}
-        </div>
-    </article>
+        </article>
+
+        {% if post.toc_tokens %}
+        <aside class="detail-brief-sidebar">
+            <p class="detail-brief-sidebar__label">On this page</p>
+            <ul class="detail-brief-toc">
+                {% for token in post.toc_tokens %}
+                <li><a href="#{{ token.id }}">{{ token.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </aside>
+        {% endif %}
+    </div>
 {% endblock %}

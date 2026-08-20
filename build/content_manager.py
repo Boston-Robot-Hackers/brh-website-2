@@ -8,6 +8,7 @@ Open Source Under MIT license
 """
 
 import json
+import re
 from datetime import datetime
 from pathlib import Path
 from typing import Any
@@ -15,6 +16,15 @@ from typing import Any
 import frontmatter
 import markdown
 from news_links import build_news_index, resolve_news_html
+
+WORDS_PER_MINUTE = 200
+HTML_TAG_PATTERN = re.compile(r"<[^>]+>")
+
+
+def compute_reading_time(html_content: str) -> int:
+    """Estimate reading time in minutes from rendered HTML body content."""
+    word_count = len(HTML_TAG_PATTERN.sub(" ", html_content).split())
+    return max(1, round(word_count / WORDS_PER_MINUTE))
 
 
 def parse_date(date_str):
@@ -133,6 +143,11 @@ class ContentManager:
             "text": metadata.get("text", metadata.get("emoji")),
             "excerpt": metadata.get("excerpt", ""),
             "content": html_content,
+            "toc_tokens": [
+                {"id": token["id"], "name": token["name"]}
+                for token in md_processor.toc_tokens
+            ],
+            "reading_time": compute_reading_time(html_content),
             "metadata": metadata,
         }
 

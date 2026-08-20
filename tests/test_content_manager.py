@@ -53,6 +53,57 @@ class TestProcessMarkdownFile:
         result = cm.process_markdown_file(f)
         assert result["title"] == "Alice"
 
+    def test_toc_tokens_lists_top_level_headings(self, tmp_path):
+        f = tmp_path / "post.md"
+        f.write_text(
+            "---\ntitle: Post\n---\n"
+            "### Meeting Announcement\nBody.\n"
+            "### Agenda\nBody.\n"
+            "### Featured Talk\nBody.\n"
+            "#### Speaker: Someone\nBody.\n"
+        )
+        cm = ContentManager(tmp_path)
+        result = cm.process_markdown_file(f)
+        assert result["toc_tokens"] == [
+            {"id": "meeting-announcement", "name": "Meeting Announcement"},
+            {"id": "agenda", "name": "Agenda"},
+            {"id": "featured-talk", "name": "Featured Talk"},
+        ]
+
+    def test_toc_tokens_empty_when_no_headings(self, tmp_path):
+        f = tmp_path / "post.md"
+        f.write_text("---\ntitle: Post\n---\nJust a paragraph, no headings.\n")
+        cm = ContentManager(tmp_path)
+        result = cm.process_markdown_file(f)
+        assert result["toc_tokens"] == []
+
+    def test_reading_time_computed_from_word_count(self, tmp_path):
+        f = tmp_path / "post.md"
+        body = " ".join(["word"] * 400)
+        f.write_text(f"---\ntitle: Post\n---\n{body}\n")
+        cm = ContentManager(tmp_path)
+        result = cm.process_markdown_file(f)
+        assert result["reading_time"] == 2
+
+    def test_reading_time_minimum_is_one(self, tmp_path):
+        f = tmp_path / "post.md"
+        f.write_text("---\ntitle: Post\n---\nOne short sentence.\n")
+        cm = ContentManager(tmp_path)
+        result = cm.process_markdown_file(f)
+        assert result["reading_time"] == 1
+
+    def test_toc_tokens_reset_between_files(self, tmp_path):
+        f1 = tmp_path / "with-heading.md"
+        f1.write_text("---\ntitle: One\n---\n### A Heading\nBody.\n")
+        f2 = tmp_path / "without-heading.md"
+        f2.write_text("---\ntitle: Two\n---\nNo heading here.\n")
+        cm = ContentManager(tmp_path)
+        md_processor = cm.setup_markdown_processor()
+        first = cm.process_markdown_file(f1, md_processor)
+        second = cm.process_markdown_file(f2, md_processor)
+        assert first["toc_tokens"] != []
+        assert second["toc_tokens"] == []
+
 
 class TestParseDate:
     def test_parses_iso(self):
