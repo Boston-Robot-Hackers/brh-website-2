@@ -8,53 +8,43 @@
 {% block title %}{{ project.title }} - {{ site.title }}{% endblock %}
 
 {% block detail_content %}
-    <article class="project-detail">
-        <div class="row mb-4">
-            <div class="col-md-2">
-                <div class="text-center">
-                    {% if project.image %}
-                    <img src="../{{ project.image }}" class="rounded project-detail-img" alt="{{ project.title }}">
-                    {% endif %}
-                    <div class="fw-bold mt-2">{{ project.text }}</div>
-                    <div class="badge bg-secondary mt-1">{{ project.metadata.status|default('Unknown') }}</div>
-                </div>
-            </div>
-            <div class="col-md-10">
-                <h1 class="mb-2">{{ project.title }}</h1>
+    <article class="detail-article">
+        <div class="detail-header">
+            {% if project.image %}
+            <img src="../{{ project.image }}" class="detail-header-img" alt="{{ project.title }}">
+            {% else %}
+            <div class="detail-header-thumb">{{ project.text }}</div>
+            {% endif %}
+            <div>
+                <h1 class="detail-header__title">{{ project.title }}</h1>
+                <p class="project-detail__status">{{ project.metadata.status|default('Unknown') }}</p>
                 {% if project.excerpt %}
-                <p class="lead">{{ project.excerpt }}</p>
-                {% endif %}
-                
-                <div class="row text-muted small mb-3">
-                    <div class="col-md-6">
-                        <strong>Started:</strong> {{ project.date }}
-                    </div>
-                    <div class="col-md-6">
-                        <strong>Team:</strong> {{ project.metadata.members|default('N/A') }} members
-                    </div>
-                    {% if project.metadata.lead %}
-                    <div class="col-md-6 mt-1">
-                        <strong>Lead:</strong> {{ project.metadata.lead }}
-                    </div>
-                    {% endif %}
-                    {% if project.metadata.github %}
-                    <div class="col-md-6 mt-1">
-                        <strong>GitHub:</strong> <a href="{{ project.metadata.github }}" target="_blank">{{ project.metadata.github }}</a>
-                    </div>
-                    {% endif %}
-                </div>
-                {% set project_members = members_map[project.id] if members_map and project.id in members_map else [] %}
-                {% if project_members %}
-                <div class="mt-1">
-                    <strong>Members:</strong>
-                    {% for m in project_members %}
-                        <a href="{{ m.url }}">{{ m.name }}</a>{% if not loop.last %}, {% endif %}
-                    {% endfor %}
-                </div>
+                <p class="detail-header__excerpt">{{ project.excerpt }}</p>
                 {% endif %}
             </div>
         </div>
-        
+
+        <div class="project-detail__meta">
+            <p><strong>Started:</strong> {{ project.date }}</p>
+            <p><strong>Team:</strong> {{ project.metadata.members|default('N/A') }} members</p>
+            {% if project.metadata.lead %}
+            <p><strong>Lead:</strong> {{ project.metadata.lead }}</p>
+            {% endif %}
+            {% if project.metadata.github %}
+            <p><strong>GitHub:</strong> <a href="{{ project.metadata.github }}" target="_blank">{{ project.metadata.github }}</a></p>
+            {% endif %}
+        </div>
+
+        {% set project_members = members_map[project.id] if members_map and project.id in members_map else [] %}
+        {% if project_members %}
+        <p class="project-detail__members">
+            <strong>Members:</strong>
+            {% for m in project_members %}
+                <a href="{{ m.url }}">{{ m.name }}</a>{% if not loop.last %}, {% endif %}
+            {% endfor %}
+        </p>
+        {% endif %}
+
         <div class="content">
             {{ project.content|safe }}
         </div>

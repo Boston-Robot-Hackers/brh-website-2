@@ -4,6 +4,47 @@ Completed-work log. `02-doc/current.md`'s `## Open` section is the only
 part that matters for new work; entries move here once done, per
 `.claude/process.md`'s checkpoint step.
 
+## 2026-08-20 (F04 + F05 closed: full Option D site redesign)
+* F04 (site redesign concept exploration) done: 4 mockup directions —
+  A blueprint, B terminal/circuit, C industrial minimal, D a Futurism.com
+  editorial homage (the one later implemented) — in
+  `design-mockups/f04-site-redesign/`, published as a comparison gallery
+  artifact. Discovered `content/projects/pupper.md` is a real, current
+  project (Stanford Pupper v3), not hypothetical, so all mockups used its
+  real photos/copy. Moved to `done/`.
+* F05 (implement Option D in the real site) done, all 18 `TF05` steps
+  across 3 phases:
+  - **Phase 1**: sitewide CSS variable/typography re-theme (cream/ink/red
+    palette, Archivo Narrow), nav + footer redesign (Pupper added as a
+    6th nav entry, linking to its existing project page), full home page
+    rebuild (lead block, story rivers, rail).
+  - **Phase 2**: Learn/What's New/Meetings/Projects/Members/About all
+    re-skinned from Bootstrap to the site's own CSS, each with its own
+    content-preservation regression test.
+  - **Phase 3**: Bootstrap CSS/JS/Icons removed entirely — 11
+    hand-authored inline SVG icons replace Bootstrap Icons, a new
+    `.page-content`/`.hero` absorbed the layout utility classes Bootstrap
+    was providing, added the `box-sizing: border-box` reset Bootstrap's
+    reboot.css was quietly supplying.
+* Real bugs found and fixed along the way (unrelated to the redesign
+  itself): a stray literal "+" rendering as visible text on every page
+  (all 3 layout templates); every meeting-detail page overflowing a
+  fixed-size thumbnail box with a full paragraph of text; the
+  long-dangling `images/robot-logo.png` reference (flagged since F01)
+  finally resolved with a user-supplied hand-drawn logo, circle-cropped
+  and made theme-aware via `filter: invert()`.
+* Content-count parity verified exact across the whole migration: 24
+  news / 24 meetings / 9 projects / 14 members — nothing lost.
+* Also this session: filled in `02-doc/spec.md` (was an unfilled
+  template); tightened `.claude/process.md`'s md-brevity rule with a
+  concrete bullet-count ceiling after drifting back into pre-rule
+  verbosity once.
+* `uv run pytest` — 107 passed (up from 78 at session start). Checkpoint:
+  `uvx ruff check .`/`ruff format --check .` clean except the 3
+  pre-existing, deliberately-deferred `DTZ` findings (unchanged, see
+  `current.md`). Committed and pushed on branch `f04-site-redesign` (not
+  merged to `main`).
+
 ## 2026-08-20 (F03 closed: signup QR code)
 * F03 (QR code to signup form on home page header) done: all 5 TF03 steps
   (`TF03.0`-`TF03.4`) done. Moved `03-features/notdone/F03-qrcode.md` ->

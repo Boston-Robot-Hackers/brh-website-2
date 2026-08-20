@@ -4,9 +4,7 @@
 {% block content %}
     {% include 'components/hero.html' %}
 
-+    <div class="container px-3">
-        <main class="py-2 pb-3">
-            {% block main_content %}{% endblock %}
-        </main>
-    </div>
+    <main class="page-content">
+        {% block main_content %}{% endblock %}
+    </main>
 {% endblock %}

@@ -1,25 +1,13 @@
-<!-- News card - Featured news display with image for home page highlights. Reusable for featured content. -->
-<div class="card mb-3 featured-news-card">
-    <div class="row g-0 h-100">
-        <div class="col-4 col-md-3 d-flex align-items-center p-3">
-            {% if image %}
-            <div class="border w-100 news-card-img-wrap">
-                <img src="{{ image }}" class="news-card-img" alt="{{ title }}">
-            </div>
-            {% else %}
-            <div class="bg-secondary d-flex align-items-center justify-content-center text-white fw-bold w-100 border news-card-thumb">
-                {% if text %}{{ text }}{% else %}NEWS{% endif %}
-            </div>
-            {% endif %}
-        </div>
-        <div class="col-8 col-md-9">
-            <div class="card-body py-2">
-                <h5 class="card-title mb-1">
-                    <a href="news/{{ id }}.html" class="text-decoration-none">{{ title }}</a>
-                </h5>
-                <p class="card-text mb-1">{{ excerpt }}</p>
-                <p class="card-text mb-0"><small class="text-body-secondary">posted on: {{ formatted_date }}</small></p>
-            </div>
-        </div>
+<!-- News card - Story-row display for home page highlights (thumbnail + kicker + title + excerpt). -->
+<article class="story-row">
+    {% if image %}
+    <img src="{{ image }}" alt="{{ title }}" class="story-row__thumb">
+    {% else %}
+    <div class="story-row__thumb story-row__thumb--fallback">{{ text or 'NEWS' }}</div>
+    {% endif %}
+    <div class="story-row__body">
+        <p class="story-row__meta">{{ formatted_date }}</p>
+        <h3 class="story-row__title"><a href="news/{{ id }}.html">{{ title }}</a></h3>
+        <p class="story-row__excerpt">{{ excerpt }}</p>
     </div>
-</div>
+</article>

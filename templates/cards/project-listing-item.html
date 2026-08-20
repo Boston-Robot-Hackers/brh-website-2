@@ -1,20 +1,20 @@
-<!-- Project listing item - Single project display for projects page. Reusable. -->
-<article class="project-listing-item d-flex gap-3 py-3 border-bottom align-items-start">
+<!-- Project listing item - Story-row display for the projects page. Reusable. -->
+<article class="story-row">
     {% if project.image %}
-    <a href="projects/{{ project.id }}.html" class="flex-shrink-0">
-        <img src="{{ project.image }}" class="rounded project-thumb" alt="{{ project.title }}">
-    </a>
+    <img src="{{ project.image }}" alt="{{ project.title }}" class="story-row__thumb">
+    {% else %}
+    <div class="story-row__thumb story-row__thumb--fallback">{{ project.text or 'PROJECT' }}</div>
     {% endif %}
-    <div class="flex-grow-1">
-        <div class="d-flex align-items-baseline gap-2 flex-wrap">
-            <h5 class="mb-0"><a href="projects/{{ project.id }}.html" class="text-decoration-none">{{ project.title }}</a></h5>
-            <span class="badge bg-secondary badge-status">{{ project.metadata.status or 'Unknown' }}</span>
-        </div>
-        <p class="mb-1 mt-1 text-muted small">{{ project.excerpt }}</p>
-        <div class="text-muted project-meta">
-            {% if project.metadata.lead %}<span class="me-3"><strong>Lead:</strong> {{ project.metadata.lead }}</span>{% endif %}
-            {% if formatted_date %}<span class="me-3"><strong>Started:</strong> {{ formatted_date }}</span>{% endif %}
-            {% if project.metadata.github %}<a href="{{ project.metadata.github }}" target="_blank" class="text-muted">GitHub</a>{% endif %}
-        </div>
+    <div class="story-row__body">
+        <p class="story-row__meta">{{ project.metadata.status or 'Unknown' }}</p>
+        <h3 class="story-row__title"><a href="projects/{{ project.id }}.html">{{ project.title }}</a></h3>
+        <p class="story-row__excerpt">{{ project.excerpt }}</p>
+        {% if project.metadata.lead or formatted_date or project.metadata.github %}
+        <p class="story-row__submeta">
+            {% if project.metadata.lead %}Lead: {{ project.metadata.lead }}{% endif %}
+            {% if formatted_date %}{% if project.metadata.lead %} &middot; {% endif %}Started: {{ formatted_date }}{% endif %}
+            {% if project.metadata.github %}{% if project.metadata.lead or formatted_date %} &middot; {% endif %}<a href="{{ project.metadata.github }}" target="_blank">GitHub</a>{% endif %}
+        </p>
+        {% endif %}
     </div>
 </article>

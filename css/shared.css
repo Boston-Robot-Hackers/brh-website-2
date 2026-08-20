@@ -4,30 +4,45 @@
  */
 
 /* Font Imports */
-@import url('https://fonts.googleapis.com/css2?family=Telex&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,500;1,600;1,700&display=swap');
+
+/* Minimal reset - previously provided by Bootstrap's reboot.css, now that
+ * Bootstrap is gone. box-sizing: border-box is load-bearing for several
+ * width+padding combinations throughout main.css. */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
 
 :root{
   --radius: 12px;
   --radius-lg: 16px;
   --space-1: 8px; --space-2: 12px; --space-3: 16px; --space-4: 24px; --space-5: 32px;
-  
-  /* Modern Color Palette */
-  --primary: #3b82f6;
-  --primary-hover: #2563eb;
-  --primary-light: #dbeafe;
+
+  /* Option D (Futurism editorial) palette - red accent on cream */
+  --primary: #ff0033;
+  --primary-hover: #e00030;
+  --primary-light: #ffe3e8;
   --secondary: #8b5cf6;
   --accent: #f59e0b;
   --success: #10b981;
-  
+
   /* Neutral Colors */
-  --bg: #f8fafc;
+  --bg: #fffef7;
   --bg-card: #ffffff;
-  --border: #e2e8f0;
-  --border-hover: #cbd5e1;
-  --text: #1e293b;
-  --text-muted: #64748b;
-  --text-light: #94a3b8;
-  
+  --header-bg: #f8f8f8;
+  --border: #e5e2d6;
+  --border-hover: #d0cbb8;
+  --text: #0a0a0a;
+  --text-muted: #4a4a4a;
+  --text-light: #7a7a72;
+  --dek: #2a2a2a;
+
   /* Shadows for depth */
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
@@ -35,20 +50,32 @@
   --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 }
 
-/* Dark mode: neutral scale flip. Brand/accent colors (--primary, --secondary,
- * --accent, --success) are unchanged - they're only used on self-contained
- * saturated fills (badges, gradients), not backgrounds, so they read fine in
- * both modes. Keyed off data-bs-theme (set by an inline script in <head>,
- * from either localStorage or prefers-color-scheme) rather than the media
- * query directly, so the manual toggle can override the OS setting. */
+/* Dark mode: neutral scale flip to a warm near-black (not blue-black),
+ * consistent with the light mode's warm cream. --secondary/--accent/
+ * --success are unchanged - they're only used on self-contained saturated
+ * fills (badges, gradients), not backgrounds/text, so they read fine in
+ * both modes (see F01's audit). --primary IS redefined here, unlike F01's
+ * precedent: Option D uses red as running link/nav text color (not just
+ * isolated fills), and the light-mode #ff0033 is too dark to pass text
+ * contrast against a near-black background, so dark mode gets a lighter
+ * tint of the same hue. Keyed off data-bs-theme (set by an inline script
+ * in <head>, from either localStorage or prefers-color-scheme) rather than
+ * the media query directly, so the manual toggle can override the OS
+ * setting. */
 :root[data-bs-theme="dark"] {
-  --bg: #0f172a;
-  --bg-card: #1e293b;
-  --border: #334155;
-  --border-hover: #475569;
-  --text: #f1f5f9;
-  --text-muted: #94a3b8;
-  --text-light: #64748b;
+  --primary: #ff5c78;
+  --primary-hover: #ff7d92;
+  --primary-light: #3a1420;
+
+  --bg: #121110;
+  --bg-card: #1c1a17;
+  --header-bg: #1c1a17;
+  --border: #33302a;
+  --border-hover: #4a453c;
+  --text: #f5f3ea;
+  --text-muted: #b8b3a6;
+  --text-light: #8a8578;
+  --dek: #d8d3c6;
 
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4);
@@ -141,35 +168,26 @@ body {
 }
 
 
-/* Modern Typography */
-body { 
-  font-size: 1rem; 
+/* Modern Typography - Archivo Narrow throughout (Option D's single
+ * condensed-grotesk system), body text included, not just headings. */
+body {
+  font-size: 1rem;
   line-height: 1.7;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif;
+  font-family: "Archivo Narrow", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 h1 { font-size: clamp(2.25rem, 4vw + 1rem, 3.5rem); }
 h2 { font-size: clamp(1.75rem, 2.5vw + 1rem, 2.5rem); }
 h3 { font-size: clamp(1.375rem, 1.5vw + 1rem, 1.875rem); }
 
-/* Telex font for UI elements and headings */
 h1, h2, h3, h4, h5, h6,
-.nav-link,
 .card-title,
 .hero-title,
 .section-title,
 .banner h1,
 .banner p {
-    font-family: 'Telex', sans-serif;
-    font-weight: 600;
-    letter-spacing: -0.025em;
-}
-
-/* Navigation typography */
-.nav-link { 
-    font-weight: 600; 
-    font-size: 0.9375rem; 
-    line-height: 1.2;
+    font-family: "Archivo Narrow", ui-sans-serif, system-ui, sans-serif;
+    font-weight: 700;
 }
 
 /* Heading hierarchy with better spacing */
@@ -228,17 +246,18 @@ html, body {
 
 /* Modern footer styling */
 footer {
-    position: static !important;
-    width: 100% !important;
-    padding: 2rem 0 !important;
-    margin: 3rem 0 0 !important;
+    width: 100%;
+    padding: 2rem 1rem;
+    margin: 3rem 0 0;
+    text-align: center;
     background: linear-gradient(to bottom, transparent, var(--bg));
     border-top: 1px solid var(--border);
 }
 
 footer p {
+  margin: 0;
   color: var(--text-muted);
-  font-size: 0.9375rem;
+  font-size: 0.85rem;
 }
 /* Base image styling - shared by all image types with modern enhancements */
 .image-base {

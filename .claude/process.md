@@ -35,6 +35,11 @@
 * **Bold** for key decisions/terms; *italics* for emphasis or naming a
   pattern. Headed subsections over one long block.
 * Be brief — summarize, don't enumerate every file/field/variable.
+* Task-file **Result** entries: ~3-5 bullets, most one line — name the
+  file(s) and the outcome, not the full reasoning trail or every
+  identifier touched (that's what `git diff` is for).
+* Files written before this rule existed (F01/TF01 and earlier) are not a
+  style template — match this rule, not older files.
 
 # agent model selection
 * Default subagent dispatch to haiku; upgrade only when the task needs judgment, not just data-gathering.

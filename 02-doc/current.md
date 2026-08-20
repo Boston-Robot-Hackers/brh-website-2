@@ -5,6 +5,12 @@
 Backlog is empty — `03-features/notdone/` and `04-tasks/notdone/` have
 nothing pending. Nothing is in progress.
 
+The site's full visual redesign (F04 concept exploration, F05 real
+implementation of Option D) is done and sits on branch
+`f04-site-redesign`, pushed but not merged into `main` — merging/opening
+a PR is a deliberate next step for whoever picks this up, not done as
+part of the checkpoint.
+
 Known, deliberately-deferred items (not urgent, no ticket filed):
 
 * 3 ruff `DTZ` (naive-datetime) findings, left unfixed: `datetime.now()`
@@ -16,5 +22,8 @@ Known, deliberately-deferred items (not urgent, no ticket filed):
 * `pyproject.toml`'s `[tool.uv] dev-dependencies` field is deprecated by
   `uv` in favor of `[dependency-groups] dev` — a cosmetic warning on every
   `uv` invocation, not urgent.
+* `ruff` is not a project dependency (no entry in `pyproject.toml`); this
+  session ran it via `uvx ruff` instead. Worth adding as a real dev
+  dependency at some point so `uv run ruff` works directly.
 
 See `02-doc/history.md` for the completed-work log.

@@ -8,22 +8,21 @@
 {% block title %}{{ meeting.title }} - {{ site.title }}{% endblock %}
 
 {% block detail_content %}
-    <article class="meeting-detail">
-        <div class="d-flex align-items-center mb-4">
+    <article class="detail-article">
+        <div class="detail-header">
             {% if meeting.image %}
-            <img src="../{{ meeting.image }}" class="rounded me-3 detail-header-img" alt="{{ meeting.title }}">
-            {% else %}
-            <div class="bg-primary rounded d-flex align-items-center justify-content-center text-white fw-bold me-3 detail-header-thumb">
-                {{ meeting.text or 'MTG' }}
-            </div>
+            <img src="../{{ meeting.image }}" class="detail-header-img" alt="{{ meeting.title }}">
             {% endif %}
             <div>
-                <h1 class="mb-1">{{ meeting.title }}</h1>
+                <h1 class="detail-header__title">{{ meeting.title }}</h1>
                 {% if meeting.metadata.time %}
-                <p class="text-muted mb-0">{{ meeting.metadata.time }}</p>
+                <p class="detail-header__meta">{{ meeting.metadata.time }}</p>
                 {% endif %}
                 {% if meeting.metadata.location %}
-                <p class="text-muted mb-0">{{ meeting.metadata.location }}</p>
+                <p class="detail-header__meta">{{ meeting.metadata.location }}</p>
+                {% endif %}
+                {% if meeting.text %}
+                <p class="detail-header__excerpt">{{ meeting.text }}</p>
                 {% endif %}
             </div>
         </div>

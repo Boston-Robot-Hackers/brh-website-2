@@ -1,0 +1,26 @@
+<!-- Home page lead block - Option D lead section (kicker/headline/subtitle/
+     mission copy/byline) plus a full-bleed hero photo. Home-page-only:
+     components/hero.html (used by layouts/page.html) is untouched. -->
+<div class="home-lead-row">
+    <div class="home-lead__qr-block">
+        <img src="images/signup-qr.png"
+             alt="Scan to sign up for Boston Robot Hackers"
+             width="110" height="110" class="home-lead__qr">
+        <p class="home-lead__qr-caption">Join BRH</p>
+    </div>
+    <section class="home-lead">
+        <p class="home-lead__eyebrow"><a href="index.html">Home</a> &nbsp;|&nbsp; <a href="about.html">Community</a></p>
+        <p class="home-lead__kicker">Community</p>
+        <h1 class="home-lead__title">{{ site.title }}</h1>
+        <p class="home-lead__subtitle">{{ site.subtitle }}</p>
+        <div class="home-lead__body">{{ hero.hero_content|safe }}</div>
+        <p class="home-lead__byline">
+            Meets monthly at <a href="https://www.artisansasylum.com" target="_blank">Artisans Asylum, 96 Holton Street, Allston</a>
+        </p>
+    </section>
+</div>
+
+<figure class="home-lead__photo">
+    <img src="images/meetings/meeting1-1.jpg" alt="Boston Robot Hackers members at a monthly meeting">
+    <figcaption>Members gather monthly at Artisans Asylum in Allston for talks, demos, and hands-on builds.</figcaption>
+</figure>

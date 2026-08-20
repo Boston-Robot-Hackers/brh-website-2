@@ -1,60 +1,39 @@
 <!-- Monthly meeting card - Groups main and hands-on meetings by month -->
-<div class="mb-3 p-3 meeting-month-card">
-    <h5 class="mb-3 meeting-month-title">{{ month_label }}</h5>
+<div class="meeting-month-card">
+    <h3 class="meeting-month-title">{{ month_label }}</h3>
 
     {% if main_meeting %}
-    <div class="mb-2">
-        <div class="meeting-bullet-row">
-            <div class="meeting-bullet">&bull;</div>
-            <div class="meeting-bullet-body">
-                <div class="meeting-line">
-                    Main Meeting: {{ main_meeting.metadata.date|format_date }} at {{ main_meeting.metadata.time }}
-                </div>
-                {% if main_meeting.metadata.text %}
-                <div class="text-muted mt-1 meeting-text">
-                    {{ main_meeting.metadata.text }}
-                </div>
-                {% endif %}
-            </div>
-        </div>
+    <div class="meeting-entry">
+        <p class="meeting-entry__label">Main Meeting</p>
+        <p class="meeting-entry__line">{{ main_meeting.metadata.date|format_date }} at {{ main_meeting.metadata.time }}</p>
+        {% if main_meeting.metadata.text %}
+        <p class="meeting-entry__text">{{ main_meeting.metadata.text }}</p>
+        {% endif %}
+        {% if main_announcement_exists or main_report_exists %}
+        <p class="meeting-entry__links">
+            {% if main_announcement_exists %}
+                <a href="news/{{ main_announcement_html }}">announcement</a>
+            {% else %}
+                <span class="meeting-entry__tbd">announcement TBD</span>
+            {% endif %}
+            &middot;
+            {% if main_report_exists %}
+                <a href="news/{{ main_report_html }}">report</a>
+            {% else %}
+                <span class="meeting-entry__tbd">report TBD</span>
+            {% endif %}
+        </p>
+        {% endif %}
     </div>
     {% endif %}
 
     {% if handson_meeting %}
-    <div class="mb-2">
-        <div class="meeting-bullet-row">
-            <div class="meeting-bullet">&bull;</div>
-            <div class="meeting-bullet-body">
-                <div class="meeting-line">
-                    Hands-On Meeting: {{ handson_meeting.metadata.date|format_date }} at {{ handson_meeting.metadata.time }}
-                </div>
-                {% if handson_meeting.metadata.text %}
-                <div class="text-muted mt-1 meeting-text">
-                    {{ handson_meeting.metadata.text }}
-                </div>
-                {% endif %}
-            </div>
-        </div>
-    </div>
-    {% endif %}
-
-    {% if main_meeting and (main_announcement_exists or main_report_exists) %}
-    <div class="small mt-2 meeting-links">
-        <span class="nowrap">
-        {% if main_announcement_exists %}
-            <a href="news/{{ main_announcement_html }}">announcement</a>
-        {% else %}
-            <span class="text-muted">announcement TBD</span>
+    <div class="meeting-entry">
+        <p class="meeting-entry__label">Hands-On Meeting</p>
+        <p class="meeting-entry__line">{{ handson_meeting.metadata.date|format_date }} at {{ handson_meeting.metadata.time }}</p>
+        {% if handson_meeting.metadata.text %}
+        <p class="meeting-entry__text">{{ handson_meeting.metadata.text }}</p>
         {% endif %}
-        </span>
-        <span class="nowrap">
-        |
-        {% if main_report_exists %}
-            <a href="news/{{ main_report_html }}">report</a>
-        {% else %}
-            <span class="text-muted">report TBD</span>
-        {% endif %}
-        </span>
     </div>
     {% endif %}
 </div>

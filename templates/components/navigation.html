@@ -1,30 +1,30 @@
 <!-- Navigation component - Main site navigation with active page highlighting. Reusable across all pages. -->
-<div class="nav-bar-thin py-1">
-    <div class="container-fluid">
-        <ul class="navbar-nav mx-auto d-flex flex-row">
-            <li class="nav-item">
-                <a href="{{ '../' if is_detail_page else '' }}index.html" 
-                   class="nav-link {{ 'active' if current_page == 'home' else 'text-light' }}">Home</a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ '../' if is_detail_page else '' }}learn.html"
-                   class="nav-link {{ 'active' if current_page == 'learn' else 'text-light' }}">Learn</a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ '../' if is_detail_page else '' }}members.html"
-                   class="nav-link {{ 'active' if current_page == 'members' else 'text-light' }}">Members</a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ '../' if is_detail_page else '' }}projects.html"
-                   class="nav-link {{ 'active' if current_page == 'projects' else 'text-light' }}">Projects</a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ '../' if is_detail_page else '' }}about.html"
-                   class="nav-link {{ 'active' if current_page == 'about' else 'text-light' }}">About</a>
-            </li>
-        </ul>
+{% from 'components/icons.html' import icon %}
+<header class="site-nav">
+    <div class="site-nav__inner">
+        <a href="{{ '../' if is_detail_page else '' }}index.html" class="site-nav__brand">
+            <img src="{{ '../' if is_detail_page else '' }}images/robot-logo.png" alt="" class="site-nav__logo">
+            <span class="site-nav__wordmark">Boston Robot Hackers</span>
+        </a>
+        <nav class="site-nav__links" aria-label="Primary">
+            <a href="{{ '../' if is_detail_page else '' }}index.html"
+               class="site-nav__link{{ ' active' if current_page == 'home' else '' }}">Home</a>
+            <a href="{{ '../' if is_detail_page else '' }}learn.html"
+               class="site-nav__link{{ ' active' if current_page == 'learn' else '' }}">Learn</a>
+            <a href="{{ '../' if is_detail_page else '' }}members.html"
+               class="site-nav__link{{ ' active' if current_page == 'members' else '' }}">Members</a>
+            <a href="{{ '../' if is_detail_page else '' }}projects.html"
+               class="site-nav__link{{ ' active' if current_page == 'projects' else '' }}">Projects</a>
+            <a href="{{ '../' if is_detail_page else '' }}about.html"
+               class="site-nav__link{{ ' active' if current_page == 'about' else '' }}">About</a>
+            <a href="{{ '../' if is_detail_page else '' }}projects/pupper.html" class="site-nav__pupper-link">
+                <img src="{{ '../' if is_detail_page else '' }}images/projects/pupper_standing.jpg" alt="" class="site-nav__pupper-photo">
+                Pupper
+            </a>
+        </nav>
         <button id="theme-toggle" type="button" class="theme-toggle-btn" aria-label="Switch between light and dark mode" title="Switch between light and dark mode">
-            <i class="bi bi-moon-stars-fill" aria-hidden="true"></i>
+            <span class="theme-toggle-btn__icon theme-toggle-btn__icon--moon" aria-hidden="true">{{ icon('bi-moon-stars-fill') }}</span>
+            <span class="theme-toggle-btn__icon theme-toggle-btn__icon--sun" aria-hidden="true">{{ icon('bi-sun-fill') }}</span>
         </button>
     </div>
-</div>
+</header>

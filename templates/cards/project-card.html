@@ -1,25 +1,13 @@
-<!-- Project card - Horizontal card displaying project info and status. Reusable for any project listing. -->
-<div class="col-lg-6 col-md-12 mb-3">
-    <div class="card h-100">
-        <div class="row g-0 h-100">
-            <div class="col-3 col-md-2 d-flex align-items-stretch p-2">
-                {% if image %}
-                <img src="{{ image }}" class="img-fluid rounded project-card-img" alt="{{ title }}">
-                {% else %}
-                <div class="bg-secondary rounded d-flex align-items-center justify-content-center text-white fw-bold w-100">
-                    {{ text }}
-                </div>
-                {% endif %}
-            </div>
-            <div class="col-9 col-md-10">
-                <div class="card-body py-2">
-                    <h5 class="card-title mb-1">
-                        <a href="projects/{{ id }}.html" class="text-decoration-none">{{ title }}</a>
-                    </h5>
-                    <p class="card-text mb-1">{{ excerpt }}</p>
-                    <p class="card-text mb-0"><small class="text-body-secondary">Status: {{ status }}</small></p>
-                </div>
-            </div>
-        </div>
+<!-- Project card - Story-row display for home page project listing (thumbnail + status + title + excerpt). -->
+<article class="story-row">
+    {% if image %}
+    <img src="{{ image }}" alt="{{ title }}" class="story-row__thumb">
+    {% else %}
+    <div class="story-row__thumb story-row__thumb--fallback">{{ text or 'PROJECT' }}</div>
+    {% endif %}
+    <div class="story-row__body">
+        <p class="story-row__meta">{{ status }}</p>
+        <h3 class="story-row__title"><a href="projects/{{ id }}.html">{{ title }}</a></h3>
+        <p class="story-row__excerpt">{{ excerpt }}</p>
     </div>
-</div>
+</article>

@@ -5,29 +5,31 @@
 {% set is_detail_page = false %}
 
 {% block sections %}
-    <!-- What's New and Meetings Section -->
-    <div class="row mb-4">
-        <div class="col-lg-7">
-            <h3 class="mb-4"><a href="whatsnew.html">{{ site.news_title }}</a></h3>
+    <div class="home-grid">
+        <div class="home-grid__river">
+            <h2 class="river-header"><a href="whatsnew.html">{{ site.news_title }}</a></h2>
             {{ news_content }}
-            <div class="mt-3">
-                <a href="whatsnew.html" class="btn btn-sm btn-outline-primary">see all</a>
-            </div>
-        </div>
-        <div class="col-lg-5 index-side-column">
-            <h3 class="mb-3"><a href="meetings.html">Upcoming Meetings</a></h3>
-            <p class="text-muted small mb-3">All meetings at <a href="https://www.artisansasylum.com" target="_blank">Artisans Asylum, 96 Holton Street, Allston</a></p>
-            {{ meetings_content }}
-        </div>
-    </div>
+            <a href="whatsnew.html" class="btn-outline">{{ site.news_button_text }}</a>
 
-    <!-- Projects Section -->
-    {% set section_title = site.projects_title %}
-    {% set section_emoji = site.projects_emoji %}
-    {% set section_subtitle = site.projects_subtitle %}
-    {% set section_link = 'projects.html' %}
-    {% set section_link_text = 'see all' %}
-    {% set section_content = projects_content %}
-    {% set grid_layout = true %}
-    {% include 'components/section.html' %}
+            <h2 class="river-header river-header--spaced"><a href="projects.html">{{ site.projects_title }}</a></h2>
+            {{ projects_content }}
+            <a href="projects.html" class="btn-outline">{{ site.projects_button_text }}</a>
+        </div>
+
+        <aside class="home-grid__rail">
+            <div class="rail-box">
+                <h2 class="rail-title"><a href="meetings.html">Upcoming Meetings</a></h2>
+                <p class="rail-note">All meetings at <a href="https://www.artisansasylum.com" target="_blank">Artisans Asylum, 96 Holton Street, Allston</a></p>
+                {{ meetings_content }}
+            </div>
+
+            <div class="rail-box pupper-spotlight">
+                <p class="pupper-spotlight__kicker">Community</p>
+                <img src="images/projects/pupper_standing.jpg" alt="Stanford Pupper v3 quadruped robot standing" class="pupper-spotlight__photo">
+                <h3 class="pupper-spotlight__title">Meet Pupper</h3>
+                <p class="pupper-spotlight__text">An open-source quadruped robot built at Stanford — BRH is building and deploying one right here in Boston.</p>
+                <a href="projects/pupper.html" class="btn-outline">Read the full story</a>
+            </div>
+        </aside>
+    </div>
 {% endblock %}

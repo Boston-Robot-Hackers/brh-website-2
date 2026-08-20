@@ -1,21 +1,12 @@
 <!-- Home page layout - Extends base with hero section and sections block. Used only by index.html. -->
 {% extends 'layouts/base.html' %}
 
+{% block banner %}{% endblock %}
+
 {% block content %}
-    <div class="signup-qr-cta">
-        <div class="signup-qr-frame">
-            <img src="images/signup-qr.png"
-                 alt="Scan to sign up for Boston Robot Hackers"
-                 width="100" height="100">
-        </div>
-        <p class="signup-qr-caption">Join BRH</p>
-    </div>
+    {% include 'components/home-lead.html' %}
 
-    {% include 'components/hero.html' %}
-
-+    <div class="container px-3">
-        <main class="py-2 pb-3">
-            {% block sections %}{% endblock %}
-        </main>
-    </div>
+    <main class="page-content">
+        {% block sections %}{% endblock %}
+    </main>
 {% endblock %}

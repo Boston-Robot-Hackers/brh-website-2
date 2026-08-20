@@ -1,23 +1,13 @@
-<!-- Compact news card - Small inline news display for listing pages. Reusable for any news listing. -->
-<div class="card mb-3">
-    <div class="row g-0 h-100">
-        <div class="col-auto d-flex align-items-stretch p-3">
-            {% if image %}
-            <img src="{{ image }}" class="compact-news-img" alt="{{ title }}">
-            {% else %}
-            <div class="bg-secondary d-flex align-items-center justify-content-center text-white fw-bold compact-news-thumb">
-                NEWS
-            </div>
-            {% endif %}
-        </div>
-        <div class="col">
-            <div class="card-body py-3">
-                <h6 class="card-title mb-1">
-                    <a href="news/{{ id }}.html" class="text-decoration-none">{{ title }}</a>
-                </h6>
-                <p class="card-text text-muted small mb-1">{{ excerpt }}</p>
-                <small class="text-muted">{{ formatted_date }}</small>
-            </div>
-        </div>
+<!-- Compact news card - Story-row display for listing pages. Reusable for any news listing. -->
+<article class="story-row">
+    {% if image %}
+    <img src="{{ image }}" alt="{{ title }}" class="story-row__thumb">
+    {% else %}
+    <div class="story-row__thumb story-row__thumb--fallback">NEWS</div>
+    {% endif %}
+    <div class="story-row__body">
+        <p class="story-row__meta">{{ formatted_date }}</p>
+        <h3 class="story-row__title"><a href="news/{{ id }}.html">{{ title }}</a></h3>
+        <p class="story-row__excerpt">{{ excerpt }}</p>
     </div>
-</div>
+</article>

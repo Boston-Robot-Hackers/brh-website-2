@@ -16,7 +16,7 @@ function loadAllMembers() {
 // Smooth scrolling for navigation
 document.addEventListener('DOMContentLoaded', function() {
     // Smooth scrolling for navigation (only for anchor links)
-    document.querySelectorAll('.nav-link').forEach(link => {
+    document.querySelectorAll('.site-nav__link').forEach(link => {
         link.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
             // Only prevent default for anchor links (starting with #)
@@ -40,20 +40,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Light/dark theme toggle. The <head> inline script already set
     // data-bs-theme before paint (from localStorage or system preference);
-    // this just wires up manual switching and keeps the icon in sync.
+    // this just wires up manual switching. The icon itself is two inline
+    // SVGs with CSS showing whichever matches the current data-bs-theme,
+    // so no JS is needed to keep it in sync.
     const themeToggle = document.getElementById('theme-toggle');
     if (themeToggle) {
-        const icon = themeToggle.querySelector('i');
-        const currentTheme = () => document.documentElement.getAttribute('data-bs-theme');
-        const syncIcon = () => {
-            icon.className = currentTheme() === 'dark' ? 'bi bi-sun-fill' : 'bi bi-moon-stars-fill';
-        };
-        syncIcon();
         themeToggle.addEventListener('click', function() {
-            const next = currentTheme() === 'dark' ? 'light' : 'dark';
+            const next = document.documentElement.getAttribute('data-bs-theme') === 'dark' ? 'light' : 'dark';
             document.documentElement.setAttribute('data-bs-theme', next);
             localStorage.setItem('theme', next);
-            syncIcon();
         });
     }
 });

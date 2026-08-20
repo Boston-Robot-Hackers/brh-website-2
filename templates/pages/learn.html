@@ -1,5 +1,6 @@
 <!-- Learn page - Curated learning resources organized as styled section cards. -->
 {% extends 'layouts/page.html' %}
+{% from 'components/icons.html' import icon %}
 
 {% set current_page = 'learn' %}
 {% set is_detail_page = false %}
@@ -7,27 +8,25 @@
 {% block title %}Learn - {{ site.title }}{% endblock %}
 
 {% block main_content %}
-<div class="row g-4">
+<div class="learn-grid">
     {% for section in learn_sections %}
-    <div class="col-md-6">
-        <div class="card h-100 shadow-sm learn-card">
-            <div class="card-header learn-card-header d-flex align-items-center gap-2">
-                <i class="bi {{ section.icon }} fs-5"></i>
-                <span class="fw-semibold">{{ section.title }}</span>
-            </div>
-            <div class="card-body">
-                {% if section.intro %}
-                <p class="text-muted small mb-3">{{ section.intro }}</p>
-                {% endif %}
-                <ul class="list-unstyled mb-0 learn-links">
-                    {% for link in section.links %}
-                    <li class="learn-link-item">
-                        <a href="{{ link.url }}" target="_blank" class="learn-link">{{ link.text }}</a>
-                        {% if link.desc %}<span class="text-muted"> — {{ link.desc }}</span>{% endif %}
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
+    <div class="learn-card">
+        <div class="learn-card-header">
+            <span class="learn-card-icon">{{ icon(section.icon) }}</span>
+            <span>{{ section.title }}</span>
+        </div>
+        <div class="learn-card-body">
+            {% if section.intro %}
+            <p class="learn-card-intro">{{ section.intro }}</p>
+            {% endif %}
+            <ul class="learn-links">
+                {% for link in section.links %}
+                <li class="learn-link-item">
+                    <a href="{{ link.url }}" target="_blank" class="learn-link">{{ link.text }}</a>
+                    {% if link.desc %}<span class="learn-link-desc"> — {{ link.desc }}</span>{% endif %}
+                </li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
     {% endfor %}

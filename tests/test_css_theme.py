@@ -53,20 +53,44 @@ def test_base_template_syncs_bootstrap_theme():
     assert "prefers-color-scheme: dark" in base_html
 
 
-def test_bootstrap_css_loads_before_custom_css():
-    """Regression test: Bootstrap's CSS must load before shared.css/main.css.
+def test_shared_css_uses_option_d_palette_and_type():
+    """Locks in F05/TF05.1's re-theme: Option D's red-on-cream palette and
+    Archivo Narrow, in both the light and dark `:root` blocks."""
+    css = (REPO_ROOT / "css" / "shared.css").read_text()
 
-    Both define rules for `body`/`.card` etc. at equal specificity, so
-    whichever loads last wins the cascade. Bootstrap loading second silently
-    overrode our custom colors in both modes (only obviously wrong in dark
-    mode, where the two competing dark grays clashed) until this was fixed.
-    """
+    assert "Archivo+Narrow" in css, "expected the Archivo Narrow Google Fonts import"
+    assert "Archivo Narrow" in css, "expected Archivo Narrow used as a font-family"
+
+    light_block = re.search(r":root\{(.*?)\n\}", css, re.DOTALL)
+    assert light_block, "expected a light :root block"
+    assert "#fffef7" in light_block.group(1), "expected the cream --bg value"
+    assert "#ff0033" in light_block.group(1), "expected the red --primary value"
+
+    dark_block = re.search(r':root\[data-bs-theme="dark"\]\s*\{(.*?)\}', css, re.DOTALL)
+    assert dark_block, 'expected a :root[data-bs-theme="dark"] override'
+    assert "#121110" in dark_block.group(1), (
+        "expected the warm near-black dark --bg value"
+    )
+    assert "--primary" in dark_block.group(1), (
+        "dark mode must redefine --primary too (unlike neutrals-only F01 precedent) "
+        "since red is used as running text/link color, not just isolated fills"
+    )
+
+
+def test_shared_css_loads_before_main_css():
+    """shared.css defines the CSS variables main.css consumes; both are our
+    own files now (no more Bootstrap cascade-order concern - F05 Phase 3
+    removed the Bootstrap CDN entirely, see test_no_bootstrap_cdn_reference)."""
     head_html = (REPO_ROOT / "templates" / "components" / "head.html").read_text()
 
-    bootstrap_pos = head_html.index("bootstrap.min.css")
     shared_pos = head_html.index("css/shared.css")
     main_pos = head_html.index("css/main.css")
 
-    assert bootstrap_pos < shared_pos < main_pos, (
-        "Bootstrap CSS must load before shared.css and main.css"
-    )
+    assert shared_pos < main_pos, "shared.css must load before main.css"
+
+
+def test_no_bootstrap_cdn_reference():
+    """F05 Phase 3: Bootstrap CSS/JS/Icons were removed entirely in favor of
+    our own CSS and inline SVG icons (templates/components/icons.html)."""
+    head_html = (REPO_ROOT / "templates" / "components" / "head.html").read_text()
+    assert "cdn.jsdelivr.net/npm/bootstrap" not in head_html

@@ -8,44 +8,36 @@
 {% block title %}{{ member.title }} - {{ site.title }}{% endblock %}
 
 {% block detail_content %}
-    <article class="member-detail">
-        <div class="row mb-4">
-            <div class="col-md-4 text-center">
+    <article class="detail-article member-detail">
+        <div class="member-detail-header">
+            <div class="member-detail-header__photo">
                 {% if member.metadata.image %}
-                <img src="../{{ member.metadata.image }}" alt="{{ member.title }}" class="rounded member-detail-img">
+                <img src="../{{ member.metadata.image }}" alt="{{ member.title }}" class="member-detail-img">
                 {% else %}
-                <div class="member-avatar bg-secondary rounded d-flex align-items-center justify-content-center text-white fw-bold member-detail-thumb">
-                    {{ member.metadata['card-text']|default('MEMBER') }}
-                </div>
+                <div class="member-detail-thumb">{{ member.metadata['card-text']|default('MEMBER') }}</div>
                 {% endif %}
                 {% if member.metadata.featured %}
-                <div class="badge bg-primary mt-2">Featured Member</div>
+                <p class="member-detail-header__featured">Featured Member</p>
                 {% endif %}
             </div>
-            <div class="col-md-8">
-                <h1 class="mb-2">{{ member.title }}</h1>
+            <div>
+                <h1 class="detail-header__title">{{ member.title }}</h1>
                 {% if member.metadata.hashtags %}
-                <div class="mb-3">
-                    {% for tag in member.metadata.hashtags %}
-                    <span class="badge bg-body-secondary text-body me-1">#{{ tag }}</span>
-                    {% endfor %}
+                <div class="member-skills">
+                    {% for tag in member.metadata.hashtags %}<span class="member-tag">#{{ tag }}</span> {% endfor %}
                 </div>
                 {% endif %}
-                
-                <div class="row text-muted small">
+
+                <div class="member-detail__links">
                     {% if member.metadata.github %}
-                    <div class="col-md-6 mb-1">
-                        <strong>GitHub:</strong> <a href="{{ member.metadata.github }}" target="_blank">{{ member.metadata.github }}</a>
-                    </div>
+                    <p><strong>GitHub:</strong> <a href="{{ member.metadata.github }}" target="_blank">{{ member.metadata.github }}</a></p>
                     {% endif %}
                     {% if member.metadata.linkedin %}
-                    <div class="col-md-6 mb-1">
-                        <strong>LinkedIn:</strong> <a href="{{ member.metadata.linkedin }}" target="_blank">{{ member.metadata.linkedin }}</a>
-                    </div>
+                    <p><strong>LinkedIn:</strong> <a href="{{ member.metadata.linkedin }}" target="_blank">{{ member.metadata.linkedin }}</a></p>
                     {% endif %}
                 </div>
                 {% if member.metadata.projects %}
-                <div class="mt-2">
+                <p class="member-detail__projects">
                     <strong>Current Projects:</strong>
                     {% for slug in member.metadata.projects %}
                         {% if projects_map and slug in projects_map %}
@@ -55,11 +47,11 @@
                         {% endif %}
                         {% if not loop.last %}, {% endif %}
                     {% endfor %}
-                </div>
+                </p>
                 {% endif %}
             </div>
         </div>
-        
+
         <div class="content">
             {{ member.content|safe }}
         </div>

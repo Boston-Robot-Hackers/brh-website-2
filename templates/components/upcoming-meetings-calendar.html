@@ -1,45 +1,18 @@
-<!-- Upcoming meetings calendar - Table-style display for home page -->
+<!-- Upcoming meetings rail - Option D rail-item display for home page -->
 <div class="upcoming-meetings-calendar">
     {% if meetings %}
-    <div class="table-responsive">
-        <table class="table table-hover">
-            <tbody>
-            {% for meeting in meetings %}
-                <tr class="meeting-row"{% if meeting.announcement_url %} data-href="{{ meeting.announcement_url }}"{% endif %}>
-                    <td class="date-column calendar-date-cell">
-                        <div class="meeting-date">
-                            <div class="date-day">
-                                {{ meeting.day }} {{ meeting.month_abbr }}
-                            </div>
-                            <div class="date-month-year">
-                                {{ meeting.year }}
-                            </div>
-                            <div class="date-time">
-                                {{ meeting.time }}
-                            </div>
-                        </div>
-                    </td>
-                    <td class="details-column calendar-details-cell">
-                        <div class="meeting-type">
-                            {{ meeting.type_label }}
-                        </div>
-                        {% if meeting.text %}
-                        <div class="meeting-blurb">
-                            {{ meeting.text }}
-                        </div>
-                        {% endif %}
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+    {% for meeting in meetings %}
+    {# meeting-row kept alongside rail-item so scripts/script.js's existing click-to-navigate selector still matches #}
+    <div class="rail-item meeting-row"{% if meeting.announcement_url %} data-href="{{ meeting.announcement_url }}"{% endif %}>
+        <p class="rail-item__cat">{{ meeting.type_label }}</p>
+        <p class="rail-item__date">{{ meeting.month_abbr }} {{ meeting.day }}, {{ meeting.year }} &middot; {{ meeting.time }}</p>
+        {% if meeting.text %}
+        <p class="rail-item__blurb">{{ meeting.text }}</p>
+        {% endif %}
     </div>
-    <div class="mt-3">
-        <a href="meetings.html" class="btn btn-sm btn-outline-primary">view all meetings</a>
-    </div>
+    {% endfor %}
+    <a href="meetings.html" class="btn-outline">view all meetings</a>
     {% else %}
-    <div class="alert alert-info">
-        <p class="mb-0">No upcoming meetings scheduled. Check back soon!</p>
-    </div>
+    <p class="rail-item__blurb">No upcoming meetings scheduled. Check back soon!</p>
     {% endif %}
 </div>
