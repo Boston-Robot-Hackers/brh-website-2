@@ -152,15 +152,24 @@ body {
   margin-bottom: 3px;
 }
 
+.member-projects-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 8px;
+  max-height: 2.4rem;
+  overflow: hidden;
+}
+
 .member-project-link {
-  font-size: 0.8rem;
+  font-size: 0.72rem;
   font-weight: 500;
   color: var(--primary);
   text-decoration: none;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  display: block;
+  display: inline-block;
+  max-width: 100%;
 }
 
 .member-project-link:hover {

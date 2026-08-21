@@ -6,7 +6,7 @@ hashtags: ["ROS", "firmware", "controlsystems", "retired"]
 github: "https://github.com/AlanKilian"
 linkedin: "https://www.linkedin.com/in/alankilian/"
 website: "http://www.bobodyne.com/web-docs/"
-projects: ["irobot_create", "XRP robot"]
+projects: ["irobot_create", "XRP robot", "oscar", "trippy"]
 opentowork: false
 ---
 I'm a retired software/firmware engineer and manager who has loved and worked with robots for my entire life.

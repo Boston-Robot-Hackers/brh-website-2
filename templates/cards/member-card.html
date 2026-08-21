@@ -20,14 +20,16 @@
         {% if ns.count > 0 %}
         <div class="member-projects">
             <div class="member-projects-label">Projects</div>
-            {% set ns2 = namespace(shown=0) %}
-            {% for slug in projects %}
-                {% if projects_map and slug in projects_map and ns2.shown < 2 %}
-                <a href="{{ projects_map[slug].url }}" class="member-project-link">{{ projects_map[slug].title }}</a>
-                {% set ns2.shown = ns2.shown + 1 %}
-                {% endif %}
-            {% endfor %}
-            {% if ns.count > 2 %}<span class="member-project-link member-project-link--more">+{{ ns.count - 2 }} more</span>{% endif %}
+            <div class="member-projects-list">
+                {% set ns2 = namespace(shown=0) %}
+                {% for slug in projects %}
+                    {% if projects_map and slug in projects_map and ns2.shown < 4 %}
+                    <a href="{{ projects_map[slug].url }}" class="member-project-link">{{ projects_map[slug].title }}</a>
+                    {% set ns2.shown = ns2.shown + 1 %}
+                    {% endif %}
+                {% endfor %}
+                {% if ns.count > 4 %}<span class="member-project-link member-project-link--more">+{{ ns.count - 4 }} more</span>{% endif %}
+            </div>
         </div>
         {% endif %}
         {% endif %}
