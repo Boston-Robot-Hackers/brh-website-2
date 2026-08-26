@@ -3,6 +3,9 @@ title: Stanford Pupper v3 x Boston Robot Hackers
 date: 2026-06-10
 status: New
 image: images/projects/pupper_standing.jpg
+banner_image: images/projects/pupper_resting.jpg
+banner_title: Stanford Pupper v3
+banner_subtitle: An open-source quadruped robot, built with Boston Robot Hackers
 text: "An open-source quadruped robot"
 lead: Alan
 members: 5

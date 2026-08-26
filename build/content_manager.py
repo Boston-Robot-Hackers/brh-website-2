@@ -295,6 +295,9 @@ class ContentManager:
             "hero_title": hero_data["title"],
             "hero_subtitle": hero_data["metadata"].get("subtitle", ""),
             "hero_content": hero_content,
+            "banner_image": hero_data["metadata"].get("banner_image"),
+            "banner_title": hero_data["metadata"].get("banner_title"),
+            "banner_subtitle": hero_data["metadata"].get("banner_subtitle"),
         }
 
     def process_single_content_file(self, filename: str) -> str:

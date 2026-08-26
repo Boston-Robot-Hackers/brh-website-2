@@ -40,6 +40,52 @@ class TestFormatDate:
             page_builder.format_date("not-a-date")
 
 
+class TestResolveBanner:
+    @pytest.fixture
+    def pb(self, dist):
+        dist.mkdir()
+        env = Environment(loader=DictLoader({}))
+        site_config = {
+            "title": "Boston Robot Hackers",
+            "subtitle": "CONNECT * LEARN * BUILD",
+            "default_banner_image": "images/meetings/meeting1-1.jpg",
+        }
+        return PageBuilder(env, dist, site_config)
+
+    def test_no_override_falls_back_to_site_defaults(self, pb):
+        result = pb.resolve_banner({})
+        assert result["banner_image"] == "images/meetings/meeting1-1.jpg"
+        assert result["banner_title"] == "Boston Robot Hackers"
+        assert result["banner_subtitle"] == "CONNECT * LEARN * BUILD"
+
+    def test_full_override(self, pb):
+        metadata = {
+            "banner_image": "images/projects/pupper_standing.jpg",
+            "banner_title": "Pupper",
+            "banner_subtitle": "An open-source quadruped robot",
+        }
+        result = pb.resolve_banner(metadata)
+        assert result["banner_image"] == "images/projects/pupper_standing.jpg"
+        assert result["banner_title"] == "Pupper"
+        assert result["banner_subtitle"] == "An open-source quadruped robot"
+
+    def test_partial_override_falls_back_for_missing_fields(self, pb):
+        result = pb.resolve_banner({"banner_image": "images/projects/custom.jpg"})
+        assert result["banner_image"] == "images/projects/custom.jpg"
+        assert result["banner_title"] == "Boston Robot Hackers"
+        assert result["banner_subtitle"] == "CONNECT * LEARN * BUILD"
+
+    def test_path_prefix_applied_to_override(self, pb):
+        result = pb.resolve_banner(
+            {"banner_image": "images/projects/custom.jpg"}, path_prefix="../"
+        )
+        assert result["banner_image"] == "../images/projects/custom.jpg"
+
+    def test_path_prefix_applied_to_default(self, pb):
+        result = pb.resolve_banner({}, path_prefix="../")
+        assert result["banner_image"] == "../images/meetings/meeting1-1.jpg"
+
+
 class TestBuildPage:
     def test_writes_html_to_output_file(self, page_builder, dist):
         page_builder.build_page("pages/simple.html", "output.html", title="Hello")

@@ -148,6 +148,7 @@ class WebsiteBuilder:
             hero=hero_content,
             news_content=news_content,
             meetings_content=meetings_content,
+            **self.page_builder.resolve_banner(hero_content),
         )
 
         print(
@@ -180,6 +181,7 @@ class WebsiteBuilder:
             "projects.html",
             hero=hero_content,
             projects_content=projects_content,
+            **self.page_builder.resolve_banner(hero_content),
         )
 
         print(f"Built projects.html with {len(projects)} projects")
@@ -211,6 +213,7 @@ class WebsiteBuilder:
             hero=hero_content,
             members_content=members_content,
             valid_hashtags=sorted(self.content_manager.valid_hashtags),
+            **self.page_builder.resolve_banner(hero_content),
         )
 
         print(f"Built members.html with {len(members)} members")
@@ -225,6 +228,7 @@ class WebsiteBuilder:
             "about.html",
             hero=hero_content,
             about_content=about_content,
+            **self.page_builder.resolve_banner(hero_content),
         )
 
         print("Built about.html")
@@ -288,6 +292,7 @@ class WebsiteBuilder:
             "learn.html",
             hero=hero_content,
             learn_sections=sections,
+            **self.page_builder.resolve_banner(hero_content),
         )
 
         print(f"Built learn.html with {len(sections)} sections")
@@ -305,6 +310,7 @@ class WebsiteBuilder:
             "meetings.html",
             hero=hero_content,
             meetings_content=meetings_content,
+            **self.page_builder.resolve_banner(hero_content),
         )
 
         print(f"Built meetings.html with {len(meetings)} meetings")

@@ -4,6 +4,32 @@ Completed-work log. `02-doc/current.md`'s `## Open` section is the only
 part that matters for new work; entries move here once done, per
 `.claude/process.md`'s checkpoint step.
 
+## 2026-08-26 (F09 closed: per-page customizable banner)
+* F09 (per-page banner image + overlay text) done, all 7 `TF09` steps.
+  Optional `banner_image`/`banner_title`/`banner_subtitle` frontmatter on
+  any main page's `content/heroes/<page>.md`, or any
+  project/member/meeting/news item's own `.md` file, overrides that
+  page's banner; unset falls back to `config/site.json`'s new
+  `default_banner_image` + `site.title`/`site.subtitle` (identical to
+  pre-F09 behavior).
+* New `PageBuilder.resolve_banner()` resolves override-or-default and
+  applies the correct relative path prefix for the page's own depth
+  (`"../"` for one-level-deep detail pages, `""` for top-level pages) —
+  needed because the banner image moved from a CSS-relative `url()` to
+  an HTML-relative inline `style`, so path resolution now depends on
+  where each page itself lives.
+* `content/projects/pupper.md` carries the first real override
+  (`pupper_resting.jpg` — distinct from the `pupper_standing.jpg` already
+  used as the page's own thumbnail).
+* Verified with a real Playwright browser check (light + dark) against
+  the built `output/`: Pupper shows its own banner, an unmodified main
+  page and an unmodified detail page render pixel-identical to before,
+  0 console/network errors.
+* Tests: `uv run pytest` — 129 passed (was 120; +9 new: 2
+  `content_manager` hero-field cases, 5 `resolve_banner` cases, 2
+  `banner.html` render cases). `ruff check .` / `ruff format --check .`
+  clean except the pre-existing, still-deferred `DTZ` findings.
+
 ## 2026-08-20 (F04 + F05 closed: full Option D site redesign)
 * F04 (site redesign concept exploration) done: 4 mockup directions —
   A blueprint, B terminal/circuit, C industrial minimal, D a Futurism.com

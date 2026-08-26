@@ -1,6 +1,7 @@
 {
   "title": "Boston Robot Hackers",
   "subtitle": "CONNECT * LEARN * BUILD",
+  "default_banner_image": "images/meetings/meeting1-1.jpg",
   "news_emoji": "📰",
   "news_title": "What's New",
   "news_subtitle": "Latest updates from our community",

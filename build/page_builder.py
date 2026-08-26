@@ -31,6 +31,27 @@ class PageBuilder:
         parsed = parse_date(date_str)
         return parsed.strftime("%B %d, %Y") if parsed else ""
 
+    def resolve_banner(self, metadata: dict, path_prefix: str = "") -> dict[str, str]:
+        """Resolve this page's banner image/title/subtitle.
+
+        Falls back to the site-wide defaults when `metadata` has no
+        `banner_image`/`banner_title`/`banner_subtitle`. `path_prefix`
+        locates the image relative to this page's own output directory
+        (e.g. "../" for one-level-deep detail pages, "" for top-level
+        pages) - applied to whichever image is chosen, override or
+        default, since both are given relative to the site root.
+        """
+        image = metadata.get("banner_image") or self.site_config.get(
+            "default_banner_image", ""
+        )
+        return {
+            "banner_image": f"{path_prefix}{image}" if image else "",
+            "banner_title": metadata.get("banner_title")
+            or self.site_config.get("title", ""),
+            "banner_subtitle": metadata.get("banner_subtitle")
+            or self.site_config.get("subtitle", ""),
+        }
+
     def build_detail_pages(
         self, items: list[dict], content_type: ContentType, **extra_context
     ):
@@ -61,6 +82,7 @@ class PageBuilder:
             template_vars = {
                 "site": self.site_config,
                 var_name: item_with_formatted_date,
+                **self.resolve_banner(item["metadata"], path_prefix="../"),
                 **extra_context,
             }
 

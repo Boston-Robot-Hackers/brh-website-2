@@ -303,6 +303,29 @@ class TestHeroGeneration:
         assert hero["hero_title"] == "Welcome"
         assert hero["hero_subtitle"] == "Boston Robot Hackers"
 
+    def test_build_hero_content_no_banner_fields_returns_none(
+        self, tmp_content_dir, jinja_env
+    ):
+        cm = ContentManager(tmp_content_dir, jinja_env)
+        hero = cm.build_hero_content("index")
+        assert hero["banner_image"] is None
+        assert hero["banner_title"] is None
+        assert hero["banner_subtitle"] is None
+
+    def test_build_hero_content_returns_banner_fields_when_set(self, tmp_content_dir):
+        (tmp_content_dir / "heroes" / "projects.md").write_text(
+            "---\ntitle: Projects\n"
+            "banner_image: images/projects/custom.jpg\n"
+            "banner_title: Custom Banner Title\n"
+            "banner_subtitle: Custom Banner Subtitle\n"
+            "---\nProjects hero body.\n"
+        )
+        cm = ContentManager(tmp_content_dir)
+        hero = cm.build_hero_content("projects")
+        assert hero["banner_image"] == "images/projects/custom.jpg"
+        assert hero["banner_title"] == "Custom Banner Title"
+        assert hero["banner_subtitle"] == "Custom Banner Subtitle"
+
     def test_process_single_content_file(self, tmp_content_dir):
         cm = ContentManager(tmp_content_dir)
         result = cm.process_single_content_file("about.md")
