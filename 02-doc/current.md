@@ -37,6 +37,14 @@
   wait for the DNS check to pass, enable "Enforce HTTPS," then verify with
   `curl -sI https://pupper.bostonrobothackers.com`.
 
+Meeting schedule content is now filled in through March 2027 (10 new
+`content/meetings/*.md` entries, chore-level content update, no
+feature/task — see `02-doc/history.md` 2026-08-27 entry). The 4 monthly
+meetings from Dec 2026–Mar 2027 have no speaker yet (`text: "Speaker and
+topic to be announced."`); fill in `text`/`announcement` on
+`28-meeting.md`, `30-meeting.md`, `32-meeting.md`, `34-meeting.md` as
+speakers are confirmed.
+
 The site's full visual redesign (F04 concept exploration, F05 real
 implementation of Option D) is done and sits on branch
 `f04-site-redesign`, pushed but not merged into `main` — merging/opening

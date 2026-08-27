@@ -4,6 +4,22 @@ Completed-work log. `02-doc/current.md`'s `## Open` section is the only
 part that matters for new work; entries move here once done, per
 `.claude/process.md`'s checkpoint step.
 
+## 2026-08-27 (content: schedule through March 2027)
+* Added 10 new `content/meetings/*.md` entries (26–35) for the full
+  Oct 2026–Mar 2027 schedule the user provided: 6 hands-on meetings
+  (Oct 21, Nov 25, Dec 16 2026; Jan 13, Feb 17, Mar 17 2027 — all
+  Wednesdays, 6–9pm, reusing the generic `6-hands-on-meeting.md`
+  announcement) and 4 monthly meetings with speaker not yet set
+  (Dec 10 2026; Jan 7, Feb 11, Mar 11 2027 — all Thursdays, 7–9pm,
+  `text: "Speaker and topic to be announced."`, no `announcement` field).
+* Oct 15 and Nov 12 2026 monthly meetings already existed
+  (`25-meeting.md`, `24-meeting.md`) and matched the given schedule — no
+  changes needed there.
+* Verified: full build succeeds (35/35 meetings, up from 25), TBD
+  meetings render "Speaker and topic to be announced." with no broken
+  announcement/report links on `meetings.html`; `uv run pytest` 131/131,
+  no regressions.
+
 ## 2026-08-27 (content: October 15 meeting + Arjun Viswanathan talk)
 * Added `content/meetings/25-meeting.md` (October 15, 2026, kind: main)
   and `content/news/26-arjun-viswanathan-talk-announcement.md` (full
