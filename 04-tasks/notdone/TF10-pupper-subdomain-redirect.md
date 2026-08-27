@@ -84,7 +84,7 @@ now returns `200 OK` serving the redirect page. `https://` still fails
 repo's Pages settings) hasn't been done yet.
 
 ## TF10.4 — Set the custom domain and enforce HTTPS on the new repo
-**Status**: not done
+**Status**: in progress
 **Description**: In the new repo's Settings → Pages → Custom domain,
 enter `pupper.bostonrobothackers.com` and save. Wait for GitHub's DNS
 check to pass (can take minutes to a few hours), then enable "Enforce

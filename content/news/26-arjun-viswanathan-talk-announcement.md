@@ -1,6 +1,7 @@
 ---
 title: "October 15: Arjun Viswanathan: Reinforcement Learning for Multimodal Locomotion"
 date: 2026-10-15
+image: "images/news/boston-dynamics-spot.png"
 highlight: true
 type: news
 excerpt: "Arjun works on reinforcement learning for robot behavior at Boston Dynamics. He did his MS in Robotics at Northeastern's Silicon Synapse Lab, teaching the Husky-Beta legged-aerial robot to cross rough terrain with hierarchical RL — learning not just how to walk, but which mode of locomotion to use at all."
