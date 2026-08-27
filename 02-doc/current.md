@@ -14,29 +14,28 @@
   edge lets GitHub issue a proper cert for that subdomain, same as the
   main site. Full rationale and rejected alternatives (Cloudflare
   nameserver move, second custom domain on this repo) are in the F10 file.
-* Done so far (TF10.0–TF10.2, TF10.6): recorded the old DNS record for
+* Done so far (TF10.0–TF10.3, TF10.6): recorded the old DNS record for
   rollback; added `ops/pupper-redirect/index.html` + `CNAME` in this repo
   as versioned source (covered by `tests/test_pupper_redirect.py`, new,
-  2/2 passing); user created/renamed the standalone repo to
-  `brh-pupper-redirect`, pushed both files, enabled GitHub Pages on it
-  (confirmed live via its default `github.io` URL, which now redirects
-  correctly). Full suite: 131/131 passing, no regressions from this repo's
-  side — this feature touches no build/deploy code.
-* **In progress (TF10.3)**: Namecheap's `pupper` host record has been
-  changed from the old URL Redirect Record to a `CNAME Record` pointing
-  at `boston-robot-hackers.github.io.` — confirmed correct in the
-  Namecheap panel, but as of the last check the authoritative nameserver
-  (`dns1/2.registrar-servers.com`) hadn't yet picked it up (zone SOA
-  serial unchanged). Waiting on propagation — Namecheap's own docs say
-  this is typically minutes, up to ~30.
+  2/2 passing); user created the standalone repo `brh-pupper-redirect`,
+  pushed both files, enabled GitHub Pages on it; Namecheap's `pupper` host
+  record is now a `CNAME Record` → `boston-robot-hackers.github.io.`,
+  confirmed propagated (resolves correctly via public resolvers and the
+  authoritative nameserver). `curl -I http://pupper.bostonrobothackers.com`
+  returns `200 OK` serving the redirect page. Full suite: 131/131 passing,
+  no regressions from this repo's side — this feature touches no
+  build/deploy code.
 * **Not yet started**: TF10.4 (set `pupper.bostonrobothackers.com` as the
   new repo's custom domain in its Pages settings, wait for GitHub's DNS
   check, enable "Enforce HTTPS"), TF10.5 (end-to-end verification —
-  browser + `curl -sI https://pupper.bostonrobothackers.com`).
-* Next step for whoever picks this up: re-run
-  `dig pupper.bostonrobothackers.com CNAME +short` (or ask the user to
-  check) — once it resolves to `boston-robot-hackers.github.io.`, proceed
-  to TF10.4.
+  browser + `curl -sI https://pupper.bostonrobothackers.com`). As of this
+  checkpoint, `https://pupper.bostonrobothackers.com` still fails
+  (`SSL: no alternative certificate subject name matches target host
+  name`) — expected until TF10.4's custom-domain/cert step is done.
+* Next step for whoever picks this up: have the user open the new repo's
+  Settings → Pages, set custom domain `pupper.bostonrobothackers.com`,
+  wait for the DNS check to pass, enable "Enforce HTTPS," then verify with
+  `curl -sI https://pupper.bostonrobothackers.com`.
 
 The site's full visual redesign (F04 concept exploration, F05 real
 implementation of Option D) is done and sits on branch

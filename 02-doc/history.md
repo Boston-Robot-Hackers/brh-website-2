@@ -4,6 +4,23 @@ Completed-work log. `02-doc/current.md`'s `## Open` section is the only
 part that matters for new work; entries move here once done, per
 `.claude/process.md`'s checkpoint step.
 
+## 2026-08-27 (content: October 15 meeting + Arjun Viswanathan talk)
+* Added `content/meetings/25-meeting.md` (October 15, 2026, kind: main)
+  and `content/news/26-arjun-viswanathan-talk-announcement.md` (full
+  announcement: agenda, featured-talk description, speaker bio), matching
+  the existing talk-announcement content pattern.
+* Topic: "Reinforcement Learning for Multimodal Locomotion" — Arjun's MS
+  thesis at Northeastern's Silicon Synapse Lab, teaching the Husky-Beta
+  legged-aerial robot which locomotion mode to use via hierarchical RL.
+* No speaker photo supplied; left `image` unset by user's choice — the
+  home-page card falls back to its existing text-placeholder styling
+  rather than breaking. Can be added later
+  (`images/news/arjun-viswanathan.png` + `image` field) if a photo shows
+  up.
+* Verified: full build succeeds (25 news / 25 meetings, up from 24/24),
+  new entry renders on the home page, `meetings.html`, `whatsnew.html`,
+  and its own detail page; `uv run pytest` 131/131, no regressions.
+
 ## 2026-08-26 (F09 closed: per-page customizable banner)
 * F09 (per-page banner image + overlay text) done, all 7 `TF09` steps.
   Optional `banner_image`/`banner_title`/`banner_subtitle` frontmatter on

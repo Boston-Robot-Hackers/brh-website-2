@@ -63,7 +63,7 @@ source `main` / root) and confirm the default Pages URL loads over
 HTTPS, before TF10.3's DNS change.
 
 ## TF10.3 — Repoint the `pupper` DNS record at Namecheap
-**Status**: in progress
+**Status**: done
 **Description**: In Namecheap Advanced DNS for `bostonrobothackers.com`,
 delete the existing *URL Redirect Record* for host `pupper` and add a
 **CNAME Record**: Host `pupper`, Value `<github-username>.github.io.`,
@@ -73,6 +73,15 @@ serve a proper cert for the subdomain.
 **Test**: Not testable from this repo. Verify manually via
 `dig pupper.bostonrobothackers.com CNAME +short` once propagated — expect
 it to resolve to `<github-username>.github.io.`.
+
+**Result**: Confirmed propagated: `dig pupper.bostonrobothackers.com CNAME
++short` and a direct query against the authoritative nameserver
+(`dns1.registrar-servers.com`) both resolve to
+`boston-robot-hackers.github.io.`. `curl -I http://pupper.bostonrobothackers.com`
+now returns `200 OK` serving the redirect page. `https://` still fails
+(`SSL: no alternative certificate subject name matches target host name`)
+— expected, since TF10.4 (set custom domain + enforce HTTPS in the new
+repo's Pages settings) hasn't been done yet.
 
 ## TF10.4 — Set the custom domain and enforce HTTPS on the new repo
 **Status**: not done
