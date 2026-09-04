@@ -19,9 +19,12 @@ try: build
 	@pkill -f 'http.server' || true
 	@sleep 1
 	@echo "Starting server on http://localhost:8000"
+	@cd output && python3 -m http.server 8000 > /dev/null 2>&1 &
+	@sleep 2
 	@echo "Opening browser..."
 	@open http://localhost:8000 || xdg-open http://localhost:8000 || echo "Please visit http://localhost:8000 in your browser"
-	cd output && python3 -m http.server 8000
+	@echo "Server running. Press Ctrl+C to stop."
+	@wait
 
 test tests:
 	uv run pytest
