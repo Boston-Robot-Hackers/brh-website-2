@@ -46,10 +46,8 @@ topic to be announced."`); fill in `text`/`announcement` on
 speakers are confirmed.
 
 The site's full visual redesign (F04 concept exploration, F05 real
-implementation of Option D) is done and sits on branch
-`f04-site-redesign`, pushed but not merged into `main` — merging/opening
-a PR is a deliberate next step for whoever picks this up, not done as
-part of the checkpoint.
+implementation of Option D) is merged into `main` (commit 432757f).
+Redesign is complete.
 
 Known, deliberately-deferred items (not urgent, no ticket filed):
 
