@@ -31,35 +31,15 @@
             <div class="meeting-resources__buttons">
                 {% if meeting.announcement_exists or meeting.report_exists %}
                     {% if meeting.announcement_exists %}
-                    <a href="../news/{{ meeting.announcement_html }}" class="meeting-resource-btn meeting-resource-btn--announcement">
-                        <span class="meeting-resource-btn__text">
-                            <strong>View Announcement</strong>
-                            <span class="meeting-resource-btn__subtitle">Before the meeting</span>
-                        </span>
-                    </a>
+                    <a href="../news/{{ meeting.announcement_html }}" class="btn-outline">View Announcement</a>
                     {% else %}
-                    <div class="meeting-resource-btn meeting-resource-btn--coming-soon">
-                        <span class="meeting-resource-btn__text">
-                            <strong>Announcement</strong>
-                            <span class="meeting-resource-btn__subtitle">Coming soon</span>
-                        </span>
-                    </div>
+                    <button class="btn-outline" disabled style="opacity: 0.5; cursor: default;">Announcement TBD</button>
                     {% endif %}
 
                     {% if meeting.report_exists %}
-                    <a href="../news/{{ meeting.report_html }}" class="meeting-resource-btn meeting-resource-btn--report">
-                        <span class="meeting-resource-btn__text">
-                            <strong>View Report</strong>
-                            <span class="meeting-resource-btn__subtitle">After the meeting</span>
-                        </span>
-                    </a>
+                    <a href="../news/{{ meeting.report_html }}" class="btn-outline">View Report</a>
                     {% else %}
-                    <div class="meeting-resource-btn meeting-resource-btn--coming-soon">
-                        <span class="meeting-resource-btn__text">
-                            <strong>Meeting Report</strong>
-                            <span class="meeting-resource-btn__subtitle">Coming soon</span>
-                        </span>
-                    </div>
+                    <button class="btn-outline" disabled style="opacity: 0.5; cursor: default;">Report TBD</button>
                     {% endif %}
                 {% endif %}
             </div>
@@ -74,55 +54,11 @@
                 gap: 1rem;
                 flex-wrap: wrap;
             }
-            .meeting-resource-btn {
-                display: flex;
-                align-items: center;
-                gap: 1rem;
-                padding: 1.5rem;
-                border-radius: 8px;
-                text-decoration: none;
-                border: 2px solid var(--border);
-                background-color: var(--bg-card);
-                color: var(--text);
-                flex: 1;
-                min-width: 250px;
-                transition: all 0.2s ease;
+            .meeting-resources__buttons .btn-outline {
+                margin-top: 0;
             }
-            .meeting-resource-btn:hover {
-                transform: translateY(-2px);
-                border-color: var(--primary);
-                box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            }
-            .meeting-resource-btn--announcement {
-                border-left: 4px solid #f59e0b;
-            }
-            .meeting-resource-btn--announcement:hover {
-                background-color: rgba(245, 158, 11, 0.05);
-            }
-            .meeting-resource-btn--report {
-                border-left: 4px solid #10b981;
-            }
-            .meeting-resource-btn--report:hover {
-                background-color: rgba(16, 185, 129, 0.05);
-            }
-            .meeting-resource-btn--coming-soon {
-                opacity: 0.6;
+            .meeting-resources__buttons button:disabled {
                 cursor: default;
-            }
-            .meeting-resource-btn--coming-soon:hover {
-                transform: none;
-                border-color: var(--border);
-                box-shadow: none;
-            }
-            .meeting-resource-btn__text {
-                display: flex;
-                flex-direction: column;
-                gap: 0.25rem;
-            }
-            .meeting-resource-btn__subtitle {
-                font-size: 0.85rem;
-                color: var(--text-muted);
-                font-weight: normal;
             }
         </style>
 
