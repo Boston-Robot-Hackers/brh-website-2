@@ -32,7 +32,6 @@
                 {% if meeting.announcement_exists or meeting.report_exists %}
                     {% if meeting.announcement_exists %}
                     <a href="../news/{{ meeting.announcement_html }}" class="meeting-resource-btn meeting-resource-btn--announcement">
-                        <span class="meeting-resource-btn__icon">📢</span>
                         <span class="meeting-resource-btn__text">
                             <strong>View Announcement</strong>
                             <span class="meeting-resource-btn__subtitle">Before the meeting</span>
@@ -40,7 +39,6 @@
                     </a>
                     {% else %}
                     <div class="meeting-resource-btn meeting-resource-btn--coming-soon">
-                        <span class="meeting-resource-btn__icon">📢</span>
                         <span class="meeting-resource-btn__text">
                             <strong>Announcement</strong>
                             <span class="meeting-resource-btn__subtitle">Coming soon</span>
@@ -50,7 +48,6 @@
 
                     {% if meeting.report_exists %}
                     <a href="../news/{{ meeting.report_html }}" class="meeting-resource-btn meeting-resource-btn--report">
-                        <span class="meeting-resource-btn__icon">📝</span>
                         <span class="meeting-resource-btn__text">
                             <strong>View Report</strong>
                             <span class="meeting-resource-btn__subtitle">After the meeting</span>
@@ -58,7 +55,6 @@
                     </a>
                     {% else %}
                     <div class="meeting-resource-btn meeting-resource-btn--coming-soon">
-                        <span class="meeting-resource-btn__icon">📝</span>
                         <span class="meeting-resource-btn__text">
                             <strong>Meeting Report</strong>
                             <span class="meeting-resource-btn__subtitle">Coming soon</span>
@@ -117,10 +113,6 @@
                 transform: none;
                 border-color: var(--border);
                 box-shadow: none;
-            }
-            .meeting-resource-btn__icon {
-                font-size: 2rem;
-                flex-shrink: 0;
             }
             .meeting-resource-btn__text {
                 display: flex;

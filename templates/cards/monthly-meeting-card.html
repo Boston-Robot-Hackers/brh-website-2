@@ -12,14 +12,14 @@
         {% if main_announcement_exists or main_report_exists %}
         <div class="meeting-entry__links">
             {% if main_announcement_exists %}
-                <a href="news/{{ main_announcement_html }}" class="meeting-entry__badge meeting-entry__badge--announcement">📢 Announcement</a>
+                <a href="news/{{ main_announcement_html }}" class="meeting-entry__badge meeting-entry__badge--announcement">Announcement</a>
             {% else %}
-                <span class="meeting-entry__badge meeting-entry__badge--tbd">📢 Announcement TBD</span>
+                <span class="meeting-entry__badge meeting-entry__badge--tbd">Announcement TBD</span>
             {% endif %}
             {% if main_report_exists %}
-                <a href="news/{{ main_report_html }}" class="meeting-entry__badge meeting-entry__badge--report">📝 Report</a>
+                <a href="news/{{ main_report_html }}" class="meeting-entry__badge meeting-entry__badge--report">Report</a>
             {% else %}
-                <span class="meeting-entry__badge meeting-entry__badge--tbd">📝 Report TBD</span>
+                <span class="meeting-entry__badge meeting-entry__badge--tbd">Report TBD</span>
             {% endif %}
         </div>
         {% endif %}
