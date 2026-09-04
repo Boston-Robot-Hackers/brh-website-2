@@ -14,7 +14,7 @@ from typing import Any
 
 from content_manager import ContentType, classify_meeting, parse_date
 from jinja2 import Environment
-from news_links import build_news_index, resolve_news_html
+from news_links import build_news_index, resolve_news_html, extract_slides_pdf
 
 
 class PageBuilder:
@@ -110,15 +110,26 @@ class PageBuilder:
         """Resolve a meeting's announcement/report refs into template context keys.
 
         Returns `{prefix}announcement_exists`, `{prefix}report_exists`,
-        `{prefix}announcement_html`, `{prefix}report_html`.
+        `{prefix}announcement_html`, `{prefix}report_html`, `{prefix}slides_pdf`.
         """
         ann_html, ann_exists = self.news_html_name(metadata.get("announcement"))
         rep_html, rep_exists = self.news_html_name(metadata.get("report"))
+
+        # Extract slides_pdf from the report if it exists
+        slides_pdf = ""
+        if rep_exists:
+            try:
+                news_dir = self.dist_dir.parent / "content" / "news"
+                slides_pdf = extract_slides_pdf(news_dir, metadata.get("report")) or ""
+            except ValueError:
+                pass  # Report file not found or slides_pdf not set
+
         return {
             f"{prefix}announcement_exists": ann_exists,
             f"{prefix}report_exists": rep_exists,
             f"{prefix}announcement_html": ann_html,
             f"{prefix}report_html": rep_html,
+            f"{prefix}slides_pdf": slides_pdf,
         }
 
     def render_cards(

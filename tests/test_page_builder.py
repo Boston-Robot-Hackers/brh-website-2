@@ -110,6 +110,7 @@ class TestResolveAnnouncementReport:
             "report_exists": False,
             "announcement_html": "",
             "report_html": "",
+            "slides_pdf": "",
         }
 
     def test_prefix_applied_to_all_keys(self, page_builder):
@@ -119,6 +120,7 @@ class TestResolveAnnouncementReport:
             "main_report_exists",
             "main_announcement_html",
             "main_report_html",
+            "main_slides_pdf",
         }
 
 

@@ -40,3 +40,19 @@ def resolve_news_html(index: dict[str, str], ref: str) -> tuple[str, bool]:
     if key not in index:
         raise ValueError(f"Unresolved news reference: {ref!r}")
     return f"{index[key]}.html", True
+
+
+def extract_slides_pdf(news_dir: Path, ref: str) -> str | None:
+    """Extract slides_pdf metadata from a news file reference.
+
+    Returns the slides_pdf value if it exists and is non-empty, else None.
+    Raises ValueError if ref doesn't resolve to a file.
+    """
+    if not ref:
+        return None
+    key = str(ref).rsplit(".", 1)[0]  # tolerate .md/.html suffixes
+    news_file = news_dir / f"{key}.md"
+    if not news_file.exists():
+        raise ValueError(f"News reference file not found: {ref!r}")
+    metadata = frontmatter.load(news_file).metadata
+    return metadata.get("slides_pdf") or None

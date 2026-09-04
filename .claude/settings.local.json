@@ -20,7 +20,8 @@
       "Read(//Users/pitosalas/mydev/dome_nav/04-tasks/**)",
       "Read(//Users/pitosalas/mydev/dome_nav/05-issues/**)",
       "Bash(cp /Users/pitosalas/mydev/j3/.claude/codereview.md /Users/pitosalas/mydev/dome_nav/.claude/codereview.md)",
-      "Bash(rm /Users/pitosalas/mydev/dome_nav/.claude/commands/newsesh.md)"
+      "Bash(rm /Users/pitosalas/mydev/dome_nav/.claude/commands/newsesh.md)",
+      "Bash(uv run *)"
     ]
   }
 }

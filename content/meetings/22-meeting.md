@@ -7,4 +7,5 @@ text: "Alan Kilian, a long time software and hardware person with a lifelong pas
 type: meeting
 kind: main
 announcement: "19-june-meeting-announcement.md"
+report: "27-september-meeting-report.md"
 ---
