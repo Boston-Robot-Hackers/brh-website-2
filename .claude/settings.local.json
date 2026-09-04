@@ -1,8 +1,26 @@
 {
   "permissions": {
     "allow": [
-      "WebSearch",
-      "Bash(xargs cat)"
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "Read(//Users/pitosalas/mydev/control/**)",
+      "Bash(xargs ls *)",
+      "Bash(python -m pytest test/ -x -q)",
+      "Bash(python3 -c \"import numpy\")",
+      "Bash(pip3 install *)",
+      "Bash(python3 *)",
+      "Bash(git stash *)",
+      "Bash(git rm *)",
+      "Read(//home/pitosalas/ros2_ws/src/oak_roboflow/02-doc/**)",
+      "Read(//home/pitosalas/ros2_ws/src/oak_roboflow/**)",
+      "Read(//Users/pitosalas/mydev/dome_nav/**)",
+      "Read(//Users/pitosalas/mydev/dome_nav/02-doc/**)",
+      "Read(//Users/pitosalas/mydev/dome_nav/03-features/**)",
+      "Read(//Users/pitosalas/mydev/dome_nav/04-tasks/**)",
+      "Read(//Users/pitosalas/mydev/dome_nav/05-issues/**)",
+      "Bash(cp /Users/pitosalas/mydev/j3/.claude/codereview.md /Users/pitosalas/mydev/dome_nav/.claude/codereview.md)",
+      "Bash(rm /Users/pitosalas/mydev/dome_nav/.claude/commands/newsesh.md)"
     ]
   }
 }
