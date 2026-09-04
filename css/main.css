@@ -1018,6 +1018,60 @@
   color: var(--text-light);
 }
 
+.meeting-entry__links {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 0.75rem !important;
+}
+
+.meeting-entry__badge {
+  display: inline-block;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.meeting-entry__badge--announcement {
+  background-color: color-mix(in srgb, var(--accent) 15%, transparent);
+  color: var(--accent);
+  border: 1px solid var(--accent);
+}
+
+.meeting-entry__badge--announcement:hover {
+  background-color: color-mix(in srgb, var(--accent) 25%, transparent);
+  transform: translateY(-1px);
+}
+
+.meeting-entry__badge--report {
+  background-color: color-mix(in srgb, var(--success) 15%, transparent);
+  color: var(--success);
+  border: 1px solid var(--success);
+}
+
+.meeting-entry__badge--report:hover {
+  background-color: rgba(16, 185, 129, 0.25);
+  transform: translateY(-1px);
+}
+
+.meeting-entry__badge--tbd {
+  background-color: rgba(128, 128, 128, 0.1);
+  color: var(--text-light);
+  border: 1px solid var(--border);
+  opacity: 0.6;
+  cursor: default;
+}
+
+.meeting-entry__badge--tbd:hover {
+  transform: none;
+  background-color: rgba(128, 128, 128, 0.1);
+}
+
 /* ---- Members grid ---- */
 .members-grid {
   display: grid;

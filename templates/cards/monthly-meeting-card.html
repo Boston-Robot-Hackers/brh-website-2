@@ -10,19 +10,18 @@
         <p class="meeting-entry__text">{{ main_meeting.metadata.text }}</p>
         {% endif %}
         {% if main_announcement_exists or main_report_exists %}
-        <p class="meeting-entry__links">
+        <div class="meeting-entry__links">
             {% if main_announcement_exists %}
-                <a href="news/{{ main_announcement_html }}">announcement</a>
+                <a href="news/{{ main_announcement_html }}" class="meeting-entry__badge meeting-entry__badge--announcement">📢 Announcement</a>
             {% else %}
-                <span class="meeting-entry__tbd">announcement TBD</span>
+                <span class="meeting-entry__badge meeting-entry__badge--tbd">📢 Announcement TBD</span>
             {% endif %}
-            &middot;
             {% if main_report_exists %}
-                <a href="news/{{ main_report_html }}">report</a>
+                <a href="news/{{ main_report_html }}" class="meeting-entry__badge meeting-entry__badge--report">📝 Report</a>
             {% else %}
-                <span class="meeting-entry__tbd">report TBD</span>
+                <span class="meeting-entry__badge meeting-entry__badge--tbd">📝 Report TBD</span>
             {% endif %}
-        </p>
+        </div>
         {% endif %}
     </div>
     {% endif %}
