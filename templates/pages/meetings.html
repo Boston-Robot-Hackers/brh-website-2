@@ -10,24 +10,50 @@
     <h1 class="river-header">Meetings</h1>
     <p class="rail-note">All meetings at <a href="https://www.artisansasylum.com" target="_blank">Artisans Asylum, 96 Holton Street, Allston</a></p>
 
-    <div class="meetings-controls" style="margin: 2rem 0; padding: 1rem; background: #f5f5f5; border-radius: 8px;">
-        <div style="display: flex; gap: 2rem; flex-wrap: wrap; align-items: center;">
+    <style>
+        .meetings-controls {
+            margin: 2rem 0;
+            padding: 1rem;
+            background-color: var(--color-bg-secondary, #f5f5f5);
+            border-radius: 8px;
+            color: var(--color-text, #000);
+        }
+        .meetings-controls-inner {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .meetings-controls select {
+            padding: 0.5rem;
+            border-radius: 4px;
+            border: 1px solid var(--color-border, #ccc);
+            background-color: var(--color-bg, #fff);
+            color: var(--color-text, #000);
+            font-size: 1rem;
+        }
+        .meetings-controls label {
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+    </style>
+
+    <div class="meetings-controls">
+        <div class="meetings-controls-inner">
             <div>
-                <label for="sort-order" style="font-weight: bold; margin-right: 0.5rem;">Sort:</label>
-                <select id="sort-order" style="padding: 0.5rem; border-radius: 4px; border: 1px solid #ccc;">
+                <label for="sort-order">Sort:</label>
+                <select id="sort-order">
                     <option value="later-first">Later → Earlier</option>
                     <option value="earlier-first">Earlier → Later</option>
                 </select>
             </div>
-            <div style="display: flex; gap: 1rem;">
-                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-                    <input type="checkbox" id="filter-upcoming" checked style="width: 18px; height: 18px;">
-                    <span>Upcoming</span>
-                </label>
-                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-                    <input type="checkbox" id="filter-passed" checked style="width: 18px; height: 18px;">
-                    <span>Passed</span>
-                </label>
+            <div>
+                <label for="filter-type">Show:</label>
+                <select id="filter-type">
+                    <option value="all">All Meetings</option>
+                    <option value="upcoming">Upcoming</option>
+                    <option value="passed">Passed</option>
+                </select>
             </div>
         </div>
     </div>
@@ -40,13 +66,13 @@
         document.addEventListener('DOMContentLoaded', function() {
             const container = document.getElementById('meetings-container');
             const sortOrder = document.getElementById('sort-order');
-            const filterUpcoming = document.getElementById('filter-upcoming');
-            const filterPassed = document.getElementById('filter-passed');
+            const filterType = document.getElementById('filter-type');
 
             function updateMeetings() {
                 const cards = container.querySelectorAll('.meeting-month-card');
                 const today = new Date();
                 today.setHours(0, 0, 0, 0);
+                const filterValue = filterType.value;
 
                 cards.forEach(card => {
                     const dateStr = card.querySelector('.meeting-entry__line');
@@ -61,7 +87,15 @@
                         }
                     }
 
-                    const showCard = (isUpcoming && filterUpcoming.checked) || (!isUpcoming && filterPassed.checked);
+                    let showCard = false;
+                    if (filterValue === 'all') {
+                        showCard = true;
+                    } else if (filterValue === 'upcoming') {
+                        showCard = isUpcoming;
+                    } else if (filterValue === 'passed') {
+                        showCard = !isUpcoming;
+                    }
+
                     card.style.display = showCard ? 'block' : 'none';
                 });
 
@@ -80,8 +114,7 @@
             }
 
             sortOrder.addEventListener('change', updateMeetings);
-            filterUpcoming.addEventListener('change', updateMeetings);
-            filterPassed.addEventListener('change', updateMeetings);
+            filterType.addEventListener('change', updateMeetings);
         });
     </script>
 {% endblock %}
