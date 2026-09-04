@@ -15,8 +15,12 @@ build:
 	uv run python build/build.py
 
 try: build
+	@echo "Stopping any existing server..."
+	@pkill -f 'http.server' || true
+	@sleep 1
 	@echo "Starting server on http://localhost:8000"
-	@echo "Press Ctrl+C to stop"
+	@echo "Opening browser..."
+	@open http://localhost:8000 || xdg-open http://localhost:8000 || echo "Please visit http://localhost:8000 in your browser"
 	cd output && python3 -m http.server 8000
 
 test tests:
