@@ -3,32 +3,36 @@
     <h3 class="meeting-month-title">{{ month_label }}</h3>
 
     {% if main_meeting %}
-    <a href="meetings/{{ main_meeting.id }}.html" class="meeting-entry meeting-entry--clickable">
-        <p class="meeting-entry__label">Main Meeting</p>
-        <p class="meeting-entry__line">{{ main_meeting.metadata.date|format_date }} at {{ main_meeting.metadata.time }}</p>
-        {% if main_meeting.metadata.text %}
-        <p class="meeting-entry__text">{{ main_meeting.metadata.text }}</p>
-        {% endif %}
+    <div class="meeting-entry meeting-entry--with-column">
+        <a href="meetings/{{ main_meeting.id }}.html" class="meeting-entry__content">
+            <p class="meeting-entry__label">Main Meeting</p>
+            <p class="meeting-entry__line">{{ main_meeting.metadata.date|format_date }} at {{ main_meeting.metadata.time }}</p>
+            {% if main_meeting.metadata.text %}
+            <p class="meeting-entry__text">{{ main_meeting.metadata.text }}</p>
+            {% endif %}
+        </a>
         {% if main_report_exists %}
-        <div class="meeting-entry__links">
-            <a href="news/{{ main_report_html }}" class="meeting-entry__badge meeting-entry__badge--report" onclick="event.stopPropagation();">Notes from the meeting</a>
+        <div class="meeting-entry__column">
+            <a href="news/{{ main_report_html }}" class="meeting-entry__badge meeting-entry__badge--report">Notes from the meeting</a>
         </div>
         {% endif %}
-    </a>
+    </div>
     {% endif %}
 
     {% if handson_meeting %}
-    <a href="meetings/{{ handson_meeting.id }}.html" class="meeting-entry meeting-entry--clickable">
-        <p class="meeting-entry__label">Hands-On Meeting</p>
-        <p class="meeting-entry__line">{{ handson_meeting.metadata.date|format_date }} at {{ handson_meeting.metadata.time }}</p>
-        {% if handson_meeting.metadata.text %}
-        <p class="meeting-entry__text">{{ handson_meeting.metadata.text }}</p>
-        {% endif %}
+    <div class="meeting-entry meeting-entry--with-column">
+        <a href="meetings/{{ handson_meeting.id }}.html" class="meeting-entry__content">
+            <p class="meeting-entry__label">Hands-On Meeting</p>
+            <p class="meeting-entry__line">{{ handson_meeting.metadata.date|format_date }} at {{ handson_meeting.metadata.time }}</p>
+            {% if handson_meeting.metadata.text %}
+            <p class="meeting-entry__text">{{ handson_meeting.metadata.text }}</p>
+            {% endif %}
+        </a>
         {% if handson_report_exists %}
-        <div class="meeting-entry__links">
-            <a href="news/{{ handson_report_html }}" class="meeting-entry__badge meeting-entry__badge--report" onclick="event.stopPropagation();">Notes from the meeting</a>
+        <div class="meeting-entry__column">
+            <a href="news/{{ handson_report_html }}" class="meeting-entry__badge meeting-entry__badge--report">Notes from the meeting</a>
         </div>
         {% endif %}
-    </a>
+    </div>
     {% endif %}
 </div>

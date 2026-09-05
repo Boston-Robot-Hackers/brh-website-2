@@ -33,7 +33,7 @@ def test_every_meeting_entry_present(built_pages):
     expected = _real_meeting_file_count()
     assert expected > 0
 
-    actual = meetings_html.count('class="meeting-entry meeting-entry--clickable"')
+    actual = meetings_html.count('class="meeting-entry meeting-entry--with-column"')
     assert actual == expected, (
         f"expected {expected} meeting entries in built meetings.html, found {actual}"
     )
