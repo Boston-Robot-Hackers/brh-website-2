@@ -1,10 +1,17 @@
 # Code Review Checklist
 
-Version: 3.2
+Version: 3.3
 
 Use this for Python source reviews. `MUST` items are blocking unless explicitly
 waived in the task or PR notes. `SHOULD` items are expected defaults. `CONSIDER`
 items are review prompts, not mechanical rules.
+
+Items marked `[ruff: CODE]` are mechanically checked by `ruff check` per the
+`[tool.ruff.lint]` select list in `pyproject.toml` (added 2026-09-05, see
+`02-doc/history.md`) — a clean `ruff check` already satisfies them, though
+still worth a human glance. `[ruff: partial]` means ruff catches only part of
+the rule; the rest still needs manual review. Everything unmarked is
+manual-review only.
 
 ## Workflow
 1. Confirm the work has a corresponding feature file and task file.
@@ -23,12 +30,12 @@ items are review prompts, not mechanical rules.
 - [ ] MUST: When `02-doc/current.md` and `03-features/`, `04-tasks/`, `05-issues/` disagree, resolve or document the mismatch before relying on either
 - [ ] MUST: No ROS2 imports (`rclpy`, `sensor_msgs`, etc.) in `oak_roboflow/`
 - [ ] MUST: ROS2 code lives under `oak_roboflow_ros/oak_roboflow_ros/`
-- [ ] MUST: No secrets, API keys, passwords, or tokens committed in code or config examples
+- [ ] MUST: No secrets, API keys, passwords, or tokens committed in code or config examples `[ruff: partial — S105/S106/S107 catch hardcoded password-shaped names only]`
 - [ ] MUST: Sensitive values come from environment variables or local untracked config
 - [ ] MUST: Logs and exceptions do not expose passwords, tokens, PII, or API-key-bearing URLs
 - [ ] MUST: No side effects at module import time
-- [ ] MUST: No mutable default arguments
-- [ ] MUST: No bare `except Exception:` or silent `except X: pass`
+- [ ] MUST: No mutable default arguments `[ruff: B006]`
+- [ ] MUST: No bare `except Exception:` or silent `except X: pass` `[ruff: BLE, S110]`
 - [ ] MUST: Validation happens at system boundaries: user input, config, hardware, ROS, or external APIs
 
 ### Report Errors, Don't Guess And "Fix" Them
@@ -37,7 +44,7 @@ do not infer what was meant and correct it. A guess-and-repair either hides a re
 bug or invents new wrong behavior. If the wrong value came from our own code or
 content, it's a bug to fix at the source.
 - [ ] MUST: Do not compensate for a violated expectation by reinterpreting, coercing, defaulting, or branching to "make it work"
-- [ ] MUST: On a problem, raise with context; never return the bad value unchanged or a silent fallback, and never swallow with `except: return None`/`continue`
+- [ ] MUST: On a problem, raise with context; never return the bad value unchanged or a silent fallback, and never swallow with `except: return None`/`continue` `[ruff: partial — S110/S112 catch silent pass/continue, not return None]`
 - [ ] MUST: Validate once at the boundary, then trust it
 - [ ] SHOULD: Only genuinely external, untrusted input gets validate-and-reject — and even then, reject, don't silently fix
 - [ ] MUST: Bug fixes include regression tests unless the case is hardware-only or otherwise documented
@@ -75,36 +82,36 @@ content, it's a bug to fix at the source.
 - [ ] SHOULD: Manual test notes include command, setup, expected observation, and actual result
 
 ## Imports And Packaging
-- [ ] SHOULD: All imports are at the top of the file
-- [ ] MUST: Project modules use absolute imports; no relative imports
-- [ ] MUST: No unused imports or wildcard imports (`from module import *`)
-- [ ] SHOULD: Imports are sorted consistently
+- [ ] SHOULD: All imports are at the top of the file `[ruff: E402]`
+- [ ] MUST: Project modules use absolute imports; no relative imports `[ruff: TID]`
+- [ ] MUST: No unused imports or wildcard imports (`from module import *`) `[ruff: F401, F403]`
+- [ ] SHOULD: Imports are sorted consistently `[ruff: I]`
 - [ ] SHOULD: Dependencies are declared in the correct package metadata
 - [ ] MUST: All .py files have shebang line `#!/usr/bin/env python3`
 
 ## Style Preferences
 - [ ] MUST: File header includes module name, one-line description, `Author: Pito Salas and Claude Code`, and `Open Source Under MIT license`
-- [ ] SHOULD: Double quotes throughout; single quotes only when required
+- [ ] SHOULD: Double quotes throughout; single quotes only when required `[ruff format]`
 - [ ] MUST: No `from __future__ import annotations`
-- [ ] SHOULD: No `Optional[X]`; use `X | None`
+- [ ] SHOULD: No `Optional[X]`; use `X | None` `[ruff: UP007]`
 - [ ] MUST: No leading underscore prefix on methods, functions, instance variables, or other custom identifiers
-- [ ] MUST: Line length <= 88 chars unless a longer line is materially clearer
+- [ ] MUST: Line length <= 88 chars unless a longer line is materially clearer `[ruff: E501]`
 - [ ] SHOULD: Boolean variables/params are named `is_X`, `has_X`, or `can_X`
 - [ ] SHOULD: No single-letter variables except loop counters `i`, `j`
 - [ ] SHOULD: Use `is` / `is not` for comparisons with `None`, `True`, and `False`
-- [ ] MUST: Use f-strings for string formatting
-- [ ] SHOULD: Use `enumerate()` instead of manual counter variables when the index is needed
+- [ ] MUST: Use f-strings for string formatting `[ruff: partial — UP catches `.format()`/`%` conversions, not all cases]`
+- [ ] SHOULD: Use `enumerate()` instead of manual counter variables when the index is needed `[ruff: SIM]`
 
 ## Design Prompts
-- [ ] MUST: Functions and methods stay <= 50 lines where practical
+- [ ] MUST: Functions and methods stay <= 50 lines where practical `[ruff: partial — PLR0915 too-many-statements as a proxy, not a line-count check]`
 - [ ] MUST: Files stay near 300 lines where practical
 - [ ] SHOULD: One class per file; dataclasses co-located with their constructing class are allowed
 - [ ] MUST: Identifiers are short enough to read and intention-revealing
 - [ ] MUST: Avoid if/else nesting more than 1 deep; extract helpers or return early when clearer
-- [ ] MUST: Avoid if statements with more than 3 branches; use lookup tables or helpers when clearer
+- [ ] MUST: Avoid if statements with more than 3 branches; use lookup tables or helpers when clearer `[ruff: partial — PLR0912 too-many-branches, calibrated to max-branches=8 in pyproject.toml, looser than this literal "3"]`
 - [ ] MUST: Avoid 1-line or 2-line methods unless they are properties, protocol adapters, or improve naming
 - [ ] MUST: Avoid simple wrappers unless they isolate a boundary, adapt a framework API, or preserve a public interface
-- [ ] CONSIDER: Prefer <=3 behavioral arguments; use dataclasses/config objects when parameter groups travel together
+- [ ] CONSIDER: Prefer <=3 behavioral arguments; use dataclasses/config objects when parameter groups travel together `[ruff: partial — PLR0913 too-many-arguments, calibrated to max-args=5 in pyproject.toml, looser than this "3", with config-style constructors exempted via noqa]`
 - [ ] CONSIDER: Defaults are acceptable in dataclasses, config, CLI, launch args, and stable public APIs; avoid hidden behavioral defaults in internal logic
 - [ ] MUST: Avoid throwaway temporaries unless they clarify meaning, avoid recomputation, or aid debugging
 - [ ] CONSIDER: No god methods, feature envy, data clumps, or unrelated responsibilities in one class
@@ -129,11 +136,11 @@ content, it's a bug to fix at the source.
 - [ ] SHOULD: One CSS file per module that needs custom styles; shared styles go in a shared asset file
 
 ## Runtime Quality
-- [ ] MUST: No unreachable code, commented-out code blocks, debug print statements, or breakpoints
-- [ ] SHOULD: Use context managers (`with`) for file handles and resources that require cleanup
+- [ ] MUST: No unreachable code, commented-out code blocks, debug print statements, or breakpoints `[ruff: partial — ERA catches commented-out code; print()/breakpoints not enforced, T20 deliberately not adopted, see pyproject.toml]`
+- [ ] SHOULD: Use context managers (`with`) for file handles and resources that require cleanup `[ruff: SIM]`
 - [ ] SHOULD: Use logging for runtime errors; do not leave debug `print()` calls in library or ROS2 modules
 - [ ] SHOULD: No blocking network, file I/O, model loading, or expensive setup inside per-frame inference loops
-- [ ] SHOULD: Avoid unnecessary image copies, large allocations, and repeated object construction in hot paths
+- [ ] SHOULD: Avoid unnecessary image copies, large allocations, and repeated object construction in hot paths `[ruff: PERF]`
 - [ ] SHOULD: Optional per-frame outputs skip work when there are no subscribers or consumers
 - [ ] SHOULD: Instrumentation does not materially change the timing of the path being measured
 - [ ] SHOULD: Use the concurrency model expected by the framework; isolate threads and make shutdown deterministic

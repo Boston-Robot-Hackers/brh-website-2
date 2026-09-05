@@ -39,7 +39,8 @@
   - `LICENSE` — copy from `.claude/templates/LICENSE.template`, fill in year and author
   - `README.md` — copy from `.claude/templates/README.md.template`, fill in app name
   - `.gitignore` — copy from `.claude/templates/.gitignore.template` as-is
-  - `CLAUDE.md` — create with references to `.claude/process.md`, `.claude/codereview.md`, `02-doc/current.md`, and `02-doc/notes.md`
+  - `ruff.toml` — copy from `.claude/templates/ruff.toml.template` as-is; carries over the calibrated ruff rules mapped to `.claude/style_guide.md`
+  - `CLAUDE.md` — create with references to `.claude/process.md`, `.claude/style_guide.md`, `02-doc/current.md`, and `02-doc/notes.md`
   - `01-literate/` — generated literate docs for changed Python modules
   - `02-doc/spec.md` — blank spec file for the target app
   - `02-doc/current.md` — session handoff and current status

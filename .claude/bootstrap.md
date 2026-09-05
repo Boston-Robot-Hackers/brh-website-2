@@ -8,6 +8,7 @@ When bootstrapping a new project, assume that you are inside the directory of th
 LICENSE
 README.md
 .gitignore
+ruff.toml
 CLAUDE.md
 01-literate/
 02-doc/
@@ -36,6 +37,14 @@ Copy from `.claude/templates/README.md.template` and replace `<APP NAME>` and ot
 ### .gitignore
 Copy from `.claude/templates/.gitignore.template` as-is.
 
+### ruff.toml
+Copy from `.claude/templates/ruff.toml.template` as-is. This carries over the
+calibrated ruff rule set mapped to `.claude/style_guide.md`'s `MUST`/`SHOULD`
+checklist (see the `[ruff: CODE]` markers in that file). Once the new project
+has real code, recalibrate `select` and the `[lint.pylint]` thresholds
+against what `ruff check` actually finds there — the template comments
+explain what to drop and why.
+
 ### CLAUDE.md
 ```
 # CLAUDE.md
@@ -60,4 +69,7 @@ Prompt the user to:
 2. Initialize `02-doc/current.md` as the session handoff file
 3. Add any durable architecture notes to `02-doc/notes.md`
 4. Replace `<APP NAME>` in `CLAUDE.md`, `README.md`, and `LICENSE` with the actual app name, author, and year
-5. Define the first feature and matching task file before writing any code
+5. Once there's real code, run `ruff check` and recalibrate `ruff.toml`'s
+   `select` list and `[lint.pylint]` thresholds against what it actually
+   finds
+6. Define the first feature and matching task file before writing any code

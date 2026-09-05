@@ -2,6 +2,25 @@
 
 ## Open
 
+**Ruff rules made portable via `.claude/` bootstrap (2026-09-05)** — the
+calibrated ruff `select` list adopted in commit 6b44ffa (`pyproject.toml`)
+is now also captured as `.claude/templates/ruff.toml.template`, a
+standalone `ruff.toml` that `/bootstrap` copies as-is into a new project
+(see updated `.claude/bootstrap.md` and `.claude/process.md`). No changes
+to this repo's own `pyproject.toml` — it keeps its embedded
+`[tool.ruff.lint]` config unchanged. `.claude/style_guide.md` (v3.3) now
+annotates each checklist line with `[ruff: CODE]` / `[ruff: partial — ...]`
+markers showing which rules are mechanically enforced vs. still
+manual-review-only. Also fixed a stale `.claude/process.md` reference to
+a nonexistent `.claude/codereview.md` (the real file is
+`.claude/style_guide.md`) — same stale name reappeared in this session's
+`/checkpoint` invocation; substituted `style_guide.md` since no Python
+source changed this session, so no MUST/SHOULD review was applicable.
+All template text was scrubbed of `brh-website-2`-specific wording per
+user request, except `.claude/settings.json`'s `autoMode.environment`
+block, which legitimately describes this project and isn't part of the
+bootstrap-copied template set.
+
 **F10 — pupper.bostonrobothackers.com subdomain over HTTPS** — on hold
 awaiting user to configure custom domain in GitHub Pages settings for
 `brh-pupper-redirect` repo (TF10.4, TF10.5). See history entry 2026-09-04
