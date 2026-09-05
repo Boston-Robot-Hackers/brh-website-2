@@ -25,7 +25,8 @@
       "Bash(make help *)",
       "Bash(make test *)",
       "Bash(git revert *)",
-      "Bash(curl *)"
+      "Bash(curl *)",
+      "Bash(xargs -I {} sh -c 'echo \"=== {} ===\"; grep -E \"announcement|report\" {} | head -2')"
     ]
   }
 }

@@ -5,6 +5,7 @@ image: "images/news/battery.png"
 excerpt: "Alan Kilian, a long time software and hardware person with a lifelong passion for Robotics will speak about aspects of power for robots. Batteries, Measurement, Circuitry and more."
 highlight: true
 type: news
+related_report: "27-september-meeting-report.html"
 ---
 ### Our Next Meeting
 
