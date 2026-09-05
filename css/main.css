@@ -1011,14 +1011,20 @@
   color: var(--primary);
 }
 
-.meeting-entry--clickable .meeting-entry__links {
-  margin-top: 0.75rem;
+.meeting-entry__header {
   display: flex;
-  gap: 0.5rem;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
 }
 
-.meeting-entry--clickable .meeting-entry__badge {
-  pointer-events: auto;
+.meeting-entry__header .meeting-entry__label {
+  margin: 0;
+}
+
+.meeting-entry__header .meeting-entry__badge {
+  margin: 0;
 }
 
 .meeting-entry__label {
