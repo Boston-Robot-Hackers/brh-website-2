@@ -18,9 +18,18 @@
 
         <aside class="home-grid__rail">
             <div class="rail-box">
-                <h2 class="rail-title"><a href="meetings.html">Upcoming Meetings</a></h2>
+                <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;">
+                    <h2 class="rail-title"><a href="meetings.html">Upcoming Meetings</a></h2>
+                    <select id="home-filter-type" style="font-size: 0.85rem; padding: 0.25rem 0.5rem; border-radius: 4px; border: 1px solid var(--border); background-color: var(--bg-card); color: var(--text);">
+                        <option value="all">All</option>
+                        <option value="upcoming">Upcoming</option>
+                        <option value="passed">Passed</option>
+                    </select>
+                </div>
                 <p class="rail-note">All meetings at <a href="https://www.artisansasylum.com" target="_blank">Artisans Asylum, 96 Holton Street, Allston</a></p>
-                {{ meetings_content }}
+                <div id="home-meetings-container">
+                    {{ meetings_content }}
+                </div>
             </div>
 
             <div class="rail-box pupper-spotlight">
@@ -32,4 +41,53 @@
             </div>
         </aside>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const homeContainer = document.getElementById('home-meetings-container');
+            const homeFilterType = document.getElementById('home-filter-type');
+
+            if (!homeContainer || !homeFilterType) return;
+
+            function updateMeetings() {
+                const cards = homeContainer.querySelectorAll('.meeting-month-card');
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                const filterValue = homeFilterType.value;
+
+                cards.forEach(card => {
+                    const dateStr = card.querySelector('.meeting-entry__line');
+                    let isUpcoming = true;
+
+                    if (dateStr) {
+                        const dateText = dateStr.textContent;
+                        const dateMatch = dateText.match(/(\w+)\s+(\d+),\s+(\d+)/);
+                        if (dateMatch) {
+                            const meetingDate = new Date(dateMatch[3], getMonthIndex(dateMatch[1]), dateMatch[2]);
+                            isUpcoming = meetingDate >= today;
+                        }
+                    }
+
+                    let showCard = false;
+                    if (filterValue === 'all') {
+                        showCard = true;
+                    } else if (filterValue === 'upcoming') {
+                        showCard = isUpcoming;
+                    } else if (filterValue === 'passed') {
+                        showCard = !isUpcoming;
+                    }
+
+                    card.style.display = showCard ? 'block' : 'none';
+                });
+            }
+
+            function getMonthIndex(monthName) {
+                const months = ['January', 'February', 'March', 'April', 'May', 'June',
+                               'July', 'August', 'September', 'October', 'November', 'December'];
+                return months.indexOf(monthName);
+            }
+
+            homeFilterType.addEventListener('change', updateMeetings);
+        });
+    </script>
 {% endblock %}
