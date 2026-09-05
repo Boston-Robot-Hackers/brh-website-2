@@ -360,3 +360,45 @@ class TestRenderUpcomingCalendar:
 
     def test_empty_list_returns_empty(self, rich_page_builder):
         assert rich_page_builder.render_upcoming_meetings_calendar([]) == ""
+
+
+class TestBuildRelatedReportsMap:
+    """Verifies related-report links are derived from each meeting's own
+    announcement/report fields, rather than requiring a second, hand-
+    maintained copy of the link on the announcement itself."""
+
+    @staticmethod
+    def _make_news_file(tmp_path, filename, title="Untitled"):
+        news_dir = tmp_path / "content" / "news"
+        news_dir.mkdir(parents=True, exist_ok=True)
+        (news_dir / filename).write_text(f"---\ntitle: {title}\n---\nBody.\n")
+
+    def test_maps_announcement_to_report_when_both_exist(self, page_builder, tmp_path):
+        self._make_news_file(tmp_path, "ann.md")
+        self._make_news_file(tmp_path, "rep.md")
+        meetings = [
+            {"id": "m1", "metadata": {"announcement": "ann.md", "report": "rep.md"}}
+        ]
+
+        result = page_builder.build_related_reports_map(meetings)
+
+        assert result == {"ann": "rep.html"}
+
+    def test_omits_meeting_missing_report(self, page_builder, tmp_path):
+        self._make_news_file(tmp_path, "ann.md")
+        meetings = [{"id": "m1", "metadata": {"announcement": "ann.md"}}]
+
+        result = page_builder.build_related_reports_map(meetings)
+
+        assert result == {}
+
+    def test_omits_meeting_missing_announcement(self, page_builder, tmp_path):
+        self._make_news_file(tmp_path, "rep.md")
+        meetings = [{"id": "m1", "metadata": {"report": "rep.md"}}]
+
+        result = page_builder.build_related_reports_map(meetings)
+
+        assert result == {}
+
+    def test_empty_meetings_list_returns_empty_map(self, page_builder):
+        assert page_builder.build_related_reports_map([]) == {}

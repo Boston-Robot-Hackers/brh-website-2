@@ -53,6 +53,22 @@ def test_news_detail_page_without_headings_has_no_sidebar(built_pages):
     assert "detail-brief-sidebar" not in detail_html
 
 
+def test_announcement_links_to_its_derived_report():
+    """Regression test: an announcement's report link is derived from its
+    meeting's own `report` field, not a hand-maintained `related_report` on
+    the announcement itself. Uses real content: the September 3 meeting's
+    announcement (19-june-meeting-announcement.md) and report
+    (27-september-meeting-report.md) are linked only via
+    content/meetings/22-meeting.md's announcement/report fields."""
+    builder = WebsiteBuilder()
+    builder.build_news_page()
+    announcement_html = (
+        builder.dist_dir / "news" / "19-june-meeting-announcement.html"
+    ).read_text()
+    assert 'href="../news/27-september-meeting-report.html"' in announcement_html
+    assert "Read Meeting Report" in announcement_html
+
+
 class TestNewsDetailTableOfContents:
     @staticmethod
     @pytest.fixture(scope="class")

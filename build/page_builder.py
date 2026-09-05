@@ -102,6 +102,24 @@ class PageBuilder:
         """Resolve an announcement/report reference to (html_filename, exists)."""
         return self._news_resolver.resolve(ref)
 
+    def build_related_reports_map(self, meetings: list[dict]) -> dict[str, str]:
+        """Map an announcement's output id to its meeting's report filename.
+
+        Derived from each meeting's own `announcement`/`report` fields, so an
+        announcement page can link to its report without that link being
+        hand-maintained a second time on the announcement itself (which could
+        drift out of sync with the meeting's own fields).
+        """
+        related = {}
+        for meeting in meetings:
+            metadata = meeting["metadata"]
+            ann_html, ann_exists = self.news_html_name(metadata.get("announcement"))
+            rep_html, rep_exists = self.news_html_name(metadata.get("report"))
+            if ann_exists and rep_exists:
+                ann_id = ann_html.rsplit(".", 1)[0]
+                related[ann_id] = rep_html
+        return related
+
     def resolve_announcement_report(
         self, metadata: dict, prefix: str = ""
     ) -> dict[str, Any]:

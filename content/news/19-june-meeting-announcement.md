@@ -6,7 +6,6 @@ excerpt: Alan Kilian, a long time software and hardware person with a lifelong p
 highlight: true
 image: images/news/battery.png
 published_date: '2026-02-27'
-related_report: 27-september-meeting-report.html
 title: 'September 3: Alan Kilian talk: Powering Robots'
 type: news
 ---
