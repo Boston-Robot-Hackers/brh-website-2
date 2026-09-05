@@ -826,10 +826,6 @@
 
 .news-slides-box {
   margin: 1.5rem 0 2rem;
-  padding: 1.5rem;
-  border: 2px solid var(--primary);
-  border-radius: var(--radius);
-  background-color: color-mix(in srgb, var(--primary) 5%, transparent);
 }
 
 .news-slides-box .btn-outline {
