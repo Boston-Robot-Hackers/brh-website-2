@@ -42,6 +42,24 @@ def resolve_news_html(index: dict[str, str], ref: str) -> tuple[str, bool]:
     return f"{index[key]}.html", True
 
 
+class NewsResolver:
+    """Caches a news directory's reference index and resolves refs against it.
+
+    Building the index means scanning every file in the news directory for its
+    frontmatter, so it's built once on first use and reused for every
+    subsequent `resolve()` call on this instance.
+    """
+
+    def __init__(self, news_dir: Path):
+        self.news_dir = news_dir
+        self._index: dict[str, str] | None = None
+
+    def resolve(self, ref: str) -> tuple[str, bool]:
+        if self._index is None:
+            self._index = build_news_index(self.news_dir)
+        return resolve_news_html(self._index, ref)
+
+
 def extract_slides_pdf(news_dir: Path, ref: str) -> str | None:
     """Extract slides_pdf metadata from a news file reference.
 

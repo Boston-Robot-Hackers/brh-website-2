@@ -15,7 +15,7 @@ from typing import Any
 
 import frontmatter
 import markdown
-from news_links import build_news_index, resolve_news_html
+from news_links import NewsResolver
 
 WORDS_PER_MINUTE = 200
 HTML_TAG_PATTERN = re.compile(r"<[^>]+>")
@@ -84,7 +84,7 @@ class ContentManager:
     def __init__(self, content_dir: Path, jinja_env=None):
         self.content_dir = content_dir
         self.jinja_env = jinja_env
-        self._news_map = None
+        self._news_resolver = NewsResolver(content_dir / "news")
         config_file = content_dir.parent / "config" / "site.json"
         if config_file.exists():
             site_config = json.loads(config_file.read_text())
@@ -183,16 +183,14 @@ class ContentManager:
                 key=lambda x: x["metadata"].get("order", 0),
                 reverse=content_type.reverse,
             )
-        elif content_type.sort_key == "date":
+        elif content_type.sort_key in ("date", "published_date"):
             # Dates were validated at load, so sort chronologically directly.
+            # x["metadata"][field] covers both: "date" is mirrored at the top
+            # level too, but metadata is always the source of truth.
+            field = content_type.sort_key
             items.sort(
-                key=lambda x: parse_date(x["date"]) or datetime.min,
-                reverse=content_type.reverse,
-            )
-        elif content_type.sort_key == "published_date":
-            # Sort by published_date from metadata (post creation date)
-            items.sort(
-                key=lambda x: parse_date(x["metadata"].get("published_date")) or datetime.min,
+                key=lambda x, field=field: parse_date(x["metadata"].get(field))
+                or datetime.min,
                 reverse=content_type.reverse,
             )
         else:
@@ -204,9 +202,7 @@ class ContentManager:
 
     def resolve_news_html(self, ref: str):
         """Resolve an announcement/report reference to (html_filename, exists)."""
-        if self._news_map is None:
-            self._news_map = build_news_index(self.content_dir / "news")
-        return resolve_news_html(self._news_map, ref)
+        return self._news_resolver.resolve(ref)
 
     def generate_index_hero(self, static_content: str) -> str:
         """Generate index hero by adding future meeting info to static content."""

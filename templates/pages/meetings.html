@@ -70,25 +70,35 @@
             const container = document.getElementById('meetings-container');
             const sortOrder = document.getElementById('sort-order');
             const filterType = document.getElementById('filter-type');
+            // Fixed reference order (as rendered: newest month first) - every
+            // reorder is computed from this, so toggling sort direction back
+            // and forth is always reversible instead of drifting.
+            const originalOrder = Array.from(container.querySelectorAll('.meeting-month-card'));
 
-            function updateMeetings() {
-                const cards = container.querySelectorAll('.meeting-month-card');
+            function cardIsUpcoming(card) {
                 const today = new Date();
                 today.setHours(0, 0, 0, 0);
+                // A month card can hold both a main and a hands-on entry;
+                // treat the card as upcoming if either one hasn't happened yet.
+                const dateLines = card.querySelectorAll('.meeting-entry__line');
+                if (dateLines.length === 0) {
+                    return true;
+                }
+                return Array.from(dateLines).some(dateStr => {
+                    const dateMatch = dateStr.textContent.match(/(\w+)\s+(\d+),\s+(\d+)/);
+                    if (!dateMatch) {
+                        return true;
+                    }
+                    const meetingDate = new Date(dateMatch[3], getMonthIndex(dateMatch[1]), dateMatch[2]);
+                    return meetingDate >= today;
+                });
+            }
+
+            function updateMeetings() {
                 const filterValue = filterType.value;
 
-                cards.forEach(card => {
-                    const dateStr = card.querySelector('.meeting-entry__line');
-                    let isUpcoming = true;
-
-                    if (dateStr) {
-                        const dateText = dateStr.textContent;
-                        const dateMatch = dateText.match(/(\w+)\s+(\d+),\s+(\d+)/);
-                        if (dateMatch) {
-                            const meetingDate = new Date(dateMatch[3], getMonthIndex(dateMatch[1]), dateMatch[2]);
-                            isUpcoming = meetingDate >= today;
-                        }
-                    }
+                originalOrder.forEach(card => {
+                    const isUpcoming = cardIsUpcoming(card);
 
                     let showCard = false;
                     if (filterValue === 'all') {
@@ -102,12 +112,12 @@
                     card.style.display = showCard ? 'block' : 'none';
                 });
 
-                // Sort by changing order in DOM
-                if (sortOrder.value === 'earlier-first') {
-                    const cardsArray = Array.from(container.querySelectorAll('.meeting-month-card:not([style*="display: none"])'));
-                    cardsArray.reverse();
-                    cardsArray.forEach(card => container.appendChild(card));
-                }
+                // Always reorder from the fixed original order, so switching
+                // back to "later-first" restores it instead of staying reversed.
+                const orderedCards = sortOrder.value === 'earlier-first'
+                    ? [...originalOrder].reverse()
+                    : originalOrder;
+                orderedCards.forEach(card => container.appendChild(card));
             }
 
             function getMonthIndex(monthName) {

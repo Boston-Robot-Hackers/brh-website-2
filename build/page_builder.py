@@ -14,7 +14,7 @@ from typing import Any
 
 from content_manager import ContentType, classify_meeting, parse_date
 from jinja2 import Environment
-from news_links import build_news_index, resolve_news_html, extract_slides_pdf
+from news_links import NewsResolver, extract_slides_pdf
 
 
 class PageBuilder:
@@ -24,7 +24,7 @@ class PageBuilder:
         self.jinja_env = jinja_env
         self.dist_dir = dist_dir
         self.site_config = site_config
-        self._news_map = None
+        self._news_resolver = NewsResolver(dist_dir.parent / "content" / "news")
 
     def format_date(self, date_str: str) -> str:
         """Format a canonical ISO date for display (e.g. 'June 11, 2026')."""
@@ -100,9 +100,7 @@ class PageBuilder:
 
     def news_html_name(self, ref: str):
         """Resolve an announcement/report reference to (html_filename, exists)."""
-        if self._news_map is None:
-            self._news_map = build_news_index(self.dist_dir.parent / "content" / "news")
-        return resolve_news_html(self._news_map, ref)
+        return self._news_resolver.resolve(ref)
 
     def resolve_announcement_report(
         self, metadata: dict, prefix: str = ""
@@ -119,8 +117,12 @@ class PageBuilder:
         slides_pdf = ""
         if rep_exists:
             try:
-                news_dir = self.dist_dir.parent / "content" / "news"
-                slides_pdf = extract_slides_pdf(news_dir, metadata.get("report")) or ""
+                slides_pdf = (
+                    extract_slides_pdf(
+                        self._news_resolver.news_dir, metadata.get("report")
+                    )
+                    or ""
+                )
             except ValueError:
                 pass  # Report file not found or slides_pdf not set
 
@@ -322,7 +324,6 @@ class PageBuilder:
                 continue
 
             # Determine meeting type label
-            title = meeting.get("title", "")
             if classify_meeting(meeting["metadata"]) == "handson":
                 type_label = "Hands-On Meeting"
             else:
@@ -341,11 +342,9 @@ class PageBuilder:
                     "day": date_obj.strftime("%d"),
                     "month_abbr": date_obj.strftime("%b"),
                     "year": date_obj.strftime("%Y"),
-                    "month_year": date_obj.strftime("%b %Y"),
                     "time": meeting["metadata"].get("time", ""),
                     "type_label": type_label,
                     "text": meeting["metadata"].get("text", ""),
-                    "title": title,
                     "announcement_url": announcement_url,
                 }
             )
