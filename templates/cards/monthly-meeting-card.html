@@ -3,37 +3,32 @@
     <h3 class="meeting-month-title">{{ month_label }}</h3>
 
     {% if main_meeting %}
-    <div class="meeting-entry">
+    <a href="meetings/{{ main_meeting.id }}.html" class="meeting-entry meeting-entry--clickable">
         <p class="meeting-entry__label">Main Meeting</p>
         <p class="meeting-entry__line">{{ main_meeting.metadata.date|format_date }} at {{ main_meeting.metadata.time }}</p>
         {% if main_meeting.metadata.text %}
         <p class="meeting-entry__text">{{ main_meeting.metadata.text }}</p>
         {% endif %}
-        <a href="meetings/{{ main_meeting.id }}.html" class="meeting-entry__link-details">View Details →</a>
-        {% if main_announcement_exists or main_report_exists %}
+        {% if main_report_exists %}
         <div class="meeting-entry__links">
-            {% if main_announcement_exists %}
-                <a href="news/{{ main_announcement_html }}" class="meeting-entry__badge meeting-entry__badge--announcement">Announcement</a>
-            {% else %}
-                <span class="meeting-entry__badge meeting-entry__badge--tbd">Announcement TBD</span>
-            {% endif %}
-            {% if main_report_exists %}
-                <a href="news/{{ main_report_html }}" class="meeting-entry__badge meeting-entry__badge--report">Report</a>
-            {% else %}
-                <span class="meeting-entry__badge meeting-entry__badge--tbd">Report TBD</span>
-            {% endif %}
+            <a href="news/{{ main_report_html }}" class="meeting-entry__badge meeting-entry__badge--report" onclick="event.stopPropagation();">Notes from the meeting</a>
         </div>
         {% endif %}
-    </div>
+    </a>
     {% endif %}
 
     {% if handson_meeting %}
-    <div class="meeting-entry">
+    <a href="meetings/{{ handson_meeting.id }}.html" class="meeting-entry meeting-entry--clickable">
         <p class="meeting-entry__label">Hands-On Meeting</p>
         <p class="meeting-entry__line">{{ handson_meeting.metadata.date|format_date }} at {{ handson_meeting.metadata.time }}</p>
         {% if handson_meeting.metadata.text %}
         <p class="meeting-entry__text">{{ handson_meeting.metadata.text }}</p>
         {% endif %}
-    </div>
+        {% if handson_report_exists %}
+        <div class="meeting-entry__links">
+            <a href="news/{{ handson_report_html }}" class="meeting-entry__badge meeting-entry__badge--report" onclick="event.stopPropagation();">Notes from the meeting</a>
+        </div>
+        {% endif %}
+    </a>
     {% endif %}
 </div>
