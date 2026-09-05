@@ -3,7 +3,7 @@ date: 2026-09-04
 excerpt: 'Alan Kilian spoke about power systems for robots: batteries, circuitry,
   motor controllers, processors, and graceful shutdown. Learn about voltage selection,
   battery chemistry, BMS, and EMI.'
-highlight: false
+highlight: true
 image: images/news/battery.png
 published_date: '2026-09-04'
 slides_pdf: meeting-reports/22/slides.pdf
