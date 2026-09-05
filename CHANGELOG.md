@@ -117,3 +117,88 @@ test suite stayed green throughout (133/133 before and after).
 - `build/page_builder.py`
 - `scripts/script.js`
 - `templates/pages/meetings.html`
+
+---
+
+# Round 2 — Architecture analysis and follow-up
+
+A broader architecture review (docs, project structure, CI, cross-module
+coupling) surfaced 8 findings beyond the code-level bugs/dead-code/duplication
+above. Three were fixed directly on this branch; the remaining five were
+written up as features in `03-features/notdone/` for future work rather than
+implemented now, per the project's own process rules (a feature file first,
+then a task breakdown, then code).
+
+## Fixed this round
+
+1. **Documentation drift** (`README.md`). The Architecture section claimed
+   `build/` has its own `pyproject.toml` and `.venv` (Python 3.13) separate
+   from the root project — no longer true; there's one root `pyproject.toml`
+   and `build/` is a flat module directory importable via pytest's
+   `pythonpath`. The Content Files table was missing `published_date`,
+   `slides_pdf`, `type` (news), `report`, `text` (meetings), and had stale
+   member fields (`role`/`skills` instead of the actual `hashtags`/`website`).
+   The Templates section listed a nonexistent `section.html` and omitted
+   `home-lead.html`, `icons.html`, `upcoming-meetings-hero.html`. All
+   reconciled against the actual code and content files.
+
+2. **Stray local files removed**: `src/assets/images/builtin/.DS_Store` (a
+   leftover, entirely unreferenced directory tree from a 2025 project
+   restructure) and `build/.venv` (a 13MB orphaned virtualenv from when
+   `build/` had its own `pyproject.toml`, per the now-corrected README claim
+   above). Both were already untracked/gitignored — no repository diff, just
+   local disk cleanup, confirmed via `git ls-files` before removal.
+
+7. **Derived `related_report` instead of hand-maintaining it.** A meeting's
+   `report:` field and its announcement's `related_report:` field encoded the
+   same relationship from two directions, by hand, in two separate files,
+   with nothing checking they agreed — confirmed zero references to
+   `related_report` anywhere in `build/` before this change (it was read only
+   by the template). Added `PageBuilder.build_related_reports_map(meetings)`,
+   which derives the announcement → report link from each meeting's own
+   `announcement`/`report` fields at build time. `news-detail.html` now reads
+   the derived map instead of `post.metadata.related_report`; the
+   hand-maintained field was removed from
+   `content/news/19-june-meeting-announcement.md`. Added 4 unit tests
+   (`TestBuildRelatedReportsMap` in `tests/test_page_builder.py`) plus 1
+   integration test on real content (`test_announcement_links_to_its_derived_report`
+   in `tests/test_whatsnew_content_preserved.py`) confirming the September 3
+   meeting's announcement still links to its report after the change.
+
+## Written up as features (not implemented)
+
+| # | Feature file | Priority | Summary |
+|---|---|---|---|
+| 3 | `03-features/notdone/F11-robust-root-dir-detection.md` | Low | `WebsiteBuilder` infers the project root from `Path.cwd().name == "build"` rather than the script's own file location — works for today's two invocation styles but is fragile to any other cwd. |
+| 4 | `03-features/notdone/F12-build-as-real-package.md` | Low | `build/` has no `__init__.py` and isn't a real package; modules import each other as flat top-level names via a `pytest` `pythonpath` hack and Python's script-directory-on-sys.path behavior. |
+| 5 | `03-features/notdone/F13-unify-ci-local-build-invocation.md` | Low | CI's `deploy.yml` does `cd build && uv sync && uv run python build.py`; the Makefile/README do `uv run python build/build.py` from the repo root. Both work today only because `uv` walks up to find the root `pyproject.toml` — confirmed empirically. |
+| 6 | `03-features/notdone/F14-reduce-page-builder-boilerplate.md` | Low | Six `build_*_page` methods in `build.py` repeat the same hero-content + banner-resolution + `build_page(...)` envelope almost verbatim. |
+| 8 | `03-features/notdone/F15-remove-inline-styles.md` | Low | 6 inline `style="..."` occurrences across 3 templates bypass the otherwise-consistent CSS-variable theming system that `test_css_theme.py` enforces elsewhere. |
+
+## Round 2 statistics
+
+| Metric | Value |
+|---|---|
+| Findings from architecture review | 8 |
+| Findings fixed directly | 3 (#1 docs, #2 stray files, #7 derived link) |
+| Findings written up as features for later | 5 |
+| New tests added | 5 (4 unit + 1 integration) |
+| Tests passing before round 2 | 133 / 133 |
+| Tests passing after round 2 | 138 / 138 |
+| Full-site link check (local build) | 6/6 key URLs 200 OK, before and after |
+| Regressions introduced | 0 |
+
+## Files touched (round 2)
+
+- `README.md`
+- `build/build.py`
+- `build/page_builder.py`
+- `content/news/19-june-meeting-announcement.md`
+- `templates/details/news-detail.html`
+- `tests/test_page_builder.py`
+- `tests/test_whatsnew_content_preserved.py`
+- `03-features/notdone/F11-robust-root-dir-detection.md` (new)
+- `03-features/notdone/F12-build-as-real-package.md` (new)
+- `03-features/notdone/F13-unify-ci-local-build-invocation.md` (new)
+- `03-features/notdone/F14-reduce-page-builder-boilerplate.md` (new)
+- `03-features/notdone/F15-remove-inline-styles.md` (new)
