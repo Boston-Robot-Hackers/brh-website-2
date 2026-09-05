@@ -8,7 +8,7 @@ Open Source Under MIT license
 """
 
 from collections import defaultdict
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
 from typing import Any
 
@@ -307,6 +307,7 @@ class PageBuilder:
             return ""
 
         today = date.today()
+        cutoff_date = today - timedelta(days=7)
         upcoming = []
 
         # Filter and format meetings
@@ -316,7 +317,7 @@ class PageBuilder:
                 continue
             date_obj = parsed.date()
 
-            if date_obj < today:
+            if date_obj < cutoff_date:
                 continue
 
             # Determine meeting type label
