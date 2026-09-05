@@ -37,6 +37,7 @@ class AssetManager:
         """Copy static assets to output directory."""
         self.copy_directory("images")
         self.copy_directory("scripts")
+        self.copy_directory("content/meeting-reports", "meeting-reports")
 
     def copy_css_files(self):
         """Copy CSS files to output/css directory."""
