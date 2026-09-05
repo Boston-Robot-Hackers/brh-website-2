@@ -2,40 +2,17 @@
 
 ## Open
 
-**In progress: F10 — pupper.bostonrobothackers.com subdomain over HTTPS**
-(`03-features/notdone/F10-pupper-subdomain-redirect.md`,
-`04-tasks/notdone/TF10-pupper-subdomain-redirect.md`).
+**F10 — pupper.bostonrobothackers.com subdomain over HTTPS** — on hold
+awaiting user to configure custom domain in GitHub Pages settings for
+`brh-pupper-redirect` repo (TF10.4, TF10.5). See history entry 2026-09-04
+for details. HTTP version working; HTTPS cert not yet issued by GitHub.
 
-* Design: a second, minimal GitHub Pages site
-  (`Boston-Robot-Hackers/brh-pupper-redirect`, public) serves a redirect
-  page for `pupper.bostonrobothackers.com` → the live Pupper project page.
-  Namecheap's old *URL Redirect Record* for `pupper` was HTTP-only, which
-  is why `https://` never worked there; a real CNAME to GitHub's Pages
-  edge lets GitHub issue a proper cert for that subdomain, same as the
-  main site. Full rationale and rejected alternatives (Cloudflare
-  nameserver move, second custom domain on this repo) are in the F10 file.
-* Done so far (TF10.0–TF10.3, TF10.6): recorded the old DNS record for
-  rollback; added `ops/pupper-redirect/index.html` + `CNAME` in this repo
-  as versioned source (covered by `tests/test_pupper_redirect.py`, new,
-  2/2 passing); user created the standalone repo `brh-pupper-redirect`,
-  pushed both files, enabled GitHub Pages on it; Namecheap's `pupper` host
-  record is now a `CNAME Record` → `boston-robot-hackers.github.io.`,
-  confirmed propagated (resolves correctly via public resolvers and the
-  authoritative nameserver). `curl -I http://pupper.bostonrobothackers.com`
-  returns `200 OK` serving the redirect page. Full suite: 131/131 passing,
-  no regressions from this repo's side — this feature touches no
-  build/deploy code.
-* **Not yet started**: TF10.4 (set `pupper.bostonrobothackers.com` as the
-  new repo's custom domain in its Pages settings, wait for GitHub's DNS
-  check, enable "Enforce HTTPS"), TF10.5 (end-to-end verification —
-  browser + `curl -sI https://pupper.bostonrobothackers.com`). As of this
-  checkpoint, `https://pupper.bostonrobothackers.com` still fails
-  (`SSL: no alternative certificate subject name matches target host
-  name`) — expected until TF10.4's custom-domain/cert step is done.
-* Next step for whoever picks this up: have the user open the new repo's
-  Settings → Pages, set custom domain `pupper.bostonrobothackers.com`,
-  wait for the DNS check to pass, enable "Enforce HTTPS," then verify with
-  `curl -sI https://pupper.bostonrobothackers.com`.
+**PDF asset delivery (2026-09-04)** — Fixed: meeting-reports directory
+was not being copied during build, causing 404 on PDF downloads in
+meeting announcements. Updated `build/asset_manager.py` to copy
+`content/meeting-reports/` to `output/meeting-reports/`. All tests
+passing (131/131). Deployed to production; full link verification
+confirms all pages, assets, and PDF downloads working correctly.
 
 Meeting schedule content is now filled in through March 2027 (10 new
 `content/meetings/*.md` entries, chore-level content update, no
