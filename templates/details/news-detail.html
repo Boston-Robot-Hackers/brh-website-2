@@ -25,15 +25,14 @@
                 {% if post.excerpt %}
                 <p class="detail-brief-header__excerpt">{{ post.excerpt }}</p>
                 {% endif %}
+                {% if post.metadata.slides_pdf %}
+                <div class="detail-brief-header__slides">
+                    <a href="../{{ post.metadata.slides_pdf }}" class="btn-slides">Download Slides (PDF)</a>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>
-
-    {% if post.metadata.slides_pdf %}
-    <div class="news-slides-box">
-        <a href="../{{ post.metadata.slides_pdf }}" class="btn-outline">Download Slides (PDF)</a>
-    </div>
-    {% endif %}
 
     <div class="detail-brief-layout{% if not post.toc_tokens %} detail-brief-layout--no-sidebar{% endif %}">
         <article class="detail-brief-body">
