@@ -1011,6 +1011,16 @@
   color: var(--primary);
 }
 
+.meeting-entry--clickable .meeting-entry__links {
+  margin-top: 0.75rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.meeting-entry--clickable .meeting-entry__badge {
+  pointer-events: auto;
+}
+
 .meeting-entry__label {
   color: var(--primary);
   font-weight: 800;
