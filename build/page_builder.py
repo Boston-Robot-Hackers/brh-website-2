@@ -7,6 +7,7 @@ Author: Pito Salas and Claude Code
 Open Source Under MIT license
 """
 
+import contextlib
 from collections import defaultdict
 from datetime import date, timedelta
 from pathlib import Path
@@ -134,15 +135,14 @@ class PageBuilder:
         # Extract slides_pdf from the report if it exists
         slides_pdf = ""
         if rep_exists:
-            try:
+            # Report file not found or slides_pdf not set - slides_pdf stays ""
+            with contextlib.suppress(ValueError):
                 slides_pdf = (
                     extract_slides_pdf(
                         self.news_resolver.news_dir, metadata.get("report")
                     )
                     or ""
                 )
-            except ValueError:
-                pass  # Report file not found or slides_pdf not set
 
         return {
             f"{prefix}announcement_exists": ann_exists,

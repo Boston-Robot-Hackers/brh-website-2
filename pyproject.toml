@@ -20,3 +20,41 @@ dev-dependencies = [
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["build"]
+
+[tool.ruff]
+line-length = 88
+
+[tool.ruff.lint]
+select = [
+    "E",      # pycodestyle errors
+    "W",      # pycodestyle warnings
+    "F",      # pyflakes (unused imports, undefined names, etc.)
+    "B",      # flake8-bugbear (mutable defaults, common bug patterns)
+    "BLE",    # flake8-blind-except (bare/overly-broad except)
+    "I",      # isort (import sorting)
+    "ERA",    # eradicate (commented-out code)
+    "UP",     # pyupgrade (Optional[X] -> X | None, .format() -> f-string, etc.)
+    "SIM",    # flake8-simplify (enumerate(), context managers, etc.)
+    "TID",    # flake8-tidy-imports (relative imports, banned-api)
+    "PERF",   # flake8-perf (unnecessary allocations/copies)
+    "S105", "S106", "S107",  # flake8-bandit: hardcoded password string/arg/default
+    "S110", "S112",          # flake8-bandit: silent try/except/pass/continue
+    "PLR0912",  # too-many-branches
+    "PLR0913",  # too-many-arguments
+    "PLR0915",  # too-many-statements (proxy for function length)
+]
+# Not selected:
+# - ANN (flake8-annotations) and T20 (flake8-print) map to real style guide
+#   rules but are not adopted yet: ANN would raise ~330 findings against this
+#   codebase's current unannotated style (a deliberate separate decision, not
+#   a quick fix); T20 would flag build/*.py's own progress-reporting print()
+#   calls ("Built 35 meetings detail pages"), which are the build CLI's
+#   legitimate output, not debug prints left in library code.
+# - T10 (flake8-debugger) and PLR1702 (too-many-nested-blocks) map to real
+#   rules but currently find nothing to flag either way: T10 has no matches,
+#   and PLR1702 isn't available outside ruff's --preview mode in this
+#   version. Both harmless to leave out.
+
+[tool.ruff.lint.pylint]
+max-branches = 8
+max-args = 5

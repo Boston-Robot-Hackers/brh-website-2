@@ -252,7 +252,8 @@ class TestHeroGeneration:
         meetings_dir = tmp_content_dir / "meetings"
         for i in range(3):
             (meetings_dir / f"extra-{i}.md").write_text(
-                f"---\ntitle: Extra Meeting {i}\ndate: 2099-0{i + 1}-10\nkind: main\ntime: 7pm\n---\n"
+                f"---\ntitle: Extra Meeting {i}\ndate: 2099-0{i + 1}-10\n"
+                "kind: main\ntime: 7pm\n---\n"
             )
         cm = ContentManager(tmp_content_dir, jinja_env)
         meetings = cm.get_future_meetings()
@@ -270,7 +271,8 @@ class TestHeroGeneration:
         )
         meetings_dir = tmp_content_dir / "meetings"
         (meetings_dir / "linked-meeting.md").write_text(
-            "---\ntitle: Linked Meeting\ndate: 2099-06-15\nkind: main\ntime: 7pm\nannouncement: 2099-01-01-announce.md\n---\n"
+            "---\ntitle: Linked Meeting\ndate: 2099-06-15\nkind: main\ntime: 7pm\n"
+            "announcement: 2099-01-01-announce.md\n---\n"
         )
         cm = ContentManager(tmp_content_dir, jinja_env)
         meetings = cm.get_future_meetings()

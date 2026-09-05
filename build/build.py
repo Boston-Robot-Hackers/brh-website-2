@@ -240,7 +240,9 @@ class WebsiteBuilder:
 
         print("Built about.html")
 
-    def parse_learn_sections(self, text: str) -> list:
+    def parse_learn_sections(  # noqa: PLR0912 - pre-existing complexity, tracked, not touched this session
+        self, text: str
+    ) -> list:
         """Parse learn.md into structured sections for card rendering."""
         icons = {
             "Getting Started": "bi-rocket-takeoff",

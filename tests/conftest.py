@@ -8,10 +8,12 @@ def tmp_content_dir(tmp_path):
         (tmp_path / d).mkdir()
 
     (tmp_path / "news" / "2024-03-15-first-post.md").write_text(
-        "---\ntitle: First Post\ndate: 2024-03-15\nexcerpt: A short excerpt.\nhighlight: true\n---\nHello **world**.\n"
+        "---\ntitle: First Post\ndate: 2024-03-15\nexcerpt: A short excerpt.\n"
+        "highlight: true\n---\nHello **world**.\n"
     )
     (tmp_path / "news" / "2024-01-10-old-post.md").write_text(
-        "---\ntitle: Old Post\ndate: 2024-01-10\nexcerpt: Older news.\nhighlight: false\n---\nOld content.\n"
+        "---\ntitle: Old Post\ndate: 2024-01-10\nexcerpt: Older news.\n"
+        "highlight: false\n---\nOld content.\n"
     )
     (tmp_path / "projects" / "robot-arm.md").write_text(
         "---\ntitle: Robot Arm\nstatus: Active\n---\nA robot arm project.\n"
@@ -32,7 +34,8 @@ def tmp_content_dir(tmp_path):
         "---\ntitle: Past Meeting\ndate: 2020-01-01\nkind: main\ntime: 7:00pm\n---\n"
     )
     (tmp_path / "heroes" / "index.md").write_text(
-        "---\ntitle: Welcome\nsubtitle: Boston Robot Hackers\n---\nHero content here.\n<hr/>\nMeeting info.\n"
+        "---\ntitle: Welcome\nsubtitle: Boston Robot Hackers\n---\n"
+        "Hero content here.\n<hr/>\nMeeting info.\n"
     )
     (tmp_path / "about.md").write_text("---\ntitle: About\n---\nAbout the group.\n")
     return tmp_path
