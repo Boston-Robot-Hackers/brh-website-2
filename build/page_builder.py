@@ -307,7 +307,8 @@ class PageBuilder:
             return ""
 
         today = date.today()
-        cutoff_date = today - timedelta(days=7)
+        earliest_date = today - timedelta(days=14)
+        latest_date = today + timedelta(days=60)
         upcoming = []
 
         # Filter and format meetings
@@ -317,7 +318,7 @@ class PageBuilder:
                 continue
             date_obj = parsed.date()
 
-            if date_obj < cutoff_date:
+            if date_obj < earliest_date or date_obj > latest_date:
                 continue
 
             # Determine meeting type label
@@ -351,6 +352,10 @@ class PageBuilder:
 
         # Sort by date
         upcoming.sort(key=lambda x: x["date_obj"])
+
+        # Return empty string if no meetings passed the filter
+        if not upcoming:
+            return ""
 
         # Render template
         template = self.jinja_env.get_template(

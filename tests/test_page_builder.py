@@ -337,15 +337,26 @@ class TestGroupMeetingsByMonth:
 
 
 class TestRenderUpcomingCalendar:
-    def test_renders_future_meetings(self, rich_page_builder):
-        meetings = [_meeting_item("future", "Future Meeting", "2099-12-31")]
-        result = rich_page_builder.render_upcoming_meetings_calendar(meetings)
-        assert "1" in result
+    def test_renders_meetings_within_window(self, rich_page_builder):
+        from datetime import date, timedelta
 
-    def test_skips_past_meetings(self, rich_page_builder):
+        future_date = (date.today() + timedelta(days=30)).isoformat()
+        meetings = [_meeting_item("future", "Future Meeting", future_date)]
+        result = rich_page_builder.render_upcoming_meetings_calendar(meetings)
+        empty_result = rich_page_builder.render_upcoming_meetings_calendar([])
+        assert len(result) > len(empty_result)
+
+    def test_skips_meetings_beyond_window(self, rich_page_builder):
+        meetings = [_meeting_item("future", "Far Future Meeting", "2099-12-31")]
+        result = rich_page_builder.render_upcoming_meetings_calendar(meetings)
+        empty_result = rich_page_builder.render_upcoming_meetings_calendar([])
+        assert result == empty_result
+
+    def test_skips_meetings_older_than_window(self, rich_page_builder):
         meetings = [_meeting_item("old", "Old Meeting", "2020-01-01")]
         result = rich_page_builder.render_upcoming_meetings_calendar(meetings)
-        assert result == "" or "0" in result
+        empty_result = rich_page_builder.render_upcoming_meetings_calendar([])
+        assert result == empty_result
 
     def test_empty_list_returns_empty(self, rich_page_builder):
         assert rich_page_builder.render_upcoming_meetings_calendar([]) == ""
