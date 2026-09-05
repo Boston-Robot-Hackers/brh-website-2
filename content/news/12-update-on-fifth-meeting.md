@@ -1,10 +1,14 @@
 ---
-title: "November meeting update"
 date: 2025-11-15
-image: "images/news/armwork.png"
-excerpt: "This was our most attended meeting to date. Skyler gave a great presenetation about his work applying neural nets to a robot arm. The neural net was trained by watching videos he made of the arm working under remote control"
+excerpt: This was our most attended meeting to date. Skyler gave a great presenetation
+  about his work applying neural nets to a robot arm. The neural net was trained by
+  watching videos he made of the arm working under remote control
 highlight: false
+image: images/news/armwork.png
+published_date: '2025-11-15'
+title: November meeting update
 ---
+
 <h2>We are making progress!</h2>
 
 <img src="../../images/meetings/meeting-4.png" alt="Sample image" style="float: right; margin: 25px 25px 25px 25px; border-radius: 8px; height: 250px;">
@@ -37,4 +41,3 @@ Our main presentation from Skyler on [VLAs](https://en.wikipedia.org/wiki/Vision
 Finally We had another edition of Chris' **HACKERSWEET™**s. Let me know if you want me to start posting the recipes. Yes, they are all homemade! And yes, bringing it all together, we saw Skyler's arm (robot arm that is) pick up a **HACKERSWEET™** and feed it someone
 
 <div  style="clear: both;"/>
-

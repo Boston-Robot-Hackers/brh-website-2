@@ -1,11 +1,15 @@
 ---
-title: "Meeting announcement for April 2: Kalman Filters"
 date: 2026-01-30
-image: "images/news/kalman2.png"
-excerpt: "Chris Lai leads the Beaver Works Summer Program at MIT. Chris will discuss the motivation behind the Kalman Filter, and describe why (and most importantly) how it is used."
+excerpt: Chris Lai leads the Beaver Works Summer Program at MIT. Chris will discuss
+  the motivation behind the Kalman Filter, and describe why (and most importantly)
+  how it is used.
 highlight: true
+image: images/news/kalman2.png
+published_date: '2026-01-30'
+title: 'Meeting announcement for April 2: Kalman Filters'
 type: news
 ---
+
 ### Our Next Meeting
 
 * When: April 2, 2026, 7:00 to 9:00pm
@@ -33,4 +37,3 @@ In this talk, we will go over the motivation behind the Kalman Filter, and descr
 
 #### Speaker: Chris Lai
 Graduate of Cal Poly Pomona with a BS in Computer Engineering and has been teaching with BWSI for 3 years and is now working at MIT Lincoln Laboratory for 2 years.
-

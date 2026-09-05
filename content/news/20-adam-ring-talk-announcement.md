@@ -1,11 +1,15 @@
 ---
-title: "May 7: Adam Ring talk about simulation"
 date: 2026-04-04
-image: "images/news/adamsim.jpg"
-excerpt: "Adam Ring will give the talk about simulation in robotics. In this talk, Adam will discuss how the right simulation approach can accelerate development, improve safety, and reduce costly real-world failures."
+excerpt: Adam Ring will give the talk about simulation in robotics. In this talk,
+  Adam will discuss how the right simulation approach can accelerate development,
+  improve safety, and reduce costly real-world failures.
 highlight: true
+image: images/news/adamsim.jpg
+published_date: '2026-04-04'
+title: 'May 7: Adam Ring talk about simulation'
 type: news
 ---
+
 ### Meeting Announcement
 
 * When: May 7, 2026, 7:00 to 9:00pm

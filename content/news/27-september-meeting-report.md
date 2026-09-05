@@ -1,10 +1,13 @@
 ---
-title: "September 3 Meeting Report: Powering Robots"
 date: 2026-09-04
-image: "images/news/battery.png"
-excerpt: "Alan Kilian spoke about power systems for robots: batteries, circuitry, motor controllers, processors, and graceful shutdown. Learn about voltage selection, battery chemistry, BMS, and EMI."
+excerpt: 'Alan Kilian spoke about power systems for robots: batteries, circuitry,
+  motor controllers, processors, and graceful shutdown. Learn about voltage selection,
+  battery chemistry, BMS, and EMI.'
 highlight: false
-slides_pdf: "meeting-reports/22/slides.pdf"
+image: images/news/battery.png
+published_date: '2026-09-04'
+slides_pdf: meeting-reports/22/slides.pdf
+title: 'September 3 Meeting Report: Powering Robots'
 type: news
 ---
 

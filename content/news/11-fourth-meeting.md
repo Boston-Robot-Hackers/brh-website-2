@@ -1,10 +1,14 @@
 ---
-title: "Meeting Announcement: Fourth BRH Meeting November 11 2025"
 date: 2025-11-11
-image: "images/news/neuraltraining.png"
-excerpt: "Featured Talk: AI for generalized robotic manipulation. Learn about the foundational research around diffusion, VLAs and VLMs, and see a demo of Hugging Face's Lerobot platform for training models at home for under $500."
+excerpt: 'Featured Talk: AI for generalized robotic manipulation. Learn about the
+  foundational research around diffusion, VLAs and VLMs, and see a demo of Hugging
+  Face''s Lerobot platform for training models at home for under $500.'
 highlight: false
+image: images/news/neuraltraining.png
+published_date: '2025-09-15'
+title: 'Meeting Announcement: Fourth BRH Meeting November 11 2025'
 ---
+
 ## Our Next Meeting
 
 * When: November 11 at 7:00pm
@@ -32,5 +36,3 @@ Robots of the future will require a generalized understanding of their environme
 ## About Skyler
 
 I've been building robots since I was a kid, and recently graduated from Worcester Polytechnic Institute. I'm now writing software at Amazon Robotics, and playing with VLAs in my free time. Previously, I competed in FIRST Robotics, built developer tools at Apple, and contributed to open source humanoids.
-
-

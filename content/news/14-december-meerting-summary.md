@@ -1,11 +1,13 @@
 ---
-title: Meeting notes from December main meeting
 date: 2025-12-13
-image: "images/news/neuraltraining.png"
-excerpt: "Thoughts about our December meeting"
+excerpt: Thoughts about our December meeting
 highlight: true
+image: images/news/neuraltraining.png
+published_date: '2025-12-12'
+title: Meeting notes from December main meeting
 type: news
 ---
+
 ### Discussion
 
 We discussed what sorts of talks and activities would be of most interest to the membership. I observed that while the overall membership is quite diverse, the ones who come to the meetings tend to be more technical. 

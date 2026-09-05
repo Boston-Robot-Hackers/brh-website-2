@@ -1,11 +1,18 @@
 ---
-title: "June 11: Ankush Dhawan: Meet Pupper, the Open-Source Robot Dog"
 date: 2026-06-11
-image: "images/news/pupper.png"
+excerpt: 'Ankush is a PhD candidate in Robotics at Stanford University. Meet Pupper:
+  an open-source quadruped robot built at Stanford that can walk, see, listen, and
+  respond to the world around it. Born as a student project and now in its third generation,
+  Pupper has become the centerpiece of Stanford''s CS123 course, a teaching platform
+  for AI-enabled robotics, and through the Dr. Pupper project at Stanford Medicine,
+  a companion for children recovering in the hospital.'
 highlight: true
+image: images/news/pupper.png
+published_date: '2026-06-05'
+title: 'June 11: Ankush Dhawan: Meet Pupper, the Open-Source Robot Dog'
 type: news
-excerpt: "Ankush is a PhD candidate in Robotics at Stanford University. Meet Pupper: an open-source quadruped robot built at Stanford that can walk, see, listen, and respond to the world around it. Born as a student project and now in its third generation, Pupper has become the centerpiece of Stanford's CS123 course, a teaching platform for AI-enabled robotics, and through the Dr. Pupper project at Stanford Medicine, a companion for children recovering in the hospital."
 ---
+
 ### Meeting Announcement
 
 * When: June 11, 2026, 7:00 to 9:00pm

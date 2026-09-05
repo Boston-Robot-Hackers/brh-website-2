@@ -189,6 +189,12 @@ class ContentManager:
                 key=lambda x: parse_date(x["date"]) or datetime.min,
                 reverse=content_type.reverse,
             )
+        elif content_type.sort_key == "published_date":
+            # Sort by published_date from metadata (post creation date)
+            items.sort(
+                key=lambda x: parse_date(x["metadata"].get("published_date")) or datetime.min,
+                reverse=content_type.reverse,
+            )
         else:
             items.sort(
                 key=lambda x: x[content_type.sort_key] or "",

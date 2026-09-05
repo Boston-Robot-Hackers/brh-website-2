@@ -1,11 +1,19 @@
 ---
-title: "Aug 6: Shivam Chopra: Forward and Inverse Kinematics"
 date: 2026-08-06
-image: "images/news/kinematics.png"
+excerpt: 'Shivam is a Senior Medical Device Engineer and Subsystem Technical Lead
+  at Dexcom, where he works on next-generation wearable platforms. Every robotic arm
+  faces the same two fundamental questions: given these joint angles, where is the
+  end-effector? (forward kinematics) — and the harder one: given a target, what joint
+  angles get me there? (inverse kinematics). The math behind both questions is something
+  every roboticist eventually has to reckon with, and this talk is a ground-up walk
+  through it.'
 highlight: true
+image: images/news/kinematics.png
+published_date: '2026-05-29'
+title: 'Aug 6: Shivam Chopra: Forward and Inverse Kinematics'
 type: news
-excerpt: "Shivam is a Senior Medical Device Engineer and Subsystem Technical Lead at Dexcom, where he works on next-generation wearable platforms. Every robotic arm faces the same two fundamental questions: given these joint angles, where is the end-effector? (forward kinematics) — and the harder one: given a target, what joint angles get me there? (inverse kinematics). The math behind both questions is something every roboticist eventually has to reckon with, and this talk is a ground-up walk through it."
 ---
+
 ### Meeting Announcement
 
 * When: Thursday August 6, 2026, 7:00 to 9:00pm
@@ -39,4 +47,3 @@ The goal is that you leave with enough intuition to read a kinematics derivation
 #### Speaker: Shivam Chopra
 
 Our August 8 main speaker will be Shivam Chopra, PhD, who is a Senior Medical Device Engineer and Subsystem Technical Lead at Dexcom, where he leads electromechanical architecture and validation for next-generation wearable platforms. He holds a PhD in Mechanical Engineering (Robotics) from UC San Diego, where his research in the Gravish Lab spanned underactuated locomotion and sensing in granular and underwater environments. His robot was the fastest untethered digging robot that could sense obstacles. With 10+ years across robotics R&D, automation, and hardware-software integration, Shivam brings both the theory and the scars of making robots actually work.
-

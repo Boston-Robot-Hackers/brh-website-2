@@ -1,11 +1,14 @@
 ---
-title: "Meeting Announcement for December 11 at 7:00pm"
 date: 2025-12-11
-image: "images/news/clock.png"
-excerpt: "Featured Talk: Joel Grimm and Christopher Lai will introduce us to the Autonomous RACECAR at MIT's Beaver Works Summer Institute"
+excerpt: 'Featured Talk: Joel Grimm and Christopher Lai will introduce us to the Autonomous
+  RACECAR at MIT''s Beaver Works Summer Institute'
 highlight: true
+image: images/news/clock.png
+published_date: '2025-09-15'
+title: Meeting Announcement for December 11 at 7:00pm
 type: news
 ---
+
 ## Our Next Meeting
 
 * When: December 11 at 7:00 to 9:00pm
@@ -35,4 +38,3 @@ Graduate of Cal Poly Pomona with a BS in Computer Engineering and has been teach
 
 #### Speaker: Joel Grimm
 Graduate of University of Rochester and has been working at MIT Lincoln Laboratory for 39 years, and has been managing the Beaver Works Center at MIT for the last 8 years, bringing projects and experience to MIT undergrads and collaborations with faculty.
-

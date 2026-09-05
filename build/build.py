@@ -61,6 +61,8 @@ class WebsiteBuilder:
             "news": ContentType(
                 "news",
                 "news",
+                sort_key="published_date",
+                reverse=True,
                 output_filename="whatsnew.html",
                 page_template="pages/whatsnew.html",
                 detail_template="details/news-detail.html",
