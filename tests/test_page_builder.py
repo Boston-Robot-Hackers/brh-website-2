@@ -125,14 +125,14 @@ class TestResolveAnnouncementReport:
 
 
 class TestBuildDetailPages:
-    def _make_items(self, ids):
+    def make_items(self, ids):
         return [
             {"id": item_id, "title": item_id.capitalize(), "date": None, "metadata": {}}
             for item_id in ids
         ]
 
     def test_writes_one_file_per_item(self, page_builder, dist):
-        items = self._make_items(["post-1", "post-2"])
+        items = self.make_items(["post-1", "post-2"])
         ct = ContentType(
             "news",
             "news",
@@ -147,7 +147,7 @@ class TestBuildDetailPages:
         assert (dist / "news" / "post-2.html").exists()
 
     def test_creates_subdirectory(self, page_builder, dist):
-        items = self._make_items(["proj-1"])
+        items = self.make_items(["proj-1"])
         ct = ContentType(
             "projects",
             "projects",
@@ -214,7 +214,7 @@ def rich_page_builder(dist):
     return PageBuilder(env, dist, {"name": "BRH"})
 
 
-def _news_item(slug, title):
+def make_news_item(slug, title):
     return {
         "id": slug,
         "title": title,
@@ -226,7 +226,7 @@ def _news_item(slug, title):
     }
 
 
-def _meeting_item(slug, title, date_str, kind="main"):
+def make_meeting_item(slug, title, date_str, kind="main"):
     return {
         "id": slug,
         "title": title,
@@ -240,7 +240,7 @@ def _meeting_item(slug, title, date_str, kind="main"):
 
 class TestRenderCards:
     def test_render_news_cards_returns_html(self, rich_page_builder):
-        items = [_news_item("a", "Alpha"), _news_item("b", "Beta")]
+        items = [make_news_item("a", "Alpha"), make_news_item("b", "Beta")]
         result = rich_page_builder.render_news_cards(items)
         assert "Alpha" in result
         assert "Beta" in result
@@ -249,7 +249,7 @@ class TestRenderCards:
         assert rich_page_builder.render_news_cards([]) == ""
 
     def test_render_compact_news_cards(self, rich_page_builder):
-        items = [_news_item("x", "News Item")]
+        items = [make_news_item("x", "News Item")]
         result = rich_page_builder.render_compact_news_cards(items)
         assert "News Item" in result
 
@@ -302,8 +302,8 @@ class TestRenderCards:
 class TestGroupMeetingsByMonth:
     def test_groups_main_and_handson(self, rich_page_builder):
         meetings = [
-            _meeting_item("main-jan", "January Meeting", "2024-01-15", kind="main"),
-            _meeting_item(
+            make_meeting_item("main-jan", "January Meeting", "2024-01-15", kind="main"),
+            make_meeting_item(
                 "hands-jan", "Hands On January", "2024-01-22", kind="handson"
             ),
         ]
@@ -314,8 +314,8 @@ class TestGroupMeetingsByMonth:
 
     def test_sorted_descending_by_month(self, rich_page_builder):
         meetings = [
-            _meeting_item("feb", "Feb Meeting", "2024-02-01"),
-            _meeting_item("jan", "Jan Meeting", "2024-01-01"),
+            make_meeting_item("feb", "Feb Meeting", "2024-02-01"),
+            make_meeting_item("jan", "Jan Meeting", "2024-01-01"),
         ]
         grouped = rich_page_builder.group_meetings_by_month(meetings)
         assert grouped[0]["sort_key"] > grouped[1]["sort_key"]
@@ -341,19 +341,19 @@ class TestRenderUpcomingCalendar:
         from datetime import date, timedelta
 
         future_date = (date.today() + timedelta(days=30)).isoformat()
-        meetings = [_meeting_item("future", "Future Meeting", future_date)]
+        meetings = [make_meeting_item("future", "Future Meeting", future_date)]
         result = rich_page_builder.render_upcoming_meetings_calendar(meetings)
         empty_result = rich_page_builder.render_upcoming_meetings_calendar([])
         assert len(result) > len(empty_result)
 
     def test_skips_meetings_beyond_window(self, rich_page_builder):
-        meetings = [_meeting_item("future", "Far Future Meeting", "2099-12-31")]
+        meetings = [make_meeting_item("future", "Far Future Meeting", "2099-12-31")]
         result = rich_page_builder.render_upcoming_meetings_calendar(meetings)
         empty_result = rich_page_builder.render_upcoming_meetings_calendar([])
         assert result == empty_result
 
     def test_skips_meetings_older_than_window(self, rich_page_builder):
-        meetings = [_meeting_item("old", "Old Meeting", "2020-01-01")]
+        meetings = [make_meeting_item("old", "Old Meeting", "2020-01-01")]
         result = rich_page_builder.render_upcoming_meetings_calendar(meetings)
         empty_result = rich_page_builder.render_upcoming_meetings_calendar([])
         assert result == empty_result
@@ -368,14 +368,14 @@ class TestBuildRelatedReportsMap:
     maintained copy of the link on the announcement itself."""
 
     @staticmethod
-    def _make_news_file(tmp_path, filename, title="Untitled"):
+    def make_news_file(tmp_path, filename, title="Untitled"):
         news_dir = tmp_path / "content" / "news"
         news_dir.mkdir(parents=True, exist_ok=True)
         (news_dir / filename).write_text(f"---\ntitle: {title}\n---\nBody.\n")
 
     def test_maps_announcement_to_report_when_both_exist(self, page_builder, tmp_path):
-        self._make_news_file(tmp_path, "ann.md")
-        self._make_news_file(tmp_path, "rep.md")
+        self.make_news_file(tmp_path, "ann.md")
+        self.make_news_file(tmp_path, "rep.md")
         meetings = [
             {"id": "m1", "metadata": {"announcement": "ann.md", "report": "rep.md"}}
         ]
@@ -385,7 +385,7 @@ class TestBuildRelatedReportsMap:
         assert result == {"ann": "rep.html"}
 
     def test_omits_meeting_missing_report(self, page_builder, tmp_path):
-        self._make_news_file(tmp_path, "ann.md")
+        self.make_news_file(tmp_path, "ann.md")
         meetings = [{"id": "m1", "metadata": {"announcement": "ann.md"}}]
 
         result = page_builder.build_related_reports_map(meetings)
@@ -393,7 +393,7 @@ class TestBuildRelatedReportsMap:
         assert result == {}
 
     def test_omits_meeting_missing_announcement(self, page_builder, tmp_path):
-        self._make_news_file(tmp_path, "rep.md")
+        self.make_news_file(tmp_path, "rep.md")
         meetings = [{"id": "m1", "metadata": {"report": "rep.md"}}]
 
         result = page_builder.build_related_reports_map(meetings)

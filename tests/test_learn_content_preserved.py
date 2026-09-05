@@ -8,7 +8,7 @@ from build import WebsiteBuilder
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
 
-def _real_learn_link_count() -> int:
+def real_learn_link_count() -> int:
     text = (REPO_ROOT / "content" / "learn.md").read_text()
     return len(re.findall(r"^\s*- \[", text, re.MULTILINE))
 
@@ -21,7 +21,7 @@ def built_learn_html():
 
 
 def test_every_learn_link_present(built_learn_html):
-    expected = _real_learn_link_count()
+    expected = real_learn_link_count()
     assert expected > 0, "expected at least one resource link in content/learn.md"
 
     actual = built_learn_html.count('class="learn-link"')

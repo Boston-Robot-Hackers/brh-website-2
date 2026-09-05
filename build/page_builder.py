@@ -24,7 +24,7 @@ class PageBuilder:
         self.jinja_env = jinja_env
         self.dist_dir = dist_dir
         self.site_config = site_config
-        self._news_resolver = NewsResolver(dist_dir.parent / "content" / "news")
+        self.news_resolver = NewsResolver(dist_dir.parent / "content" / "news")
 
     def format_date(self, date_str: str) -> str:
         """Format a canonical ISO date for display (e.g. 'June 11, 2026')."""
@@ -100,7 +100,7 @@ class PageBuilder:
 
     def news_html_name(self, ref: str):
         """Resolve an announcement/report reference to (html_filename, exists)."""
-        return self._news_resolver.resolve(ref)
+        return self.news_resolver.resolve(ref)
 
     def build_related_reports_map(self, meetings: list[dict]) -> dict[str, str]:
         """Map an announcement's output id to its meeting's report filename.
@@ -137,7 +137,7 @@ class PageBuilder:
             try:
                 slides_pdf = (
                     extract_slides_pdf(
-                        self._news_resolver.news_dir, metadata.get("report")
+                        self.news_resolver.news_dir, metadata.get("report")
                     )
                     or ""
                 )

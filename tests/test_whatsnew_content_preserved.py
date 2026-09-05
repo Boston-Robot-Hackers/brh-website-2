@@ -7,7 +7,7 @@ from build import WebsiteBuilder
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
 
-def _real_news_file_count() -> int:
+def real_news_file_count() -> int:
     return len(
         [
             f
@@ -32,7 +32,7 @@ def built_pages():
 
 def test_every_news_entry_present(built_pages):
     whatsnew_html, _ = built_pages
-    expected = _real_news_file_count()
+    expected = real_news_file_count()
     assert expected > 0
 
     actual = whatsnew_html.count('class="story-row"')

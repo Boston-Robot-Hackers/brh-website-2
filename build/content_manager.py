@@ -84,7 +84,7 @@ class ContentManager:
     def __init__(self, content_dir: Path, jinja_env=None):
         self.content_dir = content_dir
         self.jinja_env = jinja_env
-        self._news_resolver = NewsResolver(content_dir / "news")
+        self.news_resolver = NewsResolver(content_dir / "news")
         config_file = content_dir.parent / "config" / "site.json"
         if config_file.exists():
             site_config = json.loads(config_file.read_text())
@@ -202,7 +202,7 @@ class ContentManager:
 
     def resolve_news_html(self, ref: str):
         """Resolve an announcement/report reference to (html_filename, exists)."""
-        return self._news_resolver.resolve(ref)
+        return self.news_resolver.resolve(ref)
 
     def generate_index_hero(self, static_content: str) -> str:
         """Generate index hero by adding future meeting info to static content."""

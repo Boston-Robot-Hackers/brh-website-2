@@ -52,12 +52,12 @@ class NewsResolver:
 
     def __init__(self, news_dir: Path):
         self.news_dir = news_dir
-        self._index: dict[str, str] | None = None
+        self.index: dict[str, str] | None = None
 
     def resolve(self, ref: str) -> tuple[str, bool]:
-        if self._index is None:
-            self._index = build_news_index(self.news_dir)
-        return resolve_news_html(self._index, ref)
+        if self.index is None:
+            self.index = build_news_index(self.news_dir)
+        return resolve_news_html(self.index, ref)
 
 
 def extract_slides_pdf(news_dir: Path, ref: str) -> str | None:

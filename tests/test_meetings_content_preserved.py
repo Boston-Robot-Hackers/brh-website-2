@@ -7,7 +7,7 @@ from build import WebsiteBuilder
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
 
-def _real_meeting_file_count() -> int:
+def real_meeting_file_count() -> int:
     return len(
         [
             f
@@ -30,7 +30,7 @@ def built_pages():
 
 def test_every_meeting_entry_present(built_pages):
     meetings_html, _ = built_pages
-    expected = _real_meeting_file_count()
+    expected = real_meeting_file_count()
     assert expected > 0
 
     actual = meetings_html.count('class="meeting-entry meeting-entry--with-column"')

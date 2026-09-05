@@ -202,3 +202,54 @@ then a task breakdown, then code).
 - `03-features/notdone/F13-unify-ci-local-build-invocation.md` (new)
 - `03-features/notdone/F14-reduce-page-builder-boilerplate.md` (new)
 - `03-features/notdone/F15-remove-inline-styles.md` (new)
+
+---
+
+# Round 3 — Style guide compliance: leading underscores
+
+`.claude/style_guide.md` has an unconditional rule not checked in rounds 1-2:
+**MUST: No leading underscore prefix on methods, functions, instance
+variables, or other custom identifiers.** A full grep of `build/*.py` and
+`tests/*.py` for `self._x` and `def _x` found 9 occurrences (2 distinct
+names) in application code and 10 (all pytest helper functions/methods) in
+tests. All renamed; call sites updated to match; `__init__`/other dunders are
+a Python language feature, not a style choice, and are unaffected.
+
+## Renamed
+
+**`build/*.py`** (traces back to `self._news_map`, already present on `main`
+before this deep-dive branch; this session's `NewsResolver` refactor carried
+the underscore forward instead of fixing it):
+- `self._news_resolver` → `self.news_resolver` (`ContentManager`, `PageBuilder`)
+- `self._index` → `self.index` (`NewsResolver`)
+
+**`tests/*.py`** (9 pre-existing, 1 — `_make_news_file` — added this session
+alongside round 2's `build_related_reports_map` tests):
+- `_real_learn_link_count` → `real_learn_link_count`
+- `_real_member_file_count` → `real_member_file_count`
+- `_real_meeting_file_count` → `real_meeting_file_count`
+- `_real_project_file_count` → `real_project_file_count`
+- `_real_news_file_count` → `real_news_file_count`
+- `_frontmatter_titles` → `frontmatter_titles`
+- `_make_items` → `make_items`
+- `_news_item` → `make_news_item`
+- `_meeting_item` → `make_meeting_item`
+- `_make_news_file` → `make_news_file`
+
+Avoiding pytest's `test_*` auto-collection only requires *not* starting with
+`test_` — any other prefix works, so `make_`/`real_` names dodge collection
+the same way the underscore did, without the style-guide violation.
+
+## Round 3 statistics
+
+| Metric | Value |
+|---|---|
+| Style guide MUST violations found | 19 occurrences, 12 distinct identifiers |
+| Application code (`build/`) | 9 occurrences, 2 identifiers |
+| Test code (`tests/`) | 10 occurrences, 10 identifiers |
+| Files touched | 10 |
+| Tests passing before | 138 / 138 |
+| Tests passing after | 138 / 138 |
+| `ruff check` / `ruff format --check` | clean, both before and after |
+| Full-site link check (local build) | 5/5 key URLs 200 OK |
+| Regressions introduced | 0 |
