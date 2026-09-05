@@ -9,6 +9,7 @@
         {% if main_meeting.metadata.text %}
         <p class="meeting-entry__text">{{ main_meeting.metadata.text }}</p>
         {% endif %}
+        <a href="meetings/{{ main_meeting.id }}.html" class="meeting-entry__link-details">View Details →</a>
         {% if main_announcement_exists or main_report_exists %}
         <div class="meeting-entry__links">
             {% if main_announcement_exists %}

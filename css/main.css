@@ -1072,6 +1072,21 @@
   background-color: rgba(128, 128, 128, 0.1);
 }
 
+.meeting-entry__link-details {
+  display: inline-block;
+  margin: 0.75rem 0 0 0;
+  font-size: 0.85rem;
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.meeting-entry__link-details:hover {
+  color: var(--primary-hover);
+  transform: translateX(4px);
+}
+
 /* ---- Members grid ---- */
 .members-grid {
   display: grid;
