@@ -1056,6 +1056,13 @@
   margin: 0.25rem 0 0;
 }
 
+.meeting-entry__cta {
+  color: var(--primary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin: 0.5rem 0 0;
+}
+
 .meeting-entry__links {
   font-size: 0.85rem;
   margin: 0.5rem 0 0;

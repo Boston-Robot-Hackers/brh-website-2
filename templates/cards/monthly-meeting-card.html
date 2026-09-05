@@ -4,11 +4,14 @@
 
     {% if main_meeting %}
     <div class="meeting-entry meeting-entry--with-column">
-        <a href="meetings/{{ main_meeting.id }}.html" class="meeting-entry__content">
+        <a href="{% if main_announcement_exists %}news/{{ main_announcement_html }}{% else %}meetings/{{ main_meeting.id }}.html{% endif %}" class="meeting-entry__content">
             <p class="meeting-entry__label">Main Meeting</p>
             <p class="meeting-entry__line">{{ main_meeting.metadata.date|format_date }} at {{ main_meeting.metadata.time }}</p>
             {% if main_meeting.metadata.text %}
             <p class="meeting-entry__text">{{ main_meeting.metadata.text }}</p>
+            {% endif %}
+            {% if main_announcement_exists %}
+            <p class="meeting-entry__cta">View Announcement →</p>
             {% endif %}
         </a>
         {% if main_report_exists %}
@@ -21,11 +24,14 @@
 
     {% if handson_meeting %}
     <div class="meeting-entry meeting-entry--with-column">
-        <a href="meetings/{{ handson_meeting.id }}.html" class="meeting-entry__content">
+        <a href="{% if handson_announcement_exists %}news/{{ handson_announcement_html }}{% else %}meetings/{{ handson_meeting.id }}.html{% endif %}" class="meeting-entry__content">
             <p class="meeting-entry__label">Hands-On Meeting</p>
             <p class="meeting-entry__line">{{ handson_meeting.metadata.date|format_date }} at {{ handson_meeting.metadata.time }}</p>
             {% if handson_meeting.metadata.text %}
             <p class="meeting-entry__text">{{ handson_meeting.metadata.text }}</p>
+            {% endif %}
+            {% if handson_announcement_exists %}
+            <p class="meeting-entry__cta">View Announcement →</p>
             {% endif %}
         </a>
         {% if handson_report_exists %}
