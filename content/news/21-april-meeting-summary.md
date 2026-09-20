@@ -1,11 +1,16 @@
 ---
-title: "Meeting Report: Chris Lai on Kalman Filters"
 date: 2026-04-04
-image: "images/news/talk.png"
+excerpt: Chris Lai and the team from gave a rapidfire talk teaching us about Kalman
+  Filters. Kalman filters are a constant source of confusion. No one doubts their
+  value but it's easy to get lost in trying to understand the math or the right way
+  to use them.
 highlight: true
+image: images/news/talk.png
+published_date: '2026-04-04'
+title: 'Meeting Report: Chris Lai on Kalman Filters'
 type: news
-excerpt: "Chris Lai and the team from gave a rapidfire talk teaching us about Kalman Filters. Kalman filters are a constant source of confusion. No one doubts their value but it's easy to get lost in trying to understand the math or the right way to use them."
 ---
+
 ### The meeting
 
 <a href="../../images/meetings/apr5.jpeg">

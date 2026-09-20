@@ -1,10 +1,15 @@
 ---
-title: "Introducing Hands-On Meetings!"
 date: 2025-09-24
-excerpt: "Hands-on meetings are coming, starting on Oct 23. The usual place and time. Some of us will bring some partial robots or other widgets from our workshops and if you acquire a robot or robot kit before and want help building it or debugging it, bring it along. It will be a two hour meeting, without an agenda!"
-image: "images/news/workbench.png"
+excerpt: Hands-on meetings are coming, starting on Oct 23. The usual place and time.
+  Some of us will bring some partial robots or other widgets from our workshops and
+  if you acquire a robot or robot kit before and want help building it or debugging
+  it, bring it along. It will be a two hour meeting, without an agenda!
 highlight: true
+image: images/news/workbench.png
+published_date: '2025-09-24'
+title: Introducing Hands-On Meetings!
 ---
+
 ### TLDR
 
 * What: Hands-on workshops with experts for project help, explanations, teaching, and mentoring.
@@ -30,5 +35,4 @@ So what is a "moderately-advanced" robot? In my mind, one that uses ROS2 qualifi
 
 ### Hands-On Meetings
 
-This is an experiment! We have scheduled two "hands-on" meetings. The first one will be on Oct 23. The usual place and time. I will announce it separately. A few of us (Buddy, Pito, Ken) will bring some partial robots or other widgets from our workshops to serve as props for discussion. If you acquire a robot or robot kit before and want help building it or debugging it, bring it along. It will be a two hour meeting, without an agenda or a talk. We might sit around one big table (depending what facilities we are using). I would hope that everyone participates and gets involved. And through discussion and looking at what stuff was brought we will figure out what happens. 
-
+This is an experiment! We have scheduled two "hands-on" meetings. The first one will be on Oct 23. The usual place and time. I will announce it separately. A few of us (Buddy, Pito, Ken) will bring some partial robots or other widgets from our workshops to serve as props for discussion. If you acquire a robot or robot kit before and want help building it or debugging it, bring it along. It will be a two hour meeting, without an agenda or a talk. We might sit around one big table (depending what facilities we are using). I would hope that everyone participates and gets involved. And through discussion and looking at what stuff was brought we will figure out what happens.

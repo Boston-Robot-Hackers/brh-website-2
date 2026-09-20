@@ -1,16 +1,3 @@
-function loadMoreNews() {
-    // Placeholder - could expand to show more posts or link to archive
-    alert('More news coming soon! Check back for updates.');
-}
-
-function loadMoreProjects() {
-    alert('This would load more project markdown files');
-}
-
-function loadAllMembers() {
-    alert('This would load all member profiles from the members directory');
-}
-
 // JavaScript functionality for Boston Robot Hackers website
 
 // Smooth scrolling for navigation

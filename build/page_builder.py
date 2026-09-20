@@ -7,14 +7,15 @@ Author: Pito Salas and Claude Code
 Open Source Under MIT license
 """
 
+import contextlib
 from collections import defaultdict
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
 from typing import Any
 
 from content_manager import ContentType, classify_meeting, parse_date
 from jinja2 import Environment
-from news_links import build_news_index, resolve_news_html
+from news_links import NewsResolver, extract_slides_pdf
 
 
 class PageBuilder:
@@ -24,7 +25,7 @@ class PageBuilder:
         self.jinja_env = jinja_env
         self.dist_dir = dist_dir
         self.site_config = site_config
-        self._news_map = None
+        self.news_resolver = NewsResolver(dist_dir.parent / "content" / "news")
 
     def format_date(self, date_str: str) -> str:
         """Format a canonical ISO date for display (e.g. 'June 11, 2026')."""
@@ -100,9 +101,25 @@ class PageBuilder:
 
     def news_html_name(self, ref: str):
         """Resolve an announcement/report reference to (html_filename, exists)."""
-        if self._news_map is None:
-            self._news_map = build_news_index(self.dist_dir.parent / "content" / "news")
-        return resolve_news_html(self._news_map, ref)
+        return self.news_resolver.resolve(ref)
+
+    def build_related_reports_map(self, meetings: list[dict]) -> dict[str, str]:
+        """Map an announcement's output id to its meeting's report filename.
+
+        Derived from each meeting's own `announcement`/`report` fields, so an
+        announcement page can link to its report without that link being
+        hand-maintained a second time on the announcement itself (which could
+        drift out of sync with the meeting's own fields).
+        """
+        related = {}
+        for meeting in meetings:
+            metadata = meeting["metadata"]
+            ann_html, ann_exists = self.news_html_name(metadata.get("announcement"))
+            rep_html, rep_exists = self.news_html_name(metadata.get("report"))
+            if ann_exists and rep_exists:
+                ann_id = ann_html.rsplit(".", 1)[0]
+                related[ann_id] = rep_html
+        return related
 
     def resolve_announcement_report(
         self, metadata: dict, prefix: str = ""
@@ -110,15 +127,29 @@ class PageBuilder:
         """Resolve a meeting's announcement/report refs into template context keys.
 
         Returns `{prefix}announcement_exists`, `{prefix}report_exists`,
-        `{prefix}announcement_html`, `{prefix}report_html`.
+        `{prefix}announcement_html`, `{prefix}report_html`, `{prefix}slides_pdf`.
         """
         ann_html, ann_exists = self.news_html_name(metadata.get("announcement"))
         rep_html, rep_exists = self.news_html_name(metadata.get("report"))
+
+        # Extract slides_pdf from the report if it exists
+        slides_pdf = ""
+        if rep_exists:
+            # Report file not found or slides_pdf not set - slides_pdf stays ""
+            with contextlib.suppress(ValueError):
+                slides_pdf = (
+                    extract_slides_pdf(
+                        self.news_resolver.news_dir, metadata.get("report")
+                    )
+                    or ""
+                )
+
         return {
             f"{prefix}announcement_exists": ann_exists,
             f"{prefix}report_exists": rep_exists,
             f"{prefix}announcement_html": ann_html,
             f"{prefix}report_html": rep_html,
+            f"{prefix}slides_pdf": slides_pdf,
         }
 
     def render_cards(
@@ -296,6 +327,8 @@ class PageBuilder:
             return ""
 
         today = date.today()
+        earliest_date = today - timedelta(days=14)
+        latest_date = today + timedelta(days=60)
         upcoming = []
 
         # Filter and format meetings
@@ -305,11 +338,10 @@ class PageBuilder:
                 continue
             date_obj = parsed.date()
 
-            if date_obj < today:
+            if date_obj < earliest_date or date_obj > latest_date:
                 continue
 
             # Determine meeting type label
-            title = meeting.get("title", "")
             if classify_meeting(meeting["metadata"]) == "handson":
                 type_label = "Hands-On Meeting"
             else:
@@ -328,17 +360,19 @@ class PageBuilder:
                     "day": date_obj.strftime("%d"),
                     "month_abbr": date_obj.strftime("%b"),
                     "year": date_obj.strftime("%Y"),
-                    "month_year": date_obj.strftime("%b %Y"),
                     "time": meeting["metadata"].get("time", ""),
                     "type_label": type_label,
                     "text": meeting["metadata"].get("text", ""),
-                    "title": title,
                     "announcement_url": announcement_url,
                 }
             )
 
         # Sort by date
         upcoming.sort(key=lambda x: x["date_obj"])
+
+        # Return empty string if no meetings passed the filter
+        if not upcoming:
+            return ""
 
         # Render template
         template = self.jinja_env.get_template(

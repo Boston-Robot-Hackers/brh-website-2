@@ -27,22 +27,41 @@
             </div>
         </div>
 
-        <div class="content">
-            <p><strong>Announcement:</strong>
-            {% if meeting.announcement_exists %}
-                <a href="../news/{{ meeting.announcement_html }}">View meeting announcement</a>
-            {% else %}
-                <em>coming soon</em>
-            {% endif %}
-            </p>
+        <div class="meeting-resources">
+            <div class="meeting-resources__buttons">
+                {% if meeting.announcement_exists or meeting.report_exists %}
+                    {% if meeting.announcement_exists %}
+                    <a href="../news/{{ meeting.announcement_html }}" class="btn-outline">View Announcement</a>
+                    {% else %}
+                    <button class="btn-outline" disabled style="opacity: 0.5; cursor: default;">Announcement TBD</button>
+                    {% endif %}
 
-            <p><strong>Meeting Report:</strong>
-            {% if meeting.report_exists %}
-                <a href="../news/{{ meeting.report_html }}">View meeting report</a>
-            {% else %}
-                <em>coming soon</em>
-            {% endif %}
-            </p>
+                    {% if meeting.report_exists %}
+                    <a href="../news/{{ meeting.report_html }}" class="btn-outline">View Report</a>
+                    {% else %}
+                    <button class="btn-outline" disabled style="opacity: 0.5; cursor: default;">Report TBD</button>
+                    {% endif %}
+                {% endif %}
+            </div>
         </div>
+
+        <style>
+            .meeting-resources {
+                margin: 2rem 0 3rem 0;
+            }
+            .meeting-resources__buttons {
+                display: flex;
+                gap: 1rem;
+                flex-wrap: wrap;
+            }
+            .meeting-resources__buttons .btn-outline {
+                margin-top: 0;
+            }
+            .meeting-resources__buttons button:disabled {
+                cursor: default;
+            }
+        </style>
+
+        <div class="content">
     </article>
 {% endblock %}

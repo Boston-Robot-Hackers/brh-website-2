@@ -1,11 +1,15 @@
 ---
-title: "July 9: Isaac Vandor talk about maritime robotics"
 date: 2026-07-09
-image: "images/news/sentry.png"
+excerpt: Isaac Vandor is the developer and maintainer for the software running on
+  famous underwater vehicles like Alvin and AUV Sentry. Isaac will talk about his
+  work and experiences with underwater maritime robotics.
 highlight: true
+image: images/news/sentry.png
+published_date: '2026-05-01'
+title: 'July 9: Isaac Vandor talk about maritime robotics'
 type: news
-excerpt: "Isaac Vandor is the developer and maintainer for the software running on famous underwater vehicles like Alvin and AUV Sentry. Isaac will talk about his work and experiences with underwater maritime robotics."
 ---
+
 ### Meeting Announcement
 
 * When: July 9, 2026, 7:00 to 9:00pm

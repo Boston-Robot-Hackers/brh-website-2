@@ -61,6 +61,8 @@ class WebsiteBuilder:
             "news": ContentType(
                 "news",
                 "news",
+                sort_key="published_date",
+                reverse=True,
                 output_filename="whatsnew.html",
                 page_template="pages/whatsnew.html",
                 detail_template="details/news-detail.html",
@@ -133,10 +135,15 @@ class WebsiteBuilder:
     def build_news_page(self):
         """Build the whatsnew.html page with all news items and recent meetings."""
         posts = self.content_manager.get_all_content(self.content_types["news"])
-        self.page_builder.build_detail_pages(posts, self.content_types["news"])
 
-        # Get meetings for the right column (grouped by month)
+        # Get meetings for the right column (grouped by month), and derive
+        # each announcement's report link from the meeting's own fields.
         meetings = self.content_manager.get_all_content(self.content_types["meetings"])
+        related_reports = self.page_builder.build_related_reports_map(meetings)
+
+        self.page_builder.build_detail_pages(
+            posts, self.content_types["news"], related_reports=related_reports
+        )
 
         news_content = self.page_builder.render_compact_news_cards(posts)
         meetings_content = self.page_builder.render_monthly_meeting_cards(meetings)
@@ -233,7 +240,9 @@ class WebsiteBuilder:
 
         print("Built about.html")
 
-    def parse_learn_sections(self, text: str) -> list:
+    def parse_learn_sections(  # noqa: PLR0912 - pre-existing complexity, tracked, not touched this session
+        self, text: str
+    ) -> list:
         """Parse learn.md into structured sections for card rendering."""
         icons = {
             "Getting Started": "bi-rocket-takeoff",

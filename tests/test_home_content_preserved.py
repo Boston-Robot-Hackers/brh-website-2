@@ -8,7 +8,7 @@ from build import WebsiteBuilder
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
 
-def _frontmatter_titles(
+def frontmatter_titles(
     content_subdir: str, only_highlighted: bool = False
 ) -> list[str]:
     titles = []
@@ -33,14 +33,14 @@ def built_index_html():
 
 
 def test_every_highlighted_news_title_present(built_index_html):
-    titles = _frontmatter_titles("news", only_highlighted=True)
+    titles = frontmatter_titles("news", only_highlighted=True)
     assert titles, "expected at least one highlighted news post"
     for title in titles:
         assert title in built_index_html, f"missing highlighted news title: {title}"
 
 
 def test_every_project_title_present(built_index_html):
-    titles = _frontmatter_titles("projects")
+    titles = frontmatter_titles("projects")
     assert titles, "expected at least one project"
     for title in titles:
         assert title in built_index_html, f"missing project title: {title}"
@@ -59,3 +59,14 @@ def test_qr_code_present(built_index_html):
 
 def test_upcoming_meetings_present(built_index_html):
     assert "Upcoming Meetings" in built_index_html
+
+
+def test_recent_meeting_appears_on_home_page(built_index_html):
+    """Regression test: home page should show meetings from the past week.
+    The September 3 meeting is a real example that should appear, even after
+    that date passes, to show users what just happened."""
+    # The September 3 meeting should be in the home page meetings (along with
+    # future meetings) for the first week after it passes
+    assert "Sep 03" in built_index_html or "September 03" in built_index_html, (
+        "recent meeting (Sept 3) should appear on home page for 7 days after it passes"
+    )

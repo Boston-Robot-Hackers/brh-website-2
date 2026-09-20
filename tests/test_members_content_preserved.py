@@ -7,7 +7,7 @@ from build import WebsiteBuilder
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
 
-def _real_member_file_count() -> int:
+def real_member_file_count() -> int:
     return len(
         [
             f
@@ -25,7 +25,7 @@ def built_members_html():
 
 
 def test_every_member_entry_present(built_members_html):
-    expected = _real_member_file_count()
+    expected = real_member_file_count()
     assert expected > 0
 
     actual = built_members_html.count('class="card member-card')

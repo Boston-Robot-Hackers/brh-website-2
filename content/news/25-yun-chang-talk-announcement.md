@@ -1,11 +1,17 @@
 ---
-title: "November 12: Yun Chang: Robot Scene Understanding for Extreme Environments: from subterranean to heavy equipment"
 date: 2026-11-12
-image: "images/news/heavy-equipment.png"
+excerpt: Yun spent a decade at MIT earning a Bachelor's, Master's, and PhD, working
+  in the SPARK Lab under Professor Luca Carlone. The research centered on robot perception
+  — compressing the world into representations a machine can act on. Yun is now co-founding
+  a stealth startup bringing autonomy to the large machines that run society's infrastructure.
 highlight: true
+image: images/news/heavy-equipment.png
+published_date: '2026-08-19'
+title: 'November 12: Yun Chang: Robot Scene Understanding for Extreme Environments:
+  from subterranean to heavy equipment'
 type: news
-excerpt: "Yun spent a decade at MIT earning a Bachelor's, Master's, and PhD, working in the SPARK Lab under Professor Luca Carlone. The research centered on robot perception — compressing the world into representations a machine can act on. Yun is now co-founding a stealth startup bringing autonomy to the large machines that run society's infrastructure."
 ---
+
 ### Meeting Announcement
 
 * When: Thursday, November 12, 2026, 7:00 to 9:00pm

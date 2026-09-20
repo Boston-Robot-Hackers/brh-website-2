@@ -1,11 +1,15 @@
 ---
-title: "September 3: Alan Kilian talk: Powering Robots"
 date: 2026-02-27
-image: "images/news/battery.png"
-excerpt: "Alan Kilian, a long time software and hardware person with a lifelong passion for Robotics will speak about aspects of power for robots. Batteries, Measurement, Circuitry and more."
+excerpt: Alan Kilian, a long time software and hardware person with a lifelong passion
+  for Robotics will speak about aspects of power for robots. Batteries, Measurement,
+  Circuitry and more.
 highlight: true
+image: images/news/battery.png
+published_date: '2026-02-27'
+title: 'September 3: Alan Kilian talk: Powering Robots'
 type: news
 ---
+
 ### Our Next Meeting
 
 * When: September 3, 2026, 7:00 to 9:00pm

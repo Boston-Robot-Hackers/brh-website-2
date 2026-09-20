@@ -25,6 +25,17 @@
                 {% if post.excerpt %}
                 <p class="detail-brief-header__excerpt">{{ post.excerpt }}</p>
                 {% endif %}
+                {% set related_report_html = related_reports.get(post.id) if related_reports else None %}
+                {% if post.metadata.slides_pdf or related_report_html %}
+                <div class="detail-brief-header__slides">
+                    {% if post.metadata.slides_pdf %}
+                    <a href="../{{ post.metadata.slides_pdf }}" class="btn-slides">Download Slides (PDF)</a>
+                    {% endif %}
+                    {% if related_report_html %}
+                    <a href="../news/{{ related_report_html }}" class="btn-outline">Read Meeting Report</a>
+                    {% endif %}
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>

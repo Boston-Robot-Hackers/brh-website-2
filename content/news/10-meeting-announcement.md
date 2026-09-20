@@ -1,10 +1,13 @@
 ---
-title: "Meeting announcement: David Dorff on Affordable Biometric Robot Hands: October 9 at 7:00pm"
-subtitle: Join us for our upcoming meeting
-excerpt: 'Featuring talk by David Dorf about "Affordable Biomimetic Robot Hands"'
 date: 2025-11-09
-image: "images/news/clock.png"
+excerpt: Featuring talk by David Dorf about "Affordable Biomimetic Robot Hands"
+image: images/news/clock.png
+published_date: '2025-12-09'
+subtitle: Join us for our upcoming meeting
+title: 'Meeting announcement: David Dorff on Affordable Biometric Robot Hands: October
+  9 at 7:00pm'
 ---
+
 ## Our Next Meeting
 
 * When: October 9 at 7:00pm

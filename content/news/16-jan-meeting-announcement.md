@@ -1,11 +1,13 @@
 ---
-title: "Meeting announcement for January 8 - URDF and Vibe Coding"
 date: 2025-12-15
-image: "images/news/leo-1.png"
 excerpt: Monthly Meeting Announcement January 8 at A2
 highlight: true
+image: images/news/leo-1.png
+published_date: '2026-01-01'
+title: Meeting announcement for January 8 - URDF and Vibe Coding
 type: news
 ---
+
 ### Our Next Meeting
 
 * When: January 8 2026 at 7:00 to 9:00pm
@@ -30,4 +32,3 @@ The problem with it is that URDF (and XML) is not especially user friendly - goo
 After introducing URDF and explaining what I think are the key concepts and non-obvious aspects of it I will show two ways that I have used to deal with the complexity. One is using AI (that is LLMs, that is vibe coding, that is Claude.ai) to read, write, correct and check URDF. It’s pretty magical.
 
 The second is kind of a research project that I undertook to design and validate a couple of possible ways to more directly address the complexity. I will show some ideas for a DSL (domain specific language) version of URDF, and what is good and bad about it. And I will show a Python library I created to generate valid URDF, and again what is good and bad about it.
-

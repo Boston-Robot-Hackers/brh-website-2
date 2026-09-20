@@ -7,7 +7,127 @@
 {% block title %}Meetings - {{ site.title }}{% endblock %}
 
 {% block main_content %}
-    <h1 class="river-header">Meetings</h1>
-    <p class="rail-note">All meetings at <a href="https://www.artisansasylum.com" target="_blank">Artisans Asylum, 96 Holton Street, Allston</a></p>
-    {{ meetings_content }}
+    <div style="display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap;">
+        <h1 class="river-header" style="margin: 0;">Meetings</h1>
+        <p class="rail-note" style="margin: 0;">All meetings at <a href="https://www.artisansasylum.com" target="_blank">Artisans Asylum, 96 Holton Street, Allston</a></p>
+    </div>
+
+    <style>
+        .meetings-controls {
+            margin: 2rem 0;
+            padding: 1rem;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+        }
+        .meetings-controls-inner {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .meetings-controls select {
+            padding: 0.5rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+            background-color: var(--bg-card);
+            color: var(--text);
+            font-size: 1rem;
+        }
+        .meetings-controls label {
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+    </style>
+
+    <div class="meetings-controls">
+        <div class="meetings-controls-inner">
+            <div>
+                <label for="sort-order">Sort:</label>
+                <select id="sort-order">
+                    <option value="later-first">Later → Earlier</option>
+                    <option value="earlier-first">Earlier → Later</option>
+                </select>
+            </div>
+            <div>
+                <label for="filter-type">Show:</label>
+                <select id="filter-type">
+                    <option value="all">All Meetings</option>
+                    <option value="upcoming">Upcoming</option>
+                    <option value="passed">Passed</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div id="meetings-container">
+        {{ meetings_content }}
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.getElementById('meetings-container');
+            const sortOrder = document.getElementById('sort-order');
+            const filterType = document.getElementById('filter-type');
+            // Fixed reference order (as rendered: newest month first) - every
+            // reorder is computed from this, so toggling sort direction back
+            // and forth is always reversible instead of drifting.
+            const originalOrder = Array.from(container.querySelectorAll('.meeting-month-card'));
+
+            function cardIsUpcoming(card) {
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                // A month card can hold both a main and a hands-on entry;
+                // treat the card as upcoming if either one hasn't happened yet.
+                const dateLines = card.querySelectorAll('.meeting-entry__line');
+                if (dateLines.length === 0) {
+                    return true;
+                }
+                return Array.from(dateLines).some(dateStr => {
+                    const dateMatch = dateStr.textContent.match(/(\w+)\s+(\d+),\s+(\d+)/);
+                    if (!dateMatch) {
+                        return true;
+                    }
+                    const meetingDate = new Date(dateMatch[3], getMonthIndex(dateMatch[1]), dateMatch[2]);
+                    return meetingDate >= today;
+                });
+            }
+
+            function updateMeetings() {
+                const filterValue = filterType.value;
+
+                originalOrder.forEach(card => {
+                    const isUpcoming = cardIsUpcoming(card);
+
+                    let showCard = false;
+                    if (filterValue === 'all') {
+                        showCard = true;
+                    } else if (filterValue === 'upcoming') {
+                        showCard = isUpcoming;
+                    } else if (filterValue === 'passed') {
+                        showCard = !isUpcoming;
+                    }
+
+                    card.style.display = showCard ? 'block' : 'none';
+                });
+
+                // Always reorder from the fixed original order, so switching
+                // back to "later-first" restores it instead of staying reversed.
+                const orderedCards = sortOrder.value === 'earlier-first'
+                    ? [...originalOrder].reverse()
+                    : originalOrder;
+                orderedCards.forEach(card => container.appendChild(card));
+            }
+
+            function getMonthIndex(monthName) {
+                const months = ['January', 'February', 'March', 'April', 'May', 'June',
+                               'July', 'August', 'September', 'October', 'November', 'December'];
+                return months.indexOf(monthName);
+            }
+
+            sortOrder.addEventListener('change', updateMeetings);
+            filterType.addEventListener('change', updateMeetings);
+        });
+    </script>
 {% endblock %}

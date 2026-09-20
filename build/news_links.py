@@ -40,3 +40,37 @@ def resolve_news_html(index: dict[str, str], ref: str) -> tuple[str, bool]:
     if key not in index:
         raise ValueError(f"Unresolved news reference: {ref!r}")
     return f"{index[key]}.html", True
+
+
+class NewsResolver:
+    """Caches a news directory's reference index and resolves refs against it.
+
+    Building the index means scanning every file in the news directory for its
+    frontmatter, so it's built once on first use and reused for every
+    subsequent `resolve()` call on this instance.
+    """
+
+    def __init__(self, news_dir: Path):
+        self.news_dir = news_dir
+        self.index: dict[str, str] | None = None
+
+    def resolve(self, ref: str) -> tuple[str, bool]:
+        if self.index is None:
+            self.index = build_news_index(self.news_dir)
+        return resolve_news_html(self.index, ref)
+
+
+def extract_slides_pdf(news_dir: Path, ref: str) -> str | None:
+    """Extract slides_pdf metadata from a news file reference.
+
+    Returns the slides_pdf value if it exists and is non-empty, else None.
+    Raises ValueError if ref doesn't resolve to a file.
+    """
+    if not ref:
+        return None
+    key = str(ref).rsplit(".", 1)[0]  # tolerate .md/.html suffixes
+    news_file = news_dir / f"{key}.md"
+    if not news_file.exists():
+        raise ValueError(f"News reference file not found: {ref!r}")
+    metadata = frontmatter.load(news_file).metadata
+    return metadata.get("slides_pdf") or None
