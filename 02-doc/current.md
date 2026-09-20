@@ -37,6 +37,13 @@
   wait for the DNS check to pass, enable "Enforce HTTPS," then verify with
   `curl -sI https://pupper.bostonrobothackers.com`.
 
+**Planned, awaiting "go" (user intends to start next session): F11 — plain-text list of
+upcoming talks** (`03-features/notdone/F11-upcoming-talks-text.md`,
+`04-tasks/notdone/TF11-upcoming-talks-text.md`). Nothing implemented yet;
+start at TF11.0. Outputs `output/upcoming-talks.txt` for pasting into
+emails to other orgs; uses new `speaker`/`topic` meeting frontmatter and
+a new `site_url` config key.
+
 Meeting schedule content is now filled in through March 2027 (10 new
 `content/meetings/*.md` entries, chore-level content update, no
 feature/task — see `02-doc/history.md` 2026-08-27 entry). The 4 monthly
