@@ -866,6 +866,11 @@
   line-height: 1.7;
   min-width: 0;
 }
+.detail-brief-body p,
+.detail-brief-body li,
+.detail-brief-body blockquote {
+  color: var(--text-muted);
+}
 .detail-brief-body h3 {
   font-size: 1.2rem;
   margin: 2rem 0 0.6rem;
