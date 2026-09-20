@@ -64,3 +64,17 @@ browser.
 
 ## Process Gate
 After creating this feature file and the corresponding task file, **stop and present the plan to the user**. Do not write any code or content until the user gives explicit approval to proceed.
+
+## Update (2026-09-20)
+* Build-time generation from `signup_url` was replaced with a static,
+  externally-hosted image (`images/brh_qr.png`), so the QR could route
+  through a third-party scan-tracking/redirect service — the build-time
+  `qrcode` library only rasterizes a URL, it can't supply scan analytics.
+  This reverses this feature's original "generate at build time" and
+  "no scan analytics" decisions above.
+* Removed: `AssetManager.generate_qr_code`, its call in `build/build.py`,
+  the `qrcode[pil]` dependency, and the now-unused `signup_url` key in
+  `config/site.json`.
+* Tradeoff accepted: no build-time safeguard against the QR going stale if
+  the tracked destination changes — updating it now means replacing
+  `images/brh_qr.png` directly.

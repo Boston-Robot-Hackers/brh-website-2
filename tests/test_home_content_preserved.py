@@ -53,7 +53,7 @@ def test_pupper_spotlight_present(built_index_html):
 
 
 def test_qr_code_present(built_index_html):
-    assert "signup-qr.png" in built_index_html
+    assert "brh_qr.png" in built_index_html
     assert 'alt="' in built_index_html
 
 

@@ -335,7 +335,6 @@ class WebsiteBuilder:
         # Copy static assets
         self.asset_manager.copy_assets()
         self.asset_manager.copy_css_files()
-        self.asset_manager.generate_qr_code(self.site_config["signup_url"])
 
         # Generate syntax highlighting CSS
         self.asset_manager.generate_pygments_css("default")

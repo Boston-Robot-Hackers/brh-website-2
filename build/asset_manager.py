@@ -10,7 +10,6 @@ Open Source Under MIT license
 import shutil
 from pathlib import Path
 
-import qrcode
 from pygments.formatters import HtmlFormatter
 
 
@@ -63,13 +62,6 @@ class AssetManager:
         css_file = css_dir / "syntax.css"
         css_file.write_text(css_content)
         print(f"Generated syntax highlighting CSS: {css_file}")
-
-    def generate_qr_code(self, url: str, filename: str = "signup-qr.png"):
-        """Generate a QR code PNG linking to url, written to dist/images."""
-        output_path = self.dist_dir / "images" / filename
-        output_path.parent.mkdir(parents=True, exist_ok=True)
-        qrcode.make(url).save(output_path)
-        print(f"Generated QR code: {output_path}")
 
     def clean_output_directory(self):
         """Clean and recreate the output directory."""
