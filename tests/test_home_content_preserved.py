@@ -61,12 +61,16 @@ def test_upcoming_meetings_present(built_index_html):
     assert "Upcoming Meetings" in built_index_html
 
 
-def test_recent_meeting_appears_on_home_page(built_index_html):
-    """Regression test: home page should show meetings from the past week.
-    The September 3 meeting is a real example that should appear, even after
-    that date passes, to show users what just happened."""
-    # The September 3 meeting should be in the home page meetings (along with
-    # future meetings) for the first week after it passes
-    assert "Sep 03" in built_index_html or "September 03" in built_index_html, (
-        "recent meeting (Sept 3) should appear on home page for 7 days after it passes"
-    )
+def test_past_meeting_does_not_appear_on_home_page(built_index_html):
+    """Regression test: the "Upcoming Meetings" home page rail must show only
+    future meetings. September 3 and September 9 are real, already-past
+    meetings and must not appear, even though they're recent."""
+    assert "Sep 03" not in built_index_html
+    assert "September 03" not in built_index_html
+    assert "Sep 09" not in built_index_html
+    assert "September 09" not in built_index_html
+
+
+def test_next_future_meeting_appears_on_home_page(built_index_html):
+    """The nearest future meeting (Oct 15) should be on the home page rail."""
+    assert "Oct 15" in built_index_html or "October 15" in built_index_html

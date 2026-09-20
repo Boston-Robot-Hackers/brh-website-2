@@ -327,7 +327,6 @@ class PageBuilder:
             return ""
 
         today = date.today()
-        earliest_date = today - timedelta(days=14)
         latest_date = today + timedelta(days=60)
         upcoming = []
 
@@ -338,7 +337,7 @@ class PageBuilder:
                 continue
             date_obj = parsed.date()
 
-            if date_obj < earliest_date or date_obj > latest_date:
+            if date_obj < today or date_obj > latest_date:
                 continue
 
             # Determine meeting type label

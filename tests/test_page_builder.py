@@ -361,6 +361,44 @@ class TestRenderUpcomingCalendar:
     def test_empty_list_returns_empty(self, rich_page_builder):
         assert rich_page_builder.render_upcoming_meetings_calendar([]) == ""
 
+    def test_excludes_meeting_from_yesterday(self, rich_page_builder):
+        from datetime import date, timedelta
+
+        yesterday = (date.today() - timedelta(days=1)).isoformat()
+        meetings = [make_meeting_item("yesterday", "Yesterday Meeting", yesterday)]
+        result = rich_page_builder.render_upcoming_meetings_calendar(meetings)
+        empty_result = rich_page_builder.render_upcoming_meetings_calendar([])
+        assert result == empty_result
+
+    def test_includes_meeting_dated_today(self, rich_page_builder):
+        from datetime import date
+
+        today = date.today().isoformat()
+        meetings = [make_meeting_item("today", "Today Meeting", today)]
+        result = rich_page_builder.render_upcoming_meetings_calendar(meetings)
+        empty_result = rich_page_builder.render_upcoming_meetings_calendar([])
+        assert len(result) > len(empty_result)
+
+    def test_excludes_past_meeting_when_future_meeting_present(
+        self, rich_page_builder
+    ):
+        from datetime import date, timedelta
+
+        past_meeting = make_meeting_item(
+            "past", "Past Meeting", (date.today() - timedelta(days=2)).isoformat()
+        )
+        future_meeting = make_meeting_item(
+            "future", "Future Meeting", (date.today() + timedelta(days=10)).isoformat()
+        )
+
+        result_both = rich_page_builder.render_upcoming_meetings_calendar(
+            [past_meeting, future_meeting]
+        )
+        result_future_only = rich_page_builder.render_upcoming_meetings_calendar(
+            [future_meeting]
+        )
+        assert result_both == result_future_only
+
 
 class TestBuildRelatedReportsMap:
     """Verifies related-report links are derived from each meeting's own
