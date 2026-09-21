@@ -1,3 +1,10 @@
+#!/usr/bin/env python3
+# test_page_builder — Tests for PageBuilder rendering and meeting grouping
+# Author: Pito Salas and Claude Code
+# Version: 1
+# Created: 2026-09-21
+# Updated: 2026-09-21
+# Open Source Under MIT license
 import pytest
 from content_manager import ContentType
 from jinja2 import DictLoader, Environment
@@ -379,9 +386,7 @@ class TestRenderUpcomingCalendar:
         empty_result = rich_page_builder.render_upcoming_meetings_calendar([])
         assert len(result) > len(empty_result)
 
-    def test_excludes_past_meeting_when_future_meeting_present(
-        self, rich_page_builder
-    ):
+    def test_excludes_past_meeting_when_future_meeting_present(self, rich_page_builder):
         from datetime import date, timedelta
 
         past_meeting = make_meeting_item(

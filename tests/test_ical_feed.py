@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""
-test_ical_feed.py — Tests for the meetings iCalendar feed.
-
-Author: Pito Salas and Claude Code
-Open Source Under MIT license
-"""
+# test_ical_feed — Tests for the meetings iCalendar feed
+# Author: Pito Salas and Claude Code
+# Version: 1
+# Created: 2026-09-21
+# Updated: 2026-09-21
+# Open Source Under MIT license
 
 import json
 import re

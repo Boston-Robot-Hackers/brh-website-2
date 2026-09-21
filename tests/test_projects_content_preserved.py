@@ -1,3 +1,10 @@
+#!/usr/bin/env python3
+# test_projects_content_preserved — Built projects page keeps all real content
+# Author: Pito Salas and Claude Code
+# Version: 1
+# Created: 2026-09-21
+# Updated: 2026-09-21
+# Open Source Under MIT license
 from pathlib import Path
 
 import pytest

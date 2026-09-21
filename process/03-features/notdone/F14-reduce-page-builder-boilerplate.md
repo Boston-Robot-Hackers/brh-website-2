@@ -33,11 +33,13 @@
 * **Proposed fix**: extract the repeated hero+banner+build_page envelope
   into a small helper, e.g.:
   ```python
-  def _build_hero_page(self, page_name: str, template_name: str,
-                        output_filename: str, **extra_context):
+  def _build_hero_page(
+      self, page_name: str, template_name: str, output_filename: str, **extra_context
+  ):
       hero_content = self.content_manager.build_hero_content(page_name)
       self.page_builder.build_page(
-          template_name, output_filename,
+          template_name,
+          output_filename,
           hero=hero_content,
           **self.page_builder.resolve_banner(hero_content),
           **extra_context,

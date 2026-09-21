@@ -33,27 +33,27 @@ uv run pytest --cov=build
 Read and follow all rules in the `.claude/` folder:
 - @.claude/process.md — development workflow, feature/task tracking rules, and
   agent model selection
-- `02-doc/current.md` — session handoff; only the `## Open` section matters for
-  new work, see `02-doc/history.md` for the completed-work log
-- `02-doc/notes.md` — semi-permanent project notes
+- `process/02-doc/current.md` — session handoff; only the `## Open` section matters for
+  new work, see `process/02-doc/history.md` for the completed-work log
+- `process/02-doc/notes.md` — semi-permanent project notes
 
 Before writing or reviewing code, read and follow `.claude/style_guide.md`
 (coding standards, style rules, and review checklist) — apply it yourself
 before committing; do not substitute a generic/plugin review for it.
 
 Features and tasks tracked in j3 structure:
-- `02-doc/spec.md` — app description and goals
-- `02-doc/current.md` — session handoff and current status
-- `02-doc/notes.md` — architecture decisions and notes
-- `03-features/notdone/` — FNN-slug.md planned features
-- `03-features/done/` — completed features
-- `04-tasks/notdone/` — TFNN-slug.md pending tasks
-- `04-tasks/done/` — completed tasks
-- `05-issues/` — bugs not yet converted to features
+- `process/02-doc/spec.md` — app description and goals
+- `process/02-doc/current.md` — session handoff and current status
+- `process/02-doc/notes.md` — architecture decisions and notes
+- `process/03-features/notdone/` — FNN-slug.md planned features
+- `process/03-features/done/` — completed features
+- `process/04-tasks/notdone/` — TFNN-slug.md pending tasks
+- `process/04-tasks/done/` — completed tasks
+- `process/05-issues/` — bugs not yet converted to features
 
 ## Session Start
 
-At session start, read `02-doc/current.md`'s `## Open` section for status and
+At session start, read `process/02-doc/current.md`'s `## Open` section for status and
 next steps. If it is unreadable, fall back to `git log --oneline -15` and say
 so. (The `/start` skill already does this in more depth — use it when
 available; this is the fallback.)

@@ -1,5 +1,7 @@
 # TF02 Description for Feature F02
 
+**Date Created:** 2026-08-19
+
 Task file name must be `TFNN-<slug>.md` where `NN` matches the feature number.
 Each step is numbered `TF02.N`, starting at `.0`.
 
@@ -44,15 +46,15 @@ an AI agent would trip over when adding new content.
 ## TF02.4 — Reconcile against already-tracked debt
 **Status**: done
 **Description**: Cross-check findings against the 8 pending chores already
-logged in `04-tasks/chores.md` (prior `build/*.py` style-guide review) and
-the still-empty `05-issues/{open,closed,deferred}/` subfolders expected by
+logged in `process/04-tasks/chores.md` (prior `build/*.py` style-guide review) and
+the still-empty `process/05-issues/{open,closed,deferred}/` subfolders expected by
 `.claude/process.md`, so the write-up references existing tracked work
 instead of duplicating it.
 **Test**: None — reconciliation step.
 
 ## TF02.5 — Write up the review and proposed changes
 **Status**: done
-**Description**: Produce `02-doc/structure-review.md` covering every finding
+**Description**: Produce `process/02-doc/structure-review.md` covering every finding
 from TF02.0–TF02.4: what's inconsistent or AI-unfriendly, a concrete
 proposed change for each, and a recommended disposition (chore / new
 feature / defer). This is the feature's deliverable — no code or content

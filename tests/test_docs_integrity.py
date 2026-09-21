@@ -1,3 +1,10 @@
+#!/usr/bin/env python3
+# test_docs_integrity — Tests that files referenced from CLAUDE.md and docs exist
+# Author: Pito Salas and Claude Code
+# Version: 1
+# Created: 2026-09-21
+# Updated: 2026-09-21
+# Open Source Under MIT license
 import re
 from pathlib import Path
 

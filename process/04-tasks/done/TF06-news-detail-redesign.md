@@ -1,5 +1,7 @@
 # TF06 Description for Feature F06
 
+**Date Created:** 2026-08-20
+
 Task file name must be `TFNN-<slug>.md` where `NN` matches the feature number.
 Each step is numbered `TF06.N`, starting at `.0`.
 
@@ -119,5 +121,5 @@ feature — confirms no production-code change required a new automated
 test.
 
 **Result**: `git diff --stat HEAD` excluding `design-mockups/`,
-`03-features/`, `04-tasks/` is empty — no production file touched.
+`process/03-features/`, `process/04-tasks/` is empty — no production file touched.
 `uv run pytest` still passes 107/107, same count as before this feature.

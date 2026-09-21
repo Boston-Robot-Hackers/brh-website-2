@@ -1,5 +1,7 @@
 # TF08 Description for Feature F08
 
+**Date Created:** 2026-08-20
+
 ## TF08.0 — Generalize the brief CSS: `.news-brief-*` → `.detail-brief-*`
 **Status**: done
 **Description**: Rename the F07 CSS classes in `css/main.css` to a

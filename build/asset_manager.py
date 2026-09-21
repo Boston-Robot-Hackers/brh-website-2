@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""
-asset_manager.py — Asset management module for the website builder.
-Handles copying of static assets like CSS, JS, and images.
-
-Author: Pito Salas and Claude Code
-Open Source Under MIT license
-"""
+# asset_manager — Asset management module for the website builder
+# Author: Pito Salas and Claude Code
+# Version: 1
+# Created: 2026-09-21
+# Updated: 2026-09-21
+# Open Source Under MIT license
+"""Handles copying of static assets like CSS, JS, and images."""
 
 import shutil
 from pathlib import Path

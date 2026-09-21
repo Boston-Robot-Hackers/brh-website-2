@@ -5,7 +5,7 @@ Findings from F02, ordered by priority. Each has evidence, the risk it poses
 change, and a recommended disposition.
 
 **Status: all 8 findings applied** (2026-08-19), logged as chores 9-16 in
-`04-tasks/chores.md`. Each finding below now has a **Done** note describing
+`process/04-tasks/chores.md`. Each finding below now has a **Done** note describing
 what actually happened. `uv run pytest` — 69 passed; full site rebuild
 verified (same page counts, all renamed URLs resolve, cross-links updated).
 
@@ -143,8 +143,8 @@ with finding 4 if the naming cleanup is ever batched.
 **Evidence**: `image-sources/` is real and actively used — it has its own
 thorough `README.md` explaining a two-set (hand-drawn/photo) image-swap
 workflow driven by `scripts/set-images.sh` — but nothing in the root
-`README.md` or `CLAUDE.md` points to it. (The `.claude/`, `02-doc/` through
-`05-issues/` folders are a non-issue here: they're already covered by
+`README.md` or `CLAUDE.md` points to it. (The `.claude/`, `process/02-doc/` through
+`process/05-issues/` folders are a non-issue here: they're already covered by
 `CLAUDE.md`'s Development Process section, a reasonable human-doc /
 agent-doc split.)
 
@@ -168,12 +168,12 @@ with finding 6.
 
 **Done**: Updated the description to "JavaScript + set-images.sh utility".
 
-### 8. `05-issues/{open,closed,deferred}/` subfolders don't exist yet
+### 8. `process/05-issues/{open,closed,deferred}/` subfolders don't exist yet
 
-**Evidence**: `.claude/process.md` documents this structure; `05-issues/` is
+**Evidence**: `.claude/process.md` documents this structure; `process/05-issues/` is
 currently flat and empty (just `.gitkeep`).
 
-**Proposed change**: `mkdir -p 05-issues/{open,closed,deferred}`.
+**Proposed change**: `mkdir -p process/05-issues/{open,closed,deferred}`.
 
 **Disposition**: Chore.
 
@@ -182,7 +182,7 @@ directories.
 
 ## Already tracked — not duplicated here
 
-- **8 style-guide items in `04-tasks/chores.md`** from the prior `build/*.py`
+- **8 style-guide items in `process/04-tasks/chores.md`** from the prior `build/*.py`
   review (inline-HTML-in-Python, duplicated link-resolution logic, dead
   code, import placement, file headers, type hints, indentation, line
   length) — same "quick wins" category as the findings above. **Done**:
@@ -207,8 +207,8 @@ directories.
 | 5 | 3 `content/news/` files use underscores | Low | Chore | Done |
 | 6 | `image-sources/` undocumented from README | Low | Chore | Done |
 | 7 | `scripts/` description stale in README | Low | Chore | Done |
-| 8 | `05-issues/` subfolders missing | Low | Chore | Done |
+| 8 | `process/05-issues/` subfolders missing | Low | Chore | Done |
 
-All 8 applied 2026-08-19, logged as chores 9-16 in `04-tasks/chores.md`
+All 8 applied 2026-08-19, logged as chores 9-16 in `process/04-tasks/chores.md`
 alongside the 8 pre-existing `build/*.py` style-guide chores (also applied
 in the same pass). `uv run pytest` — 69 passed. Not yet committed/pushed.

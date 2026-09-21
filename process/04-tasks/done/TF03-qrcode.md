@@ -1,5 +1,7 @@
 # TF03 Description for Feature F03
 
+**Date Created:** 2026-08-20
+
 Task file name must be `TFNN-<slug>.md` where `NN` matches the feature number.
 Each step is numbered `TF03.N`, starting at `.0`.
 

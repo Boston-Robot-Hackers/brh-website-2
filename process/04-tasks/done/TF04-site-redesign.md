@@ -1,5 +1,7 @@
 # TF04 Description for Feature F04
 
+**Date Created:** 2026-08-20
+
 Task file name must be `TFNN-<slug>.md` where `NN` matches the feature number.
 Each step is numbered `TF04.N`, starting at `.0`.
 
@@ -125,8 +127,8 @@ tests because it made no production-code change.
   empty; confirms zero production files changed on `f04-site-redesign`.
 * New files are all under `design-mockups/f04-site-redesign/` (3 HTML
   mockups + 3 screenshots), plus this feature's own tracking files
-  (`03-features/notdone/F04-site-redesign.md`,
-  `04-tasks/notdone/TF04-site-redesign.md`) and `02-doc/spec.md` (filled in
+  (`process/03-features/notdone/F04-site-redesign.md`,
+  `process/04-tasks/notdone/TF04-site-redesign.md`) and `process/02-doc/spec.md` (filled in
   separately, at the user's request, before this task list ran).
 * `uv run pytest` — 78 passed, same count as the pre-feature baseline.
   No new tests needed; this feature is verified by the manual checks in

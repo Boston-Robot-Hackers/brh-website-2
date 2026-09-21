@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""
-ical_format.py — RFC 5545 text mechanics for the meetings iCalendar feed.
-Time parsing, text-value escaping, and CRLF line folding.
-
-Author: Pito Salas and Claude Code
-Open Source Under MIT license
-"""
+# ical_format — RFC 5545 text mechanics for the meetings iCalendar feed
+# Author: Pito Salas and Claude Code
+# Version: 1
+# Created: 2026-09-21
+# Updated: 2026-09-21
+# Open Source Under MIT license
+"""Time parsing, text-value escaping, and CRLF line folding."""
 
 import re
 from datetime import time
@@ -63,6 +63,4 @@ def fold_ics(text: str) -> str:
     `ics_text`, which escapes newlines, so real content never yields one.
     """
     lines = [line for line in text.splitlines() if line.strip()]
-    return "".join(
-        piece + CRLF for line in lines for piece in fold_line(line.rstrip())
-    )
+    return "".join(piece + CRLF for line in lines for piece in fold_line(line.rstrip()))

@@ -1,3 +1,10 @@
+#!/usr/bin/env python3
+# test_signup_qr — Tests that the signup QR code appears only on the home page
+# Author: Pito Salas and Claude Code
+# Version: 1
+# Created: 2026-09-21
+# Updated: 2026-09-21
+# Open Source Under MIT license
 from pathlib import Path
 
 from build import WebsiteBuilder
@@ -31,7 +38,9 @@ def test_home_lead_renders_qr_code():
 def test_shared_templates_do_not_render_qr_code():
     for rel_path in SHARED_TEMPLATES:
         text = (REPO_ROOT / rel_path).read_text()
-        assert "brh_qr.png" not in text, f"{rel_path} must not render the signup QR code"
+        assert "brh_qr.png" not in text, (
+            f"{rel_path} must not render the signup QR code"
+        )
 
 
 def test_qr_code_present_on_home_page_only():

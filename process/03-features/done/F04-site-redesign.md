@@ -6,7 +6,7 @@
 **Test Passing:** yes
 
 **Description**:
-* `02-doc/spec.md` is an unfilled template (no Description/Goals/Non-Goals
+* `process/02-doc/spec.md` is an unfilled template (no Description/Goals/Non-Goals
   content) — this feature doesn't contradict it, but there's nothing in it
   to confirm coverage against either. Noted per the spec-check step; not a
   blocker, consistent with how F01–F03 shipped under the same empty spec.

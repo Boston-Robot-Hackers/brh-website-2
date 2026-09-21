@@ -15,6 +15,7 @@ dev-dependencies = [
     "icalendar>=7.3.0",
     "pytest>=7.0.0",
     "pytest-cov>=4.0.0",
+    "ruff>=0.16.8",
 ]
 
 [tool.pytest.ini_options]
@@ -23,6 +24,9 @@ pythonpath = ["build"]
 
 [tool.ruff]
 line-length = 88
+# Literate docs quote code excerpts out of context; formatting them would
+# break their match with the source.
+extend-exclude = ["process/01-literate"]
 
 [tool.ruff.lint]
 select = [

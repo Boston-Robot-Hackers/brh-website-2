@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""
-build.py — Modular build script for Boston Robot Hackers website.
-Split into focused modules for better maintainability.
-
-Author: Pito Salas and Claude Code
-Open Source Under MIT license
-"""
+# build — Modular build script for Boston Robot Hackers website
+# Author: Pito Salas and Claude Code
+# Version: 1
+# Created: 2026-09-21
+# Updated: 2026-09-21
+# Open Source Under MIT license
+"""Split into focused modules for better maintainability."""
 
 import json
 import re

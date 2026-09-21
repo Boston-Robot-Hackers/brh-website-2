@@ -1,3 +1,10 @@
+#!/usr/bin/env python3
+# test_asset_manager — Tests for AssetManager output cleaning and asset copying
+# Author: Pito Salas and Claude Code
+# Version: 1
+# Created: 2026-09-21
+# Updated: 2026-09-21
+# Open Source Under MIT license
 from asset_manager import AssetManager
 
 

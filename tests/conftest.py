@@ -1,3 +1,10 @@
+#!/usr/bin/env python3
+# conftest — Shared pytest fixtures (minimal content directory tree)
+# Author: Pito Salas and Claude Code
+# Version: 1
+# Created: 2026-09-21
+# Updated: 2026-09-21
+# Open Source Under MIT license
 import pytest
 
 

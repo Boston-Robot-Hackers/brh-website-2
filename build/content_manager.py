@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""
-content_manager.py — Content management module for the website builder.
-Handles loading and processing of markdown content.
-
-Author: Pito Salas and Claude Code
-Open Source Under MIT license
-"""
+# content_manager — Content management module for the website builder
+# Author: Pito Salas and Claude Code
+# Version: 1
+# Created: 2026-09-21
+# Updated: 2026-09-21
+# Open Source Under MIT license
+"""Handles loading and processing of markdown content."""
 
 import json
 import re
@@ -199,8 +199,9 @@ class ContentManager:
             # level too, but metadata is always the source of truth.
             field = content_type.sort_key
             items.sort(
-                key=lambda x, field=field: parse_date(x["metadata"].get(field))
-                or datetime.min,
+                key=lambda x, field=field: (
+                    parse_date(x["metadata"].get(field)) or datetime.min
+                ),
                 reverse=content_type.reverse,
             )
         else:

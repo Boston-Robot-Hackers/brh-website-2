@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""
-test_upcoming_talks.py — Tests for the plain-text upcoming talks list.
-
-Author: Pito Salas and Claude Code
-Open Source Under MIT license
-"""
+# test_upcoming_talks — Tests for the plain-text upcoming talks list
+# Author: Pito Salas and Claude Code
+# Version: 1
+# Created: 2026-09-21
+# Updated: 2026-09-21
+# Open Source Under MIT license
 
 import json
 import re
@@ -24,7 +24,7 @@ SITE = {
     "registration_url": "https://brh.eventbrite.com",
 }
 SAMPLE_TALK = {
-    "topic": "Robots & Rain: \"Wet\" Autonomy",
+    "topic": 'Robots & Rain: "Wet" Autonomy',
     "speaker": "Ada Lovelace",
     "summary": "A talk about <robots> in weather.",
     "date_obj": date(2026, 10, 15),

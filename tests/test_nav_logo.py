@@ -1,3 +1,10 @@
+#!/usr/bin/env python3
+# test_nav_logo — Tests for the navigation bar robot logo
+# Author: Pito Salas and Claude Code
+# Version: 1
+# Created: 2026-09-21
+# Updated: 2026-09-21
+# Open Source Under MIT license
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent

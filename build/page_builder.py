@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""
-page_builder.py — Page building module for the website builder.
-Handles template rendering and page generation.
-
-Author: Pito Salas and Claude Code
-Open Source Under MIT license
-"""
+# page_builder — Page building module for the website builder
+# Author: Pito Salas and Claude Code
+# Version: 1
+# Created: 2026-09-21
+# Updated: 2026-09-21
+# Open Source Under MIT license
+"""Handles template rendering and page generation."""
 
 import contextlib
 from collections import defaultdict

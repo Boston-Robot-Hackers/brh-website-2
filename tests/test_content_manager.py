@@ -1,3 +1,10 @@
+#!/usr/bin/env python3
+# test_content_manager — Tests for ContentManager loading, sorting, meetings, and talks
+# Author: Pito Salas and Claude Code
+# Version: 1
+# Created: 2026-09-21
+# Updated: 2026-09-21
+# Open Source Under MIT license
 from datetime import date
 
 import pytest

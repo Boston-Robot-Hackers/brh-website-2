@@ -1,8 +1,62 @@
 # History
 
-Completed-work log. `02-doc/current.md`'s `## Open` section is the only
+Completed-work log. `process/02-doc/current.md`'s `## Open` section is the only
 part that matters for new work; entries move here once done, per
 `.claude/process.md`'s checkpoint step.
+
+## 2026-09-21 (process: synced to the canonical j3 kit)
+
+* Moved `02-doc`, `03-features`, `04-tasks`, `05-issues` under `process/`
+  and added `process/01-literate/`; updated every path reference.
+* Synced `.claude/` from `~/mydev/j3`: commands, session-start hook,
+  `literate.md`, `bootstrap.md`, templates (new `pre-commit.template`,
+  `Makefile.template`).
+  * Kept this repo's `settings.json` (project-specific) and
+    `ruff.toml.template` (re-added its step to `bootstrap.md`).
+  * Resolved a leftover git merge conflict in `bootstrap.md` locally; **j3's
+    own copy still contains the conflict markers**.
+* Style guide is now j3's v4.1 with the local `[ruff: …]` markers re-added.
+* **Header convention**: all 26 `.py` files converted to comment-style
+  headers. `.githooks/pre-commit` (installed, `core.hooksPath` set) stamps
+  `Version`/`Created`/`Updated` on commit.
+* Added `Date Created:` to the 9 older task files (dates from git history),
+  and `template.md` to `process/03-features/`, `04-tasks/`, `05-issues/`.
+* `ruff` is now a dev dependency; `ruff check` and `ruff format --check`
+  are clean.
+* **Literate docs baselined** for all 6 `build/` modules in
+  `process/01-literate/`.
+
+## 2026-09-21 (F11 + F17 closed: upcoming-talks.txt and meetings.ics)
+
+* **F11**: `output/upcoming-talks.txt`, a plain-text list of future main
+  meetings with a `speaker` and `topic`, for pasting into emails. Written
+  with a UTF-8 BOM (fixes `â€”` when served as `text/plain` without a
+  charset). The user hand-edited the template wording; the empty-list
+  line was dropped at their request.
+* **F17**: `output/meetings.ics`, an RFC 5545 feed of all main meetings,
+  past and future, 7:00–9:00pm America/New_York. Validated in tests with
+  the `icalendar` library. Past talks are titled "monthly meeting"
+  (accepted).
+* Home page: orange `TXT` / `iCal` pills beside "Upcoming Meetings".
+* New config keys `site_url`, `registration_url`, `meeting_duration_minutes`.
+* The duplicate F11 (root-dir detection) was renumbered to F16.
+
+## 2026-09-21 (F10 dropped: pupper subdomain over HTTPS)
+
+* Abandoned by the user; removed `ops/pupper-redirect/`, its test, and the
+  F10/TF10 files. External cleanup is tracked in `current.md`.
+
+## 2026-09-05 (ruff rules made portable via `.claude/` bootstrap)
+
+* The calibrated ruff `select` list was captured as
+  `.claude/templates/ruff.toml.template` for `/bootstrap`; style guide
+  (then v3.3) gained `[ruff: …]` markers. Fixed a stale
+  `.claude/codereview.md` reference.
+
+## 2026-09-04 (fix: meeting-report PDFs 404)
+
+* `build/asset_manager.py` now copies `content/meeting-reports/` to
+  `output/meeting-reports/`. Deployed and link-verified.
 
 ## 2026-08-27 (content: schedule through March 2027)
 * Added 10 new `content/meetings/*.md` entries (26–35) for the full
@@ -94,7 +148,7 @@ part that matters for new work; entries move here once done, per
   and made theme-aware via `filter: invert()`.
 * Content-count parity verified exact across the whole migration: 24
   news / 24 meetings / 9 projects / 14 members — nothing lost.
-* Also this session: filled in `02-doc/spec.md` (was an unfilled
+* Also this session: filled in `process/02-doc/spec.md` (was an unfilled
   template); tightened `.claude/process.md`'s md-brevity rule with a
   concrete bullet-count ceiling after drifting back into pre-rule
   verbosity once.
@@ -106,9 +160,9 @@ part that matters for new work; entries move here once done, per
 
 ## 2026-08-20 (F03 closed: signup QR code)
 * F03 (QR code to signup form on home page header) done: all 5 TF03 steps
-  (`TF03.0`-`TF03.4`) done. Moved `03-features/notdone/F03-qrcode.md` ->
-  `03-features/done/` and `04-tasks/notdone/TF03-qrcode.md` ->
-  `04-tasks/done/`.
+  (`TF03.0`-`TF03.4`) done. Moved `process/03-features/notdone/F03-qrcode.md` ->
+  `process/03-features/done/` and `process/04-tasks/notdone/TF03-qrcode.md` ->
+  `process/04-tasks/done/`.
 * Added `signup_url` to `config/site.json` (the group's Google Form,
   confirmed by the user; cross-checked against the hero's existing
   "Request an invite" link — same form via a `forms.gle` short link).
@@ -135,7 +189,7 @@ part that matters for new work; entries move here once done, per
   same file (`task-template.md` -> `task_template.md`, matching the real
   file); updated the conflicting `feedback_md_formatting` memory to match.
 * Follow-up styling tweaks per user feedback (chores 17-21 in
-  `04-tasks/chores.md`): the QR badge went from an 80x80 in-flow block
+  `process/04-tasks/chores.md`): the QR badge went from an 80x80 in-flow block
   top-left of the page to a 100x100 `position: fixed` badge
   (`z-index: 200`) floating over both the sticky nav bar and the hero
   photo; trimmed the white "quiet zone" padding around it (the `qrcode`
@@ -161,7 +215,7 @@ part that matters for new work; entries move here once done, per
   double-quote per `style_guide.md`'s own SHOULD rule. Deliberately left 3
   `DTZ` (naive-datetime) findings unfixed — see `current.md`'s `## Open`.
   `uv run pytest` — 78 passed before and after.
-* Migrated `02-doc/current.md`/`02-doc/history.md` to the split CLAUDE.md
+* Migrated `process/02-doc/current.md`/`process/02-doc/history.md` to the split CLAUDE.md
   already documented (only `## Open` matters here) but that had never
   actually been done — this file was a flat chronological log with no
   `## Open` section until this checkpoint.
@@ -170,13 +224,13 @@ part that matters for new work; entries move here once done, per
 ## 2026-08-19 (F01 closed)
 - F01 (dark/light mode correctness) confirmed done: all 8 TF01 steps
   (TF01.0-TF01.7) done, `uv run pytest` — 73 passed. Moved
-  `03-features/notdone/F01-dark-light-mode.md` -> `03-features/done/` and
-  `04-tasks/notdone/TF01-dark-light-mode.md` -> `04-tasks/done/`.
-- `03-features/notdone/F03-qrcode.md` left alone — it's a one-line idea
+  `process/03-features/notdone/F01-dark-light-mode.md` -> `process/03-features/done/` and
+  `process/04-tasks/notdone/TF01-dark-light-mode.md` -> `process/04-tasks/done/`.
+- `process/03-features/notdone/F03-qrcode.md` left alone — it's a one-line idea
   note ("add a qr code on every page to go to the signup form"), not a
   properly formatted feature file, and has no matching task file. Not done,
   nothing to close.
-- `03-features/notdone/` and `04-tasks/notdone/` are now otherwise empty.
+- `process/03-features/notdone/` and `process/04-tasks/notdone/` are now otherwise empty.
 
 ## 2026-08-19 (F01 done)
 - Executed all 7 TF01 steps for F01 (dark/light mode correctness).
@@ -240,8 +294,8 @@ part that matters for new work; entries move here once done, per
 ## 2026-08-19 (F02 closed)
 - F02 (codebase structure & consistency review) confirmed done: all 7 TF02
   steps done, `uv run pytest` — 69 passed. Moved
-  `03-features/notdone/F02-structure-review.md` -> `03-features/done/` and
-  `04-tasks/notdone/TF02-structure-review.md` -> `04-tasks/done/`.
+  `process/03-features/notdone/F02-structure-review.md` -> `process/03-features/done/` and
+  `process/04-tasks/notdone/TF02-structure-review.md` -> `process/04-tasks/done/`.
 - F01 (dark/light mode correctness) remains open in notdone/ — not started.
 
 ## 2026-08-19 (images/ cleanup)
@@ -277,7 +331,7 @@ part that matters for new work; entries move here once done, per
   blank scaffolds, excluded from the build via a leading-underscore
   convention in content_manager.py's get_all_content.
 - Removed legacy/ (incl. a git-tracked node_modules/), archive/build.py, and
-  the dangling rules.md symlink. Created 05-issues/{open,closed,deferred}/.
+  the dangling rules.md symlink. Created process/05-issues/{open,closed,deferred}/.
   Updated README.md's Project Structure tree (image-sources/, scripts/).
 - build/*.py: moved hero HTML generation into a new Jinja template
   (templates/components/upcoming-meetings-hero.html), extracted a shared
@@ -293,7 +347,7 @@ part that matters for new work; entries move here once done, per
 
 ## 2026-08-19
 - Completed F02 (codebase structure & consistency review): all 7 TF02 steps
-  done. Findings written up in `02-doc/structure-review.md` — 8 numbered
+  done. Findings written up in `process/02-doc/structure-review.md` — 8 numbered
   issues, ordered by priority, each with proposed change and disposition
   (all chore-sized). Headline finding: `content/members/member_template.md`
   and `content/projects/project_template.md` aren't templates — they hold
@@ -308,7 +362,7 @@ part that matters for new work; entries move here once done, per
 
 ## 2026-07-30
 - Reviewed build/*.py (build.py, content_manager.py, page_builder.py, asset_manager.py, news_links.py) against .claude/style_guide.md.
-- Findings recorded as 8 numbered chores in 04-tasks/chores.md, not yet applied.
+- Findings recorded as 8 numbered chores in process/04-tasks/chores.md, not yet applied.
 - No code changes made yet — chores are pending pickup.
 - Tests: `uv run pytest` — 65 passed.
 - Working tree still has pre-existing uncommitted .claude/ restructuring (codereview.md/how_to_be.md/CLAUDE.md/method.md deleted, replaced by process.md/style_guide.md; several other .claude files modified) predating this session — deliberately left uncommitted per user choice, not part of this checkpoint's commit.

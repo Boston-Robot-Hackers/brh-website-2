@@ -20,24 +20,24 @@ path outside the repo (`/Users/pitosalas/mydev/dotfiles/rules.md`, dangling
 on any other checkout); three separate `pyproject.toml` files; content
 filename conventions that drift between hyphens and underscores
 (`1-first_meeting.md` vs. later `NN-slug-with-hyphens.md`); and
-`05-issues/{open,closed,deferred}/` subfolders that `.claude/process.md`
+`process/05-issues/{open,closed,deferred}/` subfolders that `.claude/process.md`
 expects but that don't exist yet. This feature does the full audit and
 writes up the findings — it does not apply any of the proposed changes.
 
 **Non-goals**: implementing any of the proposed changes (each becomes its
 own chore/feature once reviewed and approved); re-auditing `build/*.py`
 against `.claude/style_guide.md` (already done — see the 8 pending items in
-`04-tasks/chores.md`).
+`process/04-tasks/chores.md`).
 
 ## How to Demo
 **Setup**: None beyond having the repo checked out.
 
 **Steps**:
-1. Open `02-doc/structure-review.md`.
+1. Open `process/02-doc/structure-review.md`.
 2. Confirm it covers: top-level directory inventory vs. documented
    structure, dead/legacy code, the `rules.md` symlink, naming/content-model
    consistency, and reconciliation with already-tracked debt
-   (`04-tasks/chores.md`, the missing `05-issues/` subfolders).
+   (`process/04-tasks/chores.md`, the missing `process/05-issues/` subfolders).
 3. Confirm each finding has a concrete proposed change and a recommended
    disposition (chore / feature / defer).
 4. Run `uv run pytest` and confirm the new guardrail test from this

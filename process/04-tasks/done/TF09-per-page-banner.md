@@ -1,5 +1,7 @@
 # TF09 Description for Feature F09
 
+**Date Created:** 2026-08-26
+
 ## TF09.0 — Add `default_banner_image` to `config/site.json`
 **Status**: done
 **Description**: Add `"default_banner_image": "images/meetings/meeting1-1.jpg"`

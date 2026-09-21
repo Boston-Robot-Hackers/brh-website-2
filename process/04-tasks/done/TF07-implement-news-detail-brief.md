@@ -1,5 +1,7 @@
 # TF07 Description for Feature F07
 
+**Date Created:** 2026-08-20
+
 ## TF07.0 — Add real `toc_tokens` and `reading_time` to processed content
 **Status**: done
 **Description**: In `build/content_manager.py`'s `process_markdown_file`,
