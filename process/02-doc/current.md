@@ -19,8 +19,8 @@ say "Speaker and topic to be announced."
 
 **Process kit synced to j3 (2026-09-21)**, see `history.md`. Two follow-ups:
 
-* The `~/mydev/j3/.claude/bootstrap.md` canonical copy still has unresolved
-  git merge-conflict markers (fixed only in this repo's copy).
+* j3's `bootstrap.md` merge conflict and the pre-commit hook's Python 3.9
+  crash are fixed in `~/mydev/j3` (commit a151c9a, 2026-09-21).
 * Ruff markers and `ruff.toml.template` exist only in this repo; worth
   upstreaming to j3 so the next sync doesn't drop them again.
 
