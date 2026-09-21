@@ -1,9 +1,9 @@
 # F17 — iCalendar feed of meetings
 **Priority**: Medium
-**Done:** no
+**Done:** yes
 **Tasks File Created:** yes
-**Tests Written:** no
-**Test Passing:** no
+**Tests Written:** yes
+**Test Passing:** yes
 
 **Description**:
 

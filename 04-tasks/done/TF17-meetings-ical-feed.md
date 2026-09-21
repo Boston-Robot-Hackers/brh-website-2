@@ -89,12 +89,12 @@
 
 **Result**:
 
-* Links sit right-aligned inside the rail heading, together in one orange (`--accent`) rounded pill with a divider (`.rail-feeds` in `css/main.css`).
+* Links sit right-aligned inside the rail heading, each in its own orange (`--accent`) rounded pill (`.rail-feeds` in `css/main.css`).
 * Checked visually with a headless Chrome screenshot.
 * `TestHomePageFeedLinks` in `tests/test_ical_feed.py`: 2 tests pass.
 
 ## TF17.5 — Full verification
-**Status**: in progress
+**Status**: done
 **Description**:
 
 * `uv run python build/build.py` builds cleanly; `uv run pytest` passes; `uvx ruff check build/ tests/` shows no new findings.
@@ -102,8 +102,8 @@
 
 **Test**: the commands above; manual import check recorded here.
 
-**Result** (partial):
+**Result**:
 
 * Build is clean; ruff shows no new findings.
 * `uv run pytest`: 198/198 pass.
-* **Still open**: manual calendar-app import check.
+* Manual calendar-app import check: confirmed by the user 2026-09-21.

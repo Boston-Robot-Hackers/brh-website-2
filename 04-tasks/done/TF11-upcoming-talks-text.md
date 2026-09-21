@@ -90,7 +90,7 @@
 * Full suite: 158/158 pass.
 
 ## TF11.5 — Full verification
-**Status**: in progress
+**Status**: done
 **Description**:
 * `uv run python build/build.py` builds cleanly.
 * `uv run pytest` passes in full.
@@ -99,9 +99,9 @@
 
 **Test**: the commands above; manual paste check recorded here.
 
-**Result** (partial):
+**Result**:
 
 * Build is clean and `uv run pytest` passes (158/158).
 * `uvx ruff check build/ tests/`: no new findings (the one remaining E501 is pre-existing in `tests/test_signup_qr.py`).
-* **Still open**: the manual Gmail paste check.
 * **Bug fixed 2026-09-21**: em dashes showed as `â€”` when served as `text/plain` without a charset (e.g. `make try`'s `http.server`). The file is now written with a UTF-8 BOM; regression test `TestRealBuild::test_starts_with_utf8_bom`.
+* Manual Gmail paste check: confirmed by the user 2026-09-21.

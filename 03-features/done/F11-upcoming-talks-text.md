@@ -1,9 +1,9 @@
 # F11 — Plain-text list of upcoming talks
 **Priority**: Medium
-**Done:** no
+**Done:** yes
 **Tasks File Created:** yes
-**Tests Written:** no
-**Test Passing:** no
+**Tests Written:** yes
+**Test Passing:** yes
 
 **Description**:
 * Build a plain-text page, `output/upcoming-talks.txt`.

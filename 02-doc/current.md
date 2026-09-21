@@ -36,28 +36,11 @@ meeting announcements. Updated `build/asset_manager.py` to copy
 passing (131/131). Deployed to production; full link verification
 confirms all pages, assets, and PDF downloads working correctly.
 
-**F11 (plain-text talk list) and F17 (iCal feed), 2026-09-21**: both built,
-tested, and committed. Each is waiting only on a manual check, then close
-it (`/close-feature 11`, `/close-feature 17`):
+**F11 (plain-text talk list) and F17 (iCal feed) closed 2026-09-21**. The
+build writes `output/upcoming-talks.txt` and `output/meetings.ics`, linked
+from two orange `TXT` / `iCal` pills beside the home page's "Upcoming
+Meetings" heading.
 
-* **F11**: `output/upcoming-talks.txt`. TF11.5 is waiting on the user
-  pasting it into a Gmail draft to confirm the links stay plain and
-  clickable.
-  * The file is written with a UTF-8 BOM so em dashes survive servers that
-    send `text/plain` without a charset (the `â€”` bug; has a regression
-    test).
-  * The user rewrote the template's wording by hand. The empty-list
-    "no talks scheduled" requirement was dropped at the user's request.
-* **F17**: `output/meetings.ics`, all main meetings past and future,
-  7:00–9:00pm Boston time, no hands-on meetings. TF17.5 is waiting on the
-  user importing it into a calendar app.
-  * Past talks are titled "monthly meeting" because they have no
-    `speaker`/`topic`; accepted as-is.
-* **Home page links**: two small, separate orange (`--accent`) pills, `TXT`
-  and `iCal`, right-aligned beside the "Upcoming Meetings" heading
-  (`.rail-feeds` in `css/main.css`). The TF17.6 Result line still says
-  "one pill with a divider" (an earlier iteration); update it when F17
-  closes.
 * **A talk only appears once its meeting has both `speaker` and `topic`**,
   so add them along with `text`/`announcement` when confirming speakers.
 * The CSS is linked without cache-busting, so style changes may need a hard
