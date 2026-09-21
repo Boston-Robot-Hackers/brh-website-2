@@ -9,11 +9,18 @@ Open Source Under MIT license
 
 import json
 import re
+from datetime import UTC, date, datetime, timedelta
 from pathlib import Path
 from typing import Any
 
 from asset_manager import AssetManager
-from content_manager import ContentManager, ContentType, parse_date
+from content_manager import (
+    ContentManager,
+    ContentType,
+    format_long_date,
+    parse_date,
+)
+from ical_format import fold_ics, ics_text
 from jinja2 import Environment, FileSystemLoader
 from page_builder import PageBuilder
 
@@ -50,6 +57,8 @@ class WebsiteBuilder:
             return parsed.strftime("%B %d, %Y") if parsed else ""
 
         self.jinja_env.filters["format_date"] = format_date
+        self.jinja_env.filters["long_date"] = format_long_date
+        self.jinja_env.filters["ics_text"] = ics_text
 
         # Initialize managers
         self.content_manager = ContentManager(self.content_dir, self.jinja_env)
@@ -324,6 +333,38 @@ class WebsiteBuilder:
 
         print(f"Built meetings.html with {len(meetings)} meetings")
 
+    def require_config(self, *keys: str):
+        """Raise if any of these config/site.json keys is missing or empty."""
+        for key in keys:
+            if not self.site_config.get(key):
+                raise ValueError(f"config/site.json is missing {key!r}")
+
+    def build_ical_feed(self, stamp: datetime):
+        """Build meetings.ics, an RFC 5545 feed of main meetings for subscribing."""
+        self.require_config("title", "site_url", "meeting_duration_minutes")
+        minutes = self.site_config["meeting_duration_minutes"]
+        if not isinstance(minutes, int) or minutes <= 0:
+            raise ValueError(
+                f"meeting_duration_minutes must be a positive integer, got {minutes!r}"
+            )
+        events = self.content_manager.get_calendar_events(timedelta(minutes=minutes))
+        template = self.jinja_env.get_template("pages/meetings.ics")
+        text = template.render(site=self.site_config, events=events, stamp=stamp)
+        # Bytes, so CRLF line endings survive on every platform.
+        (self.dist_dir / "meetings.ics").write_bytes(fold_ics(text).encode("utf-8"))
+        print(f"Built meetings.ics with {len(events)} events")
+
+    def build_upcoming_talks(self, today: date):
+        """Build upcoming-talks.txt, a plain-text talk list for pasting into emails."""
+        self.require_config("site_url", "registration_url")
+        talks = self.content_manager.get_upcoming_talks(today)
+        template = self.jinja_env.get_template("pages/upcoming-talks.txt")
+        text = template.render(site=self.site_config, talks=talks, generated=today)
+        # BOM, so browsers read UTF-8 (em dashes) even when a server's
+        # text/plain header omits the charset.
+        (self.dist_dir / "upcoming-talks.txt").write_text(text, encoding="utf-8-sig")
+        print(f"Built upcoming-talks.txt with {len(talks)} talks")
+
     def build(self):
         """Main build function."""
         print("Building Boston Robot Hackers website...")
@@ -347,6 +388,8 @@ class WebsiteBuilder:
         self.build_meetings_page()
         self.build_about_page()
         self.build_learn_page()
+        self.build_upcoming_talks(date.today())
+        self.build_ical_feed(datetime.now(UTC))
 
         print("Build complete!")
 

@@ -50,7 +50,7 @@
   `hero_content = ...; self.page_builder.build_page(...)` block. This is
   a pure refactor — same templates rendered with the same context in the
   same order, just less repeated code to read.
-* Lower priority than F11/F12/F13 since it's purely internal code
+* Lower priority than F16/F12/F13 since it's purely internal code
   organization with no external-facing or tooling implications — the
   main benefit is future changes to the hero/banner envelope (e.g., a
   new site-wide banner field) only needing to happen in one place

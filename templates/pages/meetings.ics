@@ -1,0 +1,42 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//{{ site.title | ics_text }}//Meetings//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:{{ site.title | ics_text }}
+X-WR-TIMEZONE:America/New_York
+BEGIN:VTIMEZONE
+TZID:America/New_York
+BEGIN:DAYLIGHT
+TZOFFSETFROM:-0500
+TZOFFSETTO:-0400
+TZNAME:EDT
+DTSTART:20070311T020000
+RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=2SU
+END:DAYLIGHT
+BEGIN:STANDARD
+TZOFFSETFROM:-0400
+TZOFFSETTO:-0500
+TZNAME:EST
+DTSTART:20071104T020000
+RRULE:FREQ=YEARLY;BYMONTH=11;BYDAY=1SU
+END:STANDARD
+END:VTIMEZONE
+{% for event in events %}
+{% set url = site.site_url ~ "/" ~ event.page_path %}
+BEGIN:VEVENT
+UID:{{ event.id }}@{{ site.site_url | replace("https://", "") }}
+DTSTAMP:{{ stamp.strftime("%Y%m%dT%H%M%SZ") }}
+DTSTART;TZID=America/New_York:{{ event.start.strftime("%Y%m%dT%H%M%S") }}
+DTEND;TZID=America/New_York:{{ event.end.strftime("%Y%m%dT%H%M%S") }}
+{% if event.topic and event.speaker %}
+SUMMARY:{{ (site.title ~ ": " ~ event.topic ~ " (" ~ event.speaker ~ ")") | ics_text }}
+{% else %}
+SUMMARY:{{ (site.title ~ " monthly meeting") | ics_text }}
+{% endif %}
+DESCRIPTION:{{ (event.description ~ "\n\nDetails: " ~ url) | ics_text }}
+LOCATION:{{ event.location | ics_text }}
+URL:{{ url }}
+END:VEVENT
+{% endfor %}
+END:VCALENDAR

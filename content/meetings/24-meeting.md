@@ -6,5 +6,7 @@ location: "Artisans Asylum, 96 Holton Street, Allston"
 text: "Yun Chang, a robotics researcher who spent a decade at MIT's SPARK Lab under Professor Luca Carlone, will speak about robot scene understanding for extreme environments — from the DARPA Subterranean Challenge to autonomy for heavy equipment at their current startup."
 type: meeting
 kind: main
+speaker: "Yun Chang"
+topic: "Robot Scene Understanding for Extreme Environments: From Subterranean to Heavy Equipment"
 announcement: "25-yun-chang-talk-announcement.md"
 ---

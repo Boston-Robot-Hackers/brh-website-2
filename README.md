@@ -47,7 +47,8 @@ uv run pytest --cov=build
 │   ├── content_manager.py  # Loads/processes Markdown content
 │   ├── page_builder.py     # Renders Jinja2 templates to HTML
 │   ├── asset_manager.py    # Copies static assets, generates CSS
-│   └── news_links.py       # Shared announcement/report link resolution
+│   ├── news_links.py       # Shared announcement/report link resolution
+│   └── ical_format.py      # RFC 5545 escaping/folding for meetings.ics
 ├── content/                # Markdown source content
 │   ├── heroes/             # Hero section content per page
 │   ├── news/               # News/announcements
@@ -84,6 +85,7 @@ The build system lives in `build/` and is composed of four modules orchestrated 
 - **`page_builder.py`** — Renders Jinja2 templates and writes HTML files to `output/`. Handles both listing pages and per-item detail pages (news, projects, members, meetings).
 - **`asset_manager.py`** — Copies static assets (CSS, images, scripts) to `output/` and generates Pygments syntax highlighting CSS.
 - **`news_links.py`** — Resolves a meeting's `announcement`/`report` references (or a news item's own `slug`) to the news item's actual output filename, shared by both `content_manager.py` and `page_builder.py` via the `NewsResolver` class.
+- **`ical_format.py`** — Meeting-time parsing plus iCalendar text escaping, CRLF line endings, and 75-octet line folding for `output/meetings.ics`.
 
 There's a single `pyproject.toml` at the repo root (Python 3.12+, one `.venv`). `build/` has no `pyproject.toml` of its own and its modules aren't a real Python package (no `__init__.py`) — they're imported as flat top-level modules. This works via two mechanisms: running `build/build.py` directly puts its own directory on `sys.path`, and `pytest.ini_options.pythonpath = ["build"]` in the root `pyproject.toml` does the same for tests.
 
@@ -98,7 +100,7 @@ All `date:` frontmatter fields use ISO `YYYY-MM-DD` — the single canonical for
 | `content/news/` | `title`, `date`, `image`, `excerpt`, `highlight` (bool — only highlighted posts appear on homepage), `published_date` (when the post was actually written; used to sort What's New and the homepage — see note below), `slides_pdf` (path under `content/meeting-reports/`, shown as a download button), `type` (always `news`) |
 | `content/members/` | `name`, `image`, `hashtags` (validated against `config/site.json`'s `valid_hashtags`), `featured`, `github`, `linkedin`, `website`, `projects` (slugs linking to `content/projects/`), `opentowork` |
 | `content/projects/` | `title`, `image`, `excerpt`, `text`, `status`, `date`, `lead`, `members`, `github` |
-| `content/meetings/` | `title`, `date` (ISO `YYYY-MM-DD`), `kind` (`main` or `handson`, required), `time`, `location`, `text`, `announcement` (filename of the linked news post), `report` (filename of the linked follow-up news post) |
+| `content/meetings/` | `title`, `date` (ISO `YYYY-MM-DD`), `kind` (`main` or `handson`, required), `time`, `location`, `text`, `announcement` (filename of the linked news post), `report` (filename of the linked follow-up news post), `speaker` + `topic` (both required for a talk to appear in `upcoming-talks.txt` and get a named event in `meetings.ics`) |
 | `content/heroes/` | Named by page (e.g. `index.md`, `about.md`, `members.md`). `index.md` uses an `<hr>` separator — content above is static, content below is replaced dynamically with upcoming meeting info |
 
 Any content item (news, project, member, or meeting) can also set `banner_image`, `banner_title`, `banner_subtitle` to override that page's banner; unset fields fall back to `config/site.json`'s `default_banner_image`/`title`/`subtitle`.
@@ -116,7 +118,7 @@ Jinja2 templates in `templates/`:
 
 ## Configuration
 
-`config/site.json` — Site-wide text strings (title, section titles, button labels, footer text). Available in all templates as the `site_config` context variable.
+`config/site.json` — Site-wide text strings (title, section titles, button labels, footer text), plus `site_url`, `registration_url`, and `meeting_duration_minutes` (used by `upcoming-talks.txt` and `meetings.ics`). Available in all templates as the `site_config` context variable.
 
 ## Deployment
 

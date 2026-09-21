@@ -1,5 +1,7 @@
+from datetime import date
+
 import pytest
-from content_manager import ContentManager, ContentType
+from content_manager import ContentManager, ContentType, format_long_date
 from jinja2 import DictLoader, Environment
 
 HERO_MEETINGS_TEMPLATE = (
@@ -404,3 +406,70 @@ class TestResolveNewsHtml:
         cm = ContentManager(tmp_content_dir)
         with pytest.raises(ValueError):
             cm.resolve_news_html("nope.md")
+
+
+TODAY = date(2026, 9, 18)
+
+
+def write_meeting(content_dir, name, **fields):
+    lines = "".join(f'{key}: "{value}"\n' for key, value in fields.items())
+    (content_dir / "meetings" / f"{name}.md").write_text(f"---\n{lines}---\n")
+
+
+class TestFormatLongDate:
+    def test_full_weekday_form_without_zero_padding(self):
+        assert format_long_date(date(2026, 10, 5)) == "Monday, October 5, 2026"
+
+
+class TestGetUpcomingTalks:
+    TALK = {"kind": "main", "speaker": "Ada", "topic": "Arms", "time": "7:00pm"}
+
+    def talk_topics(self, content_dir):
+        talks = ContentManager(content_dir).get_upcoming_talks(TODAY)
+        return [talk["topic"] for talk in talks]
+
+    def test_qualifying_talks_included_sorted_ascending(self, tmp_path):
+        (tmp_path / "meetings").mkdir()
+        write_meeting(tmp_path, "later", date="2026-11-12", **self.TALK)
+        sooner = {**self.TALK, "topic": "Legs"}
+        write_meeting(tmp_path, "sooner", date="2026-10-15", **sooner)
+        assert self.talk_topics(tmp_path) == ["Legs", "Arms"]
+
+    def test_meeting_on_today_is_included(self, tmp_path):
+        (tmp_path / "meetings").mkdir()
+        write_meeting(tmp_path, "m", date=TODAY.isoformat(), **self.TALK)
+        assert self.talk_topics(tmp_path) == ["Arms"]
+
+    def test_past_talk_excluded(self, tmp_path):
+        (tmp_path / "meetings").mkdir()
+        write_meeting(tmp_path, "m", date="2026-09-17", **self.TALK)
+        assert self.talk_topics(tmp_path) == []
+
+    def test_handson_excluded(self, tmp_path):
+        (tmp_path / "meetings").mkdir()
+        handson = {**self.TALK, "kind": "handson"}
+        write_meeting(tmp_path, "m", date="2026-10-01", **handson)
+        assert self.talk_topics(tmp_path) == []
+
+    @pytest.mark.parametrize("missing", ["speaker", "topic"])
+    def test_missing_speaker_or_topic_excluded(self, tmp_path, missing):
+        (tmp_path / "meetings").mkdir()
+        fields = {k: v for k, v in self.TALK.items() if k != missing}
+        write_meeting(tmp_path, "m", date="2026-10-01", **fields)
+        assert self.talk_topics(tmp_path) == []
+
+    def test_page_path_uses_announcement_when_present(self, tmp_path):
+        (tmp_path / "meetings").mkdir()
+        (tmp_path / "news").mkdir()
+        (tmp_path / "news" / "ada-talk.md").write_text("---\ntitle: T\n---\nx.\n")
+        write_meeting(
+            tmp_path, "m", date="2026-10-01", announcement="ada-talk.md", **self.TALK
+        )
+        talks = ContentManager(tmp_path).get_upcoming_talks(TODAY)
+        assert talks[0]["page_path"] == "news/ada-talk.html"
+
+    def test_page_path_falls_back_to_meeting_page(self, tmp_path):
+        (tmp_path / "meetings").mkdir()
+        write_meeting(tmp_path, "25-meeting", date="2026-10-01", **self.TALK)
+        talks = ContentManager(tmp_path).get_upcoming_talks(TODAY)
+        assert talks[0]["page_path"] == "meetings/25-meeting.html"

@@ -1,5 +1,8 @@
 {
   "title": "Boston Robot Hackers",
+  "site_url": "https://bostonrobothackers.com",
+  "registration_url": "https://brh.eventbrite.com",
+  "meeting_duration_minutes": 120,
   "subtitle": "CONNECT * LEARN * BUILD",
   "default_banner_image": "images/meetings/meeting1-1.jpg",
   "news_emoji": "📰",

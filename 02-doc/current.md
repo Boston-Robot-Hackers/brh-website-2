@@ -36,18 +36,40 @@ meeting announcements. Updated `build/asset_manager.py` to copy
 passing (131/131). Deployed to production; full link verification
 confirms all pages, assets, and PDF downloads working correctly.
 
-**Planned, awaiting "go" (user intends to start next session): F11 — plain-text list of
-upcoming talks** (`03-features/notdone/F11-upcoming-talks-text.md`,
-`04-tasks/notdone/TF11-upcoming-talks-text.md`). Nothing implemented yet;
-start at TF11.0. Outputs `output/upcoming-talks.txt` for pasting into
-emails to other orgs; uses new `speaker`/`topic` meeting frontmatter and
-a new `site_url` config key.
+**F11 (plain-text talk list) and F17 (iCal feed), 2026-09-21**: both built,
+tested, and committed. Each is waiting only on a manual check, then close
+it (`/close-feature 11`, `/close-feature 17`):
+
+* **F11**: `output/upcoming-talks.txt`. TF11.5 is waiting on the user
+  pasting it into a Gmail draft to confirm the links stay plain and
+  clickable.
+  * The file is written with a UTF-8 BOM so em dashes survive servers that
+    send `text/plain` without a charset (the `â€”` bug; has a regression
+    test).
+  * The user rewrote the template's wording by hand. The empty-list
+    "no talks scheduled" requirement was dropped at the user's request.
+* **F17**: `output/meetings.ics`, all main meetings past and future,
+  7:00–9:00pm Boston time, no hands-on meetings. TF17.5 is waiting on the
+  user importing it into a calendar app.
+  * Past talks are titled "monthly meeting" because they have no
+    `speaker`/`topic`; accepted as-is.
+* **Home page links**: two small, separate orange (`--accent`) pills, `TXT`
+  and `iCal`, right-aligned beside the "Upcoming Meetings" heading
+  (`.rail-feeds` in `css/main.css`). The TF17.6 Result line still says
+  "one pill with a divider" (an earlier iteration); update it when F17
+  closes.
+* **A talk only appears once its meeting has both `speaker` and `topic`**,
+  so add them along with `text`/`announcement` when confirming speakers.
+* The CSS is linked without cache-busting, so style changes may need a hard
+  refresh (Cmd+Shift+R) to show up.
+
+The duplicate F11 (robust root-dir detection) was renumbered to **F16**.
 
 Meeting schedule content is now filled in through March 2027 (10 new
 `content/meetings/*.md` entries, chore-level content update, no
 feature/task — see `02-doc/history.md` 2026-08-27 entry). The 4 monthly
 meetings from Dec 2026–Mar 2027 have no speaker yet (`text: "Speaker and
-topic to be announced."`); fill in `text`/`announcement` on
+topic to be announced."`); fill in `text`/`announcement`/`speaker`/`topic` on
 `28-meeting.md`, `30-meeting.md`, `32-meeting.md`, `34-meeting.md` as
 speakers are confirmed.
 
@@ -69,6 +91,9 @@ Known, deliberately-deferred items (not urgent, no ticket filed):
 * `ruff` is not a project dependency (no entry in `pyproject.toml`); this
   session ran it via `uvx ruff` instead. Worth adding as a real dev
   dependency at some point so `uv run ruff` works directly.
+* `build/build.py` (~405 lines) and `build/content_manager.py` (~388) are
+  over the style guide's ~300-line guideline. F11/F17 grew both; the new
+  iCal code went into its own `build/ical_format.py` to limit that.
 * `01-literate/` has never actually been populated in this repo despite
   `.claude/process.md`'s "regenerate literate docs before committing"
   rule — confirmed via `git log` (no file has ever existed there).
@@ -76,6 +101,8 @@ Known, deliberately-deferred items (not urgent, no ticket filed):
   have all changed since (most recently for F09) with no literate docs
   generated for any of them. Deliberately skipped per user decision
   (2026-08-20) rather than starting a first-pass doc-gen project
-  unprompted during a routine checkpoint.
+  unprompted during a routine checkpoint. Still skipped at the 2026-09-21
+  checkpoint (F11/F17 changed `build.py`, `content_manager.py`, and added
+  `ical_format.py`).
 
 See `02-doc/history.md` for the completed-work log.

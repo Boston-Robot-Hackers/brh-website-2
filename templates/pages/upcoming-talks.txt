@@ -1,0 +1,16 @@
+{{ site.title }} — Upcoming Talks
+As of {{ generated | long_date }}
+{% for talk in talks %}
+--------------------------------
+Boston Robot Hackers is happy to inform you of our {{ talk.date_obj.strftime('%B') }} monthly meeting. Our main speaker {{talk.speaker}} will present a talk titled "{{ talk.topic }}"
+
+When: {{ talk.date_obj | long_date }}, {{ talk.time }}
+Where: {{ talk.location }}
+
+{{ talk.summary }}
+
+You can learn more here: {{ site.site_url }}/{{ talk.page_path }}
+
+Please register!: {{ site.registration_url }}
+Here is our full schedule: {{ site.site_url }}/meetings.html
+{% endfor %}

@@ -9,16 +9,19 @@ Open Source Under MIT license
 
 import json
 import re
-from datetime import datetime
+from datetime import date, datetime, timedelta
 from pathlib import Path
 from typing import Any
+from zoneinfo import ZoneInfo
 
 import frontmatter
 import markdown
+from ical_format import parse_meeting_time
 from news_links import NewsResolver
 
 WORDS_PER_MINUTE = 200
 HTML_TAG_PATTERN = re.compile(r"<[^>]+>")
+BOSTON = ZoneInfo("America/New_York")
 
 
 def compute_reading_time(html_content: str) -> int:
@@ -42,6 +45,11 @@ def parse_date(date_str):
         raise ValueError(
             f"Invalid date {date_str!r}: expected ISO format YYYY-MM-DD"
         ) from e
+
+
+def format_long_date(value: date) -> str:
+    """Format a date as e.g. 'Thursday, October 15, 2026' (no zero-padded day)."""
+    return f"{value:%A}, {value:%B} {value.day}, {value:%Y}"
 
 
 def classify_meeting(metadata: dict[str, Any]) -> str:
@@ -221,15 +229,13 @@ class ContentManager:
 
         return static_part + "\n" + generated_part
 
-    def get_future_meetings(self) -> list[dict[str, Any]]:
-        """Get all meetings with dates in the future, sorted by date ascending."""
+    def load_meetings(self) -> list[dict[str, Any]]:
+        """Load every dated meeting's frontmatter, sorted by date ascending."""
         meetings_dir = self.content_dir / "meetings"
         if not meetings_dir.exists():
             return []
 
-        today = datetime.now().date()
-        future_meetings = []
-
+        meetings = []
         for md_file in meetings_dir.glob("*.md"):
             metadata = frontmatter.load(md_file).metadata
             date_str = metadata.get("date")
@@ -241,18 +247,86 @@ class ContentManager:
             except ValueError as e:
                 raise ValueError(f"{md_file}: {e}") from e
 
-            if meeting_date >= today:
-                future_meetings.append(
-                    {
-                        "metadata": metadata,
-                        "date_obj": meeting_date,
-                        "title": metadata.get("title", ""),
-                    }
-                )
+            meetings.append(
+                {
+                    "id": metadata.get("slug") or md_file.stem,
+                    "metadata": metadata,
+                    "date_obj": meeting_date,
+                    "title": metadata.get("title", ""),
+                }
+            )
 
-        # Sort by date ascending (nearest first)
-        future_meetings.sort(key=lambda x: x["date_obj"])
-        return future_meetings
+        meetings.sort(key=lambda x: x["date_obj"])
+        return meetings
+
+    def get_future_meetings(self, today: date | None = None) -> list[dict[str, Any]]:
+        """Get meetings dated today or later, sorted by date ascending."""
+        today = today or datetime.now().date()
+        return [m for m in self.load_meetings() if m["date_obj"] >= today]
+
+    def meeting_page_path(self, meeting: dict[str, Any]) -> str:
+        """Announcement page if one resolves, else the meeting's own page."""
+        html, exists = self.resolve_news_html(
+            meeting["metadata"].get("announcement", "")
+        )
+        return f"news/{html}" if exists else f"meetings/{meeting['id']}.html"
+
+    def get_upcoming_talks(self, today: date) -> list[dict[str, Any]]:
+        """Future main meetings that have both a `speaker` and a `topic`.
+
+        Hands-on sessions and TBA talks (no speaker/topic yet) are excluded.
+        `page_path` is the announcement page when one exists, else the
+        meeting's own detail page, relative to the site root.
+        """
+        talks = []
+        for meeting in self.get_future_meetings(today):
+            metadata = meeting["metadata"]
+            if classify_meeting(metadata) != "main":
+                continue
+            if not (metadata.get("speaker") and metadata.get("topic")):
+                continue
+            talks.append(
+                {
+                    "topic": metadata["topic"],
+                    "speaker": metadata["speaker"],
+                    "summary": metadata.get("text", ""),
+                    "date_obj": meeting["date_obj"],
+                    "time": metadata.get("time", ""),
+                    "location": metadata.get("location", ""),
+                    "page_path": self.meeting_page_path(meeting),
+                }
+            )
+        return talks
+
+    def get_calendar_events(self, duration: timedelta) -> list[dict[str, Any]]:
+        """All main meetings, past and future, as calendar events.
+
+        Past meetings stay in the feed so subscribers' calendars keep them.
+        `topic`/`speaker` are None for meetings whose talk isn't set yet.
+        """
+        events = []
+        for meeting in self.load_meetings():
+            metadata = meeting["metadata"]
+            if classify_meeting(metadata) != "main":
+                continue
+            try:
+                start_time = parse_meeting_time(metadata.get("time"))
+            except ValueError as e:
+                raise ValueError(f"meetings/{meeting['id']}.md: {e}") from e
+            start = datetime.combine(meeting["date_obj"], start_time, tzinfo=BOSTON)
+            events.append(
+                {
+                    "id": meeting["id"],
+                    "topic": metadata.get("topic"),
+                    "speaker": metadata.get("speaker"),
+                    "description": metadata.get("text", ""),
+                    "location": metadata.get("location", ""),
+                    "start": start,
+                    "end": start + duration,
+                    "page_path": self.meeting_page_path(meeting),
+                }
+            )
+        return events
 
     def format_future_meetings_section(self, meetings: list[dict[str, Any]]) -> str:
         """Render the 2 nearest future meetings via the hero template."""
