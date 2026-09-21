@@ -21,10 +21,13 @@ user request, except `.claude/settings.json`'s `autoMode.environment`
 block, which legitimately describes this project and isn't part of the
 bootstrap-copied template set.
 
-**F10 — pupper.bostonrobothackers.com subdomain over HTTPS** — on hold
-awaiting user to configure custom domain in GitHub Pages settings for
-`brh-pupper-redirect` repo (TF10.4, TF10.5). See history entry 2026-09-04
-for details. HTTP version working; HTTPS cert not yet issued by GitHub.
+**Reminder: clean up after abandoned F10 (pupper subdomain, 2026-09-21)** —
+F10 was dropped and its in-repo files removed. Two external leftovers
+need manual cleanup:
+
+* Delete (or archive) the GitHub repo `Boston-Robot-Hackers/brh-pupper-redirect`.
+* In Namecheap Advanced DNS for `bostonrobothackers.com`, delete the
+  `pupper` CNAME record (→ `boston-robot-hackers.github.io.`).
 
 **PDF asset delivery (2026-09-04)** — Fixed: meeting-reports directory
 was not being copied during build, causing 404 on PDF downloads in
