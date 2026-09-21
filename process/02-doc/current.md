@@ -17,13 +17,6 @@ say "Speaker and topic to be announced."
   `speaker` + `topic`**. A talk only appears in `upcoming-talks.txt` and
   gets a named `meetings.ics` event once both are set.
 
-**Process kit synced to j3 (2026-09-21)**, see `history.md`. Two follow-ups:
-
-* j3's `bootstrap.md` merge conflict and the pre-commit hook's Python 3.9
-  crash are fixed in `~/mydev/j3` (commit a151c9a, 2026-09-21).
-* Ruff markers and `ruff.toml.template` exist only in this repo; worth
-  upstreaming to j3 so the next sync doesn't drop them again.
-
 **Open features (none started)**: F12 (build as a real package), F13 (unify
 CI/local build invocation), F14 (reduce page-builder boilerplate), F15
 (remove inline styles), F16 (robust root-dir detection). None has a task

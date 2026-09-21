@@ -25,6 +25,10 @@ part that matters for new work; entries move here once done, per
   are clean.
 * **Literate docs baselined** for all 6 `build/` modules in
   `process/01-literate/`.
+* Upstreamed to j3: `bootstrap.md` conflict fix and the Python 3.9 hook
+  fix (a151c9a); `ruff.toml.template`, its bootstrap step, and the ruff
+  markers as style guide v4.2. The two `.claude/` trees now match except
+  `settings.json`.
 
 ## 2026-09-21 (F11 + F17 closed: upcoming-talks.txt and meetings.ics)
 

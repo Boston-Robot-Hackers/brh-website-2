@@ -1,6 +1,6 @@
 # Code Review Checklist
 
-Version: 4.1 — universal Python review guide (+ local ruff markers).
+Version: 4.2 — universal Python review guide.
 
 `MUST` blocks unless waived in the task/PR. `SHOULD` = expected default.
 `CONSIDER` = review prompt, not a mechanical rule. Prefer a linter/type-checker
