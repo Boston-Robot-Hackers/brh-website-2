@@ -55,6 +55,7 @@ uv run pytest --cov=build
 │   ├── meetings/           # Meeting entries
 │   ├── projects/           # Project descriptions
 │   ├── members/            # Member profiles
+│   ├── pages/              # Standalone pages linked from About (<slug>.md → <slug>.html)
 │   ├── about.md            # About page content
 │   └── learn.md            # Learn page content
 ├── templates/              # Jinja2 templates
@@ -101,6 +102,7 @@ All `date:` frontmatter fields use ISO `YYYY-MM-DD` — the single canonical for
 | `content/members/` | `name`, `image`, `hashtags` (validated against `config/site.json`'s `valid_hashtags`), `featured`, `github`, `linkedin`, `website`, `projects` (slugs linking to `content/projects/`), `opentowork` |
 | `content/projects/` | `title`, `image`, `excerpt`, `text`, `status`, `date`, `lead`, `members`, `github` |
 | `content/meetings/` | `title`, `date` (ISO `YYYY-MM-DD`), `kind` (`main` or `handson`, required), `time`, `location`, `text`, `announcement` (filename of the linked news post), `report` (filename of the linked follow-up news post), `speaker` + `topic` (both required for a talk to appear in `upcoming-talks.txt` and get a named event in `meetings.ics`) |
+| `content/pages/` | `title` (required), optional `banner_image`/`banner_title`/`banner_subtitle`. Each file builds to a top-level `<slug>.html`; link it by hand from `about.md` |
 | `content/heroes/` | Named by page (e.g. `index.md`, `about.md`, `members.md`). `index.md` uses an `<hr>` separator — content above is static, content below is replaced dynamically with upcoming meeting info |
 
 Any content item (news, project, member, or meeting) can also set `banner_image`, `banner_title`, `banner_subtitle` to override that page's banner; unset fields fall back to `config/site.json`'s `default_banner_image`/`title`/`subtitle`.

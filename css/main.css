@@ -1298,6 +1298,10 @@
   color: var(--primary);
 }
 
+.about-content em {
+  color: var(--emphasis);
+}
+
 .about-content hr {
   border-color: var(--border);
   margin: 2rem 0;

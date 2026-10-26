@@ -28,6 +28,10 @@ We welcome members from all backgrounds and experience levels:
 
 Our meetings take place at **Artisans Asylum** in Allston, Massachusetts - a perfect maker space environment that provides access to tools, equipment, and the collaborative atmosphere that makes our community thrive.
 
+## Speaking at BRH
+
+We're always looking for speakers, for both featured talks and lightning talks. Read our [Tips for Speakers](speaker-tips.html), then get in touch.
+
 ## Contact Us
 
 Currently BRH is led by Pito Salas. You can [contact me via LinkedIn](https://www.linkedin.com/in/pitosalas/) I will respond in less than 24 hours.

@@ -42,6 +42,8 @@ button, input, select, textarea {
   --text-muted: #4a4a4a;
   --text-light: #7a7a72;
   --dek: #2a2a2a;
+  /* Italic text color; --secondary's hue, darkened to pass text contrast on cream */
+  --emphasis: #6d28d9;
 
   /* Shadows for depth */
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
@@ -76,6 +78,7 @@ button, input, select, textarea {
   --text-muted: #b8b3a6;
   --text-light: #8a8578;
   --dek: #d8d3c6;
+  --emphasis: #a78bfa;
 
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4);

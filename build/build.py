@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # build — Modular build script for Boston Robot Hackers website
 # Author: Pito Salas and Claude Code
-# Version: 1
+# Version: 2
 # Created: 2026-09-21
-# Updated: 2026-09-21
+# Updated: 2026-10-26
 # Open Source Under MIT license
 """Split into focused modules for better maintainability."""
 
@@ -249,6 +249,23 @@ class WebsiteBuilder:
 
         print("Built about.html")
 
+    def build_content_pages(self):
+        """Build each content/pages/<slug>.md as a standalone <slug>.html page."""
+        pages_dir = self.content_manager.content_dir / "pages"
+        for page_file in sorted(pages_dir.glob("*.md")):
+            page = self.content_manager.process_markdown_file(page_file)
+            if not page["metadata"].get("title"):
+                raise ValueError(f"{page_file}: missing required 'title'")
+            self.page_builder.build_page(
+                "pages/content-page.html",
+                f"{page_file.stem}.html",
+                hero={},
+                page_title=page["title"],
+                page_content=page["content"],
+                **self.page_builder.resolve_banner(page["metadata"]),
+            )
+            print(f"Built {page_file.stem}.html")
+
     def parse_learn_sections(  # noqa: PLR0912 - pre-existing complexity, tracked, not touched this session
         self, text: str
     ) -> list:
@@ -387,6 +404,7 @@ class WebsiteBuilder:
         self.build_members_page()
         self.build_meetings_page()
         self.build_about_page()
+        self.build_content_pages()
         self.build_learn_page()
         self.build_upcoming_talks(date.today())
         self.build_ical_feed(datetime.now(UTC))

@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # test_about_content_preserved — Built about page keeps all real content
 # Author: Pito Salas and Claude Code
-# Version: 1
+# Version: 2
 # Created: 2026-09-21
-# Updated: 2026-09-21
+# Updated: 2026-10-26
 # Open Source Under MIT license
 from pathlib import Path
 
@@ -26,6 +26,7 @@ EXPECTED_PHRASES = [
     "Students",
     "Meeting Location",
     "Artisans Asylum",
+    "Speaking at BRH",
     "Contact Us",
     "Currently BRH is led by Pito Salas",
 ]

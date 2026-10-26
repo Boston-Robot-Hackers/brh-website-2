@@ -1,0 +1,14 @@
+<!-- Standalone content page - Renders one content/pages/<slug>.md, linked from About. Reusable by every such page. -->
+{% extends 'layouts/page.html' %}
+
+{% set current_page = 'about' %}
+{% set is_detail_page = false %}
+
+{% block title %}{{ page_title }} - {{ site.title }}{% endblock %}
+
+{% block main_content %}
+    <div class="about-content">
+        <h2>{{ page_title }}</h2>
+        {{ page_content }}
+    </div>
+{% endblock %}
