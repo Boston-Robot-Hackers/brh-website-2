@@ -7,8 +7,7 @@ excerpt: Yun spent a decade at MIT earning a Bachelor's, Master's, and PhD, work
 highlight: true
 image: images/news/heavy-equipment.png
 published_date: '2026-08-19'
-title: 'November 12: Yun Chang: Robot Scene Understanding for Extreme Environments:
-  from subterranean to heavy equipment'
+title: 'November 12: Yun Chang: Robot Perception with Scene Graphs'
 type: news
 ---
 
@@ -36,8 +35,9 @@ type: news
     <img src="../../images/news/heavy-equipment.png" alt="Autonomous Bobcat heavy equipment loader" style="float: left; margin: 25px 25px 25px 25px; border-radius: 8px; height: 200px;">
 </a>
 
-Yun will share experience from the DARPA Subterranean Challenge — where robots had to build and act on scene understanding in dark, GPS-denied, unpredictable underground environments — and from current startup work bringing autonomy to heavy equipment: the large machines that run society's infrastructure.
+What does it take for a robot to carry out a general task in any scene? This question is especially important as we see modern day robots showing more and more capabilities. This talk argues that robot perception should compress and organize raw sensor data into a representation best suited to the task, and presents 3D scene graphs as one general answer. 
 
+We cover Hydra, which builds hierarchical scene graphs in real time; Clio, which keeps only task-relevant objects using the Information Bottleneck; and ASHiTA, which grounds high-level instructions by solving for the task breakdown and the scene graph together. We then look at field deployments, from multi-robot missions to an autonomous loader, and close with open questions about connecting scene graphs to learned robot policies.
 Watch highlights from both efforts:
 
 * [DARPA Subterranean Challenge](https://www.youtube.com/watch?v=s_1roVVAXNU)
