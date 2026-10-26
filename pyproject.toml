@@ -59,9 +59,9 @@ select = [
 #   and PLR1702 isn't available outside ruff's --preview mode in this
 #   version. Both harmless to leave out.
 
-# "Version" is a task tag only so ERA001 stops reading the hook-stamped
-# "# Version: N" header line as commented-out code.
-task-tags = ["TODO", "FIXME", "XXX", "Version"]
+# Version/Created/Updated are task tags only so ERA001 stops reading the
+# hook-stamped header lines ("# Updated: 2026-10-26") as commented-out code.
+task-tags = ["TODO", "FIXME", "XXX", "Version", "Created", "Updated"]
 
 [tool.ruff.lint.pylint]
 max-branches = 8

@@ -33,7 +33,7 @@ Known, deliberately-deferred items (not urgent, no ticket filed):
 * `pyproject.toml`'s `[tool.uv] dev-dependencies` field is deprecated by
   `uv` in favor of `[dependency-groups] dev` — a cosmetic warning on every
   `uv` invocation, not urgent.
-* `build/build.py` (~405 lines), `build/content_manager.py` (~390), and
+* `build/build.py` (~420 lines, after F18), `build/content_manager.py` (~390), and
   `build/page_builder.py` (~390) are over the style guide's ~300-line
   guideline. The literate docs' closing observations suggest where to split.
 

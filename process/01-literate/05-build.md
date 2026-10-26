@@ -1,6 +1,6 @@
 ---
-version: "1.0"
-generated: "2026-09-21"
+version: "1.1"
+generated: "2026-10-26"
 ---
 
 # build — orchestrating the whole site
@@ -75,6 +75,29 @@ page (`projects/...`).
 `---` and matching link lines with regexes, turning a Markdown resource list
 into structured cards with icons chosen by keyword.
 
+### Standalone pages: a folder instead of a method
+
+`build_content_pages` is the one builder that isn't tied to a single page.
+It renders **every** `content/pages/<slug>.md` to a top-level `<slug>.html`,
+so adding a page (like Tips for Speakers) is a content change, not a code
+change:
+
+```python
+for page_file in sorted(pages_dir.glob("*.md")):
+    page = self.content_manager.process_markdown_file(page_file)
+    if not page["metadata"].get("title"):
+        raise ValueError(f"{page_file}: missing required 'title'")
+```
+
+- **Why check `metadata`, not `page["title"]`**: `process_markdown_file`
+  defaults a missing title to `"Untitled"`, which would publish silently.
+  The raw frontmatter is the only place the omission is still visible.
+- **No hero**: it passes `hero={}`, and the page template renders the title
+  itself. Banner overrides still work because `resolve_banner` reads the
+  page's own frontmatter.
+- **Linking is manual**: About links each page by hand. There's no
+  generated index, because one or two pages don't need one.
+
 ## The two feeds
 
 Two outputs aren't HTML pages, and both validate their config first:
@@ -106,7 +129,7 @@ sequenceDiagram
     participant A as AssetManager
     participant P as page builders
     B->>A: clean output/, copy assets + CSS, pygments CSS
-    B->>P: index, news, projects, members, meetings, about, learn
+    B->>P: index, news, projects, members, meetings, about, content pages, learn
     B->>P: upcoming-talks.txt (today)
     B->>P: meetings.ics (now, UTC)
 ```
@@ -121,7 +144,7 @@ stale pages left over from deleted content.
    helper for it.
 2. **CWD-based root detection** is fragile for IDEs and automation. F16 proposes
    `Path(__file__).resolve().parent.parent`.
-3. **The file is past the ~300-line guideline** (about 400 lines).
+3. **The file is past the ~300-line guideline** (about 420 lines).
    `parse_learn_sections` is self-contained parsing logic and would sit better
    in its own module.
 4. **`build/` isn't a package**, so modules import each other as top-level

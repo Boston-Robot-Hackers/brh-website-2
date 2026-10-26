@@ -4,6 +4,19 @@ Completed-work log. `process/02-doc/current.md`'s `## Open` section is the only
 part that matters for new work; entries move here once done, per
 `.claude/process.md`'s checkpoint step.
 
+## 2026-10-26 (F18 closed: standalone content pages, Tips for Speakers)
+
+* **F18**: each `content/pages/<slug>.md` builds to a top-level
+  `<slug>.html` in the site layout, with About highlighted in the nav. A
+  missing `title` fails the build. About links each page by hand.
+* First page: **Tips for Speakers** (`speaker-tips.html`), drafted by
+  Claude and rewritten by the user. Linked from About's new "Speaking at
+  BRH" section.
+* **Chore 30**: italics on About-style pages use a new `--emphasis` color
+  token (violet, light and dark values).
+* **Chore 31**: ruff `task-tags` now also covers `Created`/`Updated`, so
+  October header dates no longer trip ERA001.
+
 ## 2026-10-26 (content: October 15 meeting report)
 
 * New `content/news/29-october-meeting-report.md`, the summary of Arjun
