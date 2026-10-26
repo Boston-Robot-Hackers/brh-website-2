@@ -4,6 +4,15 @@ Completed-work log. `process/02-doc/current.md`'s `## Open` section is the only
 part that matters for new work; entries move here once done, per
 `.claude/process.md`'s checkpoint step.
 
+## 2026-10-26 (content: October 15 meeting report)
+
+* New `content/news/29-october-meeting-report.md`, the summary of Arjun
+  Viswanathan's talk on RL for multimodal locomotion (Husky-Beta).
+* Linked from `content/meetings/25-meeting.md` via `report:`.
+* **Chore 29**: `ruff check` was failing on 26 ERA001 hits from the
+  hook-stamped `# Version: N` header line; fixed by adding `Version` to
+  ruff's `task-tags` in `pyproject.toml`.
+
 ## 2026-09-21 (process: synced to the canonical j3 kit)
 
 * Moved `02-doc`, `03-features`, `04-tasks`, `05-issues` under `process/`

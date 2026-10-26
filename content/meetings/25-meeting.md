@@ -9,4 +9,5 @@ kind: main
 speaker: "Arjun Viswanathan"
 topic: "Reinforcement Learning for Multimodal Locomotion"
 announcement: "26-arjun-viswanathan-talk-announcement.md"
+report: "29-october-meeting-report.md"
 ---
