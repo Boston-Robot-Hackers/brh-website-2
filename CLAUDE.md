@@ -36,6 +36,7 @@ Read and follow all rules in the `.claude/` folder:
 - `process/02-doc/current.md` — session handoff; only the `## Open` section matters for
   new work, see `process/02-doc/history.md` for the completed-work log
 - `process/02-doc/notes.md` — semi-permanent project notes
+- `process/02-doc/factory.md` — how to run the software factory (F19)
 
 Before writing or reviewing code, read and follow `.claude/style_guide.md`
 (coding standards, style rules, and review checklist) — apply it yourself

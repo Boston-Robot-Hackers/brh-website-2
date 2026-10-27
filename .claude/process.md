@@ -46,7 +46,7 @@
 * If a project's `.claude/` predates the canonical `j3` kit's current state, flag it as stale and offer to sync, rather than silently working from the old copy.
 
 # factory lanes
-* Two kinds of work may run unattended via `make factory ISSUE=n` → `/factory-run`, each from a labeled GitHub issue (see F19):
+* Two kinds of work may run unattended via `make factory ISSUE=n` → `/factory-run`, each from a labeled GitHub issue (see F19; how-to in `process/02-doc/factory.md`):
   * **lane:content** — a "Speaker confirmed" issue fills in an existing meeting file (and optionally a news post).
   * **lane:refactor** — a parked feature whose output is unchanged; `make golden` must report identical output.
 * **In these lanes only, the pull request is the approval gate.** The plan goes in the PR description and merging is the approval, so the "present the plan and wait for go" gate and the "No pull requests" rule below do not apply on `factory/*` branches.
