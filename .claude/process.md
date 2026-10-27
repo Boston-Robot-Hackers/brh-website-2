@@ -45,11 +45,20 @@
 * Never copy `settings.local.json` when copying `.claude/` into a new project — it's machine-local and gitignored, and its permission entries (paths, per-machine allowances) don't generalize.
 * If a project's `.claude/` predates the canonical `j3` kit's current state, flag it as stale and offer to sync, rather than silently working from the old copy.
 
+# factory lanes
+* Two kinds of work may run unattended via `make factory ISSUE=n` → `/factory-run`, each from a labeled GitHub issue (see F19):
+  * **lane:content** — a "Speaker confirmed" issue fills in an existing meeting file (and optionally a news post).
+  * **lane:refactor** — a parked feature whose output is unchanged; `make golden` must report identical output.
+* **In these lanes only, the pull request is the approval gate.** The plan goes in the PR description and merging is the approval, so the "present the plan and wait for go" gate and the "No pull requests" rule below do not apply on `factory/*` branches.
+* Everything else — new features, anything that changes output — stays interactive under the normal gates.
+* Factory runs never edit `.claude/`, `.github/`, `.githooks/`, `Makefile` or `tools/`. `.claude/hooks/factory-guard.sh` blocks pushing to main, merging, and closing issues on `factory/*` branches.
+* A Stop hook (`.claude/hooks/stop-verify.sh`) blocks finishing a turn while the working tree has changes and pytest or ruff is red — interactive sessions included.
+
 # github
 * Literate docs: apply `.claude/literate.md`'s prompt to each changed Python module, save as `process/01-literate/<module>.md`.
 * Run tests and regenerate literate docs before committing/pushing.
 * File headers stamp themselves: `.githooks/pre-commit` sets `Version`/`Created`/`Updated` on every staged `.py`. Never hand-edit those three fields — see the file-header rule in `.claude/style_guide.md`.
 * The hook is only active once per clone: `git config core.hooksPath .githooks`. Without it headers silently stop updating, so check it after cloning.
-* **No pull requests.** Single-developer repo: run the tests, commit, push. No review branch, no PR.
+* **No pull requests** (except factory branches, see *factory lanes*). Single-developer repo: run the tests, commit, push. No review branch, no PR.
 * That sequence belongs to `/checkpoint`, which runs tests and ruff, updates `current.md`, refreshes changed literate docs, then commits and pushes. Prefer it over doing the steps by hand.
 * Commit or push only when asked, with a good message.

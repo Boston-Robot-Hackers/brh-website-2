@@ -64,6 +64,9 @@ Do not run tests, commits, or multi-file changes until the user has explicitly
 approved the plan. Present the plan, wait for "go", then execute. Never jump ahead
 of a process gate.
 
+Exception: an unattended `/factory-run` on a `factory/*` branch follows the
+*factory lanes* rules in `.claude/process.md` — the pull request is the gate.
+
 - **Stuck-loop rule**: if the same tool call fails or returns unchanged output
   twice, stop retrying. Report the failure, what was tried, and a proposed
   workaround (e.g. `cat` via Bash instead of Read), then wait for direction.

@@ -1,0 +1,19 @@
+name: Factory refactor
+description: Hand a parked, behavior-preserving feature to the factory. The built site must not change.
+title: "Refactor: "
+labels: ["factory", "lane:refactor"]
+body:
+  - type: input
+    id: feature
+    attributes:
+      label: Feature
+      description: The FNN of a feature in process/03-features/notdone/ whose output is unchanged.
+      placeholder: "F14"
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes (optional)
+    validations:
+      required: false

@@ -1,0 +1,40 @@
+name: Speaker confirmed
+description: A speaker is confirmed for a monthly meeting. The factory fills in the meeting page.
+title: "Speaker confirmed: "
+labels: ["factory", "lane:content"]
+body:
+  - type: input
+    id: meeting_date
+    attributes:
+      label: Meeting date
+      description: The meeting's date, YYYY-MM-DD. Must match an existing main meeting.
+      placeholder: "2026-12-10"
+    validations:
+      required: true
+  - type: input
+    id: speaker
+    attributes:
+      label: Speaker
+      description: Exactly as it should appear on the site.
+    validations:
+      required: true
+  - type: input
+    id: topic
+    attributes:
+      label: Talk title
+    validations:
+      required: true
+  - type: textarea
+    id: blurb
+    attributes:
+      label: Short blurb
+      description: One or two sentences for the meeting card.
+    validations:
+      required: true
+  - type: textarea
+    id: announcement
+    attributes:
+      label: Announcement post (optional)
+      description: Longer text for a news post. Leave empty to skip the post.
+    validations:
+      required: false

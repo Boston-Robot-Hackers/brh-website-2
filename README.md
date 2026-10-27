@@ -74,6 +74,7 @@ uv run pytest --cov=build
 ├── config/
 │   └── site.json           # Site-wide text strings and configuration
 ├── tests/                  # Pytest test suite
+├── tools/                  # Dev-only scripts, never published (golden_diff.sh)
 ├── pyproject.toml          # Root dependencies (Python 3.12+)
 └── output/                 # Generated website (not committed)
 ```
