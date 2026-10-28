@@ -6,7 +6,8 @@ As of {{ generated | long_date }}
 {% if meeting.kind == 'handson' -%}
 {{ meeting.date_obj | long_date }}, {{ meeting.time }}
 
-What: {{ month }} Hands-on meeting: Smaller, without an agenda or a speaker. Don't publicize.
+Note: Don't publicize.
+What: {{ month }} Hands-on meeting: Smaller, without an agenda or a speaker. D
 Where: {{ meeting.location }}
 {%- elif meeting.speaker and meeting.topic -%}
 {{ meeting.date_obj | long_date }}, {{ meeting.time }}
