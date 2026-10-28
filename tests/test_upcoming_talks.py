@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-# test_upcoming_talks — Tests for the plain-text upcoming talks list
+# test_upcoming_talks — Tests for the plain-text upcoming meetings list
 # Author: Pito Salas and Claude Code
-# Version: 1
+# Version: 2
 # Created: 2026-09-21
-# Updated: 2026-09-21
+# Updated: 2026-10-28
 # Open Source Under MIT license
 
 import json
@@ -21,9 +21,9 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 SITE = {
     "title": "Boston Robot Hackers",
     "site_url": "https://bostonrobothackers.com",
-    "registration_url": "https://brh.eventbrite.com",
 }
 SAMPLE_TALK = {
+    "kind": "main",
     "topic": 'Robots & Rain: "Wet" Autonomy',
     "speaker": "Ada Lovelace",
     "summary": "A talk about <robots> in weather.",
@@ -32,13 +32,26 @@ SAMPLE_TALK = {
     "location": "Artisans Asylum",
     "page_path": "news/ada-talk.html",
 }
+SAMPLE_TBA = {
+    **SAMPLE_TALK,
+    "speaker": None,
+    "topic": None,
+    "summary": "Speaker and topic to be announced.",
+    "date_obj": date(2026, 12, 10),
+}
+SAMPLE_HANDSON = {
+    **SAMPLE_TBA,
+    "kind": "handson",
+    "summary": "Just hacking together.",
+    "date_obj": date(2026, 11, 25),
+}
 
 
-def render(talks):
+def render(meetings):
     env = Environment(loader=FileSystemLoader(str(REPO_ROOT / "templates")))
     env.filters["long_date"] = format_long_date
     template = env.get_template("pages/upcoming-talks.txt")
-    return template.render(site=SITE, talks=talks, generated=date(2026, 9, 18))
+    return template.render(site=SITE, meetings=meetings, generated=date(2026, 9, 18))
 
 
 class TestSiteConfig:
@@ -47,19 +60,42 @@ class TestSiteConfig:
         assert config["site_url"].startswith("https://")
         assert not config["site_url"].endswith("/")
 
-    def test_registration_url_present(self):
-        config = json.loads((REPO_ROOT / "config" / "site.json").read_text())
-        assert config["registration_url"].startswith("https://")
-
 
 class TestTemplate:
-    def test_every_url_is_plain_absolute_site_url_or_registration(self):
+    def test_header_says_upcoming_meetings(self):
+        assert "Boston Robot Hackers — Upcoming Meetings" in render([])
+
+    def test_every_url_is_plain_absolute_site_url(self):
         urls = re.findall(r"https?://\S+", render([SAMPLE_TALK]))
         assert urls
         for url in urls:
-            assert re.fullmatch(
-                r"https://(bostonrobothackers\.com/\S+|brh\.eventbrite\.com)", url
-            ), url
+            assert re.fullmatch(r"https://bostonrobothackers\.com/\S+", url), url
+
+    def test_confirmed_talk_names_speaker_and_topic(self):
+        text = render([SAMPLE_TALK])
+        assert "October Main Club Meeting" in text
+        assert "Speaker: Ada Lovelace" in text
+        assert f'Topic: "{SAMPLE_TALK["topic"]}"' in text
+
+    def test_tba_main_meeting_shows_tbd(self):
+        text = render([SAMPLE_TBA])
+        assert "December Main Club Meeting" in text
+        assert "Speaker: TBD" in text
+        assert "Topic: TBD" in text
+
+    def test_handson_meeting_has_no_speaker_line(self):
+        text = render([SAMPLE_HANDSON])
+        assert "November Hands-on meeting" in text
+        assert "Speaker:" not in text
+
+    def test_no_trailing_whitespace(self):
+        text = render([SAMPLE_TALK, SAMPLE_TBA, SAMPLE_HANDSON])
+        assert [line for line in text.splitlines() if line != line.rstrip()] == []
+
+    def test_every_block_has_when_and_where(self):
+        text = render([SAMPLE_TALK, SAMPLE_TBA, SAMPLE_HANDSON])
+        assert text.count("When: ") == 3
+        assert text.count("Where: Artisans Asylum") == 3
 
     def test_talk_url_joins_site_url_and_page_path(self):
         text = render([SAMPLE_TALK])
@@ -104,9 +140,9 @@ class TestRealBuild:
         assert "—".encode() in raw
 
     def test_lists_the_confirmed_talks(self, built_text):
-        assert "Arjun Viswanathan" in built_text
-        assert "Yun Chang" in built_text
+        assert "Speaker: Arjun Viswanathan" in built_text
+        assert "Speaker: Yun Chang" in built_text
 
-    def test_excludes_handson_and_tba(self, built_text):
-        assert "Hands-On" not in built_text
-        assert "to be announced" not in built_text.lower()
+    def test_includes_handson_and_tba_meetings(self, built_text):
+        assert "Hands-on meeting" in built_text
+        assert "Speaker: TBD" in built_text

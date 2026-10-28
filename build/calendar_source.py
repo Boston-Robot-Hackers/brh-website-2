@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # calendar_source — Load the meeting schedule from content/calendar.yaml
 # Author: Pito Salas and Claude Code
-# Version: 1
+# Version: 2
 # Created: 2026-10-28
 # Updated: 2026-10-28
 # Open Source Under MIT license
@@ -13,7 +13,8 @@ needs only `date` and `kind`; every other field falls back first to
 explicit for meetings migrated from the old per-file layout (it is the
 `.ics` event UID, so it must never change) and otherwise derived from the
 date and kind. Anything unexpected - an unknown key, a bad kind, a
-duplicate id - raises, naming the entry.
+duplicate id - raises, naming the entry. A missing file raises too, since
+the site always has a schedule; an empty file means no meetings.
 """
 
 from datetime import date
@@ -39,11 +40,10 @@ def load_calendar(path: Path) -> list[dict[str, Any]]:
     """Load every meeting from `path`, sorted by date ascending.
 
     Each meeting is `{"id", "date_obj", "metadata"}`, where `metadata` holds
-    the merged fields with `date` as an ISO string. A missing file means no
-    meetings.
+    the merged fields with `date` as an ISO string.
     """
     if not path.exists():
-        return []
+        raise FileNotFoundError(f"meeting schedule not found: {path}")
     schedule = yaml.safe_load(path.read_text()) or {}
     unknown = set(schedule) - {"defaults", "meetings"}
     if unknown:

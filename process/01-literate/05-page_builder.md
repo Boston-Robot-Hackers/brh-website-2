@@ -1,5 +1,5 @@
 ---
-version: "1.1"
+version: "1.2"
 generated: "2026-10-28"
 ---
 
@@ -136,9 +136,6 @@ sliding-window filter over the meeting list followed by a sort.
 2. **Two "upcoming" definitions exist.** The rail uses a 60-day window here,
    while `content_manager.get_future_meetings` has no window. That's a real
    product difference, but the date filtering itself is duplicated.
-3. **`render_cards` has a dead branch.** It sniffs for `"compact-meeting-card"`
-   in the template name, but that template no longer exists, so the branch can
-   never run. It and its test fixture can go.
-4. **`build_page` and the `.txt`/`.ics` builders overlap.** All three render a
+3. **`build_page` and the `.txt`/`.ics` builders overlap.** All three render a
    template with `site` in context and write a file; only the encoding differs.
    An `encoding`/post-process parameter would let the feeds reuse it.

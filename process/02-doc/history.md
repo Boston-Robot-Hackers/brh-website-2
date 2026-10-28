@@ -4,6 +4,20 @@ Completed-work log. `process/02-doc/current.md`'s `## Open` section is the only
 part that matters for new work; entries move here once done, per
 `.claude/process.md`'s checkpoint step.
 
+## 2026-10-28 (F20 closed: text list shows every upcoming meeting; chores 34-36)
+
+* **F20**: `upcoming-talks.txt` lists every future meeting, both kinds, not
+  just confirmed talks. `get_upcoming_talks` became `get_upcoming_meetings`.
+  * The user rewrote the template: "Main Club Meeting" blocks with
+    Speaker/Topic (or "TBD"), and short hands-on blocks. The register and
+    schedule lines are gone, so `registration_url` is no longer required.
+  * The filename and URL are unchanged. A new test guards against trailing
+    whitespace.
+* **Chore 34**: removed the dead `compact-meeting-card` branch.
+* **Chore 35**: a missing `content/calendar.yaml` now fails the build.
+* **Chore 36**: removed `classify_meeting`; callers read `metadata["kind"]`.
+* Tests: 221 passed. Ruff clean.
+
 ## 2026-10-28 (F19 closed: single calendar file, full calendar page)
 
 * **F19**: `content/calendar.yaml` replaces the 35 `content/meetings/*.md`

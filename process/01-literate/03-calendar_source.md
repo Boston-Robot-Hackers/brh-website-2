@@ -1,5 +1,5 @@
 ---
-version: "1.0"
+version: "1.1"
 generated: "2026-10-28"
 ---
 
@@ -11,6 +11,9 @@ The meeting schedule used to be 35 Markdown files, one per meeting, plus a
 Google Sheet that drifted out of sync with them. `calendar_source` replaces
 all of that with **one hand-edited file**, `content/calendar.yaml`, and one
 function, `load_calendar`, that turns it into meeting dicts.
+
+The file must exist: a missing `calendar.yaml` fails the build, while an
+empty one means "no meetings".
 
 Everything meeting-shaped downstream (the hero, `upcoming-talks.txt`,
 `meetings.ics`, the calendar page, the home-page rail) reads through this
@@ -117,6 +120,7 @@ and names the entry:
 
 | Problem | Example message |
 |---|---|
+| Missing file | `meeting schedule not found: .../content/calendar.yaml` |
 | Unknown top-level key | `calendar.yaml: unknown top-level keys ['meeting']` |
 | Unknown key in defaults | `calendar.yaml: unknown keys in defaults ['tme']` |
 | Unknown key in an entry | `calendar.yaml: meeting #12: unknown keys ['speakr']` |
@@ -131,6 +135,9 @@ failure.
 
 Errors are numbered by position (`meeting #12`) because a new entry may not
 have an id to name it by.
+
+Because this is the **only** place `kind` is checked, everything downstream
+reads `metadata["kind"]` directly and can trust it is `main` or `handson`.
 
 ## Dates: YAML's helpful parsing, normalized
 
@@ -149,16 +156,9 @@ consumers barely changed when the source moved.
 
 ## Observations and possible improvements
 
-1. **A missing `calendar.yaml` returns no meetings** instead of raising. That
-   kept the old "no `meetings/` directory" behavior, but on this site a missing
-   schedule is almost certainly a mistake, and the build would then quietly
-   ship an empty calendar.
-2. **Kind is validated twice.** `build_meeting` checks `kind`, and
-   `content_manager.classify_meeting` checks it again on every call. Since the
-   loader is now the only way in, the second check is redundant.
-3. **Defaults values aren't type-checked.** A `time: 7` (an int) would pass
+1. **Defaults values aren't type-checked.** A `time: 7` (an int) would pass
    here and only fail later in `parse_meeting_time`. Checking at load would
    keep all calendar errors in one place.
-4. **Duplicate-id detection covers derived ids too**, so two `main` meetings
+2. **Duplicate-id detection covers derived ids too**, so two `main` meetings
    on one date fail with a "duplicate id" message. The real problem there is
    "two meetings on one date", so the message could say that.

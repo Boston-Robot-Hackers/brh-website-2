@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # content_manager — Content management module for the website builder
 # Author: Pito Salas and Claude Code
-# Version: 2
+# Version: 3
 # Created: 2026-09-21
 # Updated: 2026-10-28
 # Open Source Under MIT license
@@ -51,18 +51,6 @@ def parse_date(date_str):
 def format_long_date(value: date) -> str:
     """Format a date as e.g. 'Thursday, October 15, 2026' (no zero-padded day)."""
     return f"{value:%A}, {value:%B} {value.day}, {value:%Y}"
-
-
-def classify_meeting(metadata: dict[str, Any]) -> str:
-    """Return the meeting kind ('main' or 'handson').
-
-    Requires an explicit `kind` field; a missing or unknown value is a content
-    bug, not something to guess from the title.
-    """
-    kind = metadata.get("kind")
-    if kind in ("main", "handson"):
-        return kind
-    raise ValueError(f"meeting 'kind' must be 'main' or 'handson', got {kind!r}")
 
 
 class ContentType:
@@ -242,24 +230,21 @@ class ContentManager:
         )
         return f"news/{html}" if exists else f"meetings.html#{meeting['id']}"
 
-    def get_upcoming_talks(self, today: date) -> list[dict[str, Any]]:
-        """Future main meetings that have both a `speaker` and a `topic`.
+    def get_upcoming_meetings(self, today: date) -> list[dict[str, Any]]:
+        """Every meeting dated today or later, both kinds, soonest first.
 
-        Hands-on sessions and TBA talks (no speaker/topic yet) are excluded.
-        `page_path` is the announcement page when one exists, else the
-        meeting's entry on the calendar page, relative to the site root.
+        `speaker`/`topic` are None until a talk is confirmed. `page_path` is
+        the announcement page when one exists, else the meeting's entry on the
+        calendar page, relative to the site root.
         """
-        talks = []
+        upcoming = []
         for meeting in self.get_future_meetings(today):
             metadata = meeting["metadata"]
-            if classify_meeting(metadata) != "main":
-                continue
-            if not (metadata.get("speaker") and metadata.get("topic")):
-                continue
-            talks.append(
+            upcoming.append(
                 {
-                    "topic": metadata["topic"],
-                    "speaker": metadata["speaker"],
+                    "kind": metadata["kind"],
+                    "topic": metadata.get("topic"),
+                    "speaker": metadata.get("speaker"),
                     "summary": metadata.get("text", ""),
                     "date_obj": meeting["date_obj"],
                     "time": metadata.get("time", ""),
@@ -267,7 +252,7 @@ class ContentManager:
                     "page_path": self.meeting_page_path(meeting),
                 }
             )
-        return talks
+        return upcoming
 
     def get_calendar_events(self, duration: timedelta) -> list[dict[str, Any]]:
         """All main meetings, past and future, as calendar events.
@@ -278,7 +263,7 @@ class ContentManager:
         events = []
         for meeting in self.load_meetings():
             metadata = meeting["metadata"]
-            if classify_meeting(metadata) != "main":
+            if metadata["kind"] != "main":
                 continue
             try:
                 start_time = parse_meeting_time(metadata.get("time"))
@@ -306,7 +291,7 @@ class ContentManager:
         for meeting in meetings[:2]:
             metadata = meeting["metadata"]
 
-            is_handson = classify_meeting(metadata) == "handson"
+            is_handson = metadata["kind"] == "handson"
             label = "Next Hands-On Meeting" if is_handson else "Next Main Meeting"
 
             parsed = parse_date(metadata.get("date"))

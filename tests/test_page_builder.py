@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # test_page_builder — Tests for PageBuilder rendering and meeting grouping
 # Author: Pito Salas and Claude Code
-# Version: 2
+# Version: 3
 # Created: 2026-09-21
 # Updated: 2026-10-28
 # Open Source Under MIT license
@@ -214,7 +214,6 @@ def rich_page_builder(dist):
         "cards/project-card.html": "{{ title }}",
         "cards/project-listing-item.html": "{{ project.title }}",
         "cards/member-card.html": "{{ name }}",
-        "cards/compact-meeting-card.html": "{{ title }}",
         "components/upcoming-meetings-calendar.html": "{{ meetings | length }}",
     }
     env = Environment(loader=DictLoader(templates))

@@ -1,5 +1,5 @@
 ---
-version: "1.2"
+version: "1.3"
 generated: "2026-10-28"
 ---
 
@@ -28,7 +28,7 @@ The constructor resolves the project root, loads `config/site.json`, and builds
 one shared Jinja environment with three custom filters:
 
 - `format_date` → "October 15, 2026" for cards and pages.
-- `long_date` → "Thursday, October 15, 2026" for the talks list.
+- `long_date` → "Thursday, October 15, 2026" for the upcoming-meetings text list.
 - `ics_text` → RFC 5545 escaping for the calendar feed.
 
 One environment shared by every collaborator means templates behave identically
@@ -113,8 +113,9 @@ def require_config(self, *keys: str):
             raise ValueError(f"config/site.json is missing {key!r}")
 ```
 
-- **`build_upcoming_talks(today)`** renders `upcoming-talks.txt` for pasting
-  into emails. It's written with a **UTF-8 BOM** so browsers decode em dashes
+- **`build_upcoming_talks(today)`** renders `upcoming-talks.txt`, every
+  upcoming meeting as plain text for pasting into emails. It requires only
+  `site_url`. It's written with a **UTF-8 BOM** so browsers decode em dashes
   correctly even when a server's `text/plain` header omits the charset.
 - **`build_ical_feed(stamp)`** renders `meetings.ics`, pipes it through
   `fold_ics`, and writes **bytes** so CRLF line endings survive on every

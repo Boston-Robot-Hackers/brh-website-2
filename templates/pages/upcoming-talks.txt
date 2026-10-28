@@ -1,16 +1,25 @@
-{{ site.title }} — Upcoming Talks
+{{ site.title }} — Upcoming Meetings
 As of {{ generated | long_date }}
-{% for talk in talks %}
+{% for meeting in meetings %}
 --------------------------------
-Boston Robot Hackers is happy to inform you of our {{ talk.date_obj.strftime('%B') }} monthly meeting. Our main speaker {{talk.speaker}} will present a talk titled "{{ talk.topic }}"
-
-When: {{ talk.date_obj | long_date }}, {{ talk.time }}
-Where: {{ talk.location }}
-
-{{ talk.summary }}
-
-You can learn more here: {{ site.site_url }}/{{ talk.page_path }}
-
-Please register!: {{ site.registration_url }}
-Here is our full schedule: {{ site.site_url }}/meetings.html
+{% set month = meeting.date_obj.strftime('%B') -%}
+{% if meeting.kind == 'handson' -%}
+{{ month }} Hands-on meeting: Smaller, without an agenda or a speaker. Don't publicize.
+When: {{ meeting.date_obj | long_date }}, {{ meeting.time }}
+Where: {{ meeting.location }}
+{%- elif meeting.speaker and meeting.topic -%}
+{{ month }} Main Club Meeting
+When: {{ meeting.date_obj | long_date }}, {{ meeting.time }}
+Where: {{ meeting.location }}
+Speaker: {{ meeting.speaker }}
+Topic: "{{ meeting.topic }}"
+{{ meeting.summary }}
+More info: {{ site.site_url }}/{{ meeting.page_path }}
+{%- else -%}
+{{ month }} Main Club Meeting
+When: {{ meeting.date_obj | long_date }}, {{ meeting.time }}
+Where: {{ meeting.location }}
+Speaker: TBD
+Topic: TBD
+{%- endif %}
 {% endfor %}

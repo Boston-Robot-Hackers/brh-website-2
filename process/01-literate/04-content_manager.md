@@ -1,5 +1,5 @@
 ---
-version: "1.1"
+version: "1.3"
 generated: "2026-10-28"
 ---
 
@@ -11,7 +11,7 @@ The whole site is generated from Markdown files with YAML frontmatter under
 `content/`, plus one YAML schedule, `content/calendar.yaml`. `content_manager`
 is the layer that **reads those files and hands the rest of the build clean
 Python dicts**: parsed dates, rendered HTML,
-validated meeting kinds, and derived views like "upcoming talks" or "calendar
+meetings from the calendar, and derived views like "upcoming meetings" or "calendar
 events".
 
 It deliberately knows nothing about HTML page layout. That belongs to
@@ -24,7 +24,7 @@ flowchart LR
     CM --> I["item dicts<br/>(news, projects, members)"]
     CM --> M["meeting dicts"]
     CM --> H["hero content"]
-    CM --> U["upcoming talks"]
+    CM --> U["upcoming meetings"]
     CM --> E["calendar events"]
     I --> PB["page_builder / build.py"]
     H --> PB
@@ -32,10 +32,10 @@ flowchart LR
     E --> ICS["meetings.ics"]
 ```
 
-## Validate at the boundary: dates and meeting kinds
+## Validate at the boundary: dates
 
-Two small module-level functions encode the project's **"report, don't guess"**
-rule, and everything else leans on them.
+A small module-level function encodes the project's **"report, don't guess"**
+rule for dates, and everything else leans on it.
 
 **Dates** must be ISO `YYYY-MM-DD`:
 
@@ -54,18 +54,9 @@ except ValueError as e:
 - Anything else non-ISO is a **content bug** and fails the build. There is no
   attempt to parse "Oct 15" or "15/10/2026".
 
-**Meeting kinds** must be explicit:
-
-```python
-kind = metadata.get("kind")
-if kind in ("main", "handson"):
-    return kind
-raise ValueError(f"meeting 'kind' must be 'main' or 'handson', got {kind!r}")
-```
-
-The alternative, inferring the kind from the title ("Hands-On" in the name?),
-is exactly the kind of guess that silently breaks when someone writes a title
-differently.
+Meeting kinds used to be validated here too. That check now lives in
+`calendar_source`, the one way meetings come in, so this module reads
+`metadata["kind"]` directly.
 
 `format_long_date` is the display counterpart: it renders "Thursday, October 5,
 2026" without zero-padding by building the string from `%A`, `%B`, `.day`, and
@@ -111,7 +102,7 @@ flowchart TD
     L["load_meetings()<br/>calendar.yaml, ascending"] --> F["get_future_meetings(today)<br/>date >= today"]
     L --> E["get_calendar_events(duration)<br/>main only, past + future"]
     F --> H["format_future_meetings_section<br/>hero: next 2 meetings"]
-    F --> T["get_upcoming_talks(today)<br/>main + speaker + topic"]
+    F --> T["get_upcoming_meetings(today)<br/>both kinds, for the text list"]
     P["meeting_page_path()<br/>announcement or calendar anchor"] -.-> T
     P -.-> E
 ```
@@ -129,26 +120,27 @@ moved from 35 Markdown files to one YAML file.
 A filter over `load_meetings`. It takes an optional `today` so tests can
 **freeze time**; production passes nothing and gets the real date.
 
-### get_upcoming_talks
+### get_upcoming_meetings
 
-The data behind `upcoming-talks.txt`. A meeting qualifies only if all three
-hold: it's in the future, it's a `main` meeting, and it has **both** `speaker`
-and `topic`.
+The data behind `upcoming-talks.txt`. It used to keep only confirmed talks;
+now it keeps **every** future meeting, both kinds, and reshapes each one into
+the flat fields the text template wants:
 
 ```python
-if classify_meeting(metadata) != "main":
-    continue
-if not (metadata.get("speaker") and metadata.get("topic")):
-    continue
+"kind": metadata["kind"],
+"topic": metadata.get("topic"),
+"speaker": metadata.get("speaker"),
 ```
 
-The speaker/topic requirement is a neat trick: a TBA meeting simply *drops out*
-until someone fills in those fields. No separate "is this confirmed?" flag is
-needed.
+- `speaker`/`topic` are **`None` until a talk is confirmed**. The template
+  branches on them (confirmed talk vs. "TBD") and on `kind` (hands-on), so the
+  filtering decision moved from Python into presentation.
+- The filename stayed `upcoming-talks.txt` so already-shared URLs keep
+  working; only its content broadened.
 
 ### get_calendar_events
 
-The data behind `meetings.ics`. Unlike talks, it keeps **past** meetings too,
+The data behind `meetings.ics`. Unlike the text list, it keeps **past** meetings too,
 because subscribers' calendars would otherwise lose history. Each event gets a
 timezone-aware start:
 
@@ -182,16 +174,16 @@ is **replaced** by a rendered "next two meetings" snippet. It's a simple
 
 ## Observations and possible improvements
 
-1. **The file is still past the ~300-line guideline** (about 360 lines). The
+1. **The file is still past the ~300-line guideline** (about 345 lines). The
    meeting views (`get_future_meetings` through `get_calendar_events`) could
    move next to `calendar_source` as one meetings module.
-2. **`classify_meeting` now re-checks validated data.** `calendar_source`
-   already rejects a bad `kind`, so the raise in `classify_meeting` can no
-   longer fire. It could shrink to a plain lookup, or the callers could read
-   `metadata["kind"]` directly.
-3. **`get_all_content` has a pre-existing `noqa` for branch complexity.** The
+2. **`get_all_content` has a pre-existing `noqa` for branch complexity.** The
    one remaining per-type special case (member hashtags) could move onto
    `ContentType` as an optional validator callable.
-4. **Config is read in the constructor** for hashtags only, while `build.py`
+3. **Config is read in the constructor** for hashtags only, while `build.py`
    separately loads the same `site.json`. Passing the loaded config in would
    remove the duplicate read.
+4. **`get_future_meetings` and `get_upcoming_meetings` are near-synonyms.**
+   The first returns raw meeting dicts, the second the flattened text-list
+   shape. A name that says what the second is for (say, `text_list_entries`)
+   would stop a reader guessing which one to call.

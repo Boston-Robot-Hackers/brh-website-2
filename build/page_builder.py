@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # page_builder — Page building module for the website builder
 # Author: Pito Salas and Claude Code
-# Version: 2
+# Version: 3
 # Created: 2026-09-21
 # Updated: 2026-10-28
 # Open Source Under MIT license
@@ -12,7 +12,7 @@ from datetime import date, timedelta
 from pathlib import Path
 from typing import Any
 
-from content_manager import ContentType, classify_meeting, parse_date
+from content_manager import ContentType, parse_date
 from jinja2 import Environment
 from news_links import NewsResolver, extract_slides_pdf
 
@@ -174,11 +174,6 @@ class PageBuilder:
                 if item.get("date"):
                     context["formatted_date"] = self.format_date(item["date"])
 
-            # For meeting cards, resolve announcement/report links and classify
-            if "compact-meeting-card" in template_name and "metadata" in item:
-                context.update(self.resolve_announcement_report(item["metadata"]))
-                context["kind"] = classify_meeting(item["metadata"])
-
             card_html = template.render(**context)
             cards_html.append(card_html)
 
@@ -268,7 +263,7 @@ class PageBuilder:
                 continue
 
             # Determine meeting type label
-            if classify_meeting(meeting["metadata"]) == "handson":
+            if meeting["metadata"]["kind"] == "handson":
                 type_label = "Hands-On Meeting"
             else:
                 type_label = "Main Meeting"

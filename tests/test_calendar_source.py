@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # test_calendar_source — Tests for loading the meeting schedule from calendar.yaml
 # Author: Pito Salas and Claude Code
-# Version: 1
+# Version: 2
 # Created: 2026-10-28
 # Updated: 2026-10-28
 # Open Source Under MIT license
@@ -27,8 +27,15 @@ def load(tmp_path, body, defaults=DEFAULTS):
     return load_calendar(path)
 
 
-def test_missing_file_means_no_meetings(tmp_path):
-    assert load_calendar(tmp_path / "calendar.yaml") == []
+def test_missing_file_raises(tmp_path):
+    with pytest.raises(FileNotFoundError, match="calendar.yaml"):
+        load_calendar(tmp_path / "calendar.yaml")
+
+
+def test_empty_file_means_no_meetings(tmp_path):
+    path = tmp_path / "calendar.yaml"
+    path.write_text("")
+    assert load_calendar(path) == []
 
 
 def test_defaults_merged_by_kind(tmp_path):

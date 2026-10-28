@@ -12,27 +12,18 @@ leftovers need manual cleanup (design record in
 
 **Speakers to confirm**: the 4 main meetings from Dec 2026 to Mar 2027
 (2026-12-10, 2027-01-14, 2027-02-11, 2027-03-11) have no speaker yet, so
-they show the "Speaker and topic to be announced." default.
+they show the "Speaker and topic to be announced." default, and "TBD" in
+`upcoming-talks.txt`.
 
 * When a speaker is confirmed, edit that entry in `content/calendar.yaml`:
-  add `speaker`, `topic`, `text`, and `announcement`. A talk only appears in
-  `upcoming-talks.txt` and gets a named `meetings.ics` event once both
-  `speaker` and `topic` are set.
+  add `speaker`, `topic`, `text`, and `announcement`. Once both `speaker`
+  and `topic` are set, `upcoming-talks.txt` names them and `meetings.ics`
+  gets a named event.
 
 **Open features (none started)**: F12 (build as a real package), F13 (unify
 CI/local build invocation), F14 (reduce page-builder boilerplate), F15
 (remove inline styles), F16 (robust root-dir detection). None has a task
 file yet.
-
-**Small cleanups found in the F19 checkpoint review** (not started; each
-would be a chore):
-
-* `PageBuilder.render_cards` still checks for `compact-meeting-card`, a
-  template that no longer exists, so that branch is dead code.
-* `calendar_source.load_calendar` returns no meetings when
-  `content/calendar.yaml` is missing, rather than failing the build.
-* `classify_meeting`'s raise can't fire any more, since `calendar_source`
-  already validates `kind`.
 
 Known, deliberately-deferred items (not urgent, no ticket filed):
 
@@ -42,7 +33,7 @@ Known, deliberately-deferred items (not urgent, no ticket filed):
   (the group's own meetup "today"), so naive local dates are correct as
   written — forcing tz-awareness would be a real behavior-risk change with
   no matching `.claude/style_guide.md` rule, not a mechanical lint fix.
-* `build/build.py` (~405 lines), `build/content_manager.py` (~360), and
+* `build/build.py` (~405 lines), `build/content_manager.py` (~345), and
   `build/page_builder.py` (~320) are over the style guide's ~300-line
   guideline. The literate docs' closing observations suggest where to split.
 

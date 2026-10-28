@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # build — Modular build script for Boston Robot Hackers website
 # Author: Pito Salas and Claude Code
-# Version: 3
+# Version: 4
 # Created: 2026-09-21
 # Updated: 2026-10-28
 # Open Source Under MIT license
@@ -355,15 +355,17 @@ class WebsiteBuilder:
         print(f"Built meetings.ics with {len(events)} events")
 
     def build_upcoming_talks(self, today: date):
-        """Build upcoming-talks.txt, a plain-text talk list for pasting into emails."""
-        self.require_config("site_url", "registration_url")
-        talks = self.content_manager.get_upcoming_talks(today)
+        """Build upcoming-talks.txt, a plain-text meeting list to paste into emails."""
+        self.require_config("site_url")
+        meetings = self.content_manager.get_upcoming_meetings(today)
         template = self.jinja_env.get_template("pages/upcoming-talks.txt")
-        text = template.render(site=self.site_config, talks=talks, generated=today)
+        text = template.render(
+            site=self.site_config, meetings=meetings, generated=today
+        )
         # BOM, so browsers read UTF-8 (em dashes) even when a server's
         # text/plain header omits the charset.
         (self.dist_dir / "upcoming-talks.txt").write_text(text, encoding="utf-8-sig")
-        print(f"Built upcoming-talks.txt with {len(talks)} talks")
+        print(f"Built upcoming-talks.txt with {len(meetings)} meetings")
 
     def build(self):
         """Main build function."""

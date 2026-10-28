@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # test_content_manager — Tests for ContentManager loading, sorting, meetings, and talks
 # Author: Pito Salas and Claude Code
-# Version: 2
+# Version: 3
 # Created: 2026-09-21
 # Updated: 2026-10-28
 # Open Source Under MIT license
@@ -251,9 +251,10 @@ class TestHeroGeneration:
         result = cm.format_future_meetings_section(meetings)
         assert result.count("<strong>") <= 2
 
-    def test_get_future_meetings_no_calendar_file(self, tmp_path):
+    def test_get_future_meetings_no_calendar_file_raises(self, tmp_path):
         cm = ContentManager(tmp_path)
-        assert cm.get_future_meetings() == []
+        with pytest.raises(FileNotFoundError):
+            cm.get_future_meetings()
 
     def test_format_future_meetings_with_announcement(self, tmp_content_dir, jinja_env):
         news_dir = tmp_content_dir / "news"
@@ -350,26 +351,6 @@ class TestHeroGeneration:
         assert items[1]["metadata"]["order"] == 2
 
 
-class TestClassifyMeeting:
-    def test_returns_explicit_kind(self):
-        from content_manager import classify_meeting
-
-        assert classify_meeting({"kind": "main"}) == "main"
-        assert classify_meeting({"kind": "handson"}) == "handson"
-
-    def test_missing_kind_raises(self):
-        from content_manager import classify_meeting
-
-        with pytest.raises(ValueError):
-            classify_meeting({})
-
-    def test_unknown_kind_raises(self):
-        from content_manager import classify_meeting
-
-        with pytest.raises(ValueError):
-            classify_meeting({"kind": "social"})
-
-
 class TestResolveNewsHtml:
     def test_resolves_by_filename_stem(self, tmp_content_dir):
         (tmp_content_dir / "news" / "my-talk.md").write_text(
@@ -406,37 +387,41 @@ class TestFormatLongDate:
         assert format_long_date(date(2026, 10, 5)) == "Monday, October 5, 2026"
 
 
-class TestGetUpcomingTalks:
+class TestGetUpcomingMeetings:
     TALK = {"kind": "main", "speaker": "Ada", "topic": "Arms", "time": "7:00pm"}
 
-    def talk_topics(self, content_dir):
-        talks = ContentManager(content_dir).get_upcoming_talks(TODAY)
-        return [talk["topic"] for talk in talks]
+    def upcoming(self, content_dir):
+        return ContentManager(content_dir).get_upcoming_meetings(TODAY)
 
-    def test_qualifying_talks_included_sorted_ascending(self, tmp_path):
-        write_meeting(tmp_path, "later", date="2026-11-12", **self.TALK)
-        sooner = {**self.TALK, "topic": "Legs"}
-        write_meeting(tmp_path, "sooner", date="2026-10-15", **sooner)
-        assert self.talk_topics(tmp_path) == ["Legs", "Arms"]
+    def upcoming_ids(self, content_dir):
+        return [
+            meeting["date_obj"].isoformat() for meeting in self.upcoming(content_dir)
+        ]
+
+    def test_all_kinds_included_sorted_ascending(self, tmp_path):
+        write_meeting(tmp_path, "talk", date="2026-11-12", **self.TALK)
+        write_meeting(tmp_path, "tba", date="2026-12-10", kind="main")
+        write_meeting(tmp_path, "handson", date="2026-10-01", kind="handson")
+        assert self.upcoming_ids(tmp_path) == ["2026-10-01", "2026-11-12", "2026-12-10"]
 
     def test_meeting_on_today_is_included(self, tmp_path):
         write_meeting(tmp_path, "m", date=TODAY.isoformat(), **self.TALK)
-        assert self.talk_topics(tmp_path) == ["Arms"]
+        assert self.upcoming_ids(tmp_path) == [TODAY.isoformat()]
 
-    def test_past_talk_excluded(self, tmp_path):
+    def test_past_meeting_excluded(self, tmp_path):
         write_meeting(tmp_path, "m", date="2026-09-17", **self.TALK)
-        assert self.talk_topics(tmp_path) == []
+        assert self.upcoming_ids(tmp_path) == []
 
-    def test_handson_excluded(self, tmp_path):
-        handson = {**self.TALK, "kind": "handson"}
-        write_meeting(tmp_path, "m", date="2026-10-01", **handson)
-        assert self.talk_topics(tmp_path) == []
-
-    @pytest.mark.parametrize("missing", ["speaker", "topic"])
-    def test_missing_speaker_or_topic_excluded(self, tmp_path, missing):
-        fields = {k: v for k, v in self.TALK.items() if k != missing}
-        write_meeting(tmp_path, "m", date="2026-10-01", **fields)
-        assert self.talk_topics(tmp_path) == []
+    def test_items_carry_kind_and_talk_fields(self, tmp_path):
+        write_meeting(tmp_path, "talk", date="2026-11-12", **self.TALK)
+        write_meeting(tmp_path, "handson", date="2026-11-25", kind="handson")
+        talk, handson = self.upcoming(tmp_path)
+        assert (talk["kind"], talk["speaker"], talk["topic"]) == ("main", "Ada", "Arms")
+        assert (handson["kind"], handson["speaker"], handson["topic"]) == (
+            "handson",
+            None,
+            None,
+        )
 
     def test_page_path_uses_announcement_when_present(self, tmp_path):
         (tmp_path / "news").mkdir()
@@ -444,10 +429,8 @@ class TestGetUpcomingTalks:
         write_meeting(
             tmp_path, "m", date="2026-10-01", announcement="ada-talk.md", **self.TALK
         )
-        talks = ContentManager(tmp_path).get_upcoming_talks(TODAY)
-        assert talks[0]["page_path"] == "news/ada-talk.html"
+        assert self.upcoming(tmp_path)[0]["page_path"] == "news/ada-talk.html"
 
     def test_page_path_falls_back_to_calendar_entry(self, tmp_path):
         write_meeting(tmp_path, "25-meeting", date="2026-10-01", **self.TALK)
-        talks = ContentManager(tmp_path).get_upcoming_talks(TODAY)
-        assert talks[0]["page_path"] == "meetings.html#25-meeting"
+        assert self.upcoming(tmp_path)[0]["page_path"] == "meetings.html#25-meeting"
