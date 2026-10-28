@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # test_upcoming_talks — Tests for the plain-text upcoming meetings list
 # Author: Pito Salas and Claude Code
-# Version: 2
+# Version: 3
 # Created: 2026-09-21
 # Updated: 2026-10-28
 # Open Source Under MIT license
@@ -92,10 +92,13 @@ class TestTemplate:
         text = render([SAMPLE_TALK, SAMPLE_TBA, SAMPLE_HANDSON])
         assert [line for line in text.splitlines() if line != line.rstrip()] == []
 
-    def test_every_block_has_when_and_where(self):
-        text = render([SAMPLE_TALK, SAMPLE_TBA, SAMPLE_HANDSON])
-        assert text.count("When: ") == 3
-        assert text.count("Where: Artisans Asylum") == 3
+    def test_every_block_starts_with_date_and_has_where(self):
+        samples = [SAMPLE_TALK, SAMPLE_TBA, SAMPLE_HANDSON]
+        blocks = render(samples).split("--------------------------------")[1:]
+        for block, sample in zip(blocks, samples, strict=True):
+            date_line = f"{format_long_date(sample['date_obj'])}, {sample['time']}"
+            assert block.strip().splitlines()[0] == date_line
+            assert "Where: Artisans Asylum" in block
 
     def test_talk_url_joins_site_url_and_page_path(self):
         text = render([SAMPLE_TALK])

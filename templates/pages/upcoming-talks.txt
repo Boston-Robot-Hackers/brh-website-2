@@ -5,20 +5,23 @@ As of {{ generated | long_date }}
 
 {% set month = meeting.date_obj.strftime('%B') -%}
 {% if meeting.kind == 'handson' -%}
-{{ month }} Hands-on meeting: Smaller, without an agenda or a speaker. Don't publicize.
-When: {{ meeting.date_obj | long_date }}, {{ meeting.time }}
+{{ meeting.date_obj | long_date }}, {{ meeting.time }}
+
+What: {{ month }} Hands-on meeting: Smaller, without an agenda or a speaker. Don't publicize.
 Where: {{ meeting.location }}
 {%- elif meeting.speaker and meeting.topic -%}
-{{ month }} Main Club Meeting
-When: {{ meeting.date_obj | long_date }}, {{ meeting.time }}
+{{ meeting.date_obj | long_date }}, {{ meeting.time }}
+
+What: {{ month }} Main Club Meeting
 Where: {{ meeting.location }}
 Speaker: {{ meeting.speaker }}
 Topic: "{{ meeting.topic }}"
 {{ meeting.summary }}
 More info: {{ site.site_url }}/{{ meeting.page_path }}
 {%- else -%}
+{{ meeting.date_obj | long_date }}, {{ meeting.time }}
+
 {{ month }} Main Club Meeting
-When: {{ meeting.date_obj | long_date }}, {{ meeting.time }}
 Where: {{ meeting.location }}
 Speaker: TBD
 Topic: TBD
