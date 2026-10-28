@@ -8,7 +8,11 @@ Thinking about giving a talk? We'd love to have you. Our audience is a mix of st
 
 **Schedule**
 
-Our meetings are always on the second Thursday of the month, at 7:00pm at the [Artisans Asylum](https://www.artisansasylum.com). Pito Salas will work with you to find a date that is convenient for your presentation.  In order to get on the calendar I will ask for a short bio and a short abstract for your talk. I need those in order to put it up on the web site and promote it to the members and the world!
+Our meetings are always on the second Thursday of the month, at 7:00pm at the [Artisans Asylum](https://www.artisansasylum.com). Pito Salas will work with you to find a date that is convenient for your presentation.  In order to get on the calendar I will ask for some information, which I need those in order to put it up on the web site and promote it to the members and the world!
+
+    * Title of the talk
+    * Short bstract for the talk
+    * A short bio for the speaker
 
 **Focus of talks**
 
