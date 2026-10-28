@@ -2,7 +2,6 @@
 As of {{ generated | long_date }}
 {% for meeting in meetings %}
 --------------------------------
-
 {% set month = meeting.date_obj.strftime('%B') -%}
 {% if meeting.kind == 'handson' -%}
 {{ meeting.date_obj | long_date }}, {{ meeting.time }}
