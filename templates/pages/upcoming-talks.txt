@@ -2,6 +2,7 @@
 As of {{ generated | long_date }}
 {% for meeting in meetings %}
 --------------------------------
+
 {% set month = meeting.date_obj.strftime('%B') -%}
 {% if meeting.kind == 'handson' -%}
 {{ month }} Hands-on meeting: Smaller, without an agenda or a speaker. Don't publicize.
