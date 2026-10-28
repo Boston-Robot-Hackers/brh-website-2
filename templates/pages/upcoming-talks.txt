@@ -7,8 +7,9 @@ As of {{ generated | long_date }}
 {{ meeting.date_obj | long_date }}, {{ meeting.time }}
 
 Note: Don't publicize.
-What: {{ month }} Hands-on meeting: Smaller, without an agenda or a speaker. D
+What: {{ month }} Hands-on meeting
 Where: {{ meeting.location }}
+Topic: Smaller, without an agenda or a speaker!
 {%- elif meeting.speaker and meeting.topic -%}
 {{ meeting.date_obj | long_date }}, {{ meeting.time }}
 
