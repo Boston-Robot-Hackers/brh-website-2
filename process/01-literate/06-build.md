@@ -1,6 +1,6 @@
 ---
-version: "1.1"
-generated: "2026-10-26"
+version: "1.2"
+generated: "2026-10-28"
 ---
 
 # build — orchestrating the whole site
@@ -41,9 +41,13 @@ from a naming convention; F16 proposes deriving it from `__file__` instead.
 ## Content types as data
 
 Each content kind is declared once as a `ContentType`: directory, sort order,
-detail template, listing template, output filename. For example, meetings sort
-by date descending and render `details/meeting-detail.html`. The page builders
-then look types up by name instead of repeating that configuration.
+detail template, listing template, output filename. For example, news sorts
+by `published_date` descending and renders `details/news-detail.html`. The page
+builders then look types up by name instead of repeating that configuration.
+
+Meetings are **not** a content type any more. They come from
+`content/calendar.yaml` through `ContentManager.load_meetings`, which the home,
+What's New, and meetings page builders all call.
 
 ## The page builders
 
@@ -118,7 +122,8 @@ def require_config(self, *keys: str):
   integer.
 
 Both take the date or time as a **parameter** rather than reading the clock
-themselves. `build()` passes the real now; tests pass a frozen date. That's
+themselves, and so does `build_meetings_page(today)`, which needs the date to
+split the calendar into upcoming and past. `build()` passes the real now; tests pass a frozen date. That's
 simple dependency injection for time, the most common source of flaky tests.
 
 ## The build sequence
@@ -129,7 +134,8 @@ sequenceDiagram
     participant A as AssetManager
     participant P as page builders
     B->>A: clean output/, copy assets + CSS, pygments CSS
-    B->>P: index, news, projects, members, meetings, about, content pages, learn
+    B->>P: index, news, projects, members, about, content pages, learn
+    B->>P: meetings.html calendar (today)
     B->>P: upcoming-talks.txt (today)
     B->>P: meetings.ics (now, UTC)
 ```
@@ -144,7 +150,7 @@ stale pages left over from deleted content.
    helper for it.
 2. **CWD-based root detection** is fragile for IDEs and automation. F16 proposes
    `Path(__file__).resolve().parent.parent`.
-3. **The file is past the ~300-line guideline** (about 420 lines).
+3. **The file is past the ~300-line guideline** (about 405 lines).
    `parse_learn_sections` is self-contained parsing logic and would sit better
    in its own module.
 4. **`build/` isn't a package**, so modules import each other as top-level

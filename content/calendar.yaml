@@ -1,0 +1,189 @@
+# The meeting schedule: the one place to add or change a meeting.
+# An entry needs only `date` and `kind` (main | handson); anything left
+# out comes from `defaults`. Leave `speaker`/`topic` out until a talk is
+# confirmed. Never change an existing `id`: it is the calendar-feed UID.
+
+defaults:
+  location: "Artisans Asylum, 96 Holton Street, Allston"
+  main:
+    time: "7:00pm"
+    text: "Speaker and topic to be announced."
+  handson:
+    time: "6:00pm"
+    text: "These meetings have no agenda or speaker. Just hacking together. Beginners welcome!"
+    announcement: "6-hands-on-meeting.md"
+
+meetings:
+  - id: 1-meeting
+    date: 2025-09-04
+    kind: main
+    text: "Space Station OS"
+    announcement: "4-talk-announcement.md"
+
+  - id: 2-meeting
+    date: 2025-10-09
+    kind: main
+    text: "Affordable Biomimetic Robot Hands"
+    announcement: "10-meeting-announcement.md"
+
+  - id: 3-handson-meeting
+    date: 2025-10-23
+    kind: handson
+
+  - id: 4-meeting
+    date: 2025-11-11
+    kind: main
+    text: "Using a VLA for controlling a robotic hand"
+    announcement: "11-fourth-meeting.md"
+    report: "12-update-on-fifth-meeting.md"
+
+  - id: 5-handson-meeting
+    date: 2025-11-18
+    kind: handson
+
+  - id: 6-meeting
+    date: 2025-12-11
+    kind: main
+    text: "MIT Beaverworks and RACECAR Project"
+    announcement: "13-december-meeting-announcement.md"
+    report: "14-december-meerting-summary.md"
+
+  - id: 7-handson-meeting
+    date: 2025-12-18
+    kind: handson
+
+  - id: 8-meeting
+    date: 2026-01-08
+    kind: main
+    text: ""
+    announcement: "16-jan-meeting-announcement.md"
+
+  - id: 9-handson-meeting
+    date: 2026-01-29
+    kind: handson
+
+  - id: 10-meeting
+    date: 2026-03-05
+    kind: main
+    text: "March Monthly meeting with Tom Ryden, Executive Director of Mass Robotics. Tom will discuss current trends in Robotics Startups and the industry in general"
+    announcement: "18-march-meeting-announcement.md"
+
+  - id: 11-handson-meeting
+    date: 2026-03-12
+    kind: handson
+
+  - id: 12-meeting
+    date: 2026-04-02
+    kind: main
+    text: "Featuring Chris Lai Presentation on Kalman Filters. Chris will discuss the motivation behind the Kalman Filter, and describe why (and most importantly) how it is used."
+    announcement: "17-april-meeting-announcement.md"
+
+  - id: 13-handson-meeting
+    date: 2026-04-09
+    kind: handson
+
+  - id: 14-meeting
+    date: 2026-05-07
+    kind: main
+    text: "Adam Ring will give the talk about simulation in robotics. In this talk, Adam will discuss how the right simulation approach can accelerate development, improve safety, and reduce costly real-world failures."
+    announcement: "20-adam-ring-talk-announcement.md"
+
+  - id: 15-handson-meeting
+    date: 2026-05-20
+    kind: handson
+
+  - id: 16-meeting
+    date: 2026-06-11
+    kind: main
+    text: "Ankush Dhawan, a PhD candidate in Robotics at Stanford, will introduce Pupper: an open-source quadruped robot dog that walks, sees, listens, and responds. The centerpiece of Stanford's CS123 course and the Dr. Pupper project at Stanford Medicine."
+    announcement: "24-ankush-dhawan-talk-announcement.md"
+
+  - id: 17-handson-meeting
+    date: 2026-06-24
+    kind: handson
+
+  - id: 18-meeting
+    date: 2026-07-09
+    kind: main
+    text: "Isaac Vandor is the developer and maintainer for the software running on famous underwater vehicles like Alvin and AUV Sentry. Isaac will talk about his work and experiences with underwater maritime robotics."
+
+  - id: 19-handson-meeting
+    date: 2026-07-22
+    kind: handson
+
+  - id: 20-meeting
+    date: 2026-08-06
+    kind: main
+    text: "Shivam Chopra (one of our members) will give a talk about Forward and Inverse Kinematics. Especially for people working with robot arms this is a very important thing to understand. There is some math involved by Shivam promises that no one will get hurt :)"
+
+  - id: 21-handson-meeting
+    date: 2026-08-19
+    kind: handson
+
+  - id: 22-meeting
+    date: 2026-09-03
+    kind: main
+    text: "Alan Kilian, a long time software and hardware person with a lifelong passion for Robotics will speak about aspects of power for robots. Batteries, Measurement, Circuitry and more."
+    announcement: "19-june-meeting-announcement.md"
+    report: "27-september-meeting-report.md"
+
+  - id: 23-handson-meeting
+    date: 2026-09-09
+    kind: handson
+
+  - id: 25-meeting
+    date: 2026-10-15
+    kind: main
+    speaker: "Arjun Viswanathan"
+    topic: "Reinforcement Learning for Multimodal Locomotion"
+    text: "Arjun Viswanathan, who works on reinforcement learning for robot behavior at Boston Dynamics, will speak about Reinforcement Learning for Multimodal Locomotion — teaching a legged-aerial robot not just how to walk, but which mode of locomotion to use at all, the topic of his MS thesis at Northeastern's Silicon Synapse Lab."
+    announcement: "26-arjun-viswanathan-talk-announcement.md"
+    report: "29-october-meeting-report.md"
+
+  - id: 26-handson-meeting
+    date: 2026-10-21
+    kind: handson
+
+  - id: 24-meeting
+    date: 2026-11-12
+    kind: main
+    speaker: "Yun Chang"
+    topic: "Robot Scene Understanding for Extreme Environments: From Subterranean to Heavy Equipment"
+    text: "Yun Chang, a robotics researcher who spent a decade at MIT's SPARK Lab under Professor Luca Carlone, will speak about robot scene understanding for extreme environments — from the DARPA Subterranean Challenge to autonomy for heavy equipment at their current startup."
+    announcement: "25-yun-chang-talk-announcement.md"
+
+  - id: 27-handson-meeting
+    date: 2026-11-25
+    kind: handson
+
+  - id: 28-meeting
+    date: 2026-12-10
+    kind: main
+
+  - id: 29-handson-meeting
+    date: 2026-12-16
+    kind: handson
+
+  - id: 31-handson-meeting
+    date: 2027-01-13
+    kind: handson
+
+  - id: 30-meeting
+    date: 2027-01-14
+    kind: main
+
+  - id: 32-meeting
+    date: 2027-02-11
+    kind: main
+
+  - id: 33-handson-meeting
+    date: 2027-02-17
+    kind: handson
+
+  - id: 34-meeting
+    date: 2027-03-11
+    kind: main
+
+  - id: 35-handson-meeting
+    date: 2027-03-17
+    kind: handson

@@ -1,0 +1,31 @@
+<!-- One meeting on the calendar page; its id is the anchor other pages link to. -->
+<article id="{{ meeting.id }}" class="calendar-entry calendar-entry--{{ meeting.metadata.kind }}">
+    <div class="calendar-entry__when">
+        <p class="calendar-entry__month">{{ meeting.date_obj.strftime('%b') }}</p>
+        <p class="calendar-entry__day">{{ meeting.date_obj.day }}</p>
+        <p class="calendar-entry__weekday">{{ meeting.date_obj.strftime('%a') }}</p>
+    </div>
+    <div class="calendar-entry__body">
+        <p class="calendar-entry__kind">{{ 'Main Meeting' if meeting.metadata.kind == 'main' else 'Hands-On Meeting' }}</p>
+        <p class="calendar-entry__date">{{ meeting.date_obj | long_date }} &middot; {{ meeting.metadata.time }}</p>
+        {% if meeting.metadata.topic %}
+        <h3 class="calendar-entry__topic">{{ meeting.metadata.topic }}</h3>
+        {% endif %}
+        {% if meeting.metadata.speaker %}
+        <p class="calendar-entry__speaker">{{ meeting.metadata.speaker }}</p>
+        {% endif %}
+        {% if meeting.metadata.text %}
+        <p class="calendar-entry__text">{{ meeting.metadata.text }}</p>
+        {% endif %}
+        {% if meeting.announcement_exists or meeting.report_exists %}
+        <p class="calendar-entry__links">
+            {% if meeting.announcement_exists %}
+            <a href="news/{{ meeting.announcement_html }}" class="calendar-entry__badge calendar-entry__badge--announcement">Announcement</a>
+            {% endif %}
+            {% if meeting.report_exists %}
+            <a href="news/{{ meeting.report_html }}" class="calendar-entry__badge calendar-entry__badge--report">Notes from the meeting</a>
+            {% endif %}
+        </p>
+        {% endif %}
+    </div>
+</article>

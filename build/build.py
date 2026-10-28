@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # build — Modular build script for Boston Robot Hackers website
 # Author: Pito Salas and Claude Code
-# Version: 2
+# Version: 3
 # Created: 2026-09-21
-# Updated: 2026-10-26
+# Updated: 2026-10-28
 # Open Source Under MIT license
 """Split into focused modules for better maintainability."""
 
@@ -86,15 +86,6 @@ class WebsiteBuilder:
                 reverse=False,
                 detail_template="details/member-detail.html",
             ),
-            "meetings": ContentType(
-                "meetings",
-                "meetings",
-                sort_key="date",
-                reverse=True,
-                output_filename="meetings.html",
-                page_template="pages/meetings.html",
-                detail_template="details/meeting-detail.html",
-            ),
         }
 
     def load_site_config(self) -> dict[str, Any]:
@@ -127,7 +118,7 @@ class WebsiteBuilder:
         projects_content = self.page_builder.render_project_cards_for_home(projects)
 
         # Add upcoming meetings in calendar format for front page
-        meetings = self.content_manager.get_all_content(self.content_types["meetings"])
+        meetings = self.content_manager.load_meetings()
         meetings_content = self.page_builder.render_upcoming_meetings_calendar(meetings)
 
         output_file = self.page_builder.build_page(
@@ -142,12 +133,11 @@ class WebsiteBuilder:
         print(f"Generated {output_file}")
 
     def build_news_page(self):
-        """Build the whatsnew.html page with all news items and recent meetings."""
+        """Build the whatsnew.html page and every news detail page."""
         posts = self.content_manager.get_all_content(self.content_types["news"])
 
-        # Get meetings for the right column (grouped by month), and derive
-        # each announcement's report link from the meeting's own fields.
-        meetings = self.content_manager.get_all_content(self.content_types["meetings"])
+        # Derive each announcement's report link from its meeting's own fields.
+        meetings = self.content_manager.load_meetings()
         related_reports = self.page_builder.build_related_reports_map(meetings)
 
         self.page_builder.build_detail_pages(
@@ -155,7 +145,6 @@ class WebsiteBuilder:
         )
 
         news_content = self.page_builder.render_compact_news_cards(posts)
-        meetings_content = self.page_builder.render_monthly_meeting_cards(meetings)
         hero_content = self.content_manager.build_hero_content("whatsnew")
 
         self.page_builder.build_page(
@@ -163,13 +152,10 @@ class WebsiteBuilder:
             "whatsnew.html",
             hero=hero_content,
             news_content=news_content,
-            meetings_content=meetings_content,
             **self.page_builder.resolve_banner(hero_content),
         )
 
-        print(
-            f"Built whatsnew.html with {len(posts)} posts and {len(meetings)} meetings"
-        )
+        print(f"Built whatsnew.html with {len(posts)} posts")
 
     def build_projects_page(self):
         """Build the projects.html page."""
@@ -332,19 +318,16 @@ class WebsiteBuilder:
 
         print(f"Built learn.html with {len(sections)} sections")
 
-    def build_meetings_page(self):
-        """Build the meetings.html page."""
-        meetings = self.content_manager.get_all_content(self.content_types["meetings"])
-        self.page_builder.build_detail_pages(meetings, self.content_types["meetings"])
-
-        meetings_content = self.page_builder.render_monthly_meeting_cards(meetings)
+    def build_meetings_page(self, today: date):
+        """Build meetings.html, the full calendar of every meeting."""
+        meetings = self.content_manager.load_meetings()
         hero_content = self.content_manager.build_hero_content("meetings")
 
         self.page_builder.build_page(
             "pages/meetings.html",
             "meetings.html",
             hero=hero_content,
-            meetings_content=meetings_content,
+            **self.page_builder.calendar_sections(meetings, today),
             **self.page_builder.resolve_banner(hero_content),
         )
 
@@ -402,7 +385,7 @@ class WebsiteBuilder:
         self.build_news_page()
         self.build_projects_page()
         self.build_members_page()
-        self.build_meetings_page()
+        self.build_meetings_page(date.today())
         self.build_about_page()
         self.build_content_pages()
         self.build_learn_page()

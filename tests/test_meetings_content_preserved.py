@@ -1,64 +1,58 @@
 #!/usr/bin/env python3
-# test_meetings_content_preserved — Built meetings page keeps all real content
+# test_meetings_content_preserved — Calendar page shows every calendar.yaml meeting
 # Author: Pito Salas and Claude Code
-# Version: 1
+# Version: 2
 # Created: 2026-09-21
-# Updated: 2026-09-21
+# Updated: 2026-10-28
 # Open Source Under MIT license
+import re
+from datetime import UTC, date, datetime
 from pathlib import Path
 
 import pytest
+from calendar_source import load_calendar
 
 from build import WebsiteBuilder
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-
-
-def real_meeting_file_count() -> int:
-    return len(
-        [
-            f
-            for f in (REPO_ROOT / "content" / "meetings").glob("*.md")
-            if not f.stem.startswith("_")
-        ]
-    )
+TODAY = date(2026, 11, 1)
 
 
 @pytest.fixture(scope="module")
-def built_pages():
+def built():
     builder = WebsiteBuilder()
-    builder.build_meetings_page()
-    meetings_html = (builder.dist_dir / "meetings.html").read_text()
-
-    first_detail_file = min((builder.dist_dir / "meetings").glob("*.html"))
-    detail_html = first_detail_file.read_text()
-    return meetings_html, detail_html
+    builder.asset_manager.clean_output_directory()
+    builder.build_meetings_page(TODAY)
+    builder.build_ical_feed(datetime.now(UTC))
+    return builder
 
 
-def test_every_meeting_entry_present(built_pages):
-    meetings_html, _ = built_pages
-    expected = real_meeting_file_count()
-    assert expected > 0
-
-    actual = meetings_html.count('class="meeting-entry meeting-entry--with-column"')
-    assert actual == expected, (
-        f"expected {expected} meeting entries in built meetings.html, found {actual}"
-    )
+@pytest.fixture(scope="module")
+def meetings_html(built):
+    return (built.dist_dir / "meetings.html").read_text()
 
 
-def test_meeting_detail_page_renders_full_content(built_pages):
-    _, detail_html = built_pages
-    assert 'class="detail-header__title"' in detail_html
-    assert 'class="content"' in detail_html
-    assert "Back to Meetings" in detail_html
+def test_every_meeting_has_an_anchored_entry(meetings_html):
+    meetings = load_calendar(REPO_ROOT / "content" / "calendar.yaml")
+    assert meetings
+    anchors = re.findall(r'<article id="([^"]+)" class="calendar-entry', meetings_html)
+    assert sorted(anchors) == sorted(meeting["id"] for meeting in meetings)
 
 
-def test_meeting_detail_shows_blurb_not_broken_thumb(built_pages):
-    """Regression test: no content/meetings/*.md sets `image`, so every
-    meeting detail page hit the image-less fallback, which crammed the
-    full text blurb (meant as a short label elsewhere) into a fixed
-    140x140px thumbnail box - visibly overflowing. Fixed by dropping the
-    thumb for meetings and showing the blurb as a normal excerpt instead."""
-    _, detail_html = built_pages
-    assert 'class="detail-header-thumb"' not in detail_html
-    assert 'class="detail-header__excerpt"' in detail_html
+def test_upcoming_section_precedes_past(meetings_html):
+    assert meetings_html.index(">Upcoming<") < meetings_html.index(">Past<")
+
+
+def test_no_meeting_detail_pages(built):
+    assert not (built.dist_dir / "meetings").exists()
+
+
+def test_meeting_links_resolve_to_calendar_anchors(built, meetings_html):
+    """Every `meetings.html#id` link in the iCal feed lands on a real entry."""
+    raw = (built.dist_dir / "meetings.ics").read_bytes().decode()
+    feed = raw.replace("\r\n ", "").replace("\r\n", "\n")
+    targets = set(re.findall(r"^URL:\S+/meetings\.html#(\S+)$", feed, re.MULTILINE))
+    assert targets
+    anchors = set(re.findall(r'<article id="([^"]+)"', meetings_html))
+    assert targets <= anchors
+    assert "/meetings/" not in feed

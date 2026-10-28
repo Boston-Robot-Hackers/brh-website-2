@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # test_ical_feed — Tests for the meetings iCalendar feed
 # Author: Pito Salas and Claude Code
-# Version: 1
+# Version: 2
 # Created: 2026-09-21
-# Updated: 2026-09-21
+# Updated: 2026-10-28
 # Open Source Under MIT license
 
 import json
@@ -15,16 +15,12 @@ import pytest
 from content_manager import BOSTON, ContentManager
 from ical_format import fold_ics, ics_text, parse_meeting_time
 from icalendar import Calendar
+from meeting_fixtures import write_meeting
 
 from build import WebsiteBuilder
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 TWO_HOURS = timedelta(minutes=120)
-
-
-def write_meeting(content_dir, name, **fields):
-    lines = "".join(f'{key}: "{value}"\n' for key, value in fields.items())
-    (content_dir / "meetings" / f"{name}.md").write_text(f"---\n{lines}---\n")
 
 
 class TestParseMeetingTime:
@@ -96,33 +92,28 @@ class TestGetCalendarEvents:
         return ContentManager(content_dir).get_calendar_events(TWO_HOURS)
 
     def test_includes_past_and_future_main_meetings_ascending(self, tmp_path):
-        (tmp_path / "meetings").mkdir()
         write_meeting(tmp_path, "future", date="2099-01-01", **self.TALK)
         write_meeting(tmp_path, "past", date="2020-01-01", **self.TALK)
         assert [e["id"] for e in self.events(tmp_path)] == ["past", "future"]
 
     def test_handson_excluded(self, tmp_path):
-        (tmp_path / "meetings").mkdir()
         handson = {**self.TALK, "kind": "handson", "time": "6:00pm"}
         write_meeting(tmp_path, "h", date="2026-10-01", **handson)
         assert self.events(tmp_path) == []
 
     def test_start_is_boston_local_and_end_adds_duration(self, tmp_path):
-        (tmp_path / "meetings").mkdir()
         write_meeting(tmp_path, "m", date="2026-10-15", **self.TALK)
         event = self.events(tmp_path)[0]
         assert event["start"] == datetime(2026, 10, 15, 19, 0, tzinfo=BOSTON)
         assert event["end"] == datetime(2026, 10, 15, 21, 0, tzinfo=BOSTON)
 
     def test_topic_and_speaker_none_when_tba(self, tmp_path):
-        (tmp_path / "meetings").mkdir()
         write_meeting(tmp_path, "m", date="2026-10-15", **self.TALK)
         event = self.events(tmp_path)[0]
         assert event["topic"] is None
         assert event["speaker"] is None
 
     def test_page_path_uses_announcement_when_present(self, tmp_path):
-        (tmp_path / "meetings").mkdir()
         (tmp_path / "news").mkdir()
         (tmp_path / "news" / "talk.md").write_text("---\ntitle: T\n---\nx.\n")
         write_meeting(
@@ -130,13 +121,11 @@ class TestGetCalendarEvents:
         )
         assert self.events(tmp_path)[0]["page_path"] == "news/talk.html"
 
-    def test_page_path_falls_back_to_meeting_page(self, tmp_path):
-        (tmp_path / "meetings").mkdir()
+    def test_page_path_falls_back_to_calendar_entry(self, tmp_path):
         write_meeting(tmp_path, "7-meeting", date="2026-10-15", **self.TALK)
-        assert self.events(tmp_path)[0]["page_path"] == "meetings/7-meeting.html"
+        assert self.events(tmp_path)[0]["page_path"] == "meetings.html#7-meeting"
 
     def test_bad_time_raises_naming_meeting(self, tmp_path):
-        (tmp_path / "meetings").mkdir()
         bad_time = {**self.TALK, "time": "7pm"}
         write_meeting(tmp_path, "7-meeting", date="2026-10-15", **bad_time)
         with pytest.raises(ValueError, match="7-meeting"):

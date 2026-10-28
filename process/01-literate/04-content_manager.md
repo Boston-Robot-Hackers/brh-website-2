@@ -1,6 +1,6 @@
 ---
-version: "1.0"
-generated: "2026-09-21"
+version: "1.1"
+generated: "2026-10-28"
 ---
 
 # content_manager — from Markdown files to structured content
@@ -8,8 +8,9 @@ generated: "2026-09-21"
 ## What this module does
 
 The whole site is generated from Markdown files with YAML frontmatter under
-`content/`. `content_manager` is the layer that **reads those files and hands
-the rest of the build clean Python dicts**: parsed dates, rendered HTML,
+`content/`, plus one YAML schedule, `content/calendar.yaml`. `content_manager`
+is the layer that **reads those files and hands the rest of the build clean
+Python dicts**: parsed dates, rendered HTML,
 validated meeting kinds, and derived views like "upcoming talks" or "calendar
 events".
 
@@ -19,7 +20,9 @@ It deliberately knows nothing about HTML page layout. That belongs to
 ```mermaid
 flowchart LR
     MD["content/**/*.md"] --> CM["ContentManager"]
-    CM --> I["item dicts<br/>(news, projects, members, meetings)"]
+    Y["content/calendar.yaml<br/>(via calendar_source)"] --> CM
+    CM --> I["item dicts<br/>(news, projects, members)"]
+    CM --> M["meeting dicts"]
     CM --> H["hero content"]
     CM --> U["upcoming talks"]
     CM --> E["calendar events"]
@@ -92,7 +95,6 @@ does the rest:
 
 - Files starting with `_` are skipped as scaffolding.
 - Members get hashtag validation (a warning, not a failure).
-- Meetings get `classify_meeting` validation (a failure).
 - Items are sorted by `order`, by date (parsed, so it's chronological not
   lexical), or by any other field.
 
@@ -100,24 +102,27 @@ This is the *table-driven* pattern: behavior varies by data, not by subclass.
 
 ## The meeting pipeline
 
-Meetings are the richest content type, and several views are derived from
-them. They share one loader:
+Meetings are the richest content, and several views are derived from them.
+They no longer go through `get_all_content` at all: they share one loader,
+backed by `calendar_source`:
 
 ```mermaid
 flowchart TD
-    L["load_meetings()<br/>all dated meetings, ascending"] --> F["get_future_meetings(today)<br/>date >= today"]
+    L["load_meetings()<br/>calendar.yaml, ascending"] --> F["get_future_meetings(today)<br/>date >= today"]
     L --> E["get_calendar_events(duration)<br/>main only, past + future"]
     F --> H["format_future_meetings_section<br/>hero: next 2 meetings"]
     F --> T["get_upcoming_talks(today)<br/>main + speaker + topic"]
-    P["meeting_page_path()<br/>announcement or meeting page"] -.-> T
+    P["meeting_page_path()<br/>announcement or calendar anchor"] -.-> T
     P -.-> E
 ```
 
 ### load_meetings
 
-Reads every meeting's frontmatter, skips undated files, validates dates, and
-returns `{id, metadata, date_obj, title}` sorted ascending. `id` is the slug or
-filename stem, which is what the meeting's detail page is named after.
+A one-line delegation to `calendar_source.load_calendar` on
+`content/calendar.yaml`. It returns `{id, date_obj, metadata}` sorted
+ascending, with defaults already merged and every entry already validated.
+Keeping the method here means no consumer had to change when the source
+moved from 35 Markdown files to one YAML file.
 
 ### get_future_meetings
 
@@ -158,8 +163,15 @@ duration, because content has no end times.
 ### meeting_page_path
 
 One rule shared by both views: link to the meeting's **announcement** post if it
-resolves, else to the meeting's own detail page. Having it in one place keeps
-the text list and the calendar pointing at the same URL.
+resolves, else to the meeting's **anchor on the calendar page**:
+
+```python
+return f"news/{html}" if exists else f"meetings.html#{meeting['id']}"
+```
+
+Per-meeting detail pages are gone, so the anchor is the meeting's only
+address. Having the rule in one place keeps the text list and the `.ics`
+feed pointing at the same URL.
 
 ## Hero content
 
@@ -170,15 +182,16 @@ is **replaced** by a rendered "next two meetings" snippet. It's a simple
 
 ## Observations and possible improvements
 
-1. **The file is past the ~300-line guideline** (about 390 lines). The meeting
-   pipeline (`load_meetings` through `get_calendar_events`) is a natural
-   candidate to move into its own `meetings.py` module.
-2. **Meetings are parsed twice.** `get_all_content` and `load_meetings` both
-   read meeting files, with slightly different rules (the latter doesn't skip
-   `_` files). Unifying them would remove a subtle divergence.
+1. **The file is still past the ~300-line guideline** (about 360 lines). The
+   meeting views (`get_future_meetings` through `get_calendar_events`) could
+   move next to `calendar_source` as one meetings module.
+2. **`classify_meeting` now re-checks validated data.** `calendar_source`
+   already rejects a bad `kind`, so the raise in `classify_meeting` can no
+   longer fire. It could shrink to a plain lookup, or the callers could read
+   `metadata["kind"]` directly.
 3. **`get_all_content` has a pre-existing `noqa` for branch complexity.** The
-   per-type special cases (members, meetings) could move onto `ContentType` as
-   optional validator callables.
+   one remaining per-type special case (member hashtags) could move onto
+   `ContentType` as an optional validator callable.
 4. **Config is read in the constructor** for hashtags only, while `build.py`
    separately loads the same `site.json`. Passing the loaded config in would
    remove the duplicate read.

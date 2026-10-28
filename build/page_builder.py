@@ -1,14 +1,13 @@
 #!/usr/bin/env python3
 # page_builder — Page building module for the website builder
 # Author: Pito Salas and Claude Code
-# Version: 1
+# Version: 2
 # Created: 2026-09-21
-# Updated: 2026-09-21
+# Updated: 2026-10-28
 # Open Source Under MIT license
 """Handles template rendering and page generation."""
 
 import contextlib
-from collections import defaultdict
 from datetime import date, timedelta
 from pathlib import Path
 from typing import Any
@@ -69,7 +68,6 @@ class PageBuilder:
             "news": "post",
             "projects": "project",
             "members": "member",
-            "meetings": "meeting",
         }
 
         for item in items:
@@ -86,12 +84,6 @@ class PageBuilder:
                 **self.resolve_banner(item["metadata"], path_prefix="../"),
                 **extra_context,
             }
-
-            # For meetings, resolve announcement and report links
-            if content_type.name == "meetings":
-                template_vars[var_name].update(
-                    self.resolve_announcement_report(item["metadata"])
-                )
 
             html_content = detail_template.render(**template_vars)
             detail_file = detail_dir / f"{item['id']}.html"
@@ -242,84 +234,19 @@ class PageBuilder:
             members_flattened, "cards/member-card.html", projects_map=projects_map
         )
 
-    def group_meetings_by_month(self, meetings: list[dict]) -> list[dict]:
-        """Group meetings by month, pairing main and hands-on meetings."""
-        month_groups = defaultdict(lambda: {"main": None, "handson": None})
-
-        for meeting in meetings:
-            date_obj = parse_date(meeting["metadata"].get("date"))
-            if date_obj is None:
-                continue
-
-            month_key = date_obj.strftime("%Y-%m")
-            month_label = date_obj.strftime("%B %Y")
-
-            # Determine if main or hands-on
-            slot = classify_meeting(meeting["metadata"])
-            if month_groups[month_key][slot] is not None:
-                existing = month_groups[month_key][slot].get("id", "?")
-                print(
-                    f"Warning: month {month_key} already has a '{slot}' meeting "
-                    f"('{existing}'); '{meeting.get('id', '?')}' will overwrite it "
-                    f"on the meetings page"
-                )
-            month_groups[month_key][slot] = meeting
-
-            month_groups[month_key]["label"] = month_label
-            month_groups[month_key]["sort_key"] = month_key
-
-        # Convert to sorted list (newest month first)
-        grouped = []
-        for month_key in sorted(month_groups.keys(), reverse=True):
-            group = month_groups[month_key]
-            grouped.append(
-                {
-                    "month_label": group["label"],
-                    "main_meeting": group["main"],
-                    "handson_meeting": group["handson"],
-                    "sort_key": group["sort_key"],
-                }
-            )
-
-        return grouped
-
-    def render_monthly_meeting_cards(self, meetings: list[dict]) -> str:
-        """Render meetings grouped by month."""
-        if not meetings:
-            return ""
-
-        grouped = self.group_meetings_by_month(meetings)
-        template = self.jinja_env.get_template("cards/monthly-meeting-card.html")
-        cards_html = []
-
-        for group in grouped:
-            context = {
-                "month_label": group["month_label"],
-                "main_meeting": group["main_meeting"],
-                "handson_meeting": group["handson_meeting"],
-            }
-
-            # Resolve announcement/report links for main meeting
-            if group["main_meeting"]:
-                context.update(
-                    self.resolve_announcement_report(
-                        group["main_meeting"]["metadata"], prefix="main_"
-                    )
-                )
-            else:
-                context.update(
-                    {
-                        "main_announcement_exists": False,
-                        "main_report_exists": False,
-                        "main_announcement_html": "",
-                        "main_report_html": "",
-                    }
-                )
-
-            card_html = template.render(**context)
-            cards_html.append(card_html)
-
-        return "\n".join(cards_html)
+    def calendar_sections(
+        self, meetings: list[dict], today: date
+    ) -> dict[str, list[dict]]:
+        """Split meetings for the calendar page: upcoming soonest first, past newest
+        first, each entry carrying its resolved announcement/report links."""
+        entries = [
+            {**meeting, **self.resolve_announcement_report(meeting["metadata"])}
+            for meeting in sorted(meetings, key=lambda meeting: meeting["date_obj"])
+        ]
+        return {
+            "upcoming": [entry for entry in entries if entry["date_obj"] >= today],
+            "past": [entry for entry in entries if entry["date_obj"] < today][::-1],
+        }
 
     def render_upcoming_meetings_calendar(self, meetings: list[dict]) -> str:
         """Render upcoming meetings in calendar format for home page."""

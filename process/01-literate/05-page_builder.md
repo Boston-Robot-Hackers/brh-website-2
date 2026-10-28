@@ -1,6 +1,6 @@
 ---
-version: "1.0"
-generated: "2026-09-21"
+version: "1.1"
+generated: "2026-10-28"
 ---
 
 # page_builder — rendering content dicts into HTML
@@ -11,8 +11,10 @@ generated: "2026-09-21"
 Jinja templates and writes files into `output/`. It owns three kinds of work:
 
 - **Detail pages**: one HTML file per item (`output/news/<id>.html`, and so on).
-- **Card fragments**: HTML snippets (news cards, meeting cards) that a listing
+- **Card fragments**: HTML snippets (news cards, project cards) that a listing
   page embeds.
+- **Calendar data**: meetings split into upcoming and past for the calendar
+  page.
 - **Whole pages**: a template plus context written to one output file.
 
 ```mermaid
@@ -45,9 +47,11 @@ detail template:
 
 - Dates are pre-formatted for display.
 - The item is passed under the name its template expects (`post`, `project`,
-  `member`, `meeting`), via a small lookup table.
+  `member`), via a small lookup table.
 - Banner context and any extra context (cross-link maps) are merged in.
-- **Meetings get extra resolution**: announcement, report, and slides links.
+
+Meetings no longer have detail pages; each one lives as an anchored entry on
+the calendar page instead.
 
 The lookup table for the variable name is a *table-driven* substitute for a
 branch per type.
@@ -65,8 +69,8 @@ flowchart LR
 ```
 
 - `resolve_announcement_report` gives a meeting's templates
-  `announcement_exists`, `report_html`, `slides_pdf`, and so on, optionally
-  prefixed (`main_...`) when a template shows several meetings.
+  `announcement_exists`, `report_html`, `slides_pdf`, and so on. It takes an
+  optional key prefix, which no caller uses any more.
 - `build_related_reports_map` inverts that relation, so an **announcement page
   can link forward to its report** without the announcement file having to know
   the report exists.
@@ -88,22 +92,35 @@ Thin wrappers (`render_news_cards`, `render_member_cards`, …) adapt specific
 content (for example flattening member metadata into `name`, `hashtags`,
 `card_text`) and pick the template.
 
-## Grouping meetings by month
+## The calendar page: upcoming, then past
 
-The meetings page shows one card per month, pairing that month's main and
-hands-on meetings. `group_meetings_by_month` builds this with a
-**`defaultdict` keyed by `YYYY-MM`**:
+`meetings.html` lists every meeting with its details inline. It used to group
+meetings into one card per month, with client-side JavaScript for sorting and
+filtering. Now the split happens at build time, in `calendar_sections`:
 
 ```python
-month_groups = defaultdict(lambda: {"main": None, "handson": None})
-...
-month_groups[month_key][slot] = meeting
+entries = [
+    {**meeting, **self.resolve_announcement_report(meeting["metadata"])}
+    for meeting in sorted(meetings, key=lambda meeting: meeting["date_obj"])
+]
+return {
+    "upcoming": [entry for entry in entries if entry["date_obj"] >= today],
+    "past": [entry for entry in entries if entry["date_obj"] < today][::-1],
+}
 ```
 
-- `YYYY-MM` strings sort **lexically in chronological order**, so a plain
-  `sorted(..., reverse=True)` gives newest-first with no date parsing.
-- Two meetings of the same kind in one month would collide; the code **warns**
-  and the later one wins, rather than silently dropping one.
+- **Two orders from one sort.** Upcoming reads soonest-first, past reads
+  newest-first, so the past list is the ascending slice reversed.
+- **Links are resolved once per entry**, spread into the meeting dict, so the
+  entry template reads `meeting.announcement_exists` directly.
+- **`today` is a parameter**, like the feed builders, so tests can freeze the
+  split date.
+- The returned dict is spread straight into `build_page` as template context
+  (`upcoming`, `past`).
+
+Doing this at build time instead of in the browser drops the JavaScript
+entirely. The tradeoff is that "upcoming" is as of the **last build**, not the
+moment someone views the page.
 
 ## The home-page rail
 
@@ -113,14 +130,15 @@ sliding-window filter over the meeting list followed by a sort.
 
 ## Observations and possible improvements
 
-1. **The file is past the ~300-line guideline** (about 390 lines). Meeting-specific
-   rendering (grouping, rail, cross-links) could move to its own module.
+1. **The file is just past the ~300-line guideline** (about 320 lines, down
+   from 390). Meeting-specific rendering (calendar split, rail, cross-links)
+   could still move to its own module.
 2. **Two "upcoming" definitions exist.** The rail uses a 60-day window here,
    while `content_manager.get_future_meetings` has no window. That's a real
    product difference, but the date filtering itself is duplicated.
-3. **`render_cards` sniffs the template name** (`"compact-meeting-card" in
-   template_name`) to decide whether to add meeting context. Passing that as an
-   explicit option would be clearer and less fragile.
+3. **`render_cards` has a dead branch.** It sniffs for `"compact-meeting-card"`
+   in the template name, but that template no longer exists, so the branch can
+   never run. It and its test fixture can go.
 4. **`build_page` and the `.txt`/`.ics` builders overlap.** All three render a
    template with `site` in context and write a file; only the encoding differs.
    An `encoding`/post-process parameter would let the feeds reuse it.

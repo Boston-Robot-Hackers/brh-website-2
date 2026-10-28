@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
 # test_content_manager — Tests for ContentManager loading, sorting, meetings, and talks
 # Author: Pito Salas and Claude Code
-# Version: 1
+# Version: 2
 # Created: 2026-09-21
-# Updated: 2026-09-21
+# Updated: 2026-10-28
 # Open Source Under MIT license
 from datetime import date
 
 import pytest
 from content_manager import ContentManager, ContentType, format_long_date
 from jinja2 import DictLoader, Environment
+from meeting_fixtures import write_meeting
 
 HERO_MEETINGS_TEMPLATE = (
     "{% if not meetings %}<p><em>No upcoming meetings scheduled</em></p>"
@@ -226,31 +227,14 @@ class TestGetAllContent:
 class TestHeroGeneration:
     def test_get_future_meetings_excludes_past(self, tmp_content_dir):
         cm = ContentManager(tmp_content_dir)
-        meetings = cm.get_future_meetings()
-        titles = [m["title"] for m in meetings]
-        assert "Main Meeting" in titles
-        assert "Past Meeting" not in titles
+        ids = [m["id"] for m in cm.get_future_meetings()]
+        assert ids == ["meeting-future"]
 
     def test_get_future_meetings_sorted_ascending(self, tmp_content_dir):
-        meetings_dir = tmp_content_dir / "meetings"
-        (meetings_dir / "near-future.md").write_text(
-            "---\ntitle: Near Meeting\ndate: 2099-01-15\nkind: main\ntime: 7pm\n---\n"
-        )
+        write_meeting(tmp_content_dir, "near", date="2099-01-15", kind="main")
         cm = ContentManager(tmp_content_dir)
-        meetings = cm.get_future_meetings()
-        assert len(meetings) >= 2
-        for i in range(len(meetings) - 1):
-            assert meetings[i]["date_obj"] <= meetings[i + 1]["date_obj"]
-
-    def test_get_future_meetings_parses_iso_date(self, tmp_content_dir):
-        meetings_dir = tmp_content_dir / "meetings"
-        (meetings_dir / "iso-date-meeting.md").write_text(
-            '---\ntitle: ISO Meeting\ndate: "2099-06-15"\nkind: main\ntime: 7pm\n---\n'
-        )
-        cm = ContentManager(tmp_content_dir)
-        meetings = cm.get_future_meetings()
-        titles = [m["title"] for m in meetings]
-        assert "ISO Meeting" in titles
+        ids = [m["id"] for m in cm.get_future_meetings()]
+        assert ids == ["near", "meeting-future"]
 
     def test_format_future_meetings_empty_list(self, tmp_content_dir, jinja_env):
         cm = ContentManager(tmp_content_dir, jinja_env)
@@ -258,18 +242,16 @@ class TestHeroGeneration:
         assert "No upcoming meetings" in result
 
     def test_format_future_meetings_shows_at_most_two(self, tmp_content_dir, jinja_env):
-        meetings_dir = tmp_content_dir / "meetings"
         for i in range(3):
-            (meetings_dir / f"extra-{i}.md").write_text(
-                f"---\ntitle: Extra Meeting {i}\ndate: 2099-0{i + 1}-10\n"
-                "kind: main\ntime: 7pm\n---\n"
+            write_meeting(
+                tmp_content_dir, f"extra-{i}", date=f"2099-0{i + 1}-10", kind="main"
             )
         cm = ContentManager(tmp_content_dir, jinja_env)
         meetings = cm.get_future_meetings()
         result = cm.format_future_meetings_section(meetings)
         assert result.count("<strong>") <= 2
 
-    def test_get_future_meetings_no_meetings_dir(self, tmp_path):
+    def test_get_future_meetings_no_calendar_file(self, tmp_path):
         cm = ContentManager(tmp_path)
         assert cm.get_future_meetings() == []
 
@@ -278,14 +260,15 @@ class TestHeroGeneration:
         (news_dir / "2099-01-01-announce.md").write_text(
             "---\ntitle: Announcement\n---\nDetails.\n"
         )
-        meetings_dir = tmp_content_dir / "meetings"
-        (meetings_dir / "linked-meeting.md").write_text(
-            "---\ntitle: Linked Meeting\ndate: 2099-06-15\nkind: main\ntime: 7pm\n"
-            "announcement: 2099-01-01-announce.md\n---\n"
+        write_meeting(
+            tmp_content_dir,
+            "linked",
+            date="2099-06-15",
+            kind="main",
+            announcement="2099-01-01-announce.md",
         )
         cm = ContentManager(tmp_content_dir, jinja_env)
-        meetings = cm.get_future_meetings()
-        linked = [m for m in meetings if m["title"] == "Linked Meeting"]
+        linked = [m for m in cm.get_future_meetings() if m["id"] == "linked"]
         assert len(linked) == 1
         result = cm.format_future_meetings_section(linked)
         assert "<a href=" in result
@@ -418,11 +401,6 @@ class TestResolveNewsHtml:
 TODAY = date(2026, 9, 18)
 
 
-def write_meeting(content_dir, name, **fields):
-    lines = "".join(f'{key}: "{value}"\n' for key, value in fields.items())
-    (content_dir / "meetings" / f"{name}.md").write_text(f"---\n{lines}---\n")
-
-
 class TestFormatLongDate:
     def test_full_weekday_form_without_zero_padding(self):
         assert format_long_date(date(2026, 10, 5)) == "Monday, October 5, 2026"
@@ -436,37 +414,31 @@ class TestGetUpcomingTalks:
         return [talk["topic"] for talk in talks]
 
     def test_qualifying_talks_included_sorted_ascending(self, tmp_path):
-        (tmp_path / "meetings").mkdir()
         write_meeting(tmp_path, "later", date="2026-11-12", **self.TALK)
         sooner = {**self.TALK, "topic": "Legs"}
         write_meeting(tmp_path, "sooner", date="2026-10-15", **sooner)
         assert self.talk_topics(tmp_path) == ["Legs", "Arms"]
 
     def test_meeting_on_today_is_included(self, tmp_path):
-        (tmp_path / "meetings").mkdir()
         write_meeting(tmp_path, "m", date=TODAY.isoformat(), **self.TALK)
         assert self.talk_topics(tmp_path) == ["Arms"]
 
     def test_past_talk_excluded(self, tmp_path):
-        (tmp_path / "meetings").mkdir()
         write_meeting(tmp_path, "m", date="2026-09-17", **self.TALK)
         assert self.talk_topics(tmp_path) == []
 
     def test_handson_excluded(self, tmp_path):
-        (tmp_path / "meetings").mkdir()
         handson = {**self.TALK, "kind": "handson"}
         write_meeting(tmp_path, "m", date="2026-10-01", **handson)
         assert self.talk_topics(tmp_path) == []
 
     @pytest.mark.parametrize("missing", ["speaker", "topic"])
     def test_missing_speaker_or_topic_excluded(self, tmp_path, missing):
-        (tmp_path / "meetings").mkdir()
         fields = {k: v for k, v in self.TALK.items() if k != missing}
         write_meeting(tmp_path, "m", date="2026-10-01", **fields)
         assert self.talk_topics(tmp_path) == []
 
     def test_page_path_uses_announcement_when_present(self, tmp_path):
-        (tmp_path / "meetings").mkdir()
         (tmp_path / "news").mkdir()
         (tmp_path / "news" / "ada-talk.md").write_text("---\ntitle: T\n---\nx.\n")
         write_meeting(
@@ -475,8 +447,7 @@ class TestGetUpcomingTalks:
         talks = ContentManager(tmp_path).get_upcoming_talks(TODAY)
         assert talks[0]["page_path"] == "news/ada-talk.html"
 
-    def test_page_path_falls_back_to_meeting_page(self, tmp_path):
-        (tmp_path / "meetings").mkdir()
+    def test_page_path_falls_back_to_calendar_entry(self, tmp_path):
         write_meeting(tmp_path, "25-meeting", date="2026-10-01", **self.TALK)
         talks = ContentManager(tmp_path).get_upcoming_talks(TODAY)
-        assert talks[0]["page_path"] == "meetings/25-meeting.html"
+        assert talks[0]["page_path"] == "meetings.html#25-meeting"

@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 # test_page_builder — Tests for PageBuilder rendering and meeting grouping
 # Author: Pito Salas and Claude Code
-# Version: 1
+# Version: 2
 # Created: 2026-09-21
-# Updated: 2026-09-21
+# Updated: 2026-10-28
 # Open Source Under MIT license
+from datetime import date
+
 import pytest
 from content_manager import ContentType
 from jinja2 import DictLoader, Environment
@@ -24,7 +26,6 @@ def page_builder(dist):
         "details/news-detail.html": "{{ site.name }} {{ post.title }}",
         "details/project-detail.html": "{{ site.name }} {{ project.title }}",
         "details/member-detail.html": "{{ site.name }} {{ member.title }}",
-        "details/meeting-detail.html": "{{ site.name }} {{ meeting.title }}",
     }
     env = Environment(loader=DictLoader(templates))
     return PageBuilder(env, dist, {"name": "BRH"})
@@ -214,7 +215,6 @@ def rich_page_builder(dist):
         "cards/project-listing-item.html": "{{ project.title }}",
         "cards/member-card.html": "{{ name }}",
         "cards/compact-meeting-card.html": "{{ title }}",
-        "cards/monthly-meeting-card.html": "{{ month_label }}",
         "components/upcoming-meetings-calendar.html": "{{ meetings | length }}",
     }
     env = Environment(loader=DictLoader(templates))
@@ -304,43 +304,6 @@ class TestRenderCards:
         ]
         result = rich_page_builder.render_member_cards(members)
         assert "Alice" in result
-
-
-class TestGroupMeetingsByMonth:
-    def test_groups_main_and_handson(self, rich_page_builder):
-        meetings = [
-            make_meeting_item("main-jan", "January Meeting", "2024-01-15", kind="main"),
-            make_meeting_item(
-                "hands-jan", "Hands On January", "2024-01-22", kind="handson"
-            ),
-        ]
-        grouped = rich_page_builder.group_meetings_by_month(meetings)
-        assert len(grouped) == 1
-        assert grouped[0]["main_meeting"] is not None
-        assert grouped[0]["handson_meeting"] is not None
-
-    def test_sorted_descending_by_month(self, rich_page_builder):
-        meetings = [
-            make_meeting_item("feb", "Feb Meeting", "2024-02-01"),
-            make_meeting_item("jan", "Jan Meeting", "2024-01-01"),
-        ]
-        grouped = rich_page_builder.group_meetings_by_month(meetings)
-        assert grouped[0]["sort_key"] > grouped[1]["sort_key"]
-
-    def test_skips_items_with_no_date(self, rich_page_builder):
-        meetings = [
-            {
-                "id": "x",
-                "title": "No Date",
-                "date": None,
-                "metadata": {"date": ""},
-                "image": "",
-                "text": "",
-                "excerpt": "",
-            }
-        ]
-        grouped = rich_page_builder.group_meetings_by_month(meetings)
-        assert grouped == []
 
 
 class TestRenderUpcomingCalendar:
@@ -445,3 +408,34 @@ class TestBuildRelatedReportsMap:
 
     def test_empty_meetings_list_returns_empty_map(self, page_builder):
         assert page_builder.build_related_reports_map([]) == {}
+
+
+class TestCalendarSections:
+    TODAY = date(2026, 11, 12)
+
+    def meeting(self, meeting_id, day):
+        return {"id": meeting_id, "date_obj": day, "metadata": {"kind": "main"}}
+
+    def sections(self, page_builder, meetings):
+        return page_builder.calendar_sections(meetings, self.TODAY)
+
+    def test_upcoming_soonest_first_past_newest_first(self, page_builder):
+        meetings = [
+            self.meeting("past-old", date(2026, 9, 3)),
+            self.meeting("later", date(2026, 12, 10)),
+            self.meeting("past-recent", date(2026, 10, 15)),
+            self.meeting("today", self.TODAY),
+        ]
+        sections = self.sections(page_builder, meetings)
+        assert [m["id"] for m in sections["upcoming"]] == ["today", "later"]
+        assert [m["id"] for m in sections["past"]] == ["past-recent", "past-old"]
+
+    def test_entries_carry_resolved_links(self, page_builder):
+        sections = self.sections(page_builder, [self.meeting("m", self.TODAY)])
+        entry = sections["upcoming"][0]
+        assert entry["announcement_exists"] is False
+        assert entry["report_exists"] is False
+        assert entry["metadata"] == {"kind": "main"}
+
+    def test_empty(self, page_builder):
+        assert self.sections(page_builder, []) == {"upcoming": [], "past": []}

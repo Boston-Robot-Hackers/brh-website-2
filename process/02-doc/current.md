@@ -3,24 +3,36 @@
 ## Open
 
 **Reminder: clean up after abandoned F10 (pupper subdomain)**. Two external
-leftovers need manual cleanup:
+leftovers need manual cleanup (design record in
+`process/03-features/deferred/F10-pupper-subdomain-redirect.md`):
 
 * Delete (or archive) the GitHub repo `Boston-Robot-Hackers/brh-pupper-redirect`.
 * In Namecheap Advanced DNS for `bostonrobothackers.com`, delete the
   `pupper` CNAME record (→ `boston-robot-hackers.github.io.`).
 
-**Speakers to confirm**: the 4 monthly meetings from Dec 2026 to Mar 2027
-(`28-meeting.md`, `30-meeting.md`, `32-meeting.md`, `34-meeting.md`) still
-say "Speaker and topic to be announced."
+**Speakers to confirm**: the 4 main meetings from Dec 2026 to Mar 2027
+(2026-12-10, 2027-01-14, 2027-02-11, 2027-03-11) have no speaker yet, so
+they show the "Speaker and topic to be announced." default.
 
-* When a speaker is confirmed, fill in `text`, `announcement`, **and
-  `speaker` + `topic`**. A talk only appears in `upcoming-talks.txt` and
-  gets a named `meetings.ics` event once both are set.
+* When a speaker is confirmed, edit that entry in `content/calendar.yaml`:
+  add `speaker`, `topic`, `text`, and `announcement`. A talk only appears in
+  `upcoming-talks.txt` and gets a named `meetings.ics` event once both
+  `speaker` and `topic` are set.
 
 **Open features (none started)**: F12 (build as a real package), F13 (unify
 CI/local build invocation), F14 (reduce page-builder boilerplate), F15
 (remove inline styles), F16 (robust root-dir detection). None has a task
 file yet.
+
+**Small cleanups found in the F19 checkpoint review** (not started; each
+would be a chore):
+
+* `PageBuilder.render_cards` still checks for `compact-meeting-card`, a
+  template that no longer exists, so that branch is dead code.
+* `calendar_source.load_calendar` returns no meetings when
+  `content/calendar.yaml` is missing, rather than failing the build.
+* `classify_meeting`'s raise can't fire any more, since `calendar_source`
+  already validates `kind`.
 
 Known, deliberately-deferred items (not urgent, no ticket filed):
 
@@ -30,11 +42,8 @@ Known, deliberately-deferred items (not urgent, no ticket filed):
   (the group's own meetup "today"), so naive local dates are correct as
   written — forcing tz-awareness would be a real behavior-risk change with
   no matching `.claude/style_guide.md` rule, not a mechanical lint fix.
-* `pyproject.toml`'s `[tool.uv] dev-dependencies` field is deprecated by
-  `uv` in favor of `[dependency-groups] dev` — a cosmetic warning on every
-  `uv` invocation, not urgent.
-* `build/build.py` (~420 lines, after F18), `build/content_manager.py` (~390), and
-  `build/page_builder.py` (~390) are over the style guide's ~300-line
+* `build/build.py` (~405 lines), `build/content_manager.py` (~360), and
+  `build/page_builder.py` (~320) are over the style guide's ~300-line
   guideline. The literate docs' closing observations suggest where to split.
 
 See `process/02-doc/history.md` for the completed-work log.

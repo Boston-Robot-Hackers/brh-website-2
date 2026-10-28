@@ -4,6 +4,28 @@ Completed-work log. `process/02-doc/current.md`'s `## Open` section is the only
 part that matters for new work; entries move here once done, per
 `.claude/process.md`'s checkpoint step.
 
+## 2026-10-28 (F19 closed: single calendar file, full calendar page)
+
+* **F19**: `content/calendar.yaml` replaces the 35 `content/meetings/*.md`
+  files as the one meeting schedule, loaded by the new
+  `build/calendar_source.py`.
+  * A `defaults` block plus per-entry overrides; an entry needs only `date`
+    and `kind`. Unknown keys, bad kinds, bad dates and duplicate ids fail
+    the build.
+  * Migrated meetings keep their old ids via `id:`, so `meetings.ics` UIDs
+    are unchanged. The Jan 2027 main meeting moved to **2027-01-14**.
+* `meetings.html` is now a full calendar (upcoming, then past, details
+  inline, iCal/TXT links), split at build time. The month cards, their
+  sort/filter JavaScript, and per-meeting detail pages are gone; links
+  without an announcement go to `meetings.html#<id>`.
+* **Chore 32**: dev dependencies moved to `[dependency-groups] dev`.
+* **Chore 33**: F10/TF10 restored from git history into the `deferred/`
+  folders; the abandoning commit had deleted them.
+* Literate docs: new `03-calendar_source.md`; the later chapters shifted to
+  `04-content_manager`, `05-page_builder`, `06-build`.
+* Tests: `uv run pytest`: 220 passed. `ruff check` / `ruff format --check`
+  clean.
+
 ## 2026-10-26 (F18 closed: standalone content pages, Tips for Speakers)
 
 * **F18**: each `content/pages/<slug>.md` builds to a top-level

@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # content_manager — Content management module for the website builder
 # Author: Pito Salas and Claude Code
-# Version: 1
+# Version: 2
 # Created: 2026-09-21
-# Updated: 2026-09-21
+# Updated: 2026-10-28
 # Open Source Under MIT license
 """Handles loading and processing of markdown content."""
 
@@ -16,6 +16,7 @@ from zoneinfo import ZoneInfo
 
 import frontmatter
 import markdown
+from calendar_source import load_calendar
 from ical_format import parse_meeting_time
 from news_links import NewsResolver
 
@@ -179,11 +180,6 @@ class ContentManager:
                 if content_type.directory == "members":
                     hashtags = item_data["metadata"].get("hashtags", [])
                     self.validate_member_hashtags(item_data["id"], hashtags)
-                if content_type.directory == "meetings":
-                    try:
-                        classify_meeting(item_data["metadata"])
-                    except ValueError as e:
-                        raise ValueError(f"meetings/{item_data['id']}.md: {e}") from e
                 items.append(item_data)
 
         # Sort by specified key
@@ -231,34 +227,8 @@ class ContentManager:
         return static_part + "\n" + generated_part
 
     def load_meetings(self) -> list[dict[str, Any]]:
-        """Load every dated meeting's frontmatter, sorted by date ascending."""
-        meetings_dir = self.content_dir / "meetings"
-        if not meetings_dir.exists():
-            return []
-
-        meetings = []
-        for md_file in meetings_dir.glob("*.md"):
-            metadata = frontmatter.load(md_file).metadata
-            date_str = metadata.get("date")
-            if not date_str:
-                continue
-
-            try:
-                meeting_date = parse_date(date_str).date()
-            except ValueError as e:
-                raise ValueError(f"{md_file}: {e}") from e
-
-            meetings.append(
-                {
-                    "id": metadata.get("slug") or md_file.stem,
-                    "metadata": metadata,
-                    "date_obj": meeting_date,
-                    "title": metadata.get("title", ""),
-                }
-            )
-
-        meetings.sort(key=lambda x: x["date_obj"])
-        return meetings
+        """Load every meeting from calendar.yaml, sorted by date ascending."""
+        return load_calendar(self.content_dir / "calendar.yaml")
 
     def get_future_meetings(self, today: date | None = None) -> list[dict[str, Any]]:
         """Get meetings dated today or later, sorted by date ascending."""
@@ -266,18 +236,18 @@ class ContentManager:
         return [m for m in self.load_meetings() if m["date_obj"] >= today]
 
     def meeting_page_path(self, meeting: dict[str, Any]) -> str:
-        """Announcement page if one resolves, else the meeting's own page."""
+        """Announcement page if one resolves, else the meeting's calendar entry."""
         html, exists = self.resolve_news_html(
             meeting["metadata"].get("announcement", "")
         )
-        return f"news/{html}" if exists else f"meetings/{meeting['id']}.html"
+        return f"news/{html}" if exists else f"meetings.html#{meeting['id']}"
 
     def get_upcoming_talks(self, today: date) -> list[dict[str, Any]]:
         """Future main meetings that have both a `speaker` and a `topic`.
 
         Hands-on sessions and TBA talks (no speaker/topic yet) are excluded.
         `page_path` is the announcement page when one exists, else the
-        meeting's own detail page, relative to the site root.
+        meeting's entry on the calendar page, relative to the site root.
         """
         talks = []
         for meeting in self.get_future_meetings(today):
@@ -313,7 +283,7 @@ class ContentManager:
             try:
                 start_time = parse_meeting_time(metadata.get("time"))
             except ValueError as e:
-                raise ValueError(f"meetings/{meeting['id']}.md: {e}") from e
+                raise ValueError(f"calendar.yaml: meeting {meeting['id']}: {e}") from e
             start = datetime.combine(meeting["date_obj"], start_time, tzinfo=BOSTON)
             events.append(
                 {
