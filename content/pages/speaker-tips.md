@@ -6,13 +6,13 @@ Thinking about giving a talk? We'd love to have you. Our audience is a mix of st
 
 **PLEASE**:* If your talk has been scheduled, we will advertise and promote it to the membership. While we understand that life may get in the way, you should know that your talk is the centerpiece of the meeting and the reason people are taking time out of their evening. We hope that you will do your utmost to avoid cancelling.*
 
+**Schedule**
+
+Our meetings are always on the second Thursday of the month, at 7:00pm at the [Artisans Asylum](https://www.artisansasylum.com). Pito Salas will work with you to find a date that is convenient for your presentation.  In order to get on the calendar I will ask for a short bio and a short abstract for your talk. I need those in order to put it up on the web site and promote it to the members and the world!
+
 **Focus of talks**
 
 We like talks that skew technical: how a core technique really works (Kalman filters, kinematics, power), a research report from a lab, a robot doing real work in the field, or an open platform people can build themselves. If people leave knowing how to do something they didn't before, it's a good fit. We are less excited about talks about industry happenings and trends, specific company news or analysis. 
-
-**Schedule**
-
-Our meetings are always on the second Thursday of the month, at 7:00pm at the [Artisans Asylum in Brighton Mass](https://www.artisansasylum.com), close to the Harvard Business School. Pito Salas will work with you to find a date that is convenient for your presentation. 
 
 **Types of Talks**
 
