@@ -4,10 +4,11 @@ excerpt: Yun spent a decade at MIT earning a Bachelor's, Master's, and PhD, work
   in the SPARK Lab under Professor Luca Carlone. The research centered on robot perception
   — compressing the world into representations a machine can act on. Yun is now co-founding
   a stealth startup bringing autonomy to the large machines that run society's infrastructure.
+  Also on the bill, Husan Mavlonov of Defex Robotics on robots for connector assembly.
 highlight: true
 image: images/news/heavy-equipment.png
-published_date: '2026-08-19'
-title: 'November 12: Yun Chang: Robot Perception with Scene Graphs'
+published_date: '2026-10-28'
+title: 'November 12: Yun Chang and Husan Mavlonov'
 type: news
 ---
 
@@ -20,11 +21,9 @@ type: news
 ### Agenda
 
 * 7:00 Mingle, network, show and tell
-* 7:30 Lightning Talks
-    * TBD
-    * TBD
-* 7:45 Featured Speaker: Yun Chang
-* 8:30 Q&A and Open Discussion
+* 7:30 Short Talk: Husan Mavlonov, "Robots for Connector Assembly"
+* 7:50 Featured Speaker: Yun Chang
+* 8:35 Q&A and Open Discussion
 * 9:00 End of formal meeting
 
 ### Featured Talk
@@ -46,3 +45,17 @@ Watch highlights from both efforts:
 #### Speaker: Yun Chang
 
 Yun spent a decade at MIT earning a Bachelor's, Master's, and PhD, working in the SPARK Lab under Professor Luca Carlone. The research centered on robot perception — compressing the world into representations a machine can act on. Yun is now co-founding a stealth startup bringing autonomy to the large machines that run society's infrastructure.
+
+### Short Talk
+
+#### Robots for Connector Assembly
+
+<a href="../../images/news/defex-robot-arm.png">
+    <img src="../../images/news/defex-robot-arm.png" alt="Defex Robotics robot arm" style="float: left; margin: 25px 25px 25px 25px; border-radius: 8px; height: 200px;">
+</a>
+
+Plugging in a wire-harness connector is still one of the last hand jobs on the factory line. The cable bends, the latch hides, and a part that looks seated often isn't. This talk shows how Defex Robotics approaches it: finding a flexible harness with a camera, guiding the insertion by force and torque, and checking every connection once it clicks. I'll cover where vision alone falls short at tight tolerances, and what we learned building the loop in simulation.
+
+#### Speaker: Husan Mavlonov
+
+Husan Mavlonov is the co-founder and CEO of Defex Robotics in San Francisco, which builds a robot that plugs in connectors and checks every connection. He has 3+ years in electronics and battery manufacturing, with factory work in Uzbekistan, Turkey, China and the US, and judges robotics and AI hackathons including HackHarvard, Cal Hacks and DAHacks.

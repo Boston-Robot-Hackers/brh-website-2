@@ -4,6 +4,18 @@ Completed-work log. `process/02-doc/current.md`'s `## Open` section is the only
 part that matters for new work; entries move here once done, per
 `.claude/process.md`'s checkpoint step.
 
+## 2026-10-28 (Nov 12 double bill; chore 37)
+
+* **Chore 37**: Husan Mavlonov (Defex Robotics) gives a short talk,
+  "Robots for Connector Assembly", before Yun Chang's featured talk on
+  Nov 12.
+  * The announcement has a new agenda, title, excerpt, Short Talk section,
+    and a robot-arm image with its background removed.
+  * `calendar.yaml` mentions Husan in `text`. `speaker`/`topic` stay Yun's,
+    since a meeting holds one talk.
+  * `published_date` bumped to 2026-10-28 so the post tops What's New.
+* Tests: 221 passed. Ruff clean.
+
 ## 2026-10-28 (F20 closed: text list shows every upcoming meeting; chores 34-36)
 
 * **F20**: `upcoming-talks.txt` lists every future meeting, both kinds, not

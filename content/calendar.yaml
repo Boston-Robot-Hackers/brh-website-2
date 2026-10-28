@@ -149,7 +149,7 @@ meetings:
     kind: main
     speaker: "Yun Chang"
     topic: "Robot Scene Understanding for Extreme Environments: From Subterranean to Heavy Equipment"
-    text: "Yun Chang, a robotics researcher who spent a decade at MIT's SPARK Lab under Professor Luca Carlone, will speak about robot scene understanding for extreme environments — from the DARPA Subterranean Challenge to autonomy for heavy equipment at their current startup."
+    text: "Yun Chang, a robotics researcher who spent a decade at MIT's SPARK Lab under Professor Luca Carlone, will speak about robot scene understanding for extreme environments — from the DARPA Subterranean Challenge to autonomy for heavy equipment at their current startup. Also on the bill: Husan Mavlonov, co-founder and CEO of Defex Robotics, with a short talk on robots for connector assembly."
     announcement: "25-yun-chang-talk-announcement.md"
 
   - id: 27-handson-meeting
