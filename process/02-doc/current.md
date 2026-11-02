@@ -20,6 +20,17 @@ they show the "Speaker and topic to be announced." default, and "TBD" in
   and `topic` are set, `upcoming-talks.txt` names them and `meetings.ics`
   gets a named event.
 
+**Speaker page follow-ups**: `content/pages/speaker-tips.md` is now an FAQ,
+and these are still open:
+
+* The page title is "FAQ For Speakers", but the link at `content/about.md:33`
+  still says "Tips for Speakers". The filename and URL stay `speaker-tips`,
+  by the user's decision.
+* Typos: "bstract", "When are the meetings ?", a stray colon after "What info
+  do you need from the speaker?", and "which I need those in order to".
+* The "Title of the talk" list is indented four spaces, so it probably renders
+  as a code block. Rendered output not checked.
+
 **Open features (none started)**: F12 (build as a real package), F13 (unify
 CI/local build invocation), F14 (reduce page-builder boilerplate), F15
 (remove inline styles), F16 (robust root-dir detection). None has a task

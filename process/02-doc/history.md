@@ -4,6 +4,16 @@ Completed-work log. `process/02-doc/current.md`'s `## Open` section is the only
 part that matters for new work; entries move here once done, per
 `.claude/process.md`'s checkpoint step.
 
+## 2026-11-02 (Speaker page becomes an FAQ; chore 38)
+
+* The user rewrote `content/pages/speaker-tips.md` as "FAQ For Speakers".
+* **Chore 38**: the test looked for exact phrases, so the rewrite failed the
+  suite. `test_speaker_tips_has_content` now only checks that the file has a
+  non-empty body.
+* A rename to `speaker_faq.md` was tried and reverted, to keep the existing
+  `speaker-tips.html` link.
+* Tests: 221 passed. Ruff clean.
+
 ## 2026-10-28 (Nov 12 double bill; chore 37)
 
 * **Chore 37**: Husan Mavlonov (Defex Robotics) gives a short talk,
