@@ -4,7 +4,7 @@ title: Tips for Speakers
 
 Thinking about giving a talk? We'd love to have you. Our audience is a mix of students, hobbyists, and working engineers, so a talk that is clear to a newcomer and still interesting to an expert is the sweet spot.
 
-**PLEASE**:* If your talk has been scheduled, we will advertise and promote it to the membership. While we understand that life may get in the way, you should know that your talk is the centerpiece of the meeting and the reason people are taking time out of their evening. We hope that you will do your utmost to avoid cancelling.*
+**PLEASE**:*If your talk has been scheduled, we will advertise and promote it to the membership. While we understand that life may get in the way, you should know that your talk is the centerpiece of the meeting and the reason people are taking time out of their evening. We hope that you will do your utmost to avoid cancelling.*
 
 **Schedule**
 
