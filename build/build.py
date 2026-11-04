@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # build — Modular build script for Boston Robot Hackers website
 # Author: Pito Salas and Claude Code
-# Version: 4
+# Version: 5
 # Created: 2026-09-21
-# Updated: 2026-10-28
+# Updated: 2026-11-04
 # Open Source Under MIT license
 """Split into focused modules for better maintainability."""
 
@@ -340,7 +340,7 @@ class WebsiteBuilder:
                 raise ValueError(f"config/site.json is missing {key!r}")
 
     def build_ical_feed(self, stamp: datetime):
-        """Build meetings.ics, an RFC 5545 feed of main meetings for subscribing."""
+        """Build meetings.ics, an RFC 5545 feed of all meetings for subscribing."""
         self.require_config("title", "site_url", "meeting_duration_minutes")
         minutes = self.site_config["meeting_duration_minutes"]
         if not isinstance(minutes, int) or minutes <= 0:

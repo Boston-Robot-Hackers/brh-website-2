@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # test_ical_feed — Tests for the meetings iCalendar feed
 # Author: Pito Salas and Claude Code
-# Version: 2
+# Version: 3
 # Created: 2026-09-21
-# Updated: 2026-10-28
+# Updated: 2026-11-04
 # Open Source Under MIT license
 
 import json
@@ -87,6 +87,7 @@ class TestFoldIcs:
 
 class TestGetCalendarEvents:
     TALK = {"kind": "main", "time": "7:00pm", "location": "Asylum", "text": "Hi"}
+    HANDSON = {**TALK, "kind": "handson", "time": "6:00pm"}
 
     def events(self, content_dir):
         return ContentManager(content_dir).get_calendar_events(TWO_HOURS)
@@ -96,10 +97,25 @@ class TestGetCalendarEvents:
         write_meeting(tmp_path, "past", date="2020-01-01", **self.TALK)
         assert [e["id"] for e in self.events(tmp_path)] == ["past", "future"]
 
-    def test_handson_excluded(self, tmp_path):
-        handson = {**self.TALK, "kind": "handson", "time": "6:00pm"}
-        write_meeting(tmp_path, "h", date="2026-10-01", **handson)
-        assert self.events(tmp_path) == []
+    def test_handson_included_with_its_own_start_and_duration(self, tmp_path):
+        write_meeting(tmp_path, "h", date="2026-10-01", **self.HANDSON)
+        event = self.events(tmp_path)[0]
+        assert event["kind"] == "handson"
+        assert event["start"] == datetime(2026, 10, 1, 18, 0, tzinfo=BOSTON)
+        assert event["end"] == datetime(2026, 10, 1, 20, 0, tzinfo=BOSTON)
+
+    def test_both_kinds_ascending_by_date(self, tmp_path):
+        write_meeting(tmp_path, "later", date="2026-10-15", **self.TALK)
+        write_meeting(tmp_path, "earlier", date="2026-10-01", **self.HANDSON)
+        assert [e["id"] for e in self.events(tmp_path)] == ["earlier", "later"]
+
+    def test_handson_page_path_uses_announcement(self, tmp_path):
+        (tmp_path / "news").mkdir()
+        (tmp_path / "news" / "hack.md").write_text("---\ntitle: T\n---\nx.\n")
+        write_meeting(
+            tmp_path, "h", date="2026-10-01", announcement="hack.md", **self.HANDSON
+        )
+        assert self.events(tmp_path)[0]["page_path"] == "news/hack.html"
 
     def test_start_is_boston_local_and_end_adds_duration(self, tmp_path):
         write_meeting(tmp_path, "m", date="2026-10-15", **self.TALK)
@@ -158,12 +174,19 @@ class TestRealBuild:
     def test_parses_as_valid_calendar(self, built_feed):
         Calendar.from_ical(built_feed)
 
-    def test_one_event_per_main_meeting(self, built_feed):
+    def test_one_event_per_meeting_of_either_kind(self, built_feed):
         meetings = ContentManager(REPO_ROOT / "content").load_meetings()
-        main_count = sum(1 for m in meetings if m["metadata"]["kind"] == "main")
+        kinds = {m["metadata"]["kind"] for m in meetings}
         events = Calendar.from_ical(built_feed).walk("VEVENT")
-        assert len(events) == main_count
-        assert main_count > 0
+        assert len(events) == len(meetings)
+        assert kinds == {"main", "handson"}
+
+    def test_handson_summary_and_local_start(self, built_feed):
+        events = Calendar.from_ical(built_feed).walk("VEVENT")
+        moved = next(e for e in events if str(e["UID"]).startswith("27-handson"))
+        assert str(moved["SUMMARY"]) == "Boston Robot Hackers hands-on meeting"
+        assert moved["DTSTART"].dt == datetime(2026, 11, 11, 18, 0, tzinfo=BOSTON)
+        assert moved["DTEND"].dt == datetime(2026, 11, 11, 20, 0, tzinfo=BOSTON)
 
     def test_uids_unique(self, built_feed):
         uids = [str(e["UID"]) for e in Calendar.from_ical(built_feed).walk("VEVENT")]

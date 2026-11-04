@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # content_manager — Content management module for the website builder
 # Author: Pito Salas and Claude Code
-# Version: 3
+# Version: 4
 # Created: 2026-09-21
-# Updated: 2026-10-28
+# Updated: 2026-11-04
 # Open Source Under MIT license
 """Handles loading and processing of markdown content."""
 
@@ -255,7 +255,7 @@ class ContentManager:
         return upcoming
 
     def get_calendar_events(self, duration: timedelta) -> list[dict[str, Any]]:
-        """All main meetings, past and future, as calendar events.
+        """All meetings of both kinds, past and future, as calendar events.
 
         Past meetings stay in the feed so subscribers' calendars keep them.
         `topic`/`speaker` are None for meetings whose talk isn't set yet.
@@ -263,8 +263,6 @@ class ContentManager:
         events = []
         for meeting in self.load_meetings():
             metadata = meeting["metadata"]
-            if metadata["kind"] != "main":
-                continue
             try:
                 start_time = parse_meeting_time(metadata.get("time"))
             except ValueError as e:
@@ -273,6 +271,7 @@ class ContentManager:
             events.append(
                 {
                     "id": meeting["id"],
+                    "kind": metadata["kind"],
                     "topic": metadata.get("topic"),
                     "speaker": metadata.get("speaker"),
                     "description": metadata.get("text", ""),

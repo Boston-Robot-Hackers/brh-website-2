@@ -31,6 +31,8 @@ DTSTART;TZID=America/New_York:{{ event.start.strftime("%Y%m%dT%H%M%S") }}
 DTEND;TZID=America/New_York:{{ event.end.strftime("%Y%m%dT%H%M%S") }}
 {% if event.topic and event.speaker %}
 SUMMARY:{{ (site.title ~ ": " ~ event.topic ~ " (" ~ event.speaker ~ ")") | ics_text }}
+{% elif event.kind == "handson" %}
+SUMMARY:{{ (site.title ~ " hands-on meeting") | ics_text }}
 {% else %}
 SUMMARY:{{ (site.title ~ " monthly meeting") | ics_text }}
 {% endif %}
