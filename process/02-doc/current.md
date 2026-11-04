@@ -10,6 +10,9 @@ leftovers need manual cleanup (design record in
 * In Namecheap Advanced DNS for `bostonrobothackers.com`, delete the
   `pupper` CNAME record (→ `boston-robot-hackers.github.io.`).
 
+**Nov 11 hands-on meeting**: moved from Nov 25 on 2026-11-04, and it falls on
+Veterans Day. Confirm the space is open and let members know.
+
 **Speakers to confirm**: the 4 main meetings from Dec 2026 to Mar 2027
 (2026-12-10, 2027-01-14, 2027-02-11, 2027-03-11) have no speaker yet, so
 they show the "Speaker and topic to be announced." default, and "TBD" in

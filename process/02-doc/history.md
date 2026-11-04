@@ -4,6 +4,16 @@ Completed-work log. `process/02-doc/current.md`'s `## Open` section is the only
 part that matters for new work; entries move here once done, per
 `.claude/process.md`'s checkpoint step.
 
+## 2026-11-04 (Calendar newest first; hands-on dates moved; chores 39-40)
+
+* **Chore 39**: `content/calendar.yaml` is now kept newest first. The build
+  sorts by date, so the loaded data did not change.
+* **Chore 40**: four hands-on meetings moved to the second Wednesday: Nov 11,
+  Dec 9, Feb 10 and Mar 10. Each keeps its `id`, so calendar subscribers see
+  the event move.
+* Tests: 221 passed. Ruff clean. No Python changed, so no literate docs to
+  refresh. Full site build not run.
+
 ## 2026-11-02 (Speaker page becomes an FAQ; chore 38)
 
 * The user rewrote `content/pages/speaker-tips.md` as "FAQ For Speakers".
