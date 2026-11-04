@@ -4,7 +4,7 @@ excerpt: Featuring talk by David Dorf about "Affordable Biomimetic Robot Hands"
 image: images/news/clock.png
 published_date: '2025-12-09'
 subtitle: Join us for our upcoming meeting
-title: 'Meeting announcement: David Dorff on Affordable Biometric Robot Hands: October
+title: 'Meeting announcement: David Dorf on Affordable Biomimetic Robot Hands: October
   9 at 7:00pm'
 ---
 

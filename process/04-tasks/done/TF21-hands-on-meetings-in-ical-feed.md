@@ -67,7 +67,7 @@
 * The Nov 11 test finds its event by the stable `27-handson-meeting` id, since that meeting's date has already moved once.
 
 ## TF21.4 — Full verification
-**Status**: not done
+**Status**: done
 **Description**:
 
 * `uv run python build/build.py` builds cleanly.
@@ -81,4 +81,4 @@
 
 * Build is clean: `meetings.ics` has 35 events, 18 main and 17 hands-on.
 * `uv run pytest`: 224 passed. `uvx ruff check build/ tests/`: all checks passed.
-* **Manual calendar-app import check: still to do, by the user.** This task stays open until then.
+* Manual calendar-app import check: confirmed OK by the user 2026-11-04.

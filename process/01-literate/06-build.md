@@ -117,7 +117,8 @@ def require_config(self, *keys: str):
   upcoming meeting as plain text for pasting into emails. It requires only
   `site_url`. It's written with a **UTF-8 BOM** so browsers decode em dashes
   correctly even when a server's `text/plain` header omits the charset.
-- **`build_ical_feed(stamp)`** renders `meetings.ics`, pipes it through
+- **`build_ical_feed(stamp)`** renders `meetings.ics`, every meeting of both
+  kinds, pipes it through
   `fold_ics`, and writes **bytes** so CRLF line endings survive on every
   platform. It also validates that `meeting_duration_minutes` is a positive
   integer.

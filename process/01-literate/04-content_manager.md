@@ -100,7 +100,7 @@ backed by `calendar_source`:
 ```mermaid
 flowchart TD
     L["load_meetings()<br/>calendar.yaml, ascending"] --> F["get_future_meetings(today)<br/>date >= today"]
-    L --> E["get_calendar_events(duration)<br/>main only, past + future"]
+    L --> E["get_calendar_events(duration)<br/>both kinds, past + future"]
     F --> H["format_future_meetings_section<br/>hero: next 2 meetings"]
     F --> T["get_upcoming_meetings(today)<br/>both kinds, for the text list"]
     P["meeting_page_path()<br/>announcement or calendar anchor"] -.-> T
@@ -140,9 +140,10 @@ the flat fields the text template wants:
 
 ### get_calendar_events
 
-The data behind `meetings.ics`. Unlike the text list, it keeps **past** meetings too,
-because subscribers' calendars would otherwise lose history. Each event gets a
-timezone-aware start:
+The data behind `meetings.ics`. It covers **both kinds** of meeting and carries
+each one's `kind`, so the template can title hands-on events. Unlike the text
+list, it keeps **past** meetings too, because subscribers' calendars would
+otherwise lose history. Each event gets a timezone-aware start:
 
 ```python
 start = datetime.combine(meeting["date_obj"], start_time, tzinfo=BOSTON)

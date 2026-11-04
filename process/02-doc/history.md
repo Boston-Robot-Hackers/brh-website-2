@@ -4,6 +4,21 @@ Completed-work log. `process/02-doc/current.md`'s `## Open` section is the only
 part that matters for new work; entries move here once done, per
 `.claude/process.md`'s checkpoint step.
 
+## 2026-11-04 (F21 hands-on meetings in the iCal feed; chore 41)
+
+* **F21**: `meetings.ics` now includes hands-on meetings, reversing F17's
+  main-only decision. The feed has 35 events: 18 main and 17 hands-on.
+  * Hands-on events are titled `Boston Robot Hackers hands-on meeting` and run
+    6:00–8:00pm, using the existing `meeting_duration_minutes`.
+  * Event IDs did not change, so existing subscribers' events update in place.
+  * The user confirmed a calendar-app import.
+* **Chore 41**: past main meetings now have real feed titles.
+  * Added `speaker` and `topic` to 12 past meetings, from their announcements.
+  * Linked the Jul 9 and Aug 6 entries to their announcements.
+  * Fixed "Dorff", "Biometric" and "Ryder" in two news titles.
+* Tests: 224 passed. Ruff clean. Literate docs refreshed for `content_manager`
+  and `build`. Site build clean.
+
 ## 2026-11-04 (Calendar newest first; hands-on dates moved; chores 39-40)
 
 * **Chore 39**: `content/calendar.yaml` is now kept newest first. The build

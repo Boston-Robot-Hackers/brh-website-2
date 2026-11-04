@@ -6,7 +6,7 @@ excerpt: We are fortunate to have Tom Ryden, Executive Director of Mass Robotics
 highlight: true
 image: images/news/clock.png
 published_date: '2026-01-05'
-title: 'Meeting announcement for March 5: Tom Ryder on current trends in Robotics'
+title: 'Meeting announcement for March 5: Tom Ryden on current trends in Robotics'
 type: news
 ---
 

@@ -79,6 +79,8 @@ meetings:
   - id: 22-meeting
     date: 2026-09-03
     kind: main
+    speaker: "Alan Kilian"
+    topic: "Powering Robots"
     text: "Alan Kilian, a long time software and hardware person with a lifelong passion for Robotics will speak about aspects of power for robots. Batteries, Measurement, Circuitry and more."
     announcement: "19-june-meeting-announcement.md"
     report: "27-september-meeting-report.md"
@@ -90,7 +92,10 @@ meetings:
   - id: 20-meeting
     date: 2026-08-06
     kind: main
+    speaker: "Shivam Chopra"
+    topic: "Forward and Inverse Kinematics"
     text: "Shivam Chopra (one of our members) will give a talk about Forward and Inverse Kinematics. Especially for people working with robot arms this is a very important thing to understand. There is some math involved by Shivam promises that no one will get hurt :)"
+    announcement: "23-shivam-chopra-talk-announcement.md"
 
   - id: 19-handson-meeting
     date: 2026-07-22
@@ -99,7 +104,10 @@ meetings:
   - id: 18-meeting
     date: 2026-07-09
     kind: main
+    speaker: "Isaac Vandor"
+    topic: "Underwater robotics"
     text: "Isaac Vandor is the developer and maintainer for the software running on famous underwater vehicles like Alvin and AUV Sentry. Isaac will talk about his work and experiences with underwater maritime robotics."
+    announcement: "22-isaac-vandor-talk-announcement.md"
 
   - id: 17-handson-meeting
     date: 2026-06-24
@@ -108,6 +116,8 @@ meetings:
   - id: 16-meeting
     date: 2026-06-11
     kind: main
+    speaker: "Ankush Dhawan"
+    topic: "Meet Pupper, the Open-Source Robot Dog"
     text: "Ankush Dhawan, a PhD candidate in Robotics at Stanford, will introduce Pupper: an open-source quadruped robot dog that walks, sees, listens, and responds. The centerpiece of Stanford's CS123 course and the Dr. Pupper project at Stanford Medicine."
     announcement: "24-ankush-dhawan-talk-announcement.md"
 
@@ -118,6 +128,8 @@ meetings:
   - id: 14-meeting
     date: 2026-05-07
     kind: main
+    speaker: "Adam Ring"
+    topic: "Simulations"
     text: "Adam Ring will give the talk about simulation in robotics. In this talk, Adam will discuss how the right simulation approach can accelerate development, improve safety, and reduce costly real-world failures."
     announcement: "20-adam-ring-talk-announcement.md"
 
@@ -128,6 +140,8 @@ meetings:
   - id: 12-meeting
     date: 2026-04-02
     kind: main
+    speaker: "Chris Lai"
+    topic: "Kalman Filters"
     text: "Featuring Chris Lai Presentation on Kalman Filters. Chris will discuss the motivation behind the Kalman Filter, and describe why (and most importantly) how it is used."
     announcement: "17-april-meeting-announcement.md"
 
@@ -138,6 +152,8 @@ meetings:
   - id: 10-meeting
     date: 2026-03-05
     kind: main
+    speaker: "Tom Ryden"
+    topic: "Robotics Landscape"
     text: "March Monthly meeting with Tom Ryden, Executive Director of Mass Robotics. Tom will discuss current trends in Robotics Startups and the industry in general"
     announcement: "18-march-meeting-announcement.md"
 
@@ -148,7 +164,9 @@ meetings:
   - id: 8-meeting
     date: 2026-01-08
     kind: main
-    text: ""
+    speaker: "Pito Salas"
+    topic: "URDF and Vibe Coding"
+    text: "An introduction to URDF, the XML format used to describe a robot's physical structure, and two ways to deal with its complexity."
     announcement: "16-jan-meeting-announcement.md"
 
   - id: 7-handson-meeting
@@ -158,6 +176,8 @@ meetings:
   - id: 6-meeting
     date: 2025-12-11
     kind: main
+    speaker: "Joel Grimm and Christopher Lai"
+    topic: "Autonomous RACECAR at MIT's Beaver Works Summer Institute"
     text: "MIT Beaverworks and RACECAR Project"
     announcement: "13-december-meeting-announcement.md"
     report: "14-december-meerting-summary.md"
@@ -169,6 +189,8 @@ meetings:
   - id: 4-meeting
     date: 2025-11-11
     kind: main
+    speaker: "Skyler Wiernik"
+    topic: "AI for generalized robotic manipulation"
     text: "Using a VLA for controlling a robotic hand"
     announcement: "11-fourth-meeting.md"
     report: "12-update-on-fifth-meeting.md"
@@ -180,11 +202,15 @@ meetings:
   - id: 2-meeting
     date: 2025-10-09
     kind: main
-    text: "Affordable Biomimetic Robot Hands"
+    speaker: "David Dorf"
+    topic: "Affordable Biomimetic Robot Hands"
+    text: ""
     announcement: "10-meeting-announcement.md"
 
   - id: 1-meeting
     date: 2025-09-04
     kind: main
-    text: "Space Station OS"
+    speaker: "Siddarth Dayasagar"
+    topic: "Space Station OS"
+    text: "An open-source ROS2-based platform for developing, controlling, and automating modular space station subsystems."
     announcement: "4-talk-announcement.md"

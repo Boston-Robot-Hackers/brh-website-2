@@ -1,7 +1,7 @@
 # F21 — Hands-on meetings in the iCalendar feed
 **Priority**: Medium
 **Date Created:** 2026-11-04
-**Done:** no
+**Done:** yes
 **Tasks File Created:** yes
 **Tests Written:** yes
 **Test Passing:** yes
