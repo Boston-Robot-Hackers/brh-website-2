@@ -13,9 +13,14 @@ leftovers need manual cleanup (design record in
 **Nov 11 hands-on meeting**: moved from Nov 25 on 2026-11-04, and it falls on
 Veterans Day. Confirm the space is open and let members know.
 
-**Speakers to confirm**: the 4 main meetings from Dec 2026 to Mar 2027
-(2026-12-10, 2027-01-14, 2027-02-11, 2027-03-11) have no speaker yet, so
-they show the "Speaker and topic to be announced." default, and "TBD" in
+**Dec 10 announcement**: Addisu Taddese is the speaker. "Robotics in the Real
+World" is a working title until confirmed.
+`content/news/30-december-talk-announcement.md` is no longer hidden. Its
+lightning talks are still TBD.
+
+**Speakers to confirm**: the 3 main meetings from Jan to Mar 2027
+(2027-01-14, 2027-02-11, 2027-03-11) have no speaker yet, so they show the
+"Speaker and topic to be announced." default, and "TBD" in
 `upcoming-talks.txt`.
 
 * When a speaker is confirmed, edit that entry in `content/calendar.yaml`:

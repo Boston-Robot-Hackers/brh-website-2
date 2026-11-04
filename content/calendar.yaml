@@ -42,6 +42,10 @@ meetings:
   - id: 28-meeting
     date: 2026-12-10
     kind: main
+    speaker: "Addisu Taddese"
+    topic: "Robotics in the Real World"
+    text: "Addisu Taddese, the lead maintainer of Gazebo, will give us insights from the inside. What is it like to work on a robotics simulation platform that is used by thousands of people around the world? What are the challenges and opportunities in robotics simulation?"
+    announcement: "30-december-talk-announcement.md"
 
   - id: 29-handson-meeting
     date: 2026-12-09
