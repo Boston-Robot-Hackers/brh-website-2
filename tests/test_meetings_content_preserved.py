@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # test_meetings_content_preserved — Calendar page shows every calendar.yaml meeting
 # Author: Pito Salas and Claude Code
-# Version: 2
+# Version: 3
 # Created: 2026-09-21
-# Updated: 2026-10-28
+# Updated: 2026-11-04
 # Open Source Under MIT license
 import re
 from datetime import UTC, date, datetime
@@ -19,9 +19,10 @@ TODAY = date(2026, 11, 1)
 
 
 @pytest.fixture(scope="module")
-def built():
+def built(tmp_path_factory):
     builder = WebsiteBuilder()
-    builder.asset_manager.clean_output_directory()
+    builder.dist_dir = tmp_path_factory.mktemp("output")
+    builder.page_builder.dist_dir = builder.dist_dir
     builder.build_meetings_page(TODAY)
     builder.build_ical_feed(datetime.now(UTC))
     return builder
@@ -30,6 +31,10 @@ def built():
 @pytest.fixture(scope="module")
 def meetings_html(built):
     return (built.dist_dir / "meetings.html").read_text()
+
+
+def test_builds_outside_the_real_output_directory(built):
+    assert built.dist_dir.resolve() != (REPO_ROOT / "output").resolve()
 
 
 def test_every_meeting_has_an_anchored_entry(meetings_html):

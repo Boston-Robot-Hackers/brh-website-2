@@ -4,6 +4,18 @@ Completed-work log. `process/02-doc/current.md`'s `## Open` section is the only
 part that matters for new work; entries move here once done, per
 `.claude/process.md`'s checkpoint step.
 
+## 2026-11-04 (Dec 10 announcement; test no longer wipes output; chores 42-43)
+
+* **Chore 42**: Addisu Taddese is the Dec 10 speaker. The calendar entry is
+  filled in, and `30-december-talk-announcement.md` is published with the
+  user's photo. Open items for it are in `current.md`.
+* **Chore 43**: `tests/test_meetings_content_preserved.py` deleted the real
+  `output/` on every test run, so the local site lost images until the next
+  build. Its fixture now builds into a temp directory. Deploys were not
+  affected, because `make deploy` builds after testing and CI only builds.
+* Tests: 225 passed. Ruff clean. No build module changed, so no literate docs
+  to refresh.
+
 ## 2026-11-04 (F21 hands-on meetings in the iCal feed; chore 41)
 
 * **F21**: `meetings.ics` now includes hands-on meetings, reversing F17's
