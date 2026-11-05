@@ -3,7 +3,8 @@
  */
 
 /* Site nav - Option D system: wordmark + uppercase links + a distinct
- * italic-red Pupper entry with a real photo badge. */
+ * italic-red featured-program entries (Pupper with a photo badge,
+ * Build-A-ROSBot). */
 .site-nav {
   background: var(--header-bg);
   border-bottom: 1px solid var(--border);
@@ -103,7 +104,7 @@
   border-color: var(--primary);
 }
 
-.site-nav__pupper-link {
+.site-nav__featured-link {
   font-style: italic;
   font-weight: 600;
   font-size: 0.92rem;
@@ -112,6 +113,12 @@
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
+  border-bottom: 2px solid transparent;
+  padding-bottom: 2px;
+}
+
+.site-nav__featured-link.active {
+  border-color: var(--primary);
 }
 
 .site-nav__pupper-photo {
@@ -1339,4 +1346,36 @@
 .about-content hr {
   border-color: var(--border);
   margin: 2rem 0;
+}
+
+/* ---- Build-A-ROSBot section ---- */
+.rosbot-list {
+  list-style: none;
+  padding: 0;
+}
+
+.rosbot-list li {
+  margin-bottom: 0.75rem;
+}
+
+.rosbot-list a {
+  font-weight: 700;
+}
+
+.rosbot-list__summary {
+  display: block;
+  color: var(--text-muted);
+}
+
+.rosbot-pager {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.rosbot-pager__link--next {
+  margin-left: auto;
+  text-align: right;
 }

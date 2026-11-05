@@ -1,5 +1,5 @@
 ---
-version: "1.4"
+version: "1.5"
 generated: "2026-11-05"
 ---
 
@@ -100,6 +100,21 @@ for page_file in sorted(pages_dir.glob("*.md")):
   page's own frontmatter.
 - **Linking is manual**: About links each page by hand. There's no
   generated index, because one or two pages don't need one.
+
+### A whole section, delegated
+
+The Build-A-ROSBot section is bigger than one page: an overview, a page per
+session, and a page per resource. Rather than grow `build.py`, which is
+already past the file-length guideline, `build()` hands it off in one line:
+
+```python
+RosbotSection(self.content_manager, self.page_builder).build()
+```
+
+- **Same collaborators**: the section reuses the builder's `ContentManager`
+  and `PageBuilder`, so markdown processing, banners, and the Jinja filters
+  behave exactly as they do everywhere else.
+- See `07-rosbot_builder.md` for how it loads, orders, and renders the pages.
 
 ## The two feeds
 

@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # test_navigation — Tests for the navigation template's links
 # Author: Pito Salas and Claude Code
-# Version: 1
+# Version: 2
 # Created: 2026-09-21
-# Updated: 2026-09-21
+# Updated: 2026-11-05
 # Open Source Under MIT license
 from pathlib import Path
 
@@ -38,6 +38,13 @@ def test_pupper_link_points_at_its_existing_project_page():
 def test_pupper_link_uses_real_photo_badge():
     nav_html = NAV_TEMPLATE.read_text()
     assert "images/projects/pupper_standing.jpg" in nav_html
+
+
+def test_rosbot_link_uses_detail_prefix_and_featured_style():
+    nav_html = NAV_TEMPLATE.read_text()
+    assert "{{ '../' if is_detail_page else '' }}rosbot.html" in nav_html
+    assert "site-nav__featured-link{{ ' active' if current_page == 'rosbot'" in nav_html
+    assert nav_html.index("Pupper") < nav_html.index("Build-A-ROSBot")
 
 
 def test_theme_toggle_button_preserved():

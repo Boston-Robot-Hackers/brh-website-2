@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # build — Modular build script for Boston Robot Hackers website
 # Author: Pito Salas and Claude Code
-# Version: 7
+# Version: 8
 # Created: 2026-09-21
 # Updated: 2026-11-05
 # Open Source Under MIT license
@@ -23,6 +23,7 @@ from content_manager import (
 from ical_format import fold_ics, ics_text
 from jinja2 import Environment, FileSystemLoader
 from page_builder import PageBuilder
+from rosbot_builder import RosbotSection
 
 
 class WebsiteBuilder:
@@ -383,6 +384,7 @@ class WebsiteBuilder:
         self.build_meetings_page(date.today())
         self.build_about_page()
         self.build_content_pages()
+        RosbotSection(self.content_manager, self.page_builder).build()
         self.build_learn_page()
         self.build_upcoming_talks(date.today())
         self.build_ical_feed(datetime.now(UTC))

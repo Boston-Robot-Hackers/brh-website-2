@@ -1,0 +1,31 @@
+<!-- Build-A-ROSBot session page - One content/rosbot/sessions/<slug>.md, with previous/next session links. Reusable by every session. -->
+{% extends 'layouts/detail.html' %}
+
+{% set current_page = 'rosbot' %}
+{% set back_link = 'rosbot.html' %}
+{% set back_text = 'Back to Build-A-ROSBot' %}
+
+{% block title %}Session {{ page.metadata.session }}: {{ page.title }} - {{ site.title }}{% endblock %}
+
+{% block detail_content %}
+    <div class="detail-brief-header">
+        <p class="detail-brief-header__kicker">Build-A-ROSBot &middot; Session {{ page.metadata.session }}</p>
+        <h1 class="detail-brief-header__title">{{ page.title }}</h1>
+        {% if page.date %}
+        <p class="detail-brief-header__meta">{{ page.date|format_date }}</p>
+        {% endif %}
+    </div>
+
+    <article class="detail-brief-body">
+        {{ page.content|safe }}
+    </article>
+
+    <nav class="rosbot-pager" aria-label="Sessions">
+        {% if previous %}
+        <a href="{{ previous.id }}.html" class="rosbot-pager__link">&larr; Session {{ previous.metadata.session }}: {{ previous.title }}</a>
+        {% endif %}
+        {% if next_session %}
+        <a href="{{ next_session.id }}.html" class="rosbot-pager__link rosbot-pager__link--next">Session {{ next_session.metadata.session }}: {{ next_session.title }} &rarr;</a>
+        {% endif %}
+    </nav>
+{% endblock %}
