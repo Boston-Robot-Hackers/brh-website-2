@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # content_manager — Content management module for the website builder
 # Author: Pito Salas and Claude Code
-# Version: 5
+# Version: 6
 # Created: 2026-09-21
 # Updated: 2026-11-05
 # Open Source Under MIT license
@@ -46,6 +46,18 @@ def parse_date(date_str):
         raise ValueError(
             f"Invalid date {date_str!r}: expected ISO format YYYY-MM-DD"
         ) from e
+
+
+def file_number(file_path: Path) -> int:
+    """Return the leading number of a content filename, e.g. 32 for '32-x.md'.
+
+    Raises ValueError when the name has none: date-sorted content uses that
+    number to order items that share a date.
+    """
+    match = re.match(r"\d+", file_path.stem)
+    if match is None:
+        raise ValueError(f"{file_path}: filename must start with a number")
+    return int(match.group())
 
 
 def format_long_date(value: date) -> str:
@@ -168,6 +180,8 @@ class ContentManager:
                 if content_type.directory == "members":
                     hashtags = item_data["metadata"].get("hashtags", [])
                     self.validate_member_hashtags(item_data["id"], hashtags)
+                if content_type.sort_key == "published_date":
+                    item_data["file_number"] = file_number(md_file)
                 items.append(item_data)
 
         # Sort by specified key
@@ -178,13 +192,13 @@ class ContentManager:
                 reverse=content_type.reverse,
             )
         elif content_type.sort_key in ("date", "published_date"):
-            # Dates were validated at load, so sort chronologically directly.
-            # x["metadata"][field] covers both: "date" is mirrored at the top
-            # level too, but metadata is always the source of truth.
+            # News ties on published_date go to the file number, which rises as
+            # items are added; other date-sorted content has unnumbered files.
             field = content_type.sort_key
             items.sort(
                 key=lambda x, field=field: (
-                    parse_date(x["metadata"].get(field)) or datetime.min
+                    parse_date(x["metadata"].get(field)) or datetime.min,
+                    x.get("file_number", 0),
                 ),
                 reverse=content_type.reverse,
             )

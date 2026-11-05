@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # test_content_manager — Tests for ContentManager loading, sorting, meetings, and talks
 # Author: Pito Salas and Claude Code
-# Version: 4
+# Version: 5
 # Created: 2026-09-21
 # Updated: 2026-11-05
 # Open Source Under MIT license
@@ -175,6 +175,25 @@ class TestGetAllContent:
         items = cm.get_all_content(ct)
         assert len(items) == 2
         assert items[0]["date"] >= items[1]["date"]
+
+    def test_same_date_news_sorted_by_file_number(self, tmp_path):
+        news_dir = tmp_path / "news"
+        news_dir.mkdir()
+        for number in (9, 31, 32):
+            (news_dir / f"{number}-post.md").write_text(
+                f"---\ntitle: Post {number}\npublished_date: '2026-11-05'\n---\nx\n"
+            )
+        ct = ContentType("news", "news", sort_key="published_date", reverse=True)
+        items = ContentManager(tmp_path).get_all_content(ct)
+        assert [item["title"] for item in items] == ["Post 32", "Post 31", "Post 9"]
+
+    def test_date_sorted_file_without_number_raises(self, tmp_path):
+        news_dir = tmp_path / "news"
+        news_dir.mkdir()
+        (news_dir / "post.md").write_text("---\ntitle: Post\n---\nx\n")
+        ct = ContentType("news", "news", sort_key="published_date", reverse=True)
+        with pytest.raises(ValueError, match="must start with a number"):
+            ContentManager(tmp_path).get_all_content(ct)
 
     def test_members_sorted_title_ascending(self, tmp_content_dir):
         cm = ContentManager(tmp_content_dir)

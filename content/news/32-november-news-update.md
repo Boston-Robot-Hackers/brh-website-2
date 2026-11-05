@@ -4,7 +4,7 @@ excerpt: Hands-on on Wednesday, November 11, and our main meeting with Yun Chang
   Thursday, November 12. A new, fixed schedule for all our meetings, a great lineup
   of speakers for December and January, and Build-A-ROSBot is getting started.
 highlight: true
-image: images/news/heavy-equipment.png
+image: images/news/newspapers.jpg
 published_date: '2026-11-05'
 title: November News Update
 type: news
