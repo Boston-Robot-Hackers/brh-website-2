@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # page_builder — Page building module for the website builder
 # Author: Pito Salas and Claude Code
-# Version: 4
+# Version: 5
 # Created: 2026-09-21
 # Updated: 2026-11-05
 # Open Source Under MIT license
@@ -183,14 +183,7 @@ class PageBuilder:
 
     def render_news_cards(self, posts: list[dict[str, Any]]) -> str:
         """Render news cards using the template."""
-        # Add image classes to posts for the template
-        image_classes = (
-            "image-base image-square d-flex align-items-center "
-            "justify-content-center text-white fw-bold"
-        )
-        return self.render_cards(
-            posts, "cards/news-card.html", image_classes=image_classes
-        )
+        return self.render_cards(posts, "cards/news-card.html")
 
     def render_compact_news_cards(self, posts):
         """Render compact news cards for the full news page."""

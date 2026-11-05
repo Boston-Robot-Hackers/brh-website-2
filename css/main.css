@@ -67,7 +67,7 @@
 
 /* Hand-drawn mark is solid dark ink on transparent - invert to white for
    dark mode instead of shipping a second asset. */
-:root[data-bs-theme="dark"] .site-nav__logo {
+:root[data-theme="dark"] .site-nav__logo {
   filter: invert(1);
 }
 
@@ -156,11 +156,11 @@
 
 /* Shows the moon in light mode (prompting a switch to dark), the sun in
    dark mode - matches the icon's meaning to what clicking it will do. */
-:root:not([data-bs-theme="dark"]) .theme-toggle-btn__icon--moon {
+:root:not([data-theme="dark"]) .theme-toggle-btn__icon--moon {
   display: block;
 }
 
-:root[data-bs-theme="dark"] .theme-toggle-btn__icon--sun {
+:root[data-theme="dark"] .theme-toggle-btn__icon--sun {
   display: block;
 }
 
@@ -201,8 +201,7 @@
 }
 
 .page-intro {
-  padding: 0.75rem 1.5rem !important;
-  min-height: auto !important;
+  padding: 0.75rem 1.5rem;
   background: var(--bg-card);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
@@ -224,7 +223,7 @@
 }
 
 .page-intro *:last-child {
-  margin-bottom: 0 !important;
+  margin-bottom: 0;
 }
 
 /* ---- Home page lead block (Option D) ----
@@ -443,10 +442,6 @@
 }
 
 /* Modern card styling */
-.card .card-body { 
-  padding: 1.25rem;
-}
-
 .card img { 
   aspect-ratio: 4 / 3; 
   object-fit: cover; 
@@ -731,52 +726,12 @@
   line-height: 1.45;
 }
 
-/* ---- Detail page header (shared shape: meeting/project detail, plus
-   member-detail__title) ---- */
-.detail-header {
-  display: flex;
-  align-items: center;
-  gap: 1.25rem;
-  margin-bottom: 2rem;
-}
-
-.detail-header-img,
-.detail-header-thumb {
-  width: 140px;
-  height: 140px;
-  border-radius: var(--radius);
-  flex-shrink: 0;
-}
-.detail-header-img { object-fit: cover; }
-.detail-header-thumb {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  color: var(--text-muted);
-  font-weight: 700;
-  font-size: 1rem;
-  text-align: center;
-}
-
+/* ---- Member detail title ---- */
 .detail-header__title {
   font-weight: 900;
   font-size: clamp(1.6rem, 3vw, 2.2rem);
   margin: 0 0 0.35rem;
   color: var(--text);
-}
-
-.detail-header__meta {
-  color: var(--text-muted);
-  font-size: 0.9rem;
-  margin: 0;
-}
-
-.detail-header__excerpt {
-  color: var(--text);
-  font-size: 1.05rem;
-  margin: 0.5rem 0 0;
 }
 
 /* ---- Shared detail-page shell (layouts/detail.html) ---- */

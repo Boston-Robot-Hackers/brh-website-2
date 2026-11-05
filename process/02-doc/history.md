@@ -4,6 +4,16 @@ Completed-work log. `process/02-doc/current.md`'s `## Open` section is the only
 part that matters for new work; entries move here once done, per
 `.claude/process.md`'s checkpoint step.
 
+## 2026-11-05 (F25 delete dead code)
+
+* **F25 closed**: removes 12 unused CSS classes and 7 unused variables, about 144
+  lines of CSS.
+* `data-bs-theme` is now `data-theme`, and the leftover Bootstrap `!important`
+  rules, class names and comments are gone.
+* Also removed: the nav's smooth-scroll code, `image_classes` and the empty
+  `extra_head` block.
+* `tests/test_no_dead_css.py` now fails on any unused CSS class or variable.
+
 ## 2026-11-05 (F24 layout and accessibility bugs)
 
 * **F24 closed**: fixes the bugs from the HTML and CSS audit. No page scrolls

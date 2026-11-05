@@ -6,8 +6,7 @@
 /* Font Imports */
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,500;1,600;1,700&display=swap');
 
-/* Minimal reset - previously provided by Bootstrap's reboot.css, now that
- * Bootstrap is gone. box-sizing: border-box is load-bearing for several
+/* Minimal reset. box-sizing: border-box is load-bearing for several
  * width+padding combinations throughout main.css. */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -31,7 +30,6 @@ button, input, select, textarea {
 :root{
   --radius: 12px;
   --radius-lg: 16px;
-  --space-1: 8px; --space-2: 12px; --space-3: 16px; --space-4: 24px; --space-5: 32px;
   /* Keeps anchor targets and sticky items clear of the sticky nav */
   --nav-offset: 6rem;
 
@@ -39,7 +37,6 @@ button, input, select, textarea {
   --primary: #d00029;
   --primary-hover: #a80021;
   --primary-light: #ffe3e8;
-  --secondary: #8b5cf6;
   --accent: #f59e0b;
   /* Text on a solid --accent fill; stays dark in both themes */
   --on-accent: #0a0a0a;
@@ -57,14 +54,12 @@ button, input, select, textarea {
   --text-muted: #4a4a4a;
   --text-light: #7a7a72;
   --dek: #2a2a2a;
-  /* Italic text color; --secondary's hue, darkened to pass text contrast on cream */
+  /* Italic text color, dark enough to pass text contrast on cream */
   --emphasis: #6d28d9;
 
   /* Shadows for depth */
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 }
 
 /* The nav stops being sticky here, so nothing needs to clear it */
@@ -75,18 +70,18 @@ button, input, select, textarea {
 }
 
 /* Dark mode: neutral scale flip to a warm near-black (not blue-black),
- * consistent with the light mode's warm cream. --secondary/--accent/
+ * consistent with the light mode's warm cream. --accent and
  * --success are unchanged - they're only used on self-contained saturated
  * fills (badges, gradients), not backgrounds/text, so they read fine in
  * both modes (see F01's audit). --primary IS redefined here, unlike F01's
  * precedent: Option D uses red as running link/nav text color (not just
  * isolated fills), and the light-mode red is too dark to pass text
  * contrast against a near-black background, so dark mode gets a lighter
- * tint of the same hue. Keyed off data-bs-theme (set by an inline script
+ * tint of the same hue. Keyed off data-theme (set by an inline script
  * in <head>, from either localStorage or prefers-color-scheme) rather than
  * the media query directly, so the manual toggle can override the OS
  * setting. */
-:root[data-bs-theme="dark"] {
+:root[data-theme="dark"] {
   --primary: #ff5c78;
   --primary-hover: #ff7d92;
   --primary-light: #3a1420;
@@ -105,9 +100,7 @@ button, input, select, textarea {
   --emphasis: #a78bfa;
 
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4);
-  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.4), 0 8px 10px -6px rgb(0 0 0 / 0.4);
 }
 
 body { 
@@ -117,7 +110,7 @@ body {
 }
 
 .card { 
-  border-radius: var(--radius-lg) !important; 
+  border-radius: var(--radius-lg);
   border: 1px solid var(--border);
   background: var(--bg-card);
   box-shadow: var(--shadow-sm);
@@ -128,22 +121,6 @@ body {
   box-shadow: var(--shadow-lg);
   transform: translateY(-2px);
   border-color: var(--border-hover);
-}
-
-.btn { 
-  background: var(--primary); 
-  border-radius: var(--radius);
-  border: none;
-  padding: 0.625rem 1.25rem;
-  font-weight: 600;
-  transition: all 0.2s ease;
-  box-shadow: var(--shadow-sm);
-}
-
-.btn:hover {
-  background: var(--primary-hover);
-  box-shadow: var(--shadow-md);
-  transform: translateY(-1px);
 }
 
 .member-skills {
@@ -165,9 +142,9 @@ body {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  margin-top: 0.6rem !important;
-  padding-top: 0.6rem !important;
-  border-top: 2px solid var(--border) !important;
+  margin-top: 0.6rem;
+  padding-top: 0.6rem;
+  border-top: 2px solid var(--border);
 }
 
 .member-projects-label {
@@ -217,8 +194,6 @@ h2 { font-size: clamp(1.75rem, 2.5vw + 1rem, 2.25rem); }
 h3 { font-size: clamp(1.375rem, 1.5vw + 1rem, 1.75rem); }
 
 h1, h2, h3, h4, h5, h6,
-.card-title,
-.section-title,
 .banner h1,
 .banner p {
     font-family: "Archivo Narrow", ui-sans-serif, system-ui, sans-serif;
@@ -291,50 +266,6 @@ footer p {
   color: var(--text-muted);
   font-size: 0.85rem;
 }
-/* Base image styling - shared by all image types with modern enhancements */
-.image-base {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: var(--radius);
-  overflow: hidden;
-  background-size: cover, contain;
-  background-position: center, center;
-  background-repeat: no-repeat, no-repeat;
-  transition: transform 0.3s ease;
-}
-
-/* Image sizing and gradients with modern colors */
-.image-square {
-  background: none;
-}
-
-.image-rectangle {
-  background: 
-    linear-gradient(135deg, rgba(59, 130, 246, 0.4), rgba(139, 92, 246, 0.4)),
-    url('images/placeholder.png');
-}
-
-/* Default image sizes with better proportions */
-.image-square {
-  aspect-ratio: 1 / 1;
-  width: 100%;
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-  overflow: hidden;
-}
-
-.image-square img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.3s ease;
-}
-
-.card:hover .image-square img {
-  transform: scale(1.05);
-}
-
 /* Modern "Open to work" banner */
 .card.open-to-work {
   position: relative;
@@ -358,33 +289,3 @@ footer p {
   border-radius: 0 0 var(--radius-lg) var(--radius-lg);
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
 }
-
-.image-rectangle {
-  height: 80px;
-  width: 120px;
-}
-
-/* Common responsive adjustments */
-@media (max-width: 767px) {
-  .image-rectangle {
-    width: 100%;
-    height: 120px;
-  }
-}
-
-/* Performance optimizations */
-.image-base {
-  will-change: transform;
-  backface-visibility: hidden;
-}
-
-/* Accessibility improvements with modern colors */
-.image-base[role="img"] {
-  background-color: var(--bg);
-}
-
-.image-base[role="img"]:focus {
-  outline: 2px solid var(--primary);
-  outline-offset: 2px;
-}
-

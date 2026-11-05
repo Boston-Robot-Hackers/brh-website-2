@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # test_nav_logo — Tests for the navigation bar robot logo
 # Author: Pito Salas and Claude Code
-# Version: 1
+# Version: 2
 # Created: 2026-09-21
-# Updated: 2026-09-21
+# Updated: 2026-11-05
 # Open Source Under MIT license
 from pathlib import Path
 
@@ -20,4 +20,4 @@ def test_nav_renders_logo_with_dark_mode_invert():
     assert 'class="site-nav__logo"' in nav_html
 
     css = (REPO_ROOT / "css" / "main.css").read_text()
-    assert ':root[data-bs-theme="dark"] .site-nav__logo' in css
+    assert ':root[data-theme="dark"] .site-nav__logo' in css

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # test_css_theme — Tests that CSS colors go through theme variables in both modes
 # Author: Pito Salas and Claude Code
-# Version: 3
+# Version: 4
 # Created: 2026-09-21
 # Updated: 2026-11-05
 # Open Source Under MIT license
@@ -11,7 +11,7 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
 # Variables that must have a dark-mode counterpart (the neutral scale +
-# shadows). Brand/accent colors (--primary, --secondary, --accent, --success,
+# shadows). Brand/accent colors (--primary, --accent, --success,
 # etc.) are deliberately unchanged across modes - see F01's audit.
 DARK_MODE_VARS = {
     "--bg",
@@ -23,22 +23,20 @@ DARK_MODE_VARS = {
     "--text-light",
     "--emphasis",
     "--shadow-sm",
-    "--shadow-md",
     "--shadow-lg",
-    "--shadow-xl",
 }
 
-# The 3 bespoke dark-UI-chrome colors intentionally left hardcoded in
-# main.css (nav-bar gradient, banner, nav-link hover) - already dark
-# regardless of page theme, so they don't need a variable.
-BESPOKE_CHROME_HEX = {"#1e293b", "#334155", "#1a1a1a", "#ffffff"}
+# Colors intentionally left hardcoded in main.css: the banner's fallback
+# background, and white behind the QR code and meeting date boxes. They
+# look the same in both themes, so they don't need a variable.
+BESPOKE_CHROME_HEX = {"#1a1a1a", "#ffffff"}
 
 
 def test_dark_mode_defines_every_required_variable():
     css = (REPO_ROOT / "css" / "shared.css").read_text()
 
-    dark_block = re.search(r':root\[data-bs-theme="dark"\]\s*\{(.*?)\}', css, re.DOTALL)
-    assert dark_block, 'expected a :root[data-bs-theme="dark"] override'
+    dark_block = re.search(r':root\[data-theme="dark"\]\s*\{(.*?)\}', css, re.DOTALL)
+    assert dark_block, 'expected a :root[data-theme="dark"] override'
 
     dark_vars = set(re.findall(r"(--[\w-]+)\s*:", dark_block.group(1)))
     missing = DARK_MODE_VARS - dark_vars
@@ -54,10 +52,10 @@ def test_main_css_has_no_unexpected_hardcoded_colors():
     assert not unexpected, f"unexpected hardcoded hex colors in main.css: {unexpected}"
 
 
-def test_base_template_syncs_bootstrap_theme():
+def test_base_template_sets_theme_before_paint():
     base_html = (REPO_ROOT / "templates" / "layouts" / "base.html").read_text()
 
-    assert "data-bs-theme" in base_html
+    assert "data-theme" in base_html
     assert "prefers-color-scheme: dark" in base_html
 
 
@@ -74,8 +72,8 @@ def test_shared_css_uses_option_d_palette_and_type():
     assert "#fffef7" in light_block.group(1), "expected the cream --bg value"
     assert "#d00029" in light_block.group(1), "expected the red --primary value"
 
-    dark_block = re.search(r':root\[data-bs-theme="dark"\]\s*\{(.*?)\}', css, re.DOTALL)
-    assert dark_block, 'expected a :root[data-bs-theme="dark"] override'
+    dark_block = re.search(r':root\[data-theme="dark"\]\s*\{(.*?)\}', css, re.DOTALL)
+    assert dark_block, 'expected a :root[data-theme="dark"] override'
     assert "#121110" in dark_block.group(1), (
         "expected the warm near-black dark --bg value"
     )
