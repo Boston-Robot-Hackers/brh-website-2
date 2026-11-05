@@ -18,10 +18,13 @@ World" is a working title until confirmed.
 `content/news/30-december-talk-announcement.md` is no longer hidden. Its
 lightning talks are still TBD.
 
-**Speakers to confirm**: the 3 main meetings from Jan to Mar 2027
-(2027-01-14, 2027-02-11, 2027-03-11) have no speaker yet, so they show the
-"Speaker and topic to be announced." default, and "TBD" in
-`upcoming-talks.txt`.
+**Jan 14 announcement**: Tully Foote on Intrinsic Core.
+`content/news/31-january-talk-announcement.md` has its image, and its
+lightning talks are still TBD.
+
+**Speakers to confirm**: the 2 main meetings on 2027-02-11 and 2027-03-11 have
+no speaker yet, so they show the "Speaker and topic to be announced." default,
+and "TBD" in `upcoming-talks.txt`.
 
 * When a speaker is confirmed, edit that entry in `content/calendar.yaml`:
   add `speaker`, `topic`, `text`, and `announcement`. Once both `speaker`

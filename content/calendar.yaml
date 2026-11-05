@@ -34,6 +34,10 @@ meetings:
   - id: 30-meeting
     date: 2027-01-14
     kind: main
+    speaker: "Tully Foote"
+    topic: "Intrinsic Core"
+    text: "Tully Foote, the Open Source Lead at Intrinsic and one of the early ROS developers at Willow Garage, will present the Intrinsic Core, recently released under Apache 2.0 by Intrinsic. We'll cover what it is and what you can do with it."
+    announcement: "31-january-talk-announcement.md"
 
   - id: 31-handson-meeting
     date: 2027-01-13
