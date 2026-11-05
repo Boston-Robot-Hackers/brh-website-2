@@ -26,7 +26,14 @@
       "Bash(make test *)",
       "Bash(git revert *)",
       "Bash(curl *)",
-      "Bash(xargs -I {} sh -c 'echo \"=== {} ===\"; grep -E \"announcement|report\" {} | head -2')"
+      "Bash(xargs -I {} sh -c 'echo \"=== {} ===\"; grep -E \"announcement|report\" {} | head -2')",
+      "Bash(git fetch *)",
+      "Bash(gh run *)",
+      "Skill(close-feature)",
+      "Bash(git check-ignore *)",
+      "Skill(checkpoint)",
+      "Bash(cp output/meetings.html /private/tmp/claude-501/meetings-preview.html; cat -n templates/pages/meetings.html; echo '=== refs'; grep -rnE \"handson_schedule_note|require_config|calendar-header|calendar-note|rail-note|rail-feeds|We meet twice|Hands-on meetings|calendar-section-title|river-header\" build config templates css tests README.md process/02-doc/spec.md process/02-doc/notes.md | cut -c1-150; echo '=== css'; sed -n 985,1035p css/main.css; sed -n 595,622p css/main.css; echo '=== chores tail'; tail -3 process/04-tasks/chores.md | cut -c1-200; echo '=== req'; grep -n \"def require_config\" -A8 build/build.py)",
+      "Bash(pkill -f \"http.server 8765\")"
     ]
   }
 }
