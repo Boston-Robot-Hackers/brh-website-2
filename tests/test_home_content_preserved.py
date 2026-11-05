@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # test_home_content_preserved — Built home page keeps all real content
 # Author: Pito Salas and Claude Code
-# Version: 1
+# Version: 2
 # Created: 2026-09-21
-# Updated: 2026-09-21
+# Updated: 2026-11-05
 # Open Source Under MIT license
 from pathlib import Path
 
@@ -60,7 +60,7 @@ def test_pupper_spotlight_present(built_index_html):
 
 
 def test_qr_code_present(built_index_html):
-    assert "brh_qr.png" in built_index_html
+    assert "images/signup-qr.png" in built_index_html
     assert 'alt="' in built_index_html
 
 

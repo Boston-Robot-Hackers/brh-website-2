@@ -36,6 +36,6 @@ We're always looking for speakers, for both featured talks and lightning talks. 
 
 Currently BRH is led by Pito Salas. You can [contact me via LinkedIn](https://www.linkedin.com/in/pitosalas/) I will respond in less than 24 hours.
 
-[Click HERE](https://forms.gle/x3gpWaGvwrKKrMEL8) if you want to receive an invite to join!
+[Click HERE](https://forms.gle/JmxhSMc8iypZwj1z9) if you want to receive an invite to join!
 
 <hr/>

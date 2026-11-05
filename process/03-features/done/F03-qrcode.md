@@ -78,3 +78,11 @@ After creating this feature file and the corresponding task file, **stop and pre
 * Tradeoff accepted: no build-time safeguard against the QR going stale if
   the tracked destination changes — updating it now means replacing
   `images/brh_qr.png` directly.
+
+## Update (2026-11-05)
+
+* The 2026-09-20 change is **reversed**: the QR is generated at build time again, from `signup_url` in `config/site.json`, with no scan analytics.
+
+* Uses `segno` rather than `qrcode[pil]`, and writes `images/signup-qr.png`. `images/brh_qr.png` is gone.
+
+* `signup_url` is the `forms.gle` link, which is Google's own link for the form. No QR or tracking service is involved.

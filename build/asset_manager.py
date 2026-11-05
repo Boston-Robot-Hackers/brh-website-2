@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
 # asset_manager — Asset management module for the website builder
 # Author: Pito Salas and Claude Code
-# Version: 1
+# Version: 2
 # Created: 2026-09-21
-# Updated: 2026-09-21
+# Updated: 2026-11-05
 # Open Source Under MIT license
 """Handles copying of static assets like CSS, JS, and images."""
 
 import shutil
 from pathlib import Path
 
+import segno
 from pygments.formatters import HtmlFormatter
 
 
@@ -62,6 +63,15 @@ class AssetManager:
         css_file = css_dir / "syntax.css"
         css_file.write_text(css_content)
         print(f"Generated syntax highlighting CSS: {css_file}")
+
+    def generate_signup_qr(self, signup_url: str):
+        """Write the signup QR, encoding signup_url, to dist/images/signup-qr.png."""
+        output_path = self.dist_dir / "images" / "signup-qr.png"
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        segno.make(signup_url, error="m", micro=False).save(
+            output_path, scale=10, border=4
+        )
+        print(f"Generated signup QR code: {output_path}")
 
     def clean_output_directory(self):
         """Clean and recreate the output directory."""
