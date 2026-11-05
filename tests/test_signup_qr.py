@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # test_signup_qr — Tests that the signup QR encodes signup_url, on the home page only
 # Author: Pito Salas and Claude Code
-# Version: 2
+# Version: 3
 # Created: 2026-09-21
 # Updated: 2026-11-05
 # Open Source Under MIT license
@@ -53,7 +53,7 @@ def test_qr_follows_the_url_it_is_given(tmp_path):
     assert decoded_urls(Image.open(tmp_path / QR_SRC)) == [other_url]
 
 
-@pytest.mark.parametrize("page", ["content/heroes/index.md", "content/about.md"])
+@pytest.mark.parametrize("page", ["content/home.md", "content/about.md"])
 def test_signup_links_match_signup_url(page):
     assert SIGNUP_URL in (REPO_ROOT / page).read_text()
 

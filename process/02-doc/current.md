@@ -47,15 +47,6 @@ CI/local build invocation), F14 (reduce page-builder boilerplate), F15
 (remove inline styles), F16 (robust root-dir detection). None has a task
 file yet.
 
-**F23 (simplify hero content)**: planned and parked, awaiting the user's go.
-`F23-simplify-hero-content.md` and its task file exist in `notdone/` but aren't
-committed yet. The home page's "Next…" line stays, by the user's decision. F14's
-proposed helper needs rescoping when F23 lands.
-
-**Content fixes spotted, not made**: "memebrs" in `content/heroes/members.md`,
-and `home-lead.html` says "Meets monthly" while the Meetings intro says "twice a
-month".
-
 Known, deliberately-deferred items (not urgent, no ticket filed):
 
 * 3 ruff `DTZ` (naive-datetime) findings, left unfixed: `datetime.now()`

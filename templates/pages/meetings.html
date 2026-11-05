@@ -7,18 +7,13 @@
 {% block title %}Meetings - {{ site.title }}{% endblock %}
 
 {% block main_content %}
-    <div class="calendar-header">
-        <h1 class="river-header calendar-header__title">Meetings</h1>
-        <p class="rail-note calendar-header__note">All meetings at <a href="https://www.artisansasylum.com" target="_blank">Artisans Asylum, 96 Holton Street, Allston</a></p>
-        <span class="rail-feeds calendar-header__feeds">
+    <h2 class="calendar-section-title">Upcoming Meetings
+        <span class="rail-note calendar-section-title__note">All meetings at <a href="https://www.artisansasylum.com" target="_blank">Artisans Asylum, 96 Holton Street, Allston</a></span>
+        <span class="rail-feeds calendar-section-title__feeds">
             <a href="meetings.ics" title="Meetings calendar (iCal) — import or subscribe">Subscribe (iCal)</a>
             <a href="upcoming-talks.txt" title="Upcoming meetings as plain text">TXT</a>
         </span>
-    </div>
-
-    <p class="calendar-note">{{ site.handson_schedule_note }}</p>
-
-    <h2 class="calendar-section-title">Upcoming</h2>
+    </h2>
     {% if to_announce %}
     <p class="calendar-tba">Speaker to be announced:
         {% for meeting in to_announce %}
@@ -37,7 +32,7 @@
     {% endif %}
 
     {% if past %}
-    <h2 class="calendar-section-title">Past</h2>
+    <h2 class="calendar-section-title">Past Meetings</h2>
     <div class="calendar-grid">
         {% for meeting in past %}
         {% include 'components/calendar-entry.html' %}

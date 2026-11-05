@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # test_meetings_content_preserved — Calendar page shows calendar.yaml's main meetings
 # Author: Pito Salas and Claude Code
-# Version: 4
+# Version: 5
 # Created: 2026-09-21
 # Updated: 2026-11-05
 # Open Source Under MIT license
@@ -60,8 +60,25 @@ def test_handson_meetings_are_not_listed(meetings_html):
     assert not set(handson_ids) & set(page_anchors(meetings_html))
 
 
-def test_handson_schedule_line_comes_from_config(built, meetings_html):
-    assert built.site_config["handson_schedule_note"] in meetings_html
+def test_header_line_holds_location_and_feeds(meetings_html):
+    header = re.search(
+        r'<h2 class="calendar-section-title">Upcoming Meetings.*?</h2>',
+        meetings_html,
+        re.DOTALL,
+    ).group(0)
+    assert "All meetings at" in header
+    assert 'href="meetings.ics"' in header
+    assert 'href="upcoming-talks.txt"' in header
+
+
+def test_past_section_is_titled_past_meetings(meetings_html):
+    assert '<h2 class="calendar-section-title">Past Meetings</h2>' in meetings_html
+
+
+def test_removed_header_elements_stay_gone(meetings_html):
+    assert "Hands-on meetings:" not in meetings_html
+    assert "We meet twice a month" not in meetings_html
+    assert "calendar-header" not in meetings_html
 
 
 def test_cards_show_title_blurb_and_link_to_announcement(meetings_html):
@@ -96,7 +113,8 @@ def test_to_be_announced_dates_have_no_card(meetings_html):
 
 
 def test_upcoming_section_precedes_past(meetings_html):
-    assert meetings_html.index(">Upcoming<") < meetings_html.index(">Past<")
+    upcoming_at = meetings_html.index(">Upcoming Meetings")
+    assert upcoming_at < meetings_html.index(">Past Meetings<")
 
 
 def test_no_meeting_detail_pages(built):

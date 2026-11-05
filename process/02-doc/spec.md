@@ -11,7 +11,7 @@ Boston Robot Hackers Website (brh-website-2)
   everything in `content/` and `templates/` to static HTML in `output/`.
 * GitHub Actions builds and deploys `output/` to GitHub Pages on every
   push to `main` — no server-side runtime, database, or accounts.
-* Six areas, all reachable from the top nav: **Home** (hero + highlighted
+* Six areas, all reachable from the top nav: **Home** (mission text + highlighted
   news + upcoming meetings), **Learn** (curated external robotics
   resources), **Members** (member directory/profiles), **Projects**
   (community project listings), **About** (mission, meeting info,

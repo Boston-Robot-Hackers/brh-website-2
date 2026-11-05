@@ -1,6 +1,6 @@
 ---
-version: "1.1"
-generated: "2026-10-28"
+version: "1.2"
+generated: "2026-11-05"
 ---
 
 # calendar_source — one YAML file as the meeting schedule
@@ -15,7 +15,7 @@ function, `load_calendar`, that turns it into meeting dicts.
 The file must exist: a missing `calendar.yaml` fails the build, while an
 empty one means "no meetings".
 
-Everything meeting-shaped downstream (the hero, `upcoming-talks.txt`,
+Everything meeting-shaped downstream (the home page's next-meetings line, `upcoming-talks.txt`,
 `meetings.ics`, the calendar page, the home-page rail) reads through this
 loader via `ContentManager.load_meetings`.
 
@@ -23,7 +23,7 @@ loader via `ContentManager.load_meetings`.
 flowchart LR
     Y["content/calendar.yaml"] --> L["load_calendar()"]
     L --> CM["ContentManager.load_meetings()"]
-    CM --> H["hero: next 2 meetings"]
+    CM --> H["home page: next 2 meetings"]
     CM --> T["upcoming-talks.txt"]
     CM --> ICS["meetings.ics"]
     CM --> CAL["meetings.html calendar"]

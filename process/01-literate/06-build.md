@@ -1,6 +1,6 @@
 ---
-version: "1.3"
-generated: "2026-10-28"
+version: "1.4"
+generated: "2026-11-05"
 ---
 
 # build — orchestrating the whole site
@@ -56,8 +56,8 @@ Each `build_*_page` method follows the same recipe:
 1. Load content through `ContentManager`.
 2. Optionally build detail pages (with cross-link maps).
 3. Render the listing fragment.
-4. Load the page's hero and banner.
-5. Write the page with `PageBuilder.build_page`.
+4. Write the page with `PageBuilder.build_page`, using the default banner from
+   `resolve_banner({})`.
 
 The interesting variation is in **cross-linking**. `build_projects_page` builds
 a map from project slug to the members working on it, by inverting each
@@ -96,8 +96,7 @@ for page_file in sorted(pages_dir.glob("*.md")):
 - **Why check `metadata`, not `page["title"]`**: `process_markdown_file`
   defaults a missing title to `"Untitled"`, which would publish silently.
   The raw frontmatter is the only place the omission is still visible.
-- **No hero**: it passes `hero={}`, and the page template renders the title
-  itself. Banner overrides still work because `resolve_banner` reads the
+- **Title in the template**: the page template renders the title itself. Banner overrides still work because `resolve_banner` reads the
   page's own frontmatter.
 - **Linking is manual**: About links each page by hand. There's no
   generated index, because one or two pages don't need one.
@@ -147,9 +146,9 @@ stale pages left over from deleted content.
 
 ## Observations and possible improvements
 
-1. **Repeated hero/banner envelope.** Six page methods repeat the same
-   `build_hero_content` + `resolve_banner` + `build_page` tail. F14 proposes a
-   helper for it.
+1. **Repeated banner envelope.** Six page methods repeat the same
+   `build_page` + `resolve_banner({})` tail. F14 asks whether a helper is still
+   worth having now that the envelope is this small.
 2. **CWD-based root detection** is fragile for IDEs and automation. F16 proposes
    `Path(__file__).resolve().parent.parent`.
 3. **The file is past the ~300-line guideline** (about 405 lines).

@@ -1,8 +1,8 @@
-<!-- Standard page layout - Extends base with hero section and main_content block. Reusable by listing pages. -->
+<!-- Standard page layout - Extends base with optional intro block and main_content block. Reusable by listing pages. -->
 {% extends 'layouts/base.html' %}
 
 {% block content %}
-    {% include 'components/hero.html' %}
+    {% block intro %}{% endblock %}
 
     <main class="page-content">
         {% block main_content %}{% endblock %}

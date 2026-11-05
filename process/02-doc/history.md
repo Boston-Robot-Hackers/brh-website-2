@@ -4,6 +4,20 @@ Completed-work log. `process/02-doc/current.md`'s `## Open` section is the only
 part that matters for new work; entries move here once done, per
 `.claude/process.md`'s checkpoint step.
 
+## 2026-11-05 (F23 remove the hero concept)
+
+* **F23 closed**: `content/heroes/`, `components/hero.html` and
+  `build_hero_content` are gone. Home's mission text is in `content/home.md`, and
+  `home-lead.html` renders it with the "Next…" line.
+* The Projects intro is in its page template, through a new `intro` block in
+  `layouts/page.html`. The About, Learn and Members intros are cut.
+* Main pages use the default banner, reversing that part of F09. Detail page
+  overrides stay.
+* F14 is rescoped, since little of its repeated envelope remains.
+* **Meetings header (chore 46)**: the intro, the hands-on schedule line and the
+  standalone title are gone. The location note and feed buttons now sit on the
+  "Upcoming Meetings" line, which reverses F22's schedule line.
+
 ## 2026-11-05 (F22 meetings card grid)
 
 * **F22 closed**: `meetings.html` is now a responsive grid of main meeting cards,

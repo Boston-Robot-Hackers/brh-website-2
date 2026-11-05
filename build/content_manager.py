@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # content_manager — Content management module for the website builder
 # Author: Pito Salas and Claude Code
-# Version: 4
+# Version: 5
 # Created: 2026-09-21
-# Updated: 2026-11-04
+# Updated: 2026-11-05
 # Open Source Under MIT license
 """Handles loading and processing of markdown content."""
 
@@ -199,21 +199,6 @@ class ContentManager:
         """Resolve an announcement/report reference to (html_filename, exists)."""
         return self.news_resolver.resolve(ref)
 
-    def generate_index_hero(self, static_content: str) -> str:
-        """Generate index hero by adding future meeting info to static content."""
-        if "<hr/>" not in static_content and "<hr>" not in static_content:
-            return static_content
-
-        split_on = "<hr/>" if "<hr/>" in static_content else "<hr>"
-        parts = static_content.split(split_on, 1)
-        static_part = parts[0] + split_on
-
-        # Get all future meetings
-        future_meetings = self.get_future_meetings()
-        generated_part = self.format_future_meetings_section(future_meetings)
-
-        return static_part + "\n" + generated_part
-
     def load_meetings(self) -> list[dict[str, Any]]:
         """Load every meeting from calendar.yaml, sorted by date ascending."""
         return load_calendar(self.content_dir / "calendar.yaml")
@@ -284,7 +269,7 @@ class ContentManager:
         return events
 
     def format_future_meetings_section(self, meetings: list[dict[str, Any]]) -> str:
-        """Render the 2 nearest future meetings via the hero template."""
+        """Render the 2 nearest future meetings for the home page."""
         # Only show the 2 nearest meetings
         context_meetings = []
         for meeting in meetings[:2]:
@@ -308,30 +293,8 @@ class ContentManager:
                 }
             )
 
-        template = self.jinja_env.get_template("components/upcoming-meetings-hero.html")
+        template = self.jinja_env.get_template("components/upcoming-meetings-next.html")
         return template.render(meetings=context_meetings)
-
-    def build_hero_content(self, page_name: str = "index") -> dict[str, Any]:
-        """Build hero content from page-specific markdown file."""
-        hero_file = self.content_dir / "heroes" / f"{page_name}.md"
-        if not hero_file.exists():
-            raise FileNotFoundError(f"Missing hero file: {hero_file}")
-
-        md_processor = self.setup_markdown_processor()
-        hero_data = self.process_markdown_file(hero_file, md_processor)
-        hero_content = hero_data["content"]
-
-        if page_name == "index":
-            hero_content = self.generate_index_hero(hero_content)
-
-        return {
-            "hero_title": hero_data["title"],
-            "hero_subtitle": hero_data["metadata"].get("subtitle", ""),
-            "hero_content": hero_content,
-            "banner_image": hero_data["metadata"].get("banner_image"),
-            "banner_title": hero_data["metadata"].get("banner_title"),
-            "banner_subtitle": hero_data["metadata"].get("banner_subtitle"),
-        }
 
     def process_single_content_file(self, filename: str) -> str:
         """Process a single content file and return HTML content."""

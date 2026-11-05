@@ -165,15 +165,14 @@
   text-shadow: 1px 1px 2px black;
 }
 
-/* Modern hero section */
-.hero-section {
+/* Short intro above a page's main content */
+.page-intro__inner {
   max-width: 70rem;
   margin: 0 auto;
   padding: 0 1.5rem;
 }
 
-/* Auto-sizing hero based on content with better styling */
-.hero {
+.page-intro {
   padding: 0.75rem 1.5rem !important;
   min-height: auto !important;
   background: var(--bg-card);
@@ -191,39 +190,13 @@
   padding: 1rem 1.5rem 3rem;
 }
 
-.hero h1 {
-  margin-bottom: 1rem;
-  color: var(--text);
-}
-
-.hero p {
+.page-intro p {
   margin-bottom: 0.75rem;
   color: var(--text-muted);
 }
 
-.hero *:last-child {
+.page-intro *:last-child {
   margin-bottom: 0 !important;
-}
-
-.hero hr {
-  border-color: var(--border);
-  margin: 1.5rem 0;
-}
-
-.hero strong {
-  color: var(--primary);
-  font-weight: 600;
-}
-
-.hero a {
-  font-weight: 600;
-  text-decoration: none;
-  border-bottom: 2px solid transparent;
-  transition: border-color 0.2s ease;
-}
-
-.hero a:hover {
-  border-bottom-color: var(--primary);
 }
 
 /* ---- Home page lead block (Option D) ----
@@ -1015,36 +988,6 @@
   color: var(--text);
 }
 /* ---- Meetings calendar (meetings.html) ---- */
-.calendar-header {
-  display: flex;
-  align-items: baseline;
-  gap: 0.5rem 1rem;
-  flex-wrap: wrap;
-  margin-bottom: 1.5rem;
-}
-
-.calendar-header__title,
-.calendar-header__note {
-  margin: 0;
-}
-
-.calendar-header__feeds {
-  margin-left: 0;
-}
-
-.calendar-header__feeds a {
-  color: var(--accent);
-  padding: 0.1rem 0.6rem;
-  border: 1px solid var(--accent);
-  border-radius: 999px;
-  background-color: color-mix(in srgb, var(--accent) 12%, transparent);
-  text-decoration: none;
-}
-
-.calendar-header__feeds a:hover {
-  background-color: color-mix(in srgb, var(--accent) 25%, transparent);
-}
-
 .calendar-section-title {
   font-weight: 900;
   text-transform: uppercase;
@@ -1055,15 +998,37 @@
   margin: 2rem 0 1rem;
 }
 
-.calendar-empty {
-  color: var(--text-muted);
+.calendar-section-title:first-child {
+  margin-top: 0;
 }
 
-.calendar-note {
-  margin: 0 0 1rem;
-  color: var(--text);
-  font-size: 0.9rem;
-  font-weight: 600;
+.calendar-section-title__note {
+  margin-left: 0.5rem;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.calendar-section-title__feeds {
+  display: inline-flex;
+  margin-left: 0.75rem;
+}
+
+.calendar-section-title__feeds a {
+  color: var(--accent);
+  padding: 0.1rem 0.6rem;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  background-color: color-mix(in srgb, var(--accent) 12%, transparent);
+  text-decoration: none;
+}
+
+.calendar-section-title__feeds a:hover {
+  background-color: color-mix(in srgb, var(--accent) 25%, transparent);
+}
+
+.calendar-empty {
+  color: var(--text-muted);
 }
 
 .calendar-tba {

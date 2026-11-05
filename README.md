@@ -52,7 +52,7 @@ uv run pytest --cov=build
 │   └── ical_format.py      # RFC 5545 escaping/folding for meetings.ics
 ├── content/                # Markdown source content
 │   ├── calendar.yaml       # The meeting schedule (every meeting, one file)
-│   ├── heroes/             # Hero section content per page
+│   ├── home.md             # Home page mission text
 │   ├── news/               # News/announcements
 │   ├── projects/           # Project descriptions
 │   ├── members/            # Member profiles
@@ -83,7 +83,7 @@ uv run pytest --cov=build
 
 The build system lives in `build/` and is composed of four modules orchestrated by `WebsiteBuilder` in `build/build.py`:
 
-- **`content_manager.py`** — Loads and processes Markdown files using `python-frontmatter` and the `markdown` library (with codehilite, fenced_code, tables, toc extensions). Handles date parsing from frontmatter. Builds hero content from `content/heroes/`. Dynamically injects upcoming meeting dates into the index hero.
+- **`content_manager.py`** — Loads and processes Markdown files using `python-frontmatter` and the `markdown` library (with codehilite, fenced_code, tables, toc extensions). Handles date parsing from frontmatter. Renders the home page's line of upcoming meeting dates.
 - **`page_builder.py`** — Renders Jinja2 templates and writes HTML files to `output/`. Handles both listing pages and per-item detail pages (news, projects, members), plus the meetings calendar page.
 - **`asset_manager.py`** — Copies static assets (CSS, images, scripts) to `output/` and generates Pygments syntax highlighting CSS.
 - **`news_links.py`** — Resolves a meeting's `announcement`/`report` references (or a news item's own `slug`) to the news item's actual output filename, shared by both `content_manager.py` and `page_builder.py` via the `NewsResolver` class.
@@ -103,7 +103,7 @@ All `date:` frontmatter fields use ISO `YYYY-MM-DD` — the single canonical for
 | `content/members/` | `name`, `image`, `hashtags` (validated against `config/site.json`'s `valid_hashtags`), `featured`, `github`, `linkedin`, `website`, `projects` (slugs linking to `content/projects/`), `opentowork` |
 | `content/projects/` | `title`, `image`, `excerpt`, `text`, `status`, `date`, `lead`, `members`, `github` |
 | `content/pages/` | `title` (required), optional `banner_image`/`banner_title`/`banner_subtitle`. Each file builds to a top-level `<slug>.html`; link it by hand from `about.md` |
-| `content/heroes/` | Named by page (e.g. `index.md`, `about.md`, `members.md`). `index.md` uses an `<hr>` separator — content above is static, content below is replaced dynamically with upcoming meeting info |
+| `content/home.md` | Home page mission text. The upcoming meetings line below it comes from `content/calendar.yaml`. Other page intros live in their page templates' `intro` block |
 
 Any content item (news, project, or member) can also set `banner_image`, `banner_title`, `banner_subtitle` to override that page's banner; unset fields fall back to `config/site.json`'s `default_banner_image`/`title`/`subtitle`.
 
@@ -124,7 +124,7 @@ Every meeting lives in one file, which feeds the meetings calendar page, the hom
 Jinja2 templates in `templates/`:
 - `layouts/` — `base.html`, `home.html`, `page.html`, `detail.html`
 - `pages/` — One template per page (`index.html`, `about.html`, `members.html`, `projects.html`, `whatsnew.html`, `meetings.html`, `learn.html`)
-- `components/` — Reusable partials (`head.html`, `navigation.html`, `hero.html`, `home-lead.html`, `footer.html`, `banner.html`, `icons.html`, `upcoming-meetings-calendar.html`, `upcoming-meetings-hero.html`, `calendar-entry.html`)
+- `components/` — Reusable partials (`head.html`, `navigation.html`, `home-lead.html`, `footer.html`, `banner.html`, `icons.html`, `upcoming-meetings-calendar.html`, `upcoming-meetings-next.html`, `calendar-entry.html`)
 - `cards/` — Card components for listings
 - `details/` — Detail page templates for individual items
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # build — Modular build script for Boston Robot Hackers website
 # Author: Pito Salas and Claude Code
-# Version: 6
+# Version: 7
 # Created: 2026-09-21
 # Updated: 2026-11-05
 # Open Source Under MIT license
@@ -112,7 +112,10 @@ class WebsiteBuilder:
     def build_index(self):
         """Build the main index.html file."""
         news_content = self.build_whatsnew()
-        hero_content = self.content_manager.build_hero_content()
+        mission_content = self.content_manager.process_single_content_file("home.md")
+        next_meetings = self.content_manager.format_future_meetings_section(
+            self.content_manager.get_future_meetings()
+        )
 
         projects = self.content_manager.get_all_content(self.content_types["projects"])
         projects_content = self.page_builder.render_project_cards_for_home(projects)
@@ -125,7 +128,8 @@ class WebsiteBuilder:
             "pages/index.html",
             "index.html",
             news_content=news_content,
-            hero=hero_content,
+            mission_content=mission_content,
+            next_meetings=next_meetings,
             projects_content=projects_content,
             meetings_content=meetings_content,
         )
@@ -145,14 +149,12 @@ class WebsiteBuilder:
         )
 
         news_content = self.page_builder.render_compact_news_cards(posts)
-        hero_content = self.content_manager.build_hero_content("whatsnew")
 
         self.page_builder.build_page(
             "pages/whatsnew.html",
             "whatsnew.html",
-            hero=hero_content,
             news_content=news_content,
-            **self.page_builder.resolve_banner(hero_content),
+            **self.page_builder.resolve_banner({}),
         )
 
         print(f"Built whatsnew.html with {len(posts)} posts")
@@ -176,14 +178,12 @@ class WebsiteBuilder:
         )
 
         projects_content = self.page_builder.render_projects_content(projects)
-        hero_content = self.content_manager.build_hero_content("projects")
 
         self.page_builder.build_page(
             "pages/projects.html",
             "projects.html",
-            hero=hero_content,
             projects_content=projects_content,
-            **self.page_builder.resolve_banner(hero_content),
+            **self.page_builder.resolve_banner({}),
         )
 
         print(f"Built projects.html with {len(projects)} projects")
@@ -207,15 +207,13 @@ class WebsiteBuilder:
         members_content = self.page_builder.render_member_cards(
             members, projects_map=projects_map_listing
         )
-        hero_content = self.content_manager.build_hero_content("members")
 
         self.page_builder.build_page(
             "pages/members.html",
             "members.html",
-            hero=hero_content,
             members_content=members_content,
             valid_hashtags=sorted(self.content_manager.valid_hashtags),
-            **self.page_builder.resolve_banner(hero_content),
+            **self.page_builder.resolve_banner({}),
         )
 
         print(f"Built members.html with {len(members)} members")
@@ -223,14 +221,12 @@ class WebsiteBuilder:
     def build_about_page(self):
         """Build the about.html page."""
         about_content = self.content_manager.process_single_content_file("about.md")
-        hero_content = self.content_manager.build_hero_content("about")
 
         self.page_builder.build_page(
             "pages/about.html",
             "about.html",
-            hero=hero_content,
             about_content=about_content,
-            **self.page_builder.resolve_banner(hero_content),
+            **self.page_builder.resolve_banner({}),
         )
 
         print("Built about.html")
@@ -245,7 +241,6 @@ class WebsiteBuilder:
             self.page_builder.build_page(
                 "pages/content-page.html",
                 f"{page_file.stem}.html",
-                hero={},
                 page_title=page["title"],
                 page_content=page["content"],
                 **self.page_builder.resolve_banner(page["metadata"]),
@@ -306,30 +301,25 @@ class WebsiteBuilder:
         # Strip frontmatter
         raw_text = re.sub(r"^---.*?---\s*", "", raw_text, flags=re.DOTALL)
         sections = self.parse_learn_sections(raw_text)
-        hero_content = self.content_manager.build_hero_content("learn")
 
         self.page_builder.build_page(
             "pages/learn.html",
             "learn.html",
-            hero=hero_content,
             learn_sections=sections,
-            **self.page_builder.resolve_banner(hero_content),
+            **self.page_builder.resolve_banner({}),
         )
 
         print(f"Built learn.html with {len(sections)} sections")
 
     def build_meetings_page(self, today: date):
         """Build meetings.html, the card grid of main meetings."""
-        self.require_config("handson_schedule_note")
         meetings = self.content_manager.load_meetings()
-        hero_content = self.content_manager.build_hero_content("meetings")
 
         self.page_builder.build_page(
             "pages/meetings.html",
             "meetings.html",
-            hero=hero_content,
             **self.page_builder.calendar_sections(meetings, today),
-            **self.page_builder.resolve_banner(hero_content),
+            **self.page_builder.resolve_banner({}),
         )
 
         print(f"Built meetings.html with {len(meetings)} meetings")

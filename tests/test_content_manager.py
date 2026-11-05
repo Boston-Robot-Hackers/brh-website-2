@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # test_content_manager — Tests for ContentManager loading, sorting, meetings, and talks
 # Author: Pito Salas and Claude Code
-# Version: 3
+# Version: 4
 # Created: 2026-09-21
-# Updated: 2026-10-28
+# Updated: 2026-11-05
 # Open Source Under MIT license
 from datetime import date
 
@@ -12,7 +12,7 @@ from content_manager import ContentManager, ContentType, format_long_date
 from jinja2 import DictLoader, Environment
 from meeting_fixtures import write_meeting
 
-HERO_MEETINGS_TEMPLATE = (
+NEXT_MEETINGS_TEMPLATE = (
     "{% if not meetings %}<p><em>No upcoming meetings scheduled</em></p>"
     "{% else %}<p>{% for m in meetings %}<strong>{{ m.label }}:</strong> "
     '{% if m.url %}<a href="{{ m.url }}">{{ m.datetime_str }}</a>'
@@ -26,7 +26,7 @@ def jinja_env():
     return Environment(
         loader=DictLoader(
             {
-                "components/upcoming-meetings-hero.html": HERO_MEETINGS_TEMPLATE,
+                "components/upcoming-meetings-next.html": NEXT_MEETINGS_TEMPLATE,
             }
         )
     )
@@ -224,7 +224,7 @@ class TestGetAllContent:
         assert "Template" not in [item["title"] for item in items]
 
 
-class TestHeroGeneration:
+class TestNextMeetingsLine:
     def test_get_future_meetings_excludes_past(self, tmp_content_dir):
         cm = ContentManager(tmp_content_dir)
         ids = [m["id"] for m in cm.get_future_meetings()]
@@ -273,53 +273,6 @@ class TestHeroGeneration:
         assert len(linked) == 1
         result = cm.format_future_meetings_section(linked)
         assert "<a href=" in result
-
-    def test_generate_index_hero_inserts_meeting_info(self, tmp_content_dir, jinja_env):
-        cm = ContentManager(tmp_content_dir, jinja_env)
-        static_content = "<p>Welcome</p><hr/><p>old meeting info</p>"
-        result = cm.generate_index_hero(static_content)
-        assert "<hr/>" in result
-        assert "Welcome" in result
-
-    def test_generate_index_hero_no_hr_returns_unchanged(self, tmp_content_dir):
-        cm = ContentManager(tmp_content_dir)
-        static_content = "<p>No separator here</p>"
-        result = cm.generate_index_hero(static_content)
-        assert result == static_content
-
-    def test_build_hero_content_missing_file_raises(self, tmp_content_dir):
-        cm = ContentManager(tmp_content_dir)
-        with pytest.raises(FileNotFoundError):
-            cm.build_hero_content("projects")
-
-    def test_build_hero_content_index_page(self, tmp_content_dir, jinja_env):
-        cm = ContentManager(tmp_content_dir, jinja_env)
-        hero = cm.build_hero_content("index")
-        assert hero["hero_title"] == "Welcome"
-        assert hero["hero_subtitle"] == "Boston Robot Hackers"
-
-    def test_build_hero_content_no_banner_fields_returns_none(
-        self, tmp_content_dir, jinja_env
-    ):
-        cm = ContentManager(tmp_content_dir, jinja_env)
-        hero = cm.build_hero_content("index")
-        assert hero["banner_image"] is None
-        assert hero["banner_title"] is None
-        assert hero["banner_subtitle"] is None
-
-    def test_build_hero_content_returns_banner_fields_when_set(self, tmp_content_dir):
-        (tmp_content_dir / "heroes" / "projects.md").write_text(
-            "---\ntitle: Projects\n"
-            "banner_image: images/projects/custom.jpg\n"
-            "banner_title: Custom Banner Title\n"
-            "banner_subtitle: Custom Banner Subtitle\n"
-            "---\nProjects hero body.\n"
-        )
-        cm = ContentManager(tmp_content_dir)
-        hero = cm.build_hero_content("projects")
-        assert hero["banner_image"] == "images/projects/custom.jpg"
-        assert hero["banner_title"] == "Custom Banner Title"
-        assert hero["banner_subtitle"] == "Custom Banner Subtitle"
 
     def test_process_single_content_file(self, tmp_content_dir):
         cm = ContentManager(tmp_content_dir)

@@ -1,6 +1,6 @@
 ---
-version: "1.3"
-generated: "2026-10-28"
+version: "1.4"
+generated: "2026-11-05"
 ---
 
 # content_manager — from Markdown files to structured content
@@ -23,11 +23,9 @@ flowchart LR
     Y["content/calendar.yaml<br/>(via calendar_source)"] --> CM
     CM --> I["item dicts<br/>(news, projects, members)"]
     CM --> M["meeting dicts"]
-    CM --> H["hero content"]
     CM --> U["upcoming meetings"]
     CM --> E["calendar events"]
     I --> PB["page_builder / build.py"]
-    H --> PB
     U --> TXT["upcoming-talks.txt"]
     E --> ICS["meetings.ics"]
 ```
@@ -101,7 +99,7 @@ backed by `calendar_source`:
 flowchart TD
     L["load_meetings()<br/>calendar.yaml, ascending"] --> F["get_future_meetings(today)<br/>date >= today"]
     L --> E["get_calendar_events(duration)<br/>both kinds, past + future"]
-    F --> H["format_future_meetings_section<br/>hero: next 2 meetings"]
+    F --> H["format_future_meetings_section<br/>home page: next 2 meetings"]
     F --> T["get_upcoming_meetings(today)<br/>both kinds, for the text list"]
     P["meeting_page_path()<br/>announcement or calendar anchor"] -.-> T
     P -.-> E
@@ -166,12 +164,16 @@ Per-meeting detail pages are gone, so the anchor is the meeting's only
 address. Having the rule in one place keeps the text list and the `.ics`
 feed pointing at the same URL.
 
-## Hero content
+## The home page's meeting line
 
-`build_hero_content` loads `content/heroes/<page>.md`. For the home page, the
-Markdown contains an `<hr>`: everything above is static, and everything below
-is **replaced** by a rendered "next two meetings" snippet. It's a simple
-*template slot* convention that keeps the hero editable as plain Markdown.
+`format_future_meetings_section` renders the **next two meetings** through
+`components/upcoming-meetings-next.html`. `build_index` passes the result to
+`home-lead.html`, next to the mission text from `content/home.md`.
+
+- **Why the template owns the layout**: the rule and the line sit in
+  `home-lead.html`, so the Markdown holds only text and no marker to split on.
+- **Missing text fails the build**: `process_single_content_file` raises
+  `FileNotFoundError` when `content/home.md` is absent.
 
 ## Observations and possible improvements
 
