@@ -7,29 +7,29 @@
 {% block sections %}
     <div class="home-grid">
         <div class="home-grid__river">
-            <h2 class="river-header"><a href="whatsnew.html">{{ site.news_title }}</a></h2>
+            <h2 class="section-heading"><a href="whatsnew.html">{{ site.news_title }}</a></h2>
             {{ news_content }}
             <a href="whatsnew.html" class="btn-outline">{{ site.news_button_text }}</a>
 
-            <h2 class="river-header river-header--spaced"><a href="projects.html">{{ site.projects_title }}</a></h2>
+            <h2 class="section-heading section-heading--spaced"><a href="projects.html">{{ site.projects_title }}</a></h2>
             {{ projects_content }}
             <a href="projects.html" class="btn-outline">{{ site.projects_button_text }}</a>
         </div>
 
         <aside class="home-grid__rail">
             <div class="rail-box">
-                <h2 class="rail-title"><a href="meetings.html">Upcoming Meetings</a>
+                <h2 class="section-heading rail-title"><a href="meetings.html">Upcoming Meetings</a>
                     <span class="rail-feeds">
                         <a href="upcoming-talks.txt" title="Upcoming meetings as plain text">TXT</a>
                         <a href="meetings.ics" title="Meetings calendar (iCal) — import or subscribe">iCal</a>
                     </span>
                 </h2>
-                <p class="rail-note">All meetings at <a href="https://www.artisansasylum.com" target="_blank">Artisans Asylum, 96 Holton Street, Allston</a></p>
+                <p class="note rail-note">All meetings at <a href="https://www.artisansasylum.com" target="_blank">Artisans Asylum, 96 Holton Street, Allston</a></p>
                 {{ meetings_content }}
             </div>
 
-            <div class="rail-box pupper-spotlight">
-                <p class="pupper-spotlight__kicker">Community</p>
+            <div class="rail-box panel pupper-spotlight">
+                <p class="label pupper-spotlight__kicker">Community</p>
                 <img src="images/projects/pupper_standing.jpg" alt="Stanford Pupper v3 quadruped robot standing" class="pupper-spotlight__photo">
                 <h3 class="pupper-spotlight__title">Meet Pupper</h3>
                 <p class="pupper-spotlight__text">An open-source quadruped robot built at Stanford — BRH is building and deploying one right here in Boston.</p>

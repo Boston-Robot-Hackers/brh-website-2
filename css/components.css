@@ -1,0 +1,547 @@
+/* Components: pieces used on more than one page. */
+
+/* ---- Small uppercase labels ---- */
+.label {
+  margin: 0;
+  color: var(--primary);
+  font-size: var(--fs-xs);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.label--muted {
+  color: var(--text-muted);
+}
+
+/* ---- Underlined uppercase section headings. The About page's h2s come
+ * from Markdown, so they share the rule instead of the class. ---- */
+.section-heading,
+.about-content h2 {
+  margin: 0 0 1.25rem;
+  padding-bottom: 0.45rem;
+  border-bottom: var(--rule-strong);
+  font-size: var(--fs-lg);
+  font-weight: 900;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.section-heading > a {
+  color: var(--text);
+  text-decoration: none;
+}
+
+.section-heading--spaced {
+  margin-top: 2.5rem;
+}
+
+/* ---- Small grey text: excerpts, blurbs and notes ---- */
+.note {
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+  line-height: 1.4;
+}
+
+/* ---- "Label: value" details, with bold labels ---- */
+.meta {
+  color: var(--text-muted);
+  font-size: var(--fs-md);
+}
+
+.meta p {
+  font-size: inherit;
+}
+
+.meta strong {
+  color: var(--text);
+}
+
+/* ---- Boxes with a border, rounded corners and a light shadow ---- */
+.panel {
+  background: var(--bg-card);
+  border: var(--rule);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ---- Boxes shown where an image is missing ---- */
+.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-card);
+  border: var(--rule);
+  color: var(--text-muted);
+  font-weight: 700;
+  text-align: center;
+}
+
+/* ---- Buttons: same size and type, only the fill differs ---- */
+.btn-outline,
+.btn-slides {
+  display: inline-block;
+  padding: 0.55rem 1.1rem;
+  border-radius: var(--radius);
+  font-size: var(--fs-sm);
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.btn-outline {
+  margin-top: 1rem;
+  color: var(--text);
+  border: 1px solid var(--border-hover);
+}
+
+.btn-outline:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.btn-slides {
+  background-color: var(--primary);
+  color: white;
+  transition: all 0.2s ease;
+}
+
+.btn-slides:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Feed links (TXT, iCal) beside a heading */
+.rail-feeds {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  line-height: 1.4;
+  text-transform: none;
+  letter-spacing: 0.02em;
+}
+
+.rail-feeds a {
+  color: var(--on-accent);
+  padding: 0.1rem 0.6rem;
+  border-radius: 999px;
+  background-color: var(--accent);
+  text-decoration: none;
+}
+
+.rail-feeds a:hover {
+  background-color: color-mix(in srgb, var(--accent) 80%, black);
+}
+
+/* ---- Cards: panels that lift on hover ---- */
+.card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+  border-color: var(--border-hover);
+}
+
+.card img {
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  width: 100%;
+  transition: transform 0.3s ease;
+}
+
+.card:hover img {
+  transform: scale(1.05);
+}
+
+@media (max-width: 620px) {
+  .card img {
+    aspect-ratio: 1 / 1;
+  }
+}
+
+.card.open-to-work {
+  position: relative;
+  padding-bottom: 28px;
+}
+
+.card.open-to-work::after {
+  content: "OPEN TO WORK";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 28px;
+  background: linear-gradient(135deg, var(--success), var(--accent));
+  color: white;
+  font-size: var(--fs-xs);
+  font-weight: bold;
+  text-align: center;
+  line-height: 28px;
+  letter-spacing: 0.05em;
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* ---- Member cards (members.html) ---- */
+.member-card {
+  overflow: hidden;
+}
+
+.member-card__photo {
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  color: var(--text-muted);
+  font-weight: 700;
+  overflow: hidden;
+}
+
+.member-card__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.member-card__body {
+  padding: 0.9rem;
+}
+
+.member-card-title {
+  font-size: var(--fs-base);
+  font-weight: 700;
+  margin: 0 0 0.4rem;
+}
+
+.member-card-title a {
+  color: var(--text);
+  text-decoration: none;
+}
+
+.member-card-title a:hover {
+  color: var(--primary);
+}
+
+.member-skills {
+  word-break: break-word;
+  font-size: var(--fs-xs);
+  color: var(--primary);
+  letter-spacing: 0.01em;
+  line-height: 1.8;
+}
+
+.member-tag {
+  display: inline-block;
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  color: var(--primary);
+}
+
+.member-projects {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 0.6rem;
+  padding-top: 0.6rem;
+  border-top: var(--rule);
+}
+
+.member-projects-label {
+  margin-bottom: 3px;
+}
+
+.member-projects-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 8px;
+  max-height: 2.4rem;
+  overflow: hidden;
+}
+
+.member-project-link {
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  color: var(--primary);
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  max-width: 100%;
+}
+
+.member-project-link:hover {
+  color: var(--primary);
+}
+
+.member-project-link--more {
+  color: var(--text-muted);
+}
+
+/* ---- Story rows (news and project lists) ---- */
+.story-row {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 1.1rem;
+  padding: 1.1rem 0;
+  border-bottom: var(--rule);
+  break-inside: avoid;
+}
+
+.story-row__thumb {
+  width: 100%;
+  height: 92px;
+  object-fit: cover;
+  font-size: var(--fs-xs);
+}
+
+.story-row__meta {
+  margin-bottom: 0.2rem;
+}
+
+.story-row__title {
+  font-weight: 800;
+  font-size: var(--fs-lg);
+  line-height: 1.15;
+  margin: 0 0 0.3rem;
+}
+
+.story-row__title a {
+  color: var(--text);
+  text-decoration: none;
+}
+
+.story-row__title a:hover {
+  color: var(--primary);
+}
+
+.story-row__excerpt {
+  margin: 0;
+}
+
+.story-row__submeta {
+  margin: 0.4rem 0 0;
+  color: var(--text-muted);
+  font-size: var(--fs-xs);
+}
+
+.story-row__submeta a {
+  color: var(--text-muted);
+  text-decoration: underline;
+}
+
+/* ---- Home page right rail ---- */
+.rail-box {
+  margin-bottom: 2.5rem;
+}
+
+.rail-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.rail-title::before {
+  content: "";
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: var(--primary);
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.rail-note {
+  margin: 0 0 1rem;
+}
+
+.rail-item {
+  position: relative;
+  padding: 0.9rem 0;
+  border-bottom: var(--rule);
+}
+
+.rail-item__link {
+  color: inherit;
+}
+
+/* Makes the whole row clickable while keeping one real link */
+.rail-item__link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.rail-item__date {
+  font-weight: 800;
+  margin: 0.2rem 0 0.25rem;
+}
+
+.rail-item__blurb {
+  margin: 0;
+}
+
+.pupper-spotlight {
+  padding: 1.25rem;
+  background: var(--primary-light);
+}
+
+.pupper-spotlight__kicker {
+  margin-bottom: 0.5rem;
+}
+
+.pupper-spotlight__photo {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: var(--radius);
+  margin-bottom: 0.75rem;
+}
+
+.pupper-spotlight__title {
+  font-style: italic;
+  font-weight: 700;
+  font-size: var(--fs-lg);
+  color: var(--primary);
+  margin: 0 0 0.4rem;
+}
+
+.pupper-spotlight__text {
+  margin: 0;
+  font-size: var(--fs-sm);
+  line-height: 1.45;
+}
+
+/* ---- Meeting cards (meetings.html) ---- */
+.calendar-entry {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: var(--calendar-card-bg);
+  border: 1px solid var(--calendar-card-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.calendar-entry,
+.calendar-tba__date,
+.detail-brief-body :is(h1, h2, h3, h4, h5, h6) {
+  scroll-margin-top: var(--nav-offset);
+}
+
+.calendar-entry:target,
+.calendar-tba__date:target {
+  box-shadow: 0 0 0 2px var(--primary);
+}
+
+.calendar-entry__link {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  color: inherit;
+  text-decoration: none;
+}
+
+.calendar-entry__link:hover .calendar-entry__topic {
+  color: var(--primary);
+}
+
+.calendar-entry__visual {
+  position: relative;
+  display: block;
+}
+
+.calendar-entry__image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.calendar-entry__date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 3rem;
+  margin: 0.5rem 0 0 0.6rem;
+  padding: 0.2rem 0 0.25rem;
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.78);
+  border-radius: var(--radius);
+  line-height: 1.1;
+  text-align: center;
+}
+
+.calendar-entry__visual .calendar-entry__date {
+  position: absolute;
+  top: 0.4rem;
+  left: 0.4rem;
+  margin: 0;
+}
+
+.calendar-entry__month {
+  font-size: var(--fs-2xs);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.calendar-entry__day {
+  font-size: var(--fs-lg);
+  font-weight: 700;
+}
+
+.calendar-entry__year {
+  font-size: var(--fs-2xs);
+  opacity: 0.8;
+}
+
+.calendar-entry__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.55rem 0.7rem 0.7rem;
+}
+
+.calendar-entry__topic,
+.calendar-entry__text {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.calendar-entry__topic {
+  -webkit-line-clamp: 3;
+  margin: 0;
+  font-size: var(--fs-md);
+  font-weight: 700;
+  line-height: 1.22;
+}
+
+.calendar-entry__speaker {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+}
+
+.calendar-entry__text {
+  -webkit-line-clamp: 4;
+  margin: 0.25rem 0 0;
+}
+
+.calendar-entry__notes {
+  margin: 0;
+  padding: 0 0.7rem 0.6rem;
+  font-size: var(--fs-xs);
+}

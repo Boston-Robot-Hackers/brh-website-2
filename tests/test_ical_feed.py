@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # test_ical_feed — Tests for the meetings iCalendar feed
 # Author: Pito Salas and Claude Code
-# Version: 3
+# Version: 5
 # Created: 2026-09-21
-# Updated: 2026-11-04
+# Updated: 2026-11-05
 # Open Source Under MIT license
 
 import json
@@ -214,7 +214,7 @@ def rail_heading():
     builder = WebsiteBuilder()
     builder.build()
     html = (builder.dist_dir / "index.html").read_text()
-    match = re.search(r'<h2 class="rail-title">.*?</h2>', html, re.S)
+    match = re.search(r'<h2 class="section-heading rail-title">.*?</h2>', html, re.S)
     assert match and "Upcoming Meetings" in match[0]
     return builder.dist_dir, match[0]
 

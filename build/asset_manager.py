@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # asset_manager — Asset management module for the website builder
 # Author: Pito Salas and Claude Code
-# Version: 2
+# Version: 4
 # Created: 2026-09-21
 # Updated: 2026-11-05
 # Open Source Under MIT license
@@ -40,17 +40,13 @@ class AssetManager:
         self.copy_directory("content/meeting-reports", "meeting-reports")
 
     def copy_css_files(self):
-        """Copy CSS files to output/css directory."""
+        """Copy every CSS file in css/ to output/css."""
         css_dest = self.dist_dir / "css"
         css_dest.mkdir(exist_ok=True)
 
-        css_src_dir = self.root_dir / "css"
-
-        for css_file in ["shared.css", "main.css"]:
-            src_file = css_src_dir / css_file
-            if src_file.exists():
-                shutil.copy2(src_file, css_dest / css_file)
-                print(f"Copied {css_file} to {css_dest}")
+        for src_file in sorted((self.root_dir / "css").glob("*.css")):
+            shutil.copy2(src_file, css_dest / src_file.name)
+            print(f"Copied {src_file.name} to {css_dest}")
 
     def generate_pygments_css(self, theme="default"):
         """Generate Pygments CSS for syntax highlighting."""

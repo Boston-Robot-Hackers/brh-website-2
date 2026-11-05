@@ -3,15 +3,15 @@
     {% if meetings %}
     {% for meeting in meetings %}
     <div class="rail-item">
-        <p class="rail-item__cat">{{ meeting.type_label }}</p>
+        <p class="label">{{ meeting.type_label }}</p>
         <p class="rail-item__date">{% if meeting.announcement_url %}<a class="rail-item__link" href="{{ meeting.announcement_url }}">{% endif %}{{ meeting.month_abbr }} {{ meeting.day }}, {{ meeting.year }} &middot; {{ meeting.time }}{% if meeting.announcement_url %}</a>{% endif %}</p>
         {% if meeting.text %}
-        <p class="rail-item__blurb">{{ meeting.text }}</p>
+        <p class="note rail-item__blurb">{{ meeting.text }}</p>
         {% endif %}
     </div>
     {% endfor %}
     <a href="meetings.html" class="btn-outline">view all meetings</a>
     {% else %}
-    <p class="rail-item__blurb">No upcoming meetings scheduled. Check back soon!</p>
+    <p class="note rail-item__blurb">No upcoming meetings scheduled. Check back soon!</p>
     {% endif %}
 </div>

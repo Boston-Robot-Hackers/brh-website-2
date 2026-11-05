@@ -3,8 +3,8 @@
 <link rel="preload" href="{{ '../' if is_detail_page else '' }}images/robot-logo.png" as="image">
 <link rel="preload" href="{{ '../' if is_detail_page else '' }}images/meetings/meeting1-1.jpg" as="image">
 
-<!-- Shared CSS for common styles -->
-<link rel="stylesheet" href="{{ '../' if is_detail_page else '' }}css/shared.css">
-
-<!-- Main CSS -->
-<link rel="stylesheet" href="{{ '../' if is_detail_page else '' }}css/main.css">
+<!-- Stylesheets, in cascade order: base, layout, components, pages -->
+<link rel="stylesheet" href="{{ '../' if is_detail_page else '' }}css/base.css">
+<link rel="stylesheet" href="{{ '../' if is_detail_page else '' }}css/layout.css">
+<link rel="stylesheet" href="{{ '../' if is_detail_page else '' }}css/components.css">
+<link rel="stylesheet" href="{{ '../' if is_detail_page else '' }}css/pages.css">

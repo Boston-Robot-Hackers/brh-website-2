@@ -65,7 +65,7 @@ uv run pytest --cov=build
 │   ├── components/         # Reusable partials
 │   ├── cards/              # Card components for listings
 │   └── details/            # Detail page templates
-├── css/                    # Stylesheets
+├── css/                    # Stylesheets, loaded in order: base, layout, components, pages
 ├── images/                 # Static images, one subdirectory per content type
 │   ├── news/               # News images
 │   ├── meetings/           # Meeting images

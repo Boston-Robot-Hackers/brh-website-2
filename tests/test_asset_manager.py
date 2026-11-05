@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # test_asset_manager — Tests for AssetManager output cleaning and asset copying
 # Author: Pito Salas and Claude Code
-# Version: 1
+# Version: 3
 # Created: 2026-09-21
-# Updated: 2026-09-21
+# Updated: 2026-11-05
 # Open Source Under MIT license
 from asset_manager import AssetManager
 
@@ -68,21 +68,23 @@ class TestCopyDirectory:
 
 
 class TestCopyCssFiles:
-    def test_copies_shared_and_main_css(self, tmp_path):
+    def test_copies_every_css_file(self, tmp_path):
         root = tmp_path / "root"
         dist = tmp_path / "dist"
         root.mkdir()
         dist.mkdir()
         css_src = root / "css"
         css_src.mkdir()
-        (css_src / "shared.css").write_text("body {}")
-        (css_src / "main.css").write_text(".main {}")
+        (css_src / "base.css").write_text("body {}")
+        (css_src / "pages.css").write_text(".page {}")
+        (css_src / "notes.txt").write_text("not css")
         am = AssetManager(root, dist)
         am.copy_css_files()
-        assert (dist / "css" / "shared.css").read_text() == "body {}"
-        assert (dist / "css" / "main.css").read_text() == ".main {}"
+        assert (dist / "css" / "base.css").read_text() == "body {}"
+        assert (dist / "css" / "pages.css").read_text() == ".page {}"
+        assert not (dist / "css" / "notes.txt").exists()
 
-    def test_missing_css_files_skipped(self, tmp_path):
+    def test_empty_css_dir_copies_nothing(self, tmp_path):
         root = tmp_path / "root"
         dist = tmp_path / "dist"
         root.mkdir()
@@ -90,7 +92,7 @@ class TestCopyCssFiles:
         (root / "css").mkdir()
         am = AssetManager(root, dist)
         am.copy_css_files()
-        assert not (dist / "css" / "shared.css").exists()
+        assert list((dist / "css").iterdir()) == []
 
 
 class TestGeneratePygmentsCSS:

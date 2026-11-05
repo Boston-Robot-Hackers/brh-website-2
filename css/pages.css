@@ -1,0 +1,556 @@
+/* Pages: rules used on a single page or page type. */
+
+/* ---- Home page lead block. The QR sits in the row's own left column,
+ * beside the centered text, so it can be sized larger. ---- */
+.home-lead-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  max-width: 1060px;
+  margin: 2rem auto 0;
+  padding: 0 1.5rem;
+}
+
+.home-lead__qr-block {
+  flex-shrink: 0;
+  margin-top: 1.8rem;
+  text-align: center;
+}
+
+@media (max-width: 760px) {
+  .home-lead-row {
+    flex-direction: column;
+  }
+
+  .home-lead__qr-block {
+    margin-top: 0;
+  }
+}
+
+.home-lead__qr {
+  width: 140px;
+  height: 140px;
+  padding: 5px;
+  background: #ffffff;
+  border: var(--rule);
+  border-radius: var(--radius);
+}
+
+.home-lead__qr-caption {
+  margin: 0.4rem 0 0;
+  font-weight: 700;
+  font-size: var(--fs-sm);
+  color: var(--primary);
+}
+
+.home-lead {
+  max-width: 850px;
+}
+
+.home-lead__eyebrow {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--text-muted);
+  margin: 0 0 0.9rem;
+  padding-bottom: 0.9rem;
+  border-bottom: var(--rule);
+}
+
+.home-lead__eyebrow a {
+  color: var(--text-muted);
+  text-decoration: underline;
+}
+
+.home-lead__kicker {
+  margin-bottom: 0.4rem;
+}
+
+.home-lead__title {
+  font-weight: 900;
+  font-size: clamp(2.4rem, 5vw, 3.4rem);
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.75rem;
+}
+
+.home-lead__subtitle {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: var(--fs-md);
+  color: var(--text-muted);
+  margin: 0 0 1.25rem;
+}
+
+.home-lead__body {
+  font-style: italic;
+  font-weight: 600;
+  color: var(--text-muted);
+  font-size: var(--fs-xl);
+  line-height: 1.4;
+}
+
+.home-lead__body strong {
+  color: var(--primary);
+}
+
+.home-lead__byline {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  margin: 1rem 0 0;
+}
+
+.home-lead__photo {
+  margin: 2rem 0 0;
+}
+
+.home-lead__photo img {
+  width: 100%;
+  max-height: 480px;
+  object-fit: cover;
+  display: block;
+}
+
+.home-lead__photo figcaption {
+  font-style: italic;
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+  padding: 0 1.5rem;
+}
+
+/* ---- Learn page cards ---- */
+.learn-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 760px) {
+  .learn-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.learn-card {
+  overflow: hidden;
+}
+
+.learn-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  border-bottom: var(--rule);
+  font-weight: 700;
+  padding: 0.7rem 1rem;
+}
+
+.learn-card-icon {
+  display: inline-flex;
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.learn-card-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.learn-card-body {
+  padding: 1rem;
+}
+
+.learn-card-intro {
+  margin: 0 0 0.75rem;
+}
+
+.learn-links {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.learn-link-item {
+  font-size: var(--fs-sm);
+  line-height: 1.4;
+}
+
+.learn-link {
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.learn-link:hover {
+  text-decoration: underline;
+}
+
+.learn-link-desc {
+  color: var(--text-muted);
+}
+
+/* ---- Meetings page ---- */
+.calendar-section-title__note {
+  margin-left: 0.5rem;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.calendar-section-title__feeds {
+  display: inline-flex;
+  margin-left: 0.75rem;
+}
+
+.calendar-empty {
+  color: var(--text-muted);
+}
+
+.calendar-tba {
+  margin: 0 0 0.9rem;
+  font-size: var(--fs-md);
+}
+
+.calendar-tba__date {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.calendar-tba__date:not(:last-child)::after {
+  content: " \00b7";
+  color: var(--text-muted);
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.7rem;
+}
+
+@media (max-width: 980px) {
+  .calendar-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .calendar-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+  }
+}
+
+/* ---- Members and Projects listing pages ---- */
+.members-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.5rem;
+}
+
+.members-hashtag-note {
+  margin-top: 2rem;
+}
+
+.projects-two-col {
+  columns: 2;
+  column-gap: 2rem;
+}
+
+@media (max-width: 760px) {
+  .projects-two-col {
+    columns: 1;
+  }
+}
+
+/* ---- News and project detail: two-column "technical brief" layout ---- */
+.detail-brief-header {
+  padding-bottom: 1.5rem;
+  border-bottom: var(--rule-strong);
+}
+
+.detail-brief-header__kicker {
+  margin-bottom: 0.4rem;
+}
+
+/* Title on news, project and member detail pages */
+.detail-title {
+  font-weight: 900;
+  font-size: clamp(1.7rem, 3.5vw, 2.4rem);
+  line-height: 1.1;
+  margin: 0 0 0.75rem;
+}
+
+.detail-brief-header__row {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+.detail-brief-header__img {
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  border: var(--rule);
+  flex-shrink: 0;
+}
+
+.detail-brief-header__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  margin: 0 0 0.75rem;
+}
+
+.detail-brief-header__excerpt {
+  color: var(--text-muted);
+  line-height: 1.55;
+  margin: 0;
+}
+
+.detail-brief-header__slides {
+  margin-top: 0.75rem;
+}
+
+.detail-brief-layout {
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: 1fr 220px;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+.detail-brief-layout--no-sidebar {
+  grid-template-columns: 1fr;
+  max-width: 640px;
+}
+
+.detail-brief-body {
+  line-height: 1.7;
+  min-width: 0;
+}
+
+.detail-brief-body p,
+.detail-brief-body li,
+.detail-brief-body blockquote {
+  color: var(--text-muted);
+}
+
+.detail-brief-body h3 {
+  font-size: var(--fs-lg);
+  margin: 2rem 0 0.6rem;
+}
+
+.detail-brief-body h3:first-child {
+  margin-top: 0;
+}
+
+.detail-brief-body h4 {
+  font-size: var(--fs-base);
+  color: var(--primary);
+  margin: 1.5rem 0 0.4rem;
+}
+
+.detail-brief-body ul {
+  padding-left: 1.2rem;
+}
+
+.detail-brief-body li {
+  margin-bottom: 0.3rem;
+}
+
+.detail-brief-body img,
+.member-detail .content img {
+  object-fit: contain;
+}
+
+.detail-brief-sidebar {
+  position: sticky;
+  top: var(--nav-offset);
+  border-left: var(--rule);
+  padding-left: 1.25rem;
+}
+
+.detail-brief-sidebar__label {
+  margin-bottom: 0.6rem;
+}
+
+.detail-brief-toc {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: var(--fs-sm);
+}
+
+.detail-brief-toc li {
+  margin-bottom: 0.5rem;
+}
+
+.detail-brief-toc a {
+  color: var(--text);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+.detail-brief-toc a:hover {
+  border-bottom-color: var(--primary);
+}
+
+@media (max-width: 760px) {
+  .detail-brief-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-brief-sidebar {
+    position: static;
+    border-left: none;
+    border-top: var(--rule);
+    padding-left: 0;
+    padding-top: 1.25rem;
+  }
+
+  .detail-brief-header__row {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 620px) {
+  /* !important overrides the inline float and margin styles in content files */
+  .detail-brief-body img,
+  .member-detail .content img {
+    display: block;
+    float: none !important;
+    margin: 1rem auto !important;
+  }
+}
+
+/* ---- Project detail page ---- */
+.project-detail__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  padding: 1rem 0;
+  margin-bottom: 1.5rem;
+  border-bottom: var(--rule);
+}
+
+.project-detail__meta p {
+  margin: 0;
+}
+
+.project-detail__members {
+  margin-bottom: 1.5rem;
+}
+
+/* ---- Member detail page ---- */
+.member-detail-header {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.member-detail-header__photo {
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.member-detail-img,
+.member-detail-thumb {
+  width: 240px;
+  height: 240px;
+  margin: 0 auto;
+  border-radius: var(--radius-lg);
+}
+
+.member-detail-img {
+  object-fit: cover;
+}
+
+.member-detail-thumb {
+  font-size: 3rem;
+}
+
+.member-detail-header__featured {
+  margin-top: 0.6rem;
+}
+
+.member-detail__links {
+  margin-top: 0.75rem;
+}
+
+.member-detail__links p {
+  margin: 0 0 0.25rem;
+}
+
+.member-detail__projects {
+  margin-top: 0.5rem;
+}
+
+/* Bio - tighter paragraph spacing */
+.member-detail .content p {
+  margin-bottom: 0.25rem;
+  line-height: 1.5;
+}
+
+/* ---- About page ---- */
+.about-content {
+  max-width: 760px;
+  margin: 2rem auto 0;
+}
+
+.about-content h2 {
+  margin-top: 2.5rem;
+}
+
+.about-content h2:first-child {
+  margin-top: 0;
+}
+
+.about-content strong {
+  color: var(--primary);
+}
+
+.about-content em {
+  color: var(--emphasis);
+}
+
+.about-content hr {
+  border-color: var(--border);
+  margin: 2rem 0;
+}
+
+/* ---- Build-A-ROSBot section ---- */
+.rosbot-list {
+  list-style: none;
+  padding: 0;
+}
+
+.rosbot-list li {
+  margin-bottom: 0.75rem;
+}
+
+.rosbot-list a {
+  font-weight: 700;
+}
+
+.rosbot-list__summary {
+  display: block;
+}
+
+.rosbot-pager {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.rosbot-pager__link--next {
+  margin-left: auto;
+  text-align: right;
+}

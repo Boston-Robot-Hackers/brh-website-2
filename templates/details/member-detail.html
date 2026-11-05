@@ -14,21 +14,21 @@
                 {% if member.metadata.image %}
                 <img src="../{{ member.metadata.image }}" alt="{{ member.title }}" class="member-detail-img">
                 {% else %}
-                <div class="member-detail-thumb">{{ member.metadata['card-text']|default('MEMBER') }}</div>
+                <div class="placeholder member-detail-thumb">{{ member.metadata['card-text']|default('MEMBER') }}</div>
                 {% endif %}
                 {% if member.metadata.featured %}
-                <p class="member-detail-header__featured">Featured Member</p>
+                <p class="label member-detail-header__featured">Featured Member</p>
                 {% endif %}
             </div>
             <div>
-                <h1 class="detail-header__title">{{ member.title }}</h1>
+                <h1 class="detail-title">{{ member.title }}</h1>
                 {% if member.metadata.hashtags %}
                 <div class="member-skills">
                     {% for tag in member.metadata.hashtags %}<span class="member-tag">#{{ tag }}</span> {% endfor %}
                 </div>
                 {% endif %}
 
-                <div class="member-detail__links">
+                <div class="meta member-detail__links">
                     {% if member.metadata.github %}
                     <p><strong>GitHub:</strong> <a href="{{ member.metadata.github }}" target="_blank">{{ member.metadata.github }}</a></p>
                     {% endif %}
@@ -37,7 +37,7 @@
                     {% endif %}
                 </div>
                 {% if member.metadata.projects %}
-                <p class="member-detail__projects">
+                <p class="meta member-detail__projects">
                     <strong>Current Projects:</strong>
                     {% for slug in member.metadata.projects %}
                         {% if projects_map and slug in projects_map %}

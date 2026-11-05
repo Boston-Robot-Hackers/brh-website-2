@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # test_members_content_preserved — Built members page keeps all real content
 # Author: Pito Salas and Claude Code
-# Version: 1
+# Version: 3
 # Created: 2026-09-21
-# Updated: 2026-09-21
+# Updated: 2026-11-05
 # Open Source Under MIT license
 from pathlib import Path
 
@@ -35,7 +35,7 @@ def test_every_member_entry_present(built_members_html):
     expected = real_member_file_count()
     assert expected > 0
 
-    actual = built_members_html.count('class="card member-card')
+    actual = built_members_html.count('class="panel card member-card')
     assert actual == expected, (
         f"expected {expected} member cards in built members.html, found {actual}"
     )

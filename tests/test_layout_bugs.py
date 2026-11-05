@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # test_layout_bugs — Guards the F24 fixes for phone layout, contrast and keyboard access
 # Author: Pito Salas and Claude Code
-# Version: 1
+# Version: 3
 # Created: 2026-11-05
 # Updated: 2026-11-05
 # Open Source Under MIT license
@@ -24,7 +24,10 @@ def css_text(name):
 
 
 def all_css():
-    return css_text("shared.css") + css_text("main.css")
+    return "".join(
+        css_text(name)
+        for name in ["base.css", "layout.css", "components.css", "pages.css"]
+    )
 
 
 def media_blocks(css, max_width_px):
@@ -41,7 +44,7 @@ def media_blocks(css, max_width_px):
 
 
 def light_variable(name):
-    root = re.search(r":root\s*\{(.*?)\}", css_text("shared.css"), re.DOTALL).group(1)
+    root = re.search(r":root\s*\{(.*?)\}", css_text("base.css"), re.DOTALL).group(1)
     return re.search(rf"{name}:\s*(#[0-9a-fA-F]{{6}})", root).group(1)
 
 
@@ -71,7 +74,7 @@ def home_html(tmp_path_factory):
 
 
 def test_nav_is_not_sticky_at_tablet_width_and_below():
-    block = media_blocks(css_text("main.css"), 980)
+    block = media_blocks(css_text("layout.css"), 980)
     assert re.search(r"\.site-nav\s*\{\s*position: static;", block)
 
 
@@ -84,18 +87,18 @@ def test_scroll_offset_comes_from_one_variable():
 def test_sticky_sidebar_clears_the_nav():
     assert re.search(
         r"\.detail-brief-sidebar\s*\{[^}]*top: var\(--nav-offset\);",
-        css_text("main.css"),
+        css_text("pages.css"),
     )
 
 
 def test_images_and_code_blocks_cannot_widen_the_page():
-    shared = css_text("shared.css")
+    shared = css_text("base.css")
     assert re.search(r"(^|\n)img\s*\{\s*max-width: 100%;", shared)
     assert re.search(r"(^|\n)pre\s*\{[^}]*overflow-x: auto;", shared)
 
 
 def test_article_images_keep_their_shape_and_stop_floating_on_phones():
-    main = css_text("main.css")
+    main = css_text("pages.css")
     assert re.search(r"\.detail-brief-body img[^{]*\{\s*object-fit: contain;", main)
     assert "float: none !important" in media_blocks(main, 620)
 
@@ -103,14 +106,14 @@ def test_article_images_keep_their_shape_and_stop_floating_on_phones():
 @pytest.mark.parametrize("heading", ["h1", "h2", "h3"])
 def test_heading_size_is_only_set_responsively(heading):
     sizes = re.findall(
-        rf"(?:^|\n){heading}\s*\{{[^}}]*font-size:\s*([^;]+);", css_text("shared.css")
+        rf"(?:^|\n){heading}\s*\{{[^}}]*font-size:\s*([^;]+);", css_text("base.css")
     )
     assert len(sizes) == 1
     assert sizes[0].startswith("clamp(")
 
 
 def test_shared_heading_rule_does_not_set_a_fixed_size():
-    rule = re.search(r"h1, \.banner h1\s*\{([^}]*)\}", css_text("shared.css"))
+    rule = re.search(r"h1, \.banner h1\s*\{([^}]*)\}", css_text("base.css"))
     assert "font-size" not in rule.group(1)
 
 
@@ -123,8 +126,8 @@ def test_primary_text_passes_contrast_in_light_mode(background):
 
 
 def test_feed_buttons_are_solid_with_readable_text():
-    selectors = r"\.rail-title \.rail-feeds a,\s*\.calendar-section-title__feeds a"
-    rule = re.search(rf"{selectors}\s*\{{([^}}]*)\}}", css_text("main.css")).group(1)
+    css = css_text("components.css")
+    rule = re.search(r"\.rail-feeds a\s*\{([^}]*)\}", css).group(1)
     assert "color: var(--on-accent);" in rule
     assert "background-color: var(--accent);" in rule
     ratio = contrast(light_variable("--on-accent"), light_variable("--accent"))

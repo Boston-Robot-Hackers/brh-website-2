@@ -50,9 +50,6 @@ file yet.
 **HTML and CSS cleanup**: what remains from the 2026-11-05 audit,
 in the recommended order:
 
-* Shared styles, scales and file split: planned as F27, awaiting the user's go.
-  It's worked on in the `f27-css-cleanup` worktree branch, under
-  `.claude/worktrees/`, and merges into `main` locally when done.
 * Tidy templates: a detail-page partial, a root path variable, `{# #}` comments,
   the site address in config, member-card logic in Python, meta descriptions, and
   pages with two `h1`s.

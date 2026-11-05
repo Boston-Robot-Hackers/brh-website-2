@@ -9,8 +9,8 @@
 
 {% block detail_content %}
     <div class="detail-brief-header">
-        <p class="detail-brief-header__kicker">Build-A-ROSBot &middot; Session {{ page.metadata.session }}</p>
-        <h1 class="detail-brief-header__title">{{ page.title }}</h1>
+        <p class="label detail-brief-header__kicker">Build-A-ROSBot &middot; Session {{ page.metadata.session }}</p>
+        <h1 class="detail-title">{{ page.title }}</h1>
         {% if page.date %}
         <p class="detail-brief-header__meta">{{ page.date|format_date }}</p>
         {% endif %}

@@ -17,7 +17,7 @@
             {% for session in sessions %}
             <li>
                 <a href="rosbot-sessions/{{ session.id }}.html">Session {{ session.metadata.session }}: {{ session.title }}</a>
-                {% if session.metadata.summary %}<span class="rosbot-list__summary">{{ session.metadata.summary }}</span>{% endif %}
+                {% if session.metadata.summary %}<span class="note rosbot-list__summary">{{ session.metadata.summary }}</span>{% endif %}
             </li>
             {% endfor %}
         </ul>
@@ -29,7 +29,7 @@
             {% for resource in resources %}
             <li>
                 <a href="rosbot-resources/{{ resource.id }}.html">{{ resource.title }}</a>
-                {% if resource.metadata.summary %}<span class="rosbot-list__summary">{{ resource.metadata.summary }}</span>{% endif %}
+                {% if resource.metadata.summary %}<span class="note rosbot-list__summary">{{ resource.metadata.summary }}</span>{% endif %}
             </li>
             {% endfor %}
         </ul>

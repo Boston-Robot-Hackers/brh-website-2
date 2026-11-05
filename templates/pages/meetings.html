@@ -7,8 +7,8 @@
 {% block title %}Meetings - {{ site.title }}{% endblock %}
 
 {% block main_content %}
-    <h2 class="calendar-section-title">Upcoming Meetings
-        <span class="rail-note calendar-section-title__note">All meetings at <a href="https://www.artisansasylum.com" target="_blank">Artisans Asylum, 96 Holton Street, Allston</a></span>
+    <h2 class="section-heading calendar-section-title">Upcoming Meetings
+        <span class="note calendar-section-title__note">All meetings at <a href="https://www.artisansasylum.com" target="_blank">Artisans Asylum, 96 Holton Street, Allston</a></span>
         <span class="rail-feeds calendar-section-title__feeds">
             <a href="meetings.ics" title="Meetings calendar (iCal) — import or subscribe">Subscribe (iCal)</a>
             <a href="upcoming-talks.txt" title="Upcoming meetings as plain text">TXT</a>
@@ -32,7 +32,7 @@
     {% endif %}
 
     {% if past %}
-    <h2 class="calendar-section-title">Past Meetings</h2>
+    <h2 class="section-heading section-heading--spaced calendar-section-title">Past Meetings</h2>
     <div class="calendar-grid">
         {% for meeting in past %}
         {% include 'components/calendar-entry.html' %}

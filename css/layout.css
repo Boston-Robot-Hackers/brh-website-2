@@ -1,0 +1,276 @@
+/* Layout: nav, banner, footer, page shells and the home grid. */
+
+/* ---- Site nav: wordmark, uppercase links and italic-red featured-program
+ * entries (Pupper with a photo badge, Build-A-ROSBot). ---- */
+.site-nav {
+  background: var(--header-bg);
+  border-bottom: var(--rule);
+  padding: 0.9rem 1.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.site-nav__inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.site-nav__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.site-nav__logo {
+  height: 26px;
+  width: 26px;
+  display: block;
+}
+
+/* Hand-drawn mark is solid dark ink on transparent - invert to white for
+   dark mode instead of shipping a second asset. */
+:root[data-theme="dark"] .site-nav__logo {
+  filter: invert(1);
+}
+
+.site-nav__wordmark {
+  font-weight: 900;
+  font-size: 1.7rem;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.site-nav__links {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.site-nav__link {
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: var(--fs-md);
+  letter-spacing: 0.02em;
+  color: var(--text);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  padding-bottom: 2px;
+}
+
+.site-nav__link:hover,
+.site-nav__link.active,
+.site-nav__featured-link.active {
+  border-color: var(--primary);
+}
+
+.site-nav__featured-link {
+  font-style: italic;
+  font-weight: 600;
+  font-size: var(--fs-md);
+  color: var(--primary);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border-bottom: 2px solid transparent;
+  padding-bottom: 2px;
+}
+
+.site-nav__pupper-photo {
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  object-fit: cover;
+  border: 2px solid var(--primary);
+}
+
+.theme-toggle-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  border: var(--rule);
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fs-base);
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.theme-toggle-btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.theme-toggle-btn__icon {
+  display: none;
+  width: 18px;
+  height: 18px;
+}
+
+.theme-toggle-btn__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Shows the moon in light mode (prompting a switch to dark), the sun in
+   dark mode - matches the icon's meaning to what clicking it will do. */
+:root:not([data-theme="dark"]) .theme-toggle-btn__icon--moon {
+  display: block;
+}
+
+:root[data-theme="dark"] .theme-toggle-btn__icon--sun {
+  display: block;
+}
+
+@media (max-width: 980px) {
+  .site-nav {
+    position: static;
+  }
+}
+
+@media (max-width: 620px) {
+  .site-nav {
+    padding: 0.6rem 1rem;
+  }
+
+  .site-nav__inner {
+    gap: 0.5rem 1rem;
+  }
+
+  .site-nav__wordmark {
+    font-size: var(--fs-lg);
+  }
+
+  .site-nav__links {
+    gap: 0.25rem 0.75rem;
+  }
+
+  .site-nav__link {
+    font-size: var(--fs-sm);
+  }
+}
+
+/* ---- Banner: full-width photo with overlaid title ---- */
+.banner-header {
+  width: 100%;
+}
+
+.banner {
+  width: 100%;
+  height: 204px;
+  background-color: #1a1a1a;
+  background-size: cover;
+  background-position: center;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.banner > div {
+  position: relative;
+  z-index: 1;
+}
+
+.banner h1 {
+  color: white;
+  text-shadow: 2px 2px 4px black;
+}
+
+.banner p {
+  color: white;
+  text-shadow: 1px 1px 2px black;
+  font-size: var(--fs-xl);
+  line-height: 1.4;
+  letter-spacing: 0.05em;
+}
+
+/* ---- Page shells (layouts/home.html, page.html and detail.html) ---- */
+.page-content {
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 1rem 1.5rem 3rem;
+}
+
+/* Short intro above a page's main content */
+.page-intro {
+  padding: 0.75rem 1.5rem;
+  margin: 0;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.page-intro__inner {
+  max-width: 70rem;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.page-intro p {
+  margin-bottom: 0.75rem;
+}
+
+.page-intro *:last-child {
+  margin-bottom: 0;
+}
+
+.detail-page {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 3rem;
+}
+
+.detail-page:has(.detail-brief-layout) {
+  max-width: 920px;
+}
+
+.detail-back {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: var(--rule);
+}
+
+/* ---- Home page news and rail columns ---- */
+.home-grid {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 3rem;
+}
+
+@media (max-width: 980px) {
+  .home-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---- Footer ---- */
+footer {
+  width: 100%;
+  padding: 2rem 1rem;
+  margin: 3rem 0 0;
+  text-align: center;
+  background: linear-gradient(to bottom, transparent, var(--bg));
+  border-top: var(--rule);
+  color: var(--text-muted);
+}
+
+footer p {
+  margin: 0;
+  font-size: var(--fs-sm);
+}
