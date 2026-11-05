@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # calendar_source — Load the meeting schedule from content/calendar.yaml
 # Author: Pito Salas and Claude Code
-# Version: 2
+# Version: 3
 # Created: 2026-10-28
-# Updated: 2026-10-28
+# Updated: 2026-11-05
 # Open Source Under MIT license
 """The single source of truth for the meeting schedule.
 
@@ -28,6 +28,7 @@ DEFAULTABLE_FIELDS = {
     "time",
     "location",
     "text",
+    "blurb",
     "speaker",
     "topic",
     "announcement",

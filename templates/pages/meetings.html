@@ -1,4 +1,4 @@
-<!-- Meetings calendar page - Every meeting from content/calendar.yaml, upcoming then past. -->
+<!-- Meetings calendar page - Main meetings from content/calendar.yaml as cards, upcoming then past. -->
 {% extends 'layouts/page.html' %}
 
 {% set current_page = 'meetings' %}
@@ -16,17 +16,32 @@
         </span>
     </div>
 
+    <p class="calendar-note">{{ site.handson_schedule_note }}</p>
+
     <h2 class="calendar-section-title">Upcoming</h2>
-    {% for meeting in upcoming %}
+    {% if to_announce %}
+    <p class="calendar-tba">Speaker to be announced:
+        {% for meeting in to_announce %}
+        <span id="{{ meeting.id }}" class="calendar-tba__date">{{ meeting.date_obj.strftime('%b') }} {{ meeting.date_obj.day }}, {{ meeting.date_obj.year }}</span>
+        {% endfor %}
+    </p>
+    {% endif %}
+    {% if upcoming %}
+    <div class="calendar-grid">
+        {% for meeting in upcoming %}
         {% include 'components/calendar-entry.html' %}
-    {% else %}
-        <p class="calendar-empty">No upcoming meetings scheduled. Check back soon!</p>
-    {% endfor %}
+        {% endfor %}
+    </div>
+    {% elif not to_announce %}
+    <p class="calendar-empty">No upcoming meetings scheduled. Check back soon!</p>
+    {% endif %}
 
     {% if past %}
     <h2 class="calendar-section-title">Past</h2>
-    {% for meeting in past %}
+    <div class="calendar-grid">
+        {% for meeting in past %}
         {% include 'components/calendar-entry.html' %}
-    {% endfor %}
+        {% endfor %}
+    </div>
     {% endif %}
 {% endblock %}

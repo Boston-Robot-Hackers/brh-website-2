@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
 # test_page_builder — Tests for PageBuilder rendering and meeting grouping
 # Author: Pito Salas and Claude Code
-# Version: 3
+# Version: 4
 # Created: 2026-09-21
-# Updated: 2026-10-28
+# Updated: 2026-11-05
 # Open Source Under MIT license
 from datetime import date
 
 import pytest
 from content_manager import ContentType
 from jinja2 import DictLoader, Environment
+from news_links import NewsResolver
 from page_builder import PageBuilder
 
 
@@ -412,8 +413,9 @@ class TestBuildRelatedReportsMap:
 class TestCalendarSections:
     TODAY = date(2026, 11, 12)
 
-    def meeting(self, meeting_id, day):
-        return {"id": meeting_id, "date_obj": day, "metadata": {"kind": "main"}}
+    def meeting(self, meeting_id, day, **fields):
+        metadata = {"kind": "main", "topic": "A talk", **fields}
+        return {"id": meeting_id, "date_obj": day, "metadata": metadata}
 
     def sections(self, page_builder, meetings):
         return page_builder.calendar_sections(meetings, self.TODAY)
@@ -434,7 +436,63 @@ class TestCalendarSections:
         entry = sections["upcoming"][0]
         assert entry["announcement_exists"] is False
         assert entry["report_exists"] is False
-        assert entry["metadata"] == {"kind": "main"}
+        assert entry["metadata"] == {"kind": "main", "topic": "A talk"}
 
     def test_empty(self, page_builder):
-        assert self.sections(page_builder, []) == {"upcoming": [], "past": []}
+        assert self.sections(page_builder, []) == {
+            "to_announce": [],
+            "upcoming": [],
+            "past": [],
+        }
+
+    def test_handson_meetings_are_left_out(self, page_builder):
+        meetings = [
+            self.meeting("main", self.TODAY),
+            self.meeting("handson", self.TODAY, kind="handson"),
+        ]
+        sections = self.sections(page_builder, meetings)
+        assert [m["id"] for m in sections["upcoming"]] == ["main"]
+        assert sections["to_announce"] == []
+
+    def test_upcoming_meeting_with_no_topic_is_split_out(self, page_builder):
+        meetings = [
+            self.meeting("named", self.TODAY),
+            self.meeting("unnamed", self.TODAY, topic=None),
+        ]
+        sections = self.sections(page_builder, meetings)
+        assert [m["id"] for m in sections["to_announce"]] == ["unnamed"]
+        assert [m["id"] for m in sections["upcoming"]] == ["named"]
+
+    def test_past_meeting_with_no_topic_stays_a_card(self, page_builder):
+        day = date(2026, 1, 1)
+        meetings = [self.meeting("old", day, topic=None)]
+        sections = self.sections(page_builder, meetings)
+        assert [m["id"] for m in sections["past"]] == ["old"]
+
+    def test_card_uses_announcement_image(self, page_builder, tmp_path):
+        (tmp_path / "talk.md").write_text("---\nimage: images/news/x.png\n---\nBody")
+        page_builder.news_resolver = NewsResolver(tmp_path)
+        meetings = [self.meeting("m", self.TODAY, announcement="talk.md")]
+        assert self.sections(page_builder, meetings)["upcoming"][0]["image"] == (
+            "images/news/x.png"
+        )
+
+    def test_card_with_no_announcement_has_no_image(self, page_builder):
+        sections = self.sections(page_builder, [self.meeting("m", self.TODAY)])
+        assert sections["upcoming"][0]["image"] == ""
+
+    def test_card_text_prefers_blurb(self, page_builder):
+        meetings = [self.meeting("m", self.TODAY, blurb="Short.", text="Long.")]
+        assert self.sections(page_builder, meetings)["upcoming"][0]["card_text"] == (
+            "Short."
+        )
+
+    def test_card_text_falls_back_to_text(self, page_builder):
+        meetings = [self.meeting("m", self.TODAY, text="Long.")]
+        assert self.sections(page_builder, meetings)["upcoming"][0]["card_text"] == (
+            "Long."
+        )
+
+    def test_no_topic_means_no_card_text(self, page_builder):
+        meetings = [self.meeting("m", date(2026, 1, 1), topic=None, text="TBA.")]
+        assert self.sections(page_builder, meetings)["past"][0]["card_text"] == ""

@@ -35,6 +35,8 @@ button, input, select, textarea {
   /* Neutral Colors */
   --bg: #fffef7;
   --bg-card: #ffffff;
+  --calendar-card-bg: #f1eee2;
+  --calendar-card-border: #d8d4c4;
   --header-bg: #f8f8f8;
   --border: #e5e2d6;
   --border-hover: #d0cbb8;
@@ -71,6 +73,8 @@ button, input, select, textarea {
 
   --bg: #121110;
   --bg-card: #1c1a17;
+  --calendar-card-bg: #2a2722;
+  --calendar-card-border: #45413a;
   --header-bg: #1c1a17;
   --border: #33302a;
   --border-hover: #4a453c;

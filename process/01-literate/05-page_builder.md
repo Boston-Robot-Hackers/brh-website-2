@@ -94,33 +94,48 @@ content (for example flattening member metadata into `name`, `hashtags`,
 
 ## The calendar page: upcoming, then past
 
-`meetings.html` lists every meeting with its details inline. It used to group
+`meetings.html` shows main meetings as a grid of cards. It used to group
 meetings into one card per month, with client-side JavaScript for sorting and
 filtering. Now the split happens at build time, in `calendar_sections`:
 
 ```python
 entries = [
-    {**meeting, **self.resolve_announcement_report(meeting["metadata"])}
+    self.calendar_card(meeting)
     for meeting in sorted(meetings, key=lambda meeting: meeting["date_obj"])
+    if meeting["metadata"]["kind"] == "main"
 ]
+future = [entry for entry in entries if entry["date_obj"] >= today]
 return {
-    "upcoming": [entry for entry in entries if entry["date_obj"] >= today],
+    "to_announce": [e for e in future if not e["metadata"].get("topic")],
+    "upcoming": [e for e in future if e["metadata"].get("topic")],
     "past": [entry for entry in entries if entry["date_obj"] < today][::-1],
 }
 ```
 
+- **Hands-on meetings are left out.** One line from `config/site.json` describes
+  their schedule instead. Their dates remain on the home page and in both feeds.
+- **Meetings with no topic get no card.** They go in `to_announce`, a single line
+  of dates, so the grid has no empty cards.
 - **Two orders from one sort.** Upcoming reads soonest-first, past reads
   newest-first, so the past list is the ascending slice reversed.
-- **Links are resolved once per entry**, spread into the meeting dict, so the
-  entry template reads `meeting.announcement_exists` directly.
 - **`today` is a parameter**, like the feed builders, so tests can freeze the
   split date.
-- The returned dict is spread straight into `build_page` as template context
-  (`upcoming`, `past`).
+- The returned dict is spread straight into `build_page` as template context.
 
 Doing this at build time instead of in the browser drops the JavaScript
 entirely. The tradeoff is that "upcoming" is as of the **last build**, not the
 moment someone views the page.
+
+### What a card adds
+
+`calendar_card` adds what the template needs to each meeting:
+
+- **Links** to the announcement and report, so the template reads
+  `meeting.announcement_exists` directly.
+- **An image**, taken from the linked announcement. Meetings have no image field
+  of their own.
+- **Card text**, which is `blurb`, else `text`. A meeting with no topic gets
+  neither, because its `text` is only the to-be-announced default.
 
 ## The home-page rail
 

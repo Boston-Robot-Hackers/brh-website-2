@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-# test_meetings_content_preserved — Calendar page shows every calendar.yaml meeting
+# test_meetings_content_preserved — Calendar page shows calendar.yaml's main meetings
 # Author: Pito Salas and Claude Code
-# Version: 3
+# Version: 4
 # Created: 2026-09-21
-# Updated: 2026-11-04
+# Updated: 2026-11-05
 # Open Source Under MIT license
 import re
 from datetime import UTC, date, datetime
@@ -37,11 +37,62 @@ def test_builds_outside_the_real_output_directory(built):
     assert built.dist_dir.resolve() != (REPO_ROOT / "output").resolve()
 
 
-def test_every_meeting_has_an_anchored_entry(meetings_html):
-    meetings = load_calendar(REPO_ROOT / "content" / "calendar.yaml")
-    assert meetings
-    anchors = re.findall(r'<article id="([^"]+)" class="calendar-entry', meetings_html)
-    assert sorted(anchors) == sorted(meeting["id"] for meeting in meetings)
+def page_anchors(meetings_html):
+    """Every meeting anchor on the page: cards plus to-be-announced dates."""
+    return re.findall(
+        r'id="([^"]+)" class="calendar-(?:entry|tba__date)"', meetings_html
+    )
+
+
+def schedule():
+    return load_calendar(REPO_ROOT / "content" / "calendar.yaml")
+
+
+def test_every_main_meeting_has_an_anchor(meetings_html):
+    main_ids = [m["id"] for m in schedule() if m["metadata"]["kind"] == "main"]
+    assert main_ids
+    assert sorted(page_anchors(meetings_html)) == sorted(main_ids)
+
+
+def test_handson_meetings_are_not_listed(meetings_html):
+    handson_ids = [m["id"] for m in schedule() if m["metadata"]["kind"] == "handson"]
+    assert handson_ids
+    assert not set(handson_ids) & set(page_anchors(meetings_html))
+
+
+def test_handson_schedule_line_comes_from_config(built, meetings_html):
+    assert built.site_config["handson_schedule_note"] in meetings_html
+
+
+def test_cards_show_title_blurb_and_link_to_announcement(meetings_html):
+    articles = re.findall(r"<article.*?</article>", meetings_html, re.DOTALL)
+    by_id = {re.search(r'id="([^"]+)"', a).group(1): a for a in articles}
+    cards = [
+        m
+        for m in schedule()
+        if m["metadata"].get("blurb") and m["metadata"].get("announcement")
+    ]
+    assert cards
+    for meeting in cards:
+        card = by_id[meeting["id"]]
+        metadata = meeting["metadata"]
+        assert metadata["topic"] in card
+        assert metadata["blurb"] in card
+        assert 'class="calendar-entry__link" href="news/' in card
+        assert 'class="calendar-entry__month"' in card
+
+
+def test_to_be_announced_dates_have_no_card(meetings_html):
+    to_announce = [
+        m
+        for m in schedule()
+        if m["metadata"]["kind"] == "main"
+        and not m["metadata"].get("topic")
+        and m["date_obj"] >= TODAY
+    ]
+    for meeting in to_announce:
+        assert f'<span id="{meeting["id"]}"' in meetings_html
+        assert f'<article id="{meeting["id"]}"' not in meetings_html
 
 
 def test_upcoming_section_precedes_past(meetings_html):
@@ -52,12 +103,22 @@ def test_no_meeting_detail_pages(built):
     assert not (built.dist_dir / "meetings").exists()
 
 
+def test_upcoming_talks_links_resolve_to_calendar_anchors(built, meetings_html):
+    """Every `meetings.html#id` page path in the upcoming list has an anchor."""
+    upcoming = built.content_manager.get_upcoming_meetings(TODAY)
+    targets = {
+        meeting["page_path"].split("#")[1]
+        for meeting in upcoming
+        if "#" in meeting["page_path"]
+    }
+    assert targets <= set(page_anchors(meetings_html))
+
+
 def test_meeting_links_resolve_to_calendar_anchors(built, meetings_html):
     """Every `meetings.html#id` link in the iCal feed lands on a real entry."""
     raw = (built.dist_dir / "meetings.ics").read_bytes().decode()
     feed = raw.replace("\r\n ", "").replace("\r\n", "\n")
     targets = set(re.findall(r"^URL:\S+/meetings\.html#(\S+)$", feed, re.MULTILINE))
     assert targets
-    anchors = set(re.findall(r'<article id="([^"]+)"', meetings_html))
-    assert targets <= anchors
+    assert targets <= set(page_anchors(meetings_html))
     assert "/meetings/" not in feed

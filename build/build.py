@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # build — Modular build script for Boston Robot Hackers website
 # Author: Pito Salas and Claude Code
-# Version: 5
+# Version: 6
 # Created: 2026-09-21
-# Updated: 2026-11-04
+# Updated: 2026-11-05
 # Open Source Under MIT license
 """Split into focused modules for better maintainability."""
 
@@ -319,7 +319,8 @@ class WebsiteBuilder:
         print(f"Built learn.html with {len(sections)} sections")
 
     def build_meetings_page(self, today: date):
-        """Build meetings.html, the full calendar of every meeting."""
+        """Build meetings.html, the card grid of main meetings."""
+        self.require_config("handson_schedule_note")
         meetings = self.content_manager.load_meetings()
         hero_content = self.content_manager.build_hero_content("meetings")
 

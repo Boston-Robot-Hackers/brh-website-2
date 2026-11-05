@@ -36,6 +36,7 @@ meetings:
     kind: main
     speaker: "Tully Foote"
     topic: "Intrinsic Core"
+    blurb: "What the newly open-sourced Intrinsic Core is, and what you can do with it."
     text: "Tully Foote, the Open Source Lead at Intrinsic and one of the early ROS developers at Willow Garage, will present the Intrinsic Core, recently released under Apache 2.0 by Intrinsic. We'll cover what it is and what you can do with it."
     announcement: "31-january-talk-announcement.md"
 
@@ -48,6 +49,7 @@ meetings:
     kind: main
     speaker: "Addisu Taddese"
     topic: "Robotics in the Real World"
+    blurb: "Inside Gazebo: what it's like to maintain a simulator used by thousands, and the challenges and opportunities ahead."
     text: "Addisu Taddese, the lead maintainer of Gazebo, will give us insights from the inside. What is it like to work on a robotics simulation platform that is used by thousands of people around the world? What are the challenges and opportunities in robotics simulation?"
     announcement: "30-december-talk-announcement.md"
 
@@ -60,6 +62,7 @@ meetings:
     kind: main
     speaker: "Yun Chang"
     topic: "Robot Scene Understanding for Extreme Environments: From Subterranean to Heavy Equipment"
+    blurb: "How 3D scene graphs help robots understand any scene, out to an autonomous loader. Plus a short talk on robots for connector assembly."
     text: "Yun Chang, a robotics researcher who spent a decade at MIT's SPARK Lab under Professor Luca Carlone, will speak about robot scene understanding for extreme environments — from the DARPA Subterranean Challenge to autonomy for heavy equipment at their current startup. Also on the bill: Husan Mavlonov, co-founder and CEO of Defex Robotics, with a short talk on robots for connector assembly."
     announcement: "25-yun-chang-talk-announcement.md"
 
@@ -76,6 +79,7 @@ meetings:
     kind: main
     speaker: "Arjun Viswanathan"
     topic: "Reinforcement Learning for Multimodal Locomotion"
+    blurb: "Teaching a robot that both walks and flies to choose which mode to use, with hierarchical reinforcement learning."
     text: "Arjun Viswanathan, who works on reinforcement learning for robot behavior at Boston Dynamics, will speak about Reinforcement Learning for Multimodal Locomotion — teaching a legged-aerial robot not just how to walk, but which mode of locomotion to use at all, the topic of his MS thesis at Northeastern's Silicon Synapse Lab."
     announcement: "26-arjun-viswanathan-talk-announcement.md"
     report: "29-october-meeting-report.md"
@@ -89,6 +93,7 @@ meetings:
     kind: main
     speaker: "Alan Kilian"
     topic: "Powering Robots"
+    blurb: "Batteries, voltage regulation and power measurement: the fundamentals of powering a robot and extending its battery life."
     text: "Alan Kilian, a long time software and hardware person with a lifelong passion for Robotics will speak about aspects of power for robots. Batteries, Measurement, Circuitry and more."
     announcement: "19-june-meeting-announcement.md"
     report: "27-september-meeting-report.md"
@@ -102,6 +107,7 @@ meetings:
     kind: main
     speaker: "Shivam Chopra"
     topic: "Forward and Inverse Kinematics"
+    blurb: "A ground-up walk through the math of moving a robot arm, from joint angles to end-effector poses and back again."
     text: "Shivam Chopra (one of our members) will give a talk about Forward and Inverse Kinematics. Especially for people working with robot arms this is a very important thing to understand. There is some math involved by Shivam promises that no one will get hurt :)"
     announcement: "23-shivam-chopra-talk-announcement.md"
 
@@ -114,6 +120,7 @@ meetings:
     kind: main
     speaker: "Isaac Vandor"
     topic: "Underwater robotics"
+    blurb: "Running ROS on deep-sea vehicles like Alvin and Sentry, from the marine robotics work at Woods Hole."
     text: "Isaac Vandor is the developer and maintainer for the software running on famous underwater vehicles like Alvin and AUV Sentry. Isaac will talk about his work and experiences with underwater maritime robotics."
     announcement: "22-isaac-vandor-talk-announcement.md"
 
@@ -126,6 +133,7 @@ meetings:
     kind: main
     speaker: "Ankush Dhawan"
     topic: "Meet Pupper, the Open-Source Robot Dog"
+    blurb: "The story of Stanford's open-source robot dog: how it moves, sees and decides, in the classroom and the hospital."
     text: "Ankush Dhawan, a PhD candidate in Robotics at Stanford, will introduce Pupper: an open-source quadruped robot dog that walks, sees, listens, and responds. The centerpiece of Stanford's CS123 course and the Dr. Pupper project at Stanford Medicine."
     announcement: "24-ankush-dhawan-talk-announcement.md"
 
@@ -138,6 +146,7 @@ meetings:
     kind: main
     speaker: "Adam Ring"
     topic: "Simulations"
+    blurb: "How to choose the right simulation approach to speed up development, improve safety and avoid costly real-world failures."
     text: "Adam Ring will give the talk about simulation in robotics. In this talk, Adam will discuss how the right simulation approach can accelerate development, improve safety, and reduce costly real-world failures."
     announcement: "20-adam-ring-talk-announcement.md"
 
@@ -150,6 +159,7 @@ meetings:
     kind: main
     speaker: "Chris Lai"
     topic: "Kalman Filters"
+    blurb: "What the Kalman Filter does with noisy sensor readings, and how to use it in your own robot projects."
     text: "Featuring Chris Lai Presentation on Kalman Filters. Chris will discuss the motivation behind the Kalman Filter, and describe why (and most importantly) how it is used."
     announcement: "17-april-meeting-announcement.md"
 
@@ -162,6 +172,7 @@ meetings:
     kind: main
     speaker: "Tom Ryden"
     topic: "Robotics Landscape"
+    blurb: "Which robotics startups get funding and customers, which fail, and where the real opportunities are."
     text: "March Monthly meeting with Tom Ryden, Executive Director of Mass Robotics. Tom will discuss current trends in Robotics Startups and the industry in general"
     announcement: "18-march-meeting-announcement.md"
 
@@ -174,6 +185,7 @@ meetings:
     kind: main
     speaker: "Pito Salas"
     topic: "URDF and Vibe Coding"
+    blurb: "What makes URDF hard to write, and two ways to tame it: AI assistants, and a DSL and Python library for generating it."
     text: "An introduction to URDF, the XML format used to describe a robot's physical structure, and two ways to deal with its complexity."
     announcement: "16-jan-meeting-announcement.md"
 
@@ -186,6 +198,7 @@ meetings:
     kind: main
     speaker: "Joel Grimm and Christopher Lai"
     topic: "Autonomous RACECAR at MIT's Beaver Works Summer Institute"
+    blurb: "How MIT's Beaver Works teaches autonomous robotics with RACECAR, to students as young as middle school."
     text: "MIT Beaverworks and RACECAR Project"
     announcement: "13-december-meeting-announcement.md"
     report: "14-december-meerting-summary.md"
@@ -199,6 +212,7 @@ meetings:
     kind: main
     speaker: "Skyler Wiernik"
     topic: "AI for generalized robotic manipulation"
+    blurb: "The foundations of generalized robot manipulation with diffusion and VLAs, plus a demo of Hugging Face's LeRobot platform."
     text: "Using a VLA for controlling a robotic hand"
     announcement: "11-fourth-meeting.md"
     report: "12-update-on-fifth-meeting.md"
@@ -212,6 +226,7 @@ meetings:
     kind: main
     speaker: "David Dorf"
     topic: "Affordable Biomimetic Robot Hands"
+    blurb: "Using 3D printing with flexible materials and biomimetic design to make robot hands lighter, tougher and cheaper."
     text: ""
     announcement: "10-meeting-announcement.md"
 
@@ -220,5 +235,6 @@ meetings:
     kind: main
     speaker: "Siddarth Dayasagar"
     topic: "Space Station OS"
+    blurb: "An open-source, ROS 2-based platform that treats a space station as both a smart habitat and a robot."
     text: "An open-source ROS2-based platform for developing, controlling, and automating modular space station subsystems."
     announcement: "4-talk-announcement.md"

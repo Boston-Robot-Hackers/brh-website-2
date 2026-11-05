@@ -4,6 +4,16 @@ Completed-work log. `process/02-doc/current.md`'s `## Open` section is the only
 part that matters for new work; entries move here once done, per
 `.claude/process.md`'s checkpoint step.
 
+## 2026-11-05 (F22 meetings card grid)
+
+* **F22 closed**: `meetings.html` is now a responsive grid of main meeting cards,
+  with an optional `blurb` field in `content/calendar.yaml`.
+* Hands-on meetings are replaced there by one schedule line, and meetings with no
+  topic by a line of dates. Their anchors still resolve.
+* The banner and intro text stay. The user signed off on the browser check.
+* Tests: 239 passed. Ruff clean. Literate docs refreshed for `page_builder` and
+  `news_links`.
+
 ## 2026-11-05 (Jan 14 announcement)
 
 * Tully Foote on Intrinsic Core is the Jan 14 talk. The calendar entry is

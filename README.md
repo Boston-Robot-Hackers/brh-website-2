@@ -112,7 +112,7 @@ Any content item (news, project, or member) can also set `banner_image`, `banner
 Every meeting lives in one file, which feeds the meetings calendar page, the home page's upcoming meetings, `upcoming-talks.txt`, and `meetings.ics`.
 
 * `defaults` holds `location` plus per-kind (`main`, `handson`) fields such as `time` and `text`; any entry field left out falls back to these.
-* Each entry under `meetings` needs only `date` (ISO `YYYY-MM-DD`) and `kind` (`main` or `handson`). Optional fields: `speaker`, `topic`, `text`, `time`, `location`, `announcement` (filename of the linked news post), `report` (filename of the follow-up news post).
+* Each entry under `meetings` needs only `date` (ISO `YYYY-MM-DD`) and `kind` (`main` or `handson`). Optional fields: `speaker`, `topic`, `text`, `blurb` (about 120 characters, what the talk is about, shown on the meetings page's card instead of `text`), `time`, `location`, `announcement` (filename of the linked news post), `report` (filename of the follow-up news post).
 * `upcoming-talks.txt` lists every meeting from the build date on, both kinds. A main meeting shows its speaker and topic once both are set, else "TBD"; both are also needed for a named event in `meetings.ics`.
 * `id` is optional for new meetings (derived as `<date>-<kind>`). Existing ids must never change: each is the meeting's `meetings.ics` event UID and its `meetings.html#<id>` anchor.
 * An unknown key, bad `kind`, bad date, or duplicate id fails the build, naming the entry.
@@ -130,7 +130,7 @@ Jinja2 templates in `templates/`:
 
 ## Configuration
 
-`config/site.json` — Site-wide text strings (title, section titles, button labels, footer text), plus `site_url` and `meeting_duration_minutes` (used by `upcoming-talks.txt` and `meetings.ics`). `registration_url` is still set but no template uses it any more. Available in all templates as the `site_config` context variable.
+`config/site.json` — Site-wide text strings (title, section titles, button labels, footer text), plus `site_url` and `meeting_duration_minutes` (used by `upcoming-talks.txt` and `meetings.ics`). `registration_url` is still set but no template uses it any more. Available in all templates as the `site` context variable.
 
 ## Deployment
 

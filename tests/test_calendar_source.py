@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # test_calendar_source — Tests for loading the meeting schedule from calendar.yaml
 # Author: Pito Salas and Claude Code
-# Version: 2
+# Version: 3
 # Created: 2026-10-28
-# Updated: 2026-10-28
+# Updated: 2026-11-05
 # Open Source Under MIT license
 from datetime import date
 
@@ -145,3 +145,19 @@ def test_unknown_default_key_raises(tmp_path, defaults):
 def test_unknown_top_level_key_raises(tmp_path):
     with pytest.raises(ValueError, match="meeting"):
         load(tmp_path, "meeting: []\n")
+
+
+def test_blurb_is_an_optional_field(tmp_path):
+    with_blurb, without = load(
+        tmp_path,
+        """\
+meetings:
+  - date: 2026-01-01
+    kind: main
+    blurb: A short summary.
+  - date: 2026-02-01
+    kind: main
+""",
+    )
+    assert with_blurb["metadata"]["blurb"] == "A short summary."
+    assert "blurb" not in without["metadata"]

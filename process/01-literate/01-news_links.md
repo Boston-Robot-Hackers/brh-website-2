@@ -93,17 +93,18 @@ def resolve(self, ref: str) -> tuple[str, bool]:
 - The cache lives on the instance, so each `ContentManager` / `PageBuilder`
   gets one scan per build, not one per meeting.
 
-## extract_slides_pdf: a small sibling
+## extract_news_field: a small sibling
 
-A report post can carry a `slides_pdf` path, shown as a download button on the
-meeting page. `extract_slides_pdf` reads it directly from the post's
-frontmatter, raising if the referenced file doesn't exist and returning `None`
-when the field is simply unset, the same absent-vs-broken split as above.
+A report post can carry a `slides_pdf` path, shown as a download button, and an
+announcement's `image` appears on its meeting card. `extract_news_field` reads
+one named field directly from the post's frontmatter, raising if the referenced
+file doesn't exist and returning `None` when the field is simply unset, the same
+absent-vs-broken split as above.
 
 ## Observations and possible improvements
 
-1. **`extract_slides_pdf` ignores slugs.** It looks up `news_dir / f"{key}.md"`
-   directly, so a report referenced by its slug (rather than its stem) would
+1. **`extract_news_field` ignores slugs.** It looks up `news_dir / f"{key}.md"`
+   directly, so a post referenced by its slug (rather than its stem) would
    raise. Routing it through the index would make it consistent with
    `resolve_news_html`.
 2. **The index is never invalidated.** That's fine for a one-shot build, but a

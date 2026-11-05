@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # news_links — Shared resolution of news references to output URLs
 # Author: Pito Salas and Claude Code
-# Version: 1
+# Version: 2
 # Created: 2026-09-21
-# Updated: 2026-09-21
+# Updated: 2026-11-05
 # Open Source Under MIT license
 """
 A meeting's `announcement`/`report` may reference a news item by its filename
@@ -62,10 +62,10 @@ class NewsResolver:
         return resolve_news_html(self.index, ref)
 
 
-def extract_slides_pdf(news_dir: Path, ref: str) -> str | None:
-    """Extract slides_pdf metadata from a news file reference.
+def extract_news_field(news_dir: Path, ref: str, field: str) -> str | None:
+    """Read one frontmatter field from a news file reference.
 
-    Returns the slides_pdf value if it exists and is non-empty, else None.
+    Returns the value if it exists and is non-empty, else None.
     Raises ValueError if ref doesn't resolve to a file.
     """
     if not ref:
@@ -74,5 +74,4 @@ def extract_slides_pdf(news_dir: Path, ref: str) -> str | None:
     news_file = news_dir / f"{key}.md"
     if not news_file.exists():
         raise ValueError(f"News reference file not found: {ref!r}")
-    metadata = frontmatter.load(news_file).metadata
-    return metadata.get("slides_pdf") or None
+    return frontmatter.load(news_file).metadata.get(field) or None

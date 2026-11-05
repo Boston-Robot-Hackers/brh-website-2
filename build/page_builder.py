@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # page_builder — Page building module for the website builder
 # Author: Pito Salas and Claude Code
-# Version: 3
+# Version: 4
 # Created: 2026-09-21
-# Updated: 2026-10-28
+# Updated: 2026-11-05
 # Open Source Under MIT license
 """Handles template rendering and page generation."""
 
@@ -14,7 +14,7 @@ from typing import Any
 
 from content_manager import ContentType, parse_date
 from jinja2 import Environment
-from news_links import NewsResolver, extract_slides_pdf
+from news_links import NewsResolver, extract_news_field
 
 
 class PageBuilder:
@@ -130,8 +130,10 @@ class PageBuilder:
             # Report file not found or slides_pdf not set - slides_pdf stays ""
             with contextlib.suppress(ValueError):
                 slides_pdf = (
-                    extract_slides_pdf(
-                        self.news_resolver.news_dir, metadata.get("report")
+                    extract_news_field(
+                        self.news_resolver.news_dir,
+                        metadata.get("report"),
+                        "slides_pdf",
                     )
                     or ""
                 )
@@ -232,15 +234,39 @@ class PageBuilder:
     def calendar_sections(
         self, meetings: list[dict], today: date
     ) -> dict[str, list[dict]]:
-        """Split meetings for the calendar page: upcoming soonest first, past newest
-        first, each entry carrying its resolved announcement/report links."""
+        """Split main meetings for the calendar page; hands-on meetings aren't listed.
+
+        Upcoming meetings with no topic yet go in `to_announce`, not `upcoming`.
+        Each is soonest first, while `past` is newest first.
+        """
         entries = [
-            {**meeting, **self.resolve_announcement_report(meeting["metadata"])}
+            self.calendar_card(meeting)
             for meeting in sorted(meetings, key=lambda meeting: meeting["date_obj"])
+            if meeting["metadata"]["kind"] == "main"
         ]
+        future = [entry for entry in entries if entry["date_obj"] >= today]
         return {
-            "upcoming": [entry for entry in entries if entry["date_obj"] >= today],
+            "to_announce": [e for e in future if not e["metadata"].get("topic")],
+            "upcoming": [e for e in future if e["metadata"].get("topic")],
             "past": [entry for entry in entries if entry["date_obj"] < today][::-1],
+        }
+
+    def calendar_card(self, meeting: dict) -> dict:
+        """Add a meeting's links, announcement image, and card text.
+
+        The card text is `blurb`, else `text`. A meeting with no topic has none,
+        since its `text` is only the to-be-announced default.
+        """
+        metadata = meeting["metadata"]
+        fallback_text = metadata.get("text", "") if metadata.get("topic") else ""
+        return {
+            **meeting,
+            **self.resolve_announcement_report(metadata),
+            "image": extract_news_field(
+                self.news_resolver.news_dir, metadata.get("announcement"), "image"
+            )
+            or "",
+            "card_text": metadata.get("blurb") or fallback_text,
         }
 
     def render_upcoming_meetings_calendar(self, meetings: list[dict]) -> str:
