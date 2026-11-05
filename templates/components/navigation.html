@@ -19,10 +19,12 @@
                class="site-nav__link{{ ' active' if current_page == 'projects' else '' }}">Projects</a>
             <a href="{{ '../' if is_detail_page else '' }}about.html"
                class="site-nav__link{{ ' active' if current_page == 'about' else '' }}">About</a>
-            <a href="{{ '../' if is_detail_page else '' }}projects/pupper.html" class="site-nav__pupper-link">
+            <a href="{{ '../' if is_detail_page else '' }}projects/pupper.html" class="site-nav__featured-link">
                 <img src="{{ '../' if is_detail_page else '' }}images/projects/pupper_standing.jpg" alt="" class="site-nav__pupper-photo">
                 Pupper
             </a>
+            <a href="{{ '../' if is_detail_page else '' }}rosbot.html"
+               class="site-nav__featured-link{{ ' active' if current_page == 'rosbot' else '' }}">Build-A-ROSBot</a>
         </nav>
         <button id="theme-toggle" type="button" class="theme-toggle-btn" aria-label="Switch between light and dark mode" title="Switch between light and dark mode">
             <span class="theme-toggle-btn__icon theme-toggle-btn__icon--moon" aria-hidden="true">{{ icon('bi-moon-stars-fill') }}</span>

@@ -1,0 +1,38 @@
+<!-- Build-A-ROSBot overview - content/rosbot/overview.md followed by generated lists of the program's sessions and resources. -->
+{% extends 'layouts/page.html' %}
+
+{% set current_page = 'rosbot' %}
+{% set is_detail_page = false %}
+
+{% block title %}{{ overview.title }} - {{ site.title }}{% endblock %}
+
+{% block main_content %}
+    <div class="about-content">
+        <h2>{{ overview.title }}</h2>
+        {{ overview.content }}
+
+        {% if sessions %}
+        <h2>Sessions</h2>
+        <ul class="rosbot-list">
+            {% for session in sessions %}
+            <li>
+                <a href="rosbot-sessions/{{ session.id }}.html">Session {{ session.metadata.session }}: {{ session.title }}</a>
+                {% if session.metadata.summary %}<span class="rosbot-list__summary">{{ session.metadata.summary }}</span>{% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        {% if resources %}
+        <h2>Resources</h2>
+        <ul class="rosbot-list">
+            {% for resource in resources %}
+            <li>
+                <a href="rosbot-resources/{{ resource.id }}.html">{{ resource.title }}</a>
+                {% if resource.metadata.summary %}<span class="rosbot-list__summary">{{ resource.metadata.summary }}</span>{% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+{% endblock %}

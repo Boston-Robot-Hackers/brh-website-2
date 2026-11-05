@@ -1,0 +1,19 @@
+<!-- Build-A-ROSBot resource page - One content/rosbot/resources/<slug>.md. Reusable by every resource. -->
+{% extends 'layouts/detail.html' %}
+
+{% set current_page = 'rosbot' %}
+{% set back_link = 'rosbot.html' %}
+{% set back_text = 'Back to Build-A-ROSBot' %}
+
+{% block title %}{{ page.title }} - {{ site.title }}{% endblock %}
+
+{% block detail_content %}
+    <div class="detail-brief-header">
+        <p class="detail-brief-header__kicker">Build-A-ROSBot &middot; Resource</p>
+        <h1 class="detail-brief-header__title">{{ page.title }}</h1>
+    </div>
+
+    <article class="detail-brief-body">
+        {{ page.content|safe }}
+    </article>
+{% endblock %}

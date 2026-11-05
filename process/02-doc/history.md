@@ -4,6 +4,22 @@ Completed-work log. `process/02-doc/current.md`'s `## Open` section is the only
 part that matters for new work; entries move here once done, per
 `.claude/process.md`'s checkpoint step.
 
+## 2026-11-05 (F26 Build-A-ROSBot section)
+
+* **F26 closed**: a new Build-A-ROSBot section with an overview at
+  `rosbot.html`, a page per session, and a page per resource. Each page is a
+  Markdown file under `content/rosbot/`, and the overview lists new files
+  automatically.
+* Sessions are ordered by a required `session` number and link to their
+  previous and next session. Resources are ordered by an optional `order`,
+  then by title.
+* The top nav has a Build-A-ROSBot link after Pupper. Both now share the
+  `site-nav__featured-link` class.
+* The spec's area list now includes Meetings and featured-program links
+  (chore 47).
+* The content is placeholders: two sessions and one resource, plus a
+  `_template.md` in each folder.
+
 ## 2026-11-05 (F25 delete dead code)
 
 * **F25 closed**: removes 12 unused CSS classes and 7 unused variables, about 144

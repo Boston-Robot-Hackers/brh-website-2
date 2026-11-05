@@ -11,12 +11,17 @@ Boston Robot Hackers Website (brh-website-2)
   everything in `content/` and `templates/` to static HTML in `output/`.
 * GitHub Actions builds and deploys `output/` to GitHub Pages on every
   push to `main` — no server-side runtime, database, or accounts.
-* Six areas, all reachable from the top nav: **Home** (mission text + highlighted
-  news + upcoming meetings), **Learn** (curated external robotics
-  resources), **Members** (member directory/profiles), **Projects**
-  (community project listings), **About** (mission, meeting info,
-  contact), and **What's New** (news/announcements archive, linked from
-  Home rather than the top nav).
+* Areas reachable from the top nav: **Home** (mission text + highlighted
+  news + upcoming meetings), **Meetings** (upcoming and past meetings,
+  iCal/TXT feeds), **Learn** (curated external robotics resources),
+  **Members** (member directory/profiles), **Projects** (community project
+  listings), and **About** (mission, meeting info, contact).
+* **What's New** (news/announcements archive) is linked from Home rather
+  than the top nav.
+* *Featured-program links*: special badge-styled top-nav links to
+  standalone program sections. Currently **Pupper** (a project page) and
+  **Build-A-ROSBot** (a program section with an overview, one page per
+  session and one page per resource, each a Markdown file).
 
 ## Goals
 * Give Boston Robot Hackers a public front door: explain who the club is,
