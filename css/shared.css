@@ -13,6 +13,15 @@
   box-sizing: border-box;
 }
 
+img {
+  max-width: 100%;
+}
+
+pre {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
 button, input, select, textarea {
   font-family: inherit;
   font-size: inherit;
@@ -23,13 +32,17 @@ button, input, select, textarea {
   --radius: 12px;
   --radius-lg: 16px;
   --space-1: 8px; --space-2: 12px; --space-3: 16px; --space-4: 24px; --space-5: 32px;
+  /* Keeps anchor targets and sticky items clear of the sticky nav */
+  --nav-offset: 6rem;
 
   /* Option D (Futurism editorial) palette - red accent on cream */
-  --primary: #ff0033;
-  --primary-hover: #e00030;
+  --primary: #d00029;
+  --primary-hover: #a80021;
   --primary-light: #ffe3e8;
   --secondary: #8b5cf6;
   --accent: #f59e0b;
+  /* Text on a solid --accent fill; stays dark in both themes */
+  --on-accent: #0a0a0a;
   --success: #10b981;
 
   /* Neutral Colors */
@@ -54,13 +67,20 @@ button, input, select, textarea {
   --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 }
 
+/* The nav stops being sticky here, so nothing needs to clear it */
+@media (max-width: 980px) {
+  :root {
+    --nav-offset: 1rem;
+  }
+}
+
 /* Dark mode: neutral scale flip to a warm near-black (not blue-black),
  * consistent with the light mode's warm cream. --secondary/--accent/
  * --success are unchanged - they're only used on self-contained saturated
  * fills (badges, gradients), not backgrounds/text, so they read fine in
  * both modes (see F01's audit). --primary IS redefined here, unlike F01's
  * precedent: Option D uses red as running link/nav text color (not just
- * isolated fills), and the light-mode #ff0033 is too dark to pass text
+ * isolated fills), and the light-mode red is too dark to pass text
  * contrast against a near-black background, so dark mode gets a lighter
  * tint of the same hue. Keyed off data-bs-theme (set by an inline script
  * in <head>, from either localStorage or prefers-color-scheme) rather than
@@ -193,8 +213,8 @@ body {
 }
 
 h1 { font-size: clamp(2.25rem, 4vw + 1rem, 3.5rem); }
-h2 { font-size: clamp(1.75rem, 2.5vw + 1rem, 2.5rem); }
-h3 { font-size: clamp(1.375rem, 1.5vw + 1rem, 1.875rem); }
+h2 { font-size: clamp(1.75rem, 2.5vw + 1rem, 2.25rem); }
+h3 { font-size: clamp(1.375rem, 1.5vw + 1rem, 1.75rem); }
 
 h1, h2, h3, h4, h5, h6,
 .card-title,
@@ -207,19 +227,16 @@ h1, h2, h3, h4, h5, h6,
 
 /* Heading hierarchy with better spacing */
 h1, .banner h1 { 
-    font-size: 3.5rem;
     line-height: 1.1;
     margin-bottom: 1rem;
 }
 
 h2 { 
-    font-size: 2.25rem;
     line-height: 1.2;
     margin-bottom: 0.875rem;
 }
 
 h3 { 
-    font-size: 1.75rem;
     line-height: 1.3;
     margin-bottom: 0.75rem;
 }

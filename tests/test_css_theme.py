@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # test_css_theme — Tests that CSS colors go through theme variables in both modes
 # Author: Pito Salas and Claude Code
-# Version: 2
+# Version: 3
 # Created: 2026-09-21
-# Updated: 2026-10-26
+# Updated: 2026-11-05
 # Open Source Under MIT license
 import re
 from pathlib import Path
@@ -72,7 +72,7 @@ def test_shared_css_uses_option_d_palette_and_type():
     light_block = re.search(r":root\{(.*?)\n\}", css, re.DOTALL)
     assert light_block, "expected a light :root block"
     assert "#fffef7" in light_block.group(1), "expected the cream --bg value"
-    assert "#ff0033" in light_block.group(1), "expected the red --primary value"
+    assert "#d00029" in light_block.group(1), "expected the red --primary value"
 
     dark_block = re.search(r':root\[data-bs-theme="dark"\]\s*\{(.*?)\}', css, re.DOTALL)
     assert dark_block, 'expected a :root[data-bs-theme="dark"] override'

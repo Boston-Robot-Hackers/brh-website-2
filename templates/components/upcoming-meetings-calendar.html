@@ -2,10 +2,9 @@
 <div class="upcoming-meetings-calendar">
     {% if meetings %}
     {% for meeting in meetings %}
-    {# meeting-row kept alongside rail-item so scripts/script.js's existing click-to-navigate selector still matches #}
-    <div class="rail-item meeting-row"{% if meeting.announcement_url %} data-href="{{ meeting.announcement_url }}"{% endif %}>
+    <div class="rail-item">
         <p class="rail-item__cat">{{ meeting.type_label }}</p>
-        <p class="rail-item__date">{{ meeting.month_abbr }} {{ meeting.day }}, {{ meeting.year }} &middot; {{ meeting.time }}</p>
+        <p class="rail-item__date">{% if meeting.announcement_url %}<a class="rail-item__link" href="{{ meeting.announcement_url }}">{% endif %}{{ meeting.month_abbr }} {{ meeting.day }}, {{ meeting.year }} &middot; {{ meeting.time }}{% if meeting.announcement_url %}</a>{% endif %}</p>
         {% if meeting.text %}
         <p class="rail-item__blurb">{{ meeting.text }}</p>
         {% endif %}

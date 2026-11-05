@@ -4,6 +4,17 @@ Completed-work log. `process/02-doc/current.md`'s `## Open` section is the only
 part that matters for new work; entries move here once done, per
 `.claude/process.md`'s checkpoint step.
 
+## 2026-11-05 (F24 layout and accessibility bugs)
+
+* **F24 closed**: fixes the bugs from the HTML and CSS audit. No page scrolls
+  sideways at 375px wide, down from 10 of 61.
+* The nav stops being sticky at 980px and below. One `--nav-offset` variable keeps
+  linked headings and the sticky sidebar clear of it.
+* Headings are responsive again, since fixed sizes no longer override `clamp()`.
+* Light mode `--primary` is now `#d00029`, and feed buttons are solid amber with
+  dark text.
+* Home's meeting rows are real links, and their JavaScript handler is gone.
+
 ## 2026-11-05 (F23 remove the hero concept)
 
 * **F23 closed**: `content/heroes/`, `components/hero.html` and

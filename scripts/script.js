@@ -18,13 +18,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Clickable calendar rows: navigate to the row's announcement.
-    document.querySelectorAll('.meeting-row[data-href]').forEach(row => {
-        row.addEventListener('click', function() {
-            window.location = this.getAttribute('data-href');
-        });
-    });
-
     // Light/dark theme toggle. The <head> inline script already set
     // data-bs-theme before paint (from localStorage or system preference);
     // this just wires up manual switching. The icon itself is two inline

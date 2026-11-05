@@ -47,6 +47,20 @@ CI/local build invocation), F14 (reduce page-builder boilerplate), F15
 (remove inline styles), F16 (robust root-dir detection). None has a task
 file yet.
 
+**HTML and CSS cleanup, no features yet**: what remains from the 2026-11-05 audit,
+in the recommended order:
+
+* Delete dead code: 12 unused CSS classes, unused variables, the Bootstrap class
+  names at `build/page_builder.py:188`, the nav's smooth-scroll code, leftover
+  `!important` rules and stale colors in `tests/test_css_theme.py`.
+* Add shared styles for labels, section headings and image placeholders, plus
+  font size and breakpoint scales.
+* Tidy templates: a detail-page partial, a root path variable, `{# #}` comments,
+  the site address in config, member-card logic in Python, meta descriptions, and
+  pages with two `h1`s.
+* Replace inline image styles in content files. F15 is out of date and should be
+  rewritten around this. It also removes the `!important` F24 added.
+
 Known, deliberately-deferred items (not urgent, no ticket filed):
 
 * 3 ruff `DTZ` (naive-datetime) findings, left unfixed: `datetime.now()`
