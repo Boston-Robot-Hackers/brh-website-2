@@ -13,15 +13,15 @@ Here are some really really important announcements that everyone will want to r
 
 ### Next Main Meeting
 
-First off, check out our next Main Meeting - It's a double header! We have a short presentation by Husan Mavlonov about Robots for Connector Assembly. And then Yun Chang's talk on Robot Scene Understanding for Extreme Environments: from subterranean to heavy equipment.  See: [November Main Meegting](https://bostonrobothackers.com/news/25-yun-chang-talk-announcement.html)
+First off, check out our next Main Meeting - It's a double header! We have a short presentation by Husan Mavlonov about Robots for Connector Assembly. And then Yun Chang's talk on Robot Scene Understanding for Extreme Environments: from subterranean to heavy equipment.  See: [November Main Meeting](https://bostonrobothackers.com/news/25-yun-chang-talk-announcement.html)
 
 ### Next Hands-On Meeting
 
-Our next Hands-on is happening the day before: Wednesday, November 11, 2026, 6:00 to 9:00pm as usual at [Artisans Asylum](https://www.artisansasylum.com) (96 Holton Street, Boston, MA 02135) Remember, these meetings are informal, work, play, learn and teach from each other. We will likely be taling about the Build-A-ROSbot program. ring your robot, your kit, or your questions. Beginners welcome!
+Our next Hands-on is happening the day before: Wednesday, November 11, 2026, 6:00 to 9:00pm as usual at [Artisans Asylum](https://www.artisansasylum.com) (96 Holton Street, Boston, MA 02135) Remember, these meetings are informal, work, play, learn and teach from each other. We will likely be talking about the Build-A-ROSbot program. Bring your robot, your kit, or your questions. Beginners welcome!
 
 ### A Fixed Schedule
 
-I've had the imprssion that the scheduling of our meetings was hard to follow. So, with the help of Artisans Asylum, from now on our meetings should be easier to keep track of:
+I've had the impression that the scheduling of our meetings was hard to follow. So, with the help of Artisans Asylum, from now on our meetings should be easier to keep track of:
 
 * **Main meetings** are on the **second Thursday** of every month, 7:00 to 9:00pm.
 * **Hands-on meetings** are on the **second Wednesday** of every month, the night before.
@@ -40,4 +40,4 @@ More speakers are being arranged right now.
 
 ### Build-A-ROSBot Is Getting Started
 
-[Build-A-ROSBot](https://bostonrobothackers.com/rosbot.html) is getting started. Over a series of hands-on sessions, each participant builds a small ROS-based robot and learns ROS2 along the way. Show your interest [here](https://forms.gle/gWZx4qW8gQrrysPz6), but remember that it will require a baseline of Python programming shell and command line facility. Without that I fear you will be frustrated.
+[Build-A-ROSBot](https://bostonrobothackers.com/rosbot.html) is getting started. Over a series of hands-on sessions, each participant builds a small ROS-based robot and learns ROS2 along the way. Show your interest [here](https://forms.gle/gWZx4qW8gQrrysPz6), but remember that it will require a baseline of Python programming, and shell and command line facility. Without that I fear you will be frustrated.
