@@ -6,7 +6,7 @@ excerpt: This talk will present the Intrinsic Core, recently released under Apac
   He participated in all three DARPA Grand Challenges and is the co-chair of the OSRA
   SIG for Physical AI.
 highlight: true
-image: images/news/intrinsicros.jpeg
+image: images/news/tully-foote.jpg
 published_date: '2026-11-05'
 title: 'January 14: Tully Foote: Intrinsic Core'
 type: news
@@ -31,6 +31,10 @@ type: news
 ### Featured Talk
 
 #### Intrinsic Core
+
+<a href="../images/news/intrinsicros.jpeg">
+    <img src="../images/news/intrinsicros.jpeg" alt="ROS at the center of capabilities such as perception, motion planning and simulation" style="float: left; margin: 25px 25px 25px 25px; border-radius: 8px; height: 200px;">
+</a>
 
 This talk will present the Intrinsic Core recently released under Apache 2.0 by Intrinsic. We'll cover what it is and what you can do with it. Find out more at [intrinsic.ai/intrinsic-core](https://www.intrinsic.ai/intrinsic-core).
 

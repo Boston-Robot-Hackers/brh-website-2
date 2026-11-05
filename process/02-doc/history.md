@@ -8,7 +8,7 @@ part that matters for new work; entries move here once done, per
 
 * Tully Foote on Intrinsic Core is the Jan 14 talk. The calendar entry is
   filled in, and `31-january-talk-announcement.md` is published with the
-  user's ROS diagram image. Open items for it are in `current.md`.
+  user's headshot of Tully. Open items for it are in `current.md`.
 * Tests: 225 passed. Ruff clean. No build module changed, so no literate docs
   to refresh.
 
