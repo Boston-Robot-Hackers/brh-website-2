@@ -1,15 +1,17 @@
 #!/usr/bin/env python3
 # test_no_dead_css — Fails on unused CSS classes or variables and Bootstrap leftovers
 # Author: Pito Salas and Claude Code
-# Version: 1
+# Version: 2
 # Created: 2026-11-05
 # Updated: 2026-11-05
 # Open Source Under MIT license
 import re
 from pathlib import Path
 
+import pytest
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
-CSS_FILES = ["main.css", "shared.css"]
+CSS_FILES = ["base.css", "layout.css", "components.css", "pages.css"]
 USAGE_GLOBS = [
     "templates/**/*.html",
     "build/*.py",
@@ -61,10 +63,11 @@ def test_bootstrap_theme_attribute_is_gone():
             assert old_attribute not in path.read_text(), path
 
 
-def test_member_detail_title_keeps_its_style():
-    assert ".detail-header__title" in css_without_comments()
-    member_detail = REPO_ROOT / "templates" / "details" / "member-detail.html"
-    assert "detail-header__title" in member_detail.read_text()
+@pytest.mark.parametrize("page", ["member-detail", "news-detail", "project-detail"])
+def test_detail_pages_share_one_title_style(page):
+    assert ".detail-title" in css_without_comments()
+    template = REPO_ROOT / "templates" / "details" / f"{page}.html"
+    assert 'class="detail-title"' in template.read_text()
 
 
 def test_script_keeps_only_the_theme_toggle():

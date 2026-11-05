@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # test_page_intros — Home mission text and "Next" line, page intros, default banners
 # Author: Pito Salas and Claude Code
-# Version: 1
+# Version: 2
 # Created: 2026-11-05
 # Updated: 2026-11-05
 # Open Source Under MIT license
@@ -10,7 +10,7 @@ from content_manager import ContentManager
 
 from build import WebsiteBuilder
 
-INTRO_MARKER = 'class="page-intro"'
+INTRO_MARKER = 'class="panel page-intro"'
 PROJECTS_INTRO = "Get in touch with us if you would like your project highlighted"
 DEFAULT_BANNER_PAGES = [
     "about",

@@ -7,11 +7,11 @@
 {% block title %}Members - {{ site.title }}{% endblock %}
 
 {% block main_content %}
-    <h1 class="river-header">Members</h1>
+    <h1 class="section-heading">Members</h1>
     <div class="members-grid">
         {{ members_content }}
     </div>
-    <p class="members-hashtag-note">
+    <p class="note members-hashtag-note">
         <strong>Available hashtags:</strong>
         {% for tag in valid_hashtags %}#{{ tag }}{% if not loop.last %} &nbsp;{% endif %}{% endfor %}
     </p>

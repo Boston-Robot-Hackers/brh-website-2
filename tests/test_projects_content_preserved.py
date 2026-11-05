@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # test_projects_content_preserved — Built projects page keeps all real content
 # Author: Pito Salas and Claude Code
-# Version: 1
+# Version: 2
 # Created: 2026-09-21
-# Updated: 2026-09-21
+# Updated: 2026-11-05
 # Open Source Under MIT license
 from pathlib import Path
 
@@ -48,7 +48,7 @@ def test_every_project_entry_present(built_pages):
 
 def test_pupper_detail_page_renders_full_content(built_pages):
     _, pupper_html, _, _ = built_pages
-    assert 'class="detail-brief-header__title"' in pupper_html
+    assert 'class="detail-title"' in pupper_html
     assert "Stanford Pupper v3" in pupper_html
     assert 'class="detail-brief-body"' in pupper_html
     assert "Back to Projects" in pupper_html

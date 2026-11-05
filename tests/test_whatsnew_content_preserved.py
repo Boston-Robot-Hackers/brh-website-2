@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # test_whatsnew_content_preserved — Built whatsnew page keeps all real content
 # Author: Pito Salas and Claude Code
-# Version: 1
+# Version: 2
 # Created: 2026-09-21
-# Updated: 2026-09-21
+# Updated: 2026-11-05
 # Open Source Under MIT license
 from pathlib import Path
 
@@ -50,7 +50,7 @@ def test_every_news_entry_present(built_pages):
 
 def test_news_detail_page_renders_full_content(built_pages):
     _, detail_html = built_pages
-    assert 'class="detail-brief-header__title"' in detail_html
+    assert 'class="detail-title"' in detail_html
     assert 'class="detail-brief-body"' in detail_html
     assert "Back to What" in detail_html
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # test_signup_qr — Tests that the signup QR encodes signup_url, on the home page only
 # Author: Pito Salas and Claude Code
-# Version: 3
+# Version: 4
 # Created: 2026-09-21
 # Updated: 2026-11-05
 # Open Source Under MIT license
@@ -18,7 +18,7 @@ from build import WebsiteBuilder
 REPO_ROOT = Path(__file__).resolve().parent.parent
 SIGNUP_URL = json.loads((REPO_ROOT / "config" / "site.json").read_text())["signup_url"]
 QR_SRC = "images/signup-qr.png"
-# The .home-lead__qr box in css/main.css: 140px, less 5px padding and 1px border.
+# The .home-lead__qr box in css/pages.css: 140px, less 5px padding and 1px border.
 DISPLAYED_QR_PX = 128
 
 

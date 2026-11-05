@@ -9,13 +9,13 @@
 
 {% block detail_content %}
     <div class="detail-brief-header">
-        <p class="detail-brief-header__kicker">{{ project.metadata.status|default('Unknown') }}</p>
-        <h1 class="detail-brief-header__title">{{ project.title }}</h1>
+        <p class="label detail-brief-header__kicker">{{ project.metadata.status|default('Unknown') }}</p>
+        <h1 class="detail-title">{{ project.title }}</h1>
         <div class="detail-brief-header__row">
             {% if project.image %}
             <img src="../{{ project.image }}" alt="{{ project.title }}" class="detail-brief-header__img">
             {% else %}
-            <div class="detail-brief-header__img detail-brief-header__img--fallback">{{ project.text or 'PROJECT' }}</div>
+            <div class="detail-brief-header__img placeholder">{{ project.text or 'PROJECT' }}</div>
             {% endif %}
             {% if project.excerpt %}
             <p class="detail-brief-header__excerpt">{{ project.excerpt }}</p>
@@ -23,7 +23,7 @@
         </div>
     </div>
 
-    <div class="project-detail__meta">
+    <div class="meta project-detail__meta">
         <p><strong>Started:</strong> {{ project.date }}</p>
         <p><strong>Team:</strong> {{ project.metadata.members|default('N/A') }} members</p>
         {% if project.metadata.lead %}
@@ -36,7 +36,7 @@
 
     {% set project_members = members_map[project.id] if members_map and project.id in members_map else [] %}
     {% if project_members %}
-    <p class="project-detail__members">
+    <p class="meta project-detail__members">
         <strong>Members:</strong>
         {% for m in project_members %}
             <a href="{{ m.url }}">{{ m.name }}</a>{% if not loop.last %}, {% endif %}
@@ -51,7 +51,7 @@
 
         {% if project.toc_tokens %}
         <aside class="detail-brief-sidebar">
-            <p class="detail-brief-sidebar__label">On this page</p>
+            <p class="label label--muted detail-brief-sidebar__label">On this page</p>
             <ul class="detail-brief-toc">
                 {% for token in project.toc_tokens %}
                 <li><a href="#{{ token.id }}">{{ token.name }}</a></li>

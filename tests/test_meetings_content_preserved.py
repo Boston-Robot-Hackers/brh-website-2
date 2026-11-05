@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # test_meetings_content_preserved — Calendar page shows calendar.yaml's main meetings
 # Author: Pito Salas and Claude Code
-# Version: 5
+# Version: 6
 # Created: 2026-09-21
 # Updated: 2026-11-05
 # Open Source Under MIT license
@@ -62,7 +62,7 @@ def test_handson_meetings_are_not_listed(meetings_html):
 
 def test_header_line_holds_location_and_feeds(meetings_html):
     header = re.search(
-        r'<h2 class="calendar-section-title">Upcoming Meetings.*?</h2>',
+        r'<h2 class="section-heading calendar-section-title">Upcoming Meetings.*?</h2>',
         meetings_html,
         re.DOTALL,
     ).group(0)
@@ -72,7 +72,8 @@ def test_header_line_holds_location_and_feeds(meetings_html):
 
 
 def test_past_section_is_titled_past_meetings(meetings_html):
-    assert '<h2 class="calendar-section-title">Past Meetings</h2>' in meetings_html
+    heading = 'section-heading--spaced calendar-section-title">Past Meetings</h2>'
+    assert heading in meetings_html
 
 
 def test_removed_header_elements_stay_gone(meetings_html):

@@ -4,6 +4,22 @@ Completed-work log. `process/02-doc/current.md`'s `## Open` section is the only
 part that matters for new work; entries move here once done, per
 `.claude/process.md`'s checkpoint step.
 
+## 2026-11-05 (F27 CSS shared styles, scales and file split)
+
+* **F27 closed**: CSS declarations went from 831 to 713 (14% fewer), and lines
+  from 1,588 to 1,523.
+* `main.css` and `shared.css` became `base.css`, `layout.css`, `components.css`
+  and `pages.css`. The build copies every file in `css/`.
+* Seven `--fs-*` sizes replace 28 font sizes, and 620, 760 and 980px replace ten
+  breakpoints.
+* Near-identical styles were made identical, at the user's request: `.panel`,
+  `.label`, `.section-heading`, `.note`, `.meta`, `.placeholder`,
+  `.detail-title`, shared button sizing, the `--rule` and `--rule-strong`
+  dividers, one muted grey and two corner radii.
+* Fixed F24's phone nav rules, which never applied because they came before the
+  rules they meant to override.
+* `tests/test_css_structure.py` locks in the scales and shared styles.
+
 ## 2026-11-05 (F25 delete dead code)
 
 * **F25 closed**: removes 12 unused CSS classes and 7 unused variables, about 144

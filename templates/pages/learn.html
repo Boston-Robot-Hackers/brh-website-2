@@ -10,14 +10,14 @@
 {% block main_content %}
 <div class="learn-grid">
     {% for section in learn_sections %}
-    <div class="learn-card">
+    <div class="panel learn-card">
         <div class="learn-card-header">
             <span class="learn-card-icon">{{ icon(section.icon) }}</span>
             <span>{{ section.title }}</span>
         </div>
         <div class="learn-card-body">
             {% if section.intro %}
-            <p class="learn-card-intro">{{ section.intro }}</p>
+            <p class="note learn-card-intro">{{ section.intro }}</p>
             {% endif %}
             <ul class="learn-links">
                 {% for link in section.links %}
