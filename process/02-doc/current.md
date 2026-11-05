@@ -19,8 +19,8 @@ World" is a working title until confirmed.
 lightning talks are still TBD.
 
 **Jan 14 announcement**: Tully Foote on Intrinsic Core.
-`content/news/31-january-talk-announcement.md` has its image, and its
-lightning talks are still TBD.
+`content/news/31-january-talk-announcement.md` is published with a ROS diagram
+as its image. Its lightning talks are still TBD.
 
 **Speakers to confirm**: the 2 main meetings on 2027-02-11 and 2027-03-11 have
 no speaker yet, so they show the "Speaker and topic to be announced." default,

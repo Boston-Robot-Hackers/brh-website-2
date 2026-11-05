@@ -4,6 +4,14 @@ Completed-work log. `process/02-doc/current.md`'s `## Open` section is the only
 part that matters for new work; entries move here once done, per
 `.claude/process.md`'s checkpoint step.
 
+## 2026-11-05 (Jan 14 announcement)
+
+* Tully Foote on Intrinsic Core is the Jan 14 talk. The calendar entry is
+  filled in, and `31-january-talk-announcement.md` is published with the
+  user's ROS diagram image. Open items for it are in `current.md`.
+* Tests: 225 passed. Ruff clean. No build module changed, so no literate docs
+  to refresh.
+
 ## 2026-11-04 (Dec 10 announcement; test no longer wipes output; chores 42-43)
 
 * **Chore 42**: Addisu Taddese is the Dec 10 speaker. The calendar entry is
