@@ -56,6 +56,15 @@ in the recommended order:
 * Replace inline image styles in content files. F15 is out of date and should be
   rewritten around this. It also removes the `!important` F24 added.
 
+**Tests overwrite local output**: `tests/test_upcoming_talks.py` and
+`tests/test_ical_feed.py` build into the real `output/`, so running the tests
+leaves test data (dated 2026-09-18) in `output/upcoming-talks.txt` and
+`meetings.ics`. Deploys aren't affected, since CI builds without running tests.
+Rebuild after testing locally. Same kind of bug as chore 43; not fixed yet.
+
+**ROSbot pages after F27**: the F26 templates were moved onto F27's shared
+classes during the merge. Their HTML was checked, not their look in a browser.
+
 Known, deliberately-deferred items (not urgent, no ticket filed):
 
 * 3 ruff `DTZ` (naive-datetime) findings, left unfixed: `datetime.now()`
