@@ -50,9 +50,8 @@ file yet.
 **HTML and CSS cleanup**: what remains from the 2026-11-05 audit,
 in the recommended order:
 
-* Tidy templates: a detail-page partial, a root path variable, `{# #}` comments,
-  the site address in config, member-card logic in Python, meta descriptions, and
-  pages with two `h1`s.
+* Tidy templates: planned as F28, parked and awaiting the user's go. Its feature
+  and task files are in `notdone/`.
 * Replace inline image styles in content files. F15 is out of date and should be
   rewritten around this. It also removes the `!important` F24 added.
 
