@@ -7,6 +7,8 @@ schedule: TBD
 ---
 ### Objectives for today
 
+* Everyone leaves with basic ROS 2 commands working
+
 
 ### By the next meeting
 

@@ -4,6 +4,14 @@ Completed-work log. `process/02-doc/current.md`'s `## Open` section is the only
 part that matters for new work; entries move here once done, per
 `.claude/process.md`'s checkpoint step.
 
+## 2026-11-17 (F29 ROSbot session details)
+
+* **F29 closed**: session pages now show `medium` ("Format:"), `schedule` and
+  `summary` from the front matter in the header, each only when set.
+* Template-only change in `templates/details/rosbot-session-detail.html`,
+  reusing existing header classes; no new CSS.
+* Two tests in `tests/test_rosbot_section.py` cover set and unset fields.
+
 ## 2026-11-17 (Build-A-ROSBot content)
 
 * The overview now describes the program and who can take part.

@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # test_rosbot_section — Tests for the Build-A-ROSBot section builder
 # Author: Pito Salas and Claude Code
-# Version: 2
+# Version: 3
 # Created: 2026-11-05
-# Updated: 2026-11-05
+# Updated: 2026-11-17
 # Open Source Under MIT license
 import pytest
 from content_manager import ContentManager
@@ -15,6 +15,12 @@ from build import WebsiteBuilder
 def write_page(path, frontmatter_lines, body="Body text."):
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text("---\n" + "\n".join(frontmatter_lines) + f"\n---\n{body}\n")
+
+
+def session_header(page_path):
+    """The session page's header block, so assertions ignore the pager."""
+    html = page_path.read_text()
+    return html.split('class="detail-brief-header"', 1)[1].split("</div>", 1)[0]
 
 
 def make_section(content_dir, out_dir):
@@ -32,7 +38,13 @@ def rosbot_dir(tmp_content_dir):
     write_page(section / "sessions" / "b.md", ["title: Wheels", "session: 2"])
     write_page(
         section / "sessions" / "a.md",
-        ["title: Kickoff", "session: 1", "summary: Meet the kit."],
+        [
+            "title: Kickoff",
+            "session: 1",
+            "summary: Meet the kit.",
+            "medium: Zoom",
+            "schedule: TBD",
+        ],
     )
     write_page(section / "sessions" / "c.md", ["title: Lidar", "session: 3"])
     write_page(section / "sessions" / "_template.md", ["title: Template", "session: 9"])
@@ -113,6 +125,18 @@ class TestBuild:
         for slug in ["parts", "alpha", "zeta"]:
             assert (built / RESOURCES_OUT / f"{slug}.html").exists()
         assert not (built / SESSIONS_OUT / "_template.html").exists()
+
+    def test_session_header_shows_front_matter(self, built):
+        header = session_header(built / SESSIONS_OUT / "a.html")
+        assert "Meet the kit." in header
+        assert "Format: Zoom" in header
+        assert "Schedule: TBD" in header
+
+    def test_session_header_omits_unset_fields(self, built):
+        header = session_header(built / SESSIONS_OUT / "b.html")
+        assert "Format:" not in header
+        assert "Schedule:" not in header
+        assert "detail-brief-header__excerpt" not in header
 
     def test_first_session_has_only_next_link(self, built):
         html = (built / SESSIONS_OUT / "a.html").read_text()

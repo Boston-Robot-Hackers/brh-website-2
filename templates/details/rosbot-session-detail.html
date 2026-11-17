@@ -11,8 +11,16 @@
     <div class="detail-brief-header">
         <p class="label detail-brief-header__kicker">Build-A-ROSBot &middot; Session {{ page.metadata.session }}</p>
         <h1 class="detail-title">{{ page.title }}</h1>
-        {% if page.date %}
-        <p class="detail-brief-header__meta">{{ page.date|format_date }}</p>
+        {% set meta = page.metadata %}
+        {% if page.date or meta.medium or meta.schedule %}
+        <p class="detail-brief-header__meta">
+            {% if page.date %}<span>{{ page.date|format_date }}</span>{% endif %}
+            {% if meta.medium %}<span>Format: {{ meta.medium }}</span>{% endif %}
+            {% if meta.schedule %}<span>Schedule: {{ meta.schedule }}</span>{% endif %}
+        </p>
+        {% endif %}
+        {% if meta.summary %}
+        <p class="detail-brief-header__excerpt">{{ meta.summary }}</p>
         {% endif %}
     </div>
 
