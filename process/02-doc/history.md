@@ -4,6 +4,15 @@ Completed-work log. `process/02-doc/current.md`'s `## Open` section is the only
 part that matters for new work; entries move here once done, per
 `.claude/process.md`'s checkpoint step.
 
+## 2026-11-17 (Build-A-ROSBot content)
+
+* The overview now describes the program and who can take part.
+* Sessions are now 1 Kick-off Meeting, 2 Troubleshooting ROS 2 and 3
+  Assembling Maker's Pet. The old "First Motion" placeholder was removed.
+* The session template now matches them: `medium` and `schedule` fields, and
+  "Objectives for today", "By the next meeting" and "Notes" sections.
+* Typos fixed across the ROSbot pages.
+
 ## 2026-11-17 (Dec 10 speaker change)
 
 * Addisu Taddese cancelled. Joe Jones replaces him with "The Unlikely Story of
