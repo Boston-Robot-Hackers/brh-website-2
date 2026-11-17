@@ -60,6 +60,11 @@ leaves test data (dated 2026-09-18) in `output/upcoming-talks.txt` and
 `meetings.ics`. Deploys aren't affected, since CI builds without running tests.
 Rebuild after testing locally. Same kind of bug as chore 43; not fixed yet.
 
+**ROSbot session fields not shown**: session 1
+(`content/rosbot/sessions/01-getting-started.md`) now sets `medium: Zoom` and
+`schedule: TBD`, but no template or build code reads either field, so they
+don't appear on the page. Showing them would need a small feature.
+
 **ROSbot pages after F27**: the F26 templates were moved onto F27's shared
 classes during the merge. Their HTML was checked, not their look in a browser.
 
