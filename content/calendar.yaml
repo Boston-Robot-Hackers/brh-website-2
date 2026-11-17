@@ -47,11 +47,11 @@ meetings:
   - id: 28-meeting
     date: 2026-12-10
     kind: main
-    speaker: "Addisu Taddese"
-    topic: "Robotics in the Real World"
-    blurb: "Inside Gazebo: what it's like to maintain a simulator used by thousands, and the challenges and opportunities ahead."
-    text: "Addisu Taddese, the lead maintainer of Gazebo, will give us insights from the inside. What is it like to work on a robotics simulation platform that is used by thousands of people around the world? What are the challenges and opportunities in robotics simulation?"
-    announcement: "30-december-talk-announcement.md"
+    speaker: "Joe Jones"
+    topic: "The Unlikely Story of Roomba: Birthing the World's Favorite Robot"
+    blurb: "How decades of failed robot vacuums led to the invention of Roomba at iRobot."
+    text: "The inventor of Roomba recounts the improbable journey from decades of failed robot-vacuum attempts, through a breakthrough at the MIT AI Lab, to Roomba's 2002 launch at iRobot and its welcome into millions of homes."
+    announcement: "33-december-talk-announcement.md"
 
   - id: 29-handson-meeting
     date: 2026-12-09

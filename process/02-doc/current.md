@@ -13,10 +13,9 @@ leftovers need manual cleanup (design record in
 **Nov 11 hands-on meeting**: moved from Nov 25 on 2026-11-04, and it falls on
 Veterans Day. Confirm the space is open and let members know.
 
-**Dec 10 announcement**: Addisu Taddese is the speaker. "Robotics in the Real
-World" is a working title until confirmed.
-`content/news/30-december-talk-announcement.md` is no longer hidden. Its
-lightning talks are still TBD.
+**Dec 10 announcement**: Joe Jones on "The Unlikely Story of Roomba",
+replacing Addisu Taddese, who cancelled. The image is a Roomba product photo,
+not a headshot. Its lightning talks are still TBD.
 
 **Jan 14 announcement**: Tully Foote on Intrinsic Core.
 `content/news/31-january-talk-announcement.md` is published with Tully's

@@ -4,6 +4,16 @@ Completed-work log. `process/02-doc/current.md`'s `## Open` section is the only
 part that matters for new work; entries move here once done, per
 `.claude/process.md`'s checkpoint step.
 
+## 2026-11-17 (Dec 10 speaker change)
+
+* Addisu Taddese cancelled. Joe Jones replaces him with "The Unlikely Story of
+  Roomba: Birthing the World's Favorite Robot".
+* The announcement was renamed from `30-` to `33-december-talk-announcement.md`
+  and given `published_date` 2026-11-17, so it lists first in the news.
+* `images/news/roomba.jpeg` is a Roomba product photo, padded to a square with a
+  blurred background so the 160px square thumbnail doesn't crop the robot.
+* Addisu's headshot is still in `images/news/`, unused.
+
 ## 2026-11-05 (F27 CSS shared styles, scales and file split)
 
 * **F27 closed**: CSS declarations went from 831 to 713 (14% fewer), and lines
