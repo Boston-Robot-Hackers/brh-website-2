@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # test_rosbot_section — Tests for the Build-A-ROSBot section builder
 # Author: Pito Salas and Claude Code
-# Version: 3
+# Version: 4
 # Created: 2026-11-05
-# Updated: 2026-11-17
+# Updated: 2026-11-21
 # Open Source Under MIT license
 import pytest
 from content_manager import ContentManager
@@ -113,6 +113,11 @@ class TestBuild:
         )
         assert 'href="rosbot-sessions/a.html"' in html
         assert "Meet the kit." in html
+
+    def test_overview_summary_on_title_line(self, built):
+        html = (built / "rosbot.html").read_text()
+        assert "Kickoff</a> &mdash; <span" in html
+        assert "Wheels</a>\n" in html
 
     def test_overview_lists_resources(self, built):
         html = (built / "rosbot.html").read_text()

@@ -64,8 +64,16 @@ Rebuild after testing locally. Same kind of bug as chore 43; not fixed yet.
 placeholder. Session 3's "By the next meeting" names no tutorial steps yet,
 and sessions 2 and 3 have empty Notes sections.
 
+**ROSbot "What you will need" page** (`content/rosbot/resources/parts-list.md`):
+
+* The Build Pack link's target is its own title, not a URL, so the link is
+  broken.
+* Typos: "scenaraios", "ROS om WSL", "ypu", "At at least", and a stray "/"
+  after the Pixi link.
+
 **ROSbot pages after F27**: the F26 templates were moved onto F27's shared
-classes during the merge. Their HTML was checked, not their look in a browser.
+classes during the merge. The overview has been checked in a browser. The
+session and resource pages have not.
 
 Known, deliberately-deferred items (not urgent, no ticket filed):
 

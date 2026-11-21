@@ -1,7 +1,7 @@
 ---
 title: Kick-off Meeting
 session: 1
-summary: Finalize participants and preliminary schedule
+summary: During this meeting we will finalize participants and discuss the preliminary schedule. We will talk about the required resources and time commitment.
 medium: Zoom
 schedule: TBD
 ---

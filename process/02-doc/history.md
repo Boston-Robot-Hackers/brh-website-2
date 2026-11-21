@@ -4,6 +4,15 @@ Completed-work log. `process/02-doc/current.md`'s `## Open` section is the only
 part that matters for new work; entries move here once done, per
 `.claude/process.md`'s checkpoint step.
 
+## 2026-11-21 (ROSbot list summaries inline)
+
+* Chore 49: on the Build-A-ROSBot overview, each session's and resource's
+  `summary` now follows its link on the same line, after an em dash.
+* Removed the `display: block` rule on `.rosbot-list__summary`. Checked in
+  headless Chrome.
+* The user's content edits went in with it: longer session 1 and 2 summaries,
+  and the parts list rewritten as "What you will need".
+
 ## 2026-11-17 (F29 ROSbot session details)
 
 * **F29 closed**: session pages now show `medium` ("Format:"), `schedule` and

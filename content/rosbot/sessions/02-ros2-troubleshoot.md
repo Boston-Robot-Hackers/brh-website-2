@@ -1,7 +1,7 @@
 ---
 title: Troubleshooting ROS 2
 session: 2
-summary: Solve problems encountered installing ROS 2
+summary: During this session we will work together to solve each participant's problems with the set up of the hardware and software. 
 medium: Zoom
 schedule: TBD
 ---

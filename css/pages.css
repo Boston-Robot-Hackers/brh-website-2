@@ -538,9 +538,6 @@
   font-weight: 700;
 }
 
-.rosbot-list__summary {
-  display: block;
-}
 
 .rosbot-pager {
   display: flex;
